@@ -182,6 +182,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-KVO" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/27/KVO/">KVO</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/27/KVO/" class="archive-article-date">
+  	<time datetime="2018-12-27T08:24:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h5><p>与<code>KVC</code>相同，OC在实现<code>KVO</code>时没有采用实现接口的方式，而是针对<code>NSObject</code>创建了一个类别,通过这样的方式使得<code>NSObject</code>的子类可以自行实现<code>NSKeyValueObserving</code>类别定义的相关方法，其他的如<code>NSArray</code>、<code>NSSet</code>这样的集合类也都定义了相关的类别，因此也可以对集合类型进行<code>KVO</code>的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 <code>@Max</code>,<code>@Min</code></p>
+<p>观察者观察的是属性，只有遵循<code>KVO</code> 变更属性值的方式才会执行<code>KVO</code> 的回调方法，例如是否执行了 <code>setter</code> 方法、或者是否使用了 <code>KVC</code> 赋值。<br>如果赋值没有通过 <code>setter</code> 方法或者 <code>KVC</code>，而是直接修改属性对应的成员变量，例如：仅调用<code>_name = @&quot;newName&quot;</code>，这时是不会触发<code>KVO</code> 机制，更加不会调用回调方法的。</p>
+<p>通过category和关联向类中添加属性，可以被KVO监听</p>
+<h5 id="正确使用"><a href="#正确使用" class="headerlink" title="正确使用"></a>正确使用</h5><ul>
+<li>需要主动移除</li>
+</ul>
+<p><code>A_VC</code> 持有 <code>model</code>的引用，<code>push</code>到<code>B_VC</code>，并将<code>model</code>赋值给<code>B_VC</code>的<code>model</code>。<code>B_VC</code>添加对<code>model.name</code>的监听，不移除，此时<code>pop</code>到<code>A_VC</code>,更改<code>model.name</code>，因为监听对象<code>B_VC</code>的指针为野指针，会崩溃。</p>
+<ul>
+<li>静态变量的地址可以保证<code>context</code>的独一无二</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static void * SubViewControllerBalanceObserverContext = &amp;SubViewControllerBalanceObserverContext;</span><br></pre></td></tr></table></figure>
+<p><code>superVC</code>和<code>subVC</code>都监听了<code>model.name</code>，当<code>model.name</code>改变时,子类会收到两次监听，一次是自己的，另一次因为<code>superVC</code>的监听，但<code>self</code>依然是<code>subVC</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    if (context == SubViewControllerBalanceObserverContext)</span><br><span class="line">&#123;</span><br><span class="line">        NSLog(@&quot;SubViewController NewBalance: %lf&quot;, self.model.balance);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.model removeObserver:self forKeyPath:@&quot;balance&quot; context:SubViewControllerBalanceObserverContext</span><br></pre></td></tr></table></figure>
+<p>正确做法是判断不是自己的，主动调用父类的监听方法。<br><code>object</code>是被监听的对象</p>
+<p><code>KVO</code>的<code>addObserver</code>和<code>removeObserver</code>需要是成对的，如果重复<code>remove</code>则会导致<code>NSRangeException</code>类型的<code>Crash</code>，如果忘记<code>remove</code>则会在观察者释放后再次接收到<code>KVO</code>回调时<code>Crash</code>。</p>
+<h5 id="手动调用KVO"><a href="#手动调用KVO" class="headerlink" title="手动调用KVO"></a>手动调用KVO</h5><p>KVO在属性发生改变时的调用是自动的，如果想要手动控制这个调用时机，或想自己实现KVO属性的调用，则可以通过KVO提供的方法进行调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)setBalance:(double)theBalance &#123;</span><br><span class="line">    if (theBalance != _balance) &#123;</span><br><span class="line">        [self willChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">        _balance = theBalance;</span><br><span class="line">        [self didChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//balance属性实现该方法</span><br><span class="line">+ (BOOL)automaticallyNotifiesObserversOfBalance</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h5><p>基于<code>runtime</code><br><code>Apple</code> 使用了 <code>isa</code> 混写（<code>isa-swizzling</code>）来实现 <code>KVO</code> 。当观察对象<code>A</code>时，<code>KVO</code>机制动态创建一个新的名为：<code>NSKVONotifying_A</code> 的新类，该类继承自对象<code>A</code>的本类，且 <code>KVO</code> 为 <code>NSKVONotifying_A</code> 重写观察属性的 <code>setter</code> 方法，<code>setter</code> 方法会负责在调用原 <code>setter</code> 方法之前和之后，通知所有观察对象属性值的更改情况。</p>
+<p><code>NSKVONotifying_A</code> 类剖析：在这个过程，被观察对象的 <code>isa</code> 指针从指向原来的 <code>A</code> 类，被 <code>KVO</code>机制修改为指向系统新创建的子类 <code>NSKVONotifying_A</code> 类，来实现当前类属性值改变的监听；<br>所以当我们从应用层面上看来，完全没有意识到有新的类出现，这是系统“隐瞒”了对 <code>KVO</code> 的底层实现过程，让我们误以为还是原来的类。但是此时如果我们创建一个新的名为<code>“NSKVONotifying_A”</code>的类，就会发现系统运行到注册 <code>KVO</code> 的那段代码时程序就崩溃，因为系统在注册监听的时候动态创建了名为 <code>NSKVONotifying_A</code> 的中间类，并指向这个中间类了。</p>
+<p>子类<code>setter</code>方法剖析：<code>KVO</code> 的键值观察通知依赖于 <code>NSObject</code> 的两个方法:<code>willChangeValueForKey:</code>和 <code>didChangevlueForKey:</code>，在存取数值的前后分别调用 2 个方法：<br>被观察属性发生改变之前，<code>willChangeValueForKey:</code>被调用，通知系统该 <code>keyPath</code> 的属性值即将变更；当改变发生后， <code>didChangeValueForKey:</code> 被调用，通知系统该 <code>keyPath</code> 的属性值已经变更；之后， <code>observeValueForKey:ofObject:change:context:</code> 也会被调用。且重写观察属性的 <code>setter</code> 方法这种继承方式的注入是在运行时而不是编译时实现的。<br><code>KVO</code> 为子类的观察者属性重写调用存取方法的工作原理在代码中相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(NSString *)newName&#123;</span><br><span class="line">    [self willChangeValueForKey:@&quot;name&quot;];    //KVO 在调用存取方法之前总调用</span><br><span class="line">    [super setValue:newName forKey:@&quot;name&quot;]; //调用父类的存取方法</span><br><span class="line">    [self didChangeValueForKey:@&quot;name&quot;];     //KVO 在调用存取方法之后总调用</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="object-getClass"><a href="#object-getClass" class="headerlink" title="object_getClass"></a>object_getClass</h5><p>重写了<code>NSKVONotifying_A</code>的<code>class</code>方法，所以调用<code>class</code>方法返回的还是之前的A类，需要调用<code>object_getClass</code>来获取<code>isa</code>指向的class类<br>为什么上面调用<code>runtime</code>的<code>object_getClass</code>函数，就可以获取到真正的类呢？</p>
+<p>调用<code>object_getClass</code>函数后其返回的是一个<code>Class</code>类型，<code>Class</code>是<code>objc_class</code>定义的一个<code>typedef</code>别名，通过<code>objc_class</code>就可以获取到对象的isa指针指向的Class，也就是对象的类对象。</p>
+<p>由此可以推测，object_getClass函数内部返回的是对象的isa指针。</p>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>苹果提供的<code>KVO</code>自身存在很多问题，首要问题在于，<code>KVO</code>如果使用不当很容易崩溃。例如重复<code>add</code>和<code>remove</code>导致的<code>Crash</code>，<code>Observer</code>被释放导致的崩溃，<code>keyPath</code>传错导致的崩溃等。</p>
+<h5 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h5><p><code>FBKVOViewController</code>是<code>facebook</code>团队开源的框架，提供简介的接口帮我调用kvo的功能。其核心的设计是 ：利用单例对象（_FBKVOSharedController）来接受对象属性改变的回调。保证了回调的安全。当接受到观察对象的属性改变回调时 ，在根据<code>context</code>，向上转发回调到你定义的代码块中。<br><img src="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1043" alt="d4dcf916444f9a8df82e9fda842a7566.png"></p>
+<p><a href="https://blog.csdn.net/u014205968/article/details/78224820" target="_blank" rel="noopener">https://blog.csdn.net/u014205968/article/details/78224820</a><br><a href="https://www.jianshu.com/p/e59bb8f59302" target="_blank" rel="noopener">https://www.jianshu.com/p/e59bb8f59302</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/27/KVO/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-溢出" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
