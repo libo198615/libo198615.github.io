@@ -182,6 +182,325 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-单例" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/单例/">单例</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/单例/" class="archive-article-date">
+  	<time datetime="2018-12-28T14:57:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>只有调用<code>sharedInstance</code>才会是单例 <code>allock init</code>还是会生成不同的实例<br>这里的<code>statc</code>限定作用域，使得外部不能获得<code>_instance</code>，如果外部获得<code>_instance</code>，就可以改变它，从而违背了单例的初衷。</p>
+<p><code>GCD</code>单例的原理也是在<code>dispatch_once</code>中加锁，保证线程安全，只不过内部有更多优化，效率更高</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance &#123;  </span><br><span class="line">    static MyClass *_instance = nil;  </span><br><span class="line">    static dispatch_once_t predicate;  </span><br><span class="line">    dispatch_once(&amp;predicate, ^&#123;  </span><br><span class="line">        _instance = [[MyClass alloc] init];   </span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return _instance;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@synchronized</code>采用的是递归互斥锁来实现线程安全，而<code>dispatch_once</code>的内部则使用了很多原子操作来替代锁，以及通过信号量来实现线程同步，而且有很多针对处理器优化的地方.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">+ (MyClass *)sharedInstance &#123;  </span><br><span class="line">    static MyClass *_instance = nil; </span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        if (!_instance) &#123;</span><br><span class="line">            _instance = [[super allocWithZone:NULL] init];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return _instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)zone &#123; // 第三步：重写allocWithZone方法</span><br><span class="line">    if (!_instance) &#123;</span><br><span class="line">        _instance = [[MyClass alloc] init];</span><br><span class="line">        return_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)copyWithZone:(NSZone *)zone&#123; // 第四步</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 以下只在MRC下才需要写，因为在ARC下不让调用一下方法，所以不用担心引用计数的问题。</span><br><span class="line">- (id)retain &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSUInteger)retainCount &#123;</span><br><span class="line">    return NSUIntegerMAX;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)release &#123;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)autorelease &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="单例销毁"><a href="#单例销毁" class="headerlink" title="单例销毁"></a>单例销毁</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">方法一:</span><br><span class="line">+(void)attemptDealloc&#123;</span><br><span class="line">    [_instance release]; //mrc 需要释放,当然你就不能重写release的方法了.</span><br><span class="line">    _instance = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方法二:</span><br><span class="line">1. 必须把static dispatch_once_t onceToken; 这个拿到函数体外,成为全局的.</span><br><span class="line">2.</span><br><span class="line">+(void)attempDealloc &#123;</span><br><span class="line">    onceToken = 0; // 只有置成0,GCD才会认为它从未执行过.它默认为0.这样才能保证下次再次调用shareInstance的时候,再次创建对象.</span><br><span class="line">    [_instance release];</span><br><span class="line">    _instance = nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h5><p>单例是懒加载，程序初始化后，在<code>viewcontroller</code>中不调用单例的初始化方法，不会初始化单例对象。如果在<code>viewcontrol</code>的<code>load</code>方法中调用了单例的初始化方法，就不是懒加载，是饿加载</p>
+<p>1、<code>static</code>修饰局部变量：<br>这个局部变量的生命周期就和不加<code>static</code>的全局变量一样了（也就是只有一块内存区域，无论这个方法执行多少次，都不会重新进行内存的分配），不同的在于作用域仍然没有改变<br>2、static修饰全局变量：<br>如果不使用<code>static</code>的全局变量，我们可以在其他的类中使用<code>extern</code>关键字直接获取到这个对象，从而可将对象置为<code>nil</code></p>
+<p><a href="https://www.jianshu.com/p/c5a0875d3677" target="_blank" rel="noopener">https://www.jianshu.com/p/c5a0875d3677</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/单例/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-KVC" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/KVC/">KVC</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/KVC/" class="archive-article-date">
+  	<time datetime="2018-12-28T14:48:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、<code>setValue: forKeyPath:</code> // 会查找本类里面属性，没有会继续查找父类里面属性。<br>2、<code>setValue: forKey:</code>// 只查找本类里面的属性<br>3、<code>valueForKeyPath:</code><br>4、<code>valueForKey:</code></p>
+<h5 id="特别的-key-需要特别的处理"><a href="#特别的-key-需要特别的处理" class="headerlink" title="特别的 key 需要特别的处理"></a>特别的 key 需要特别的处理</h5><p>不存在的<code>key</code>会崩溃<br>可以重写下面的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(id)valueForUndefinedKey:(NSString *)key</span><br><span class="line">- (void)setValue:(id)value forKey:(NSString *)key</span><br></pre></td></tr></table></figure></p>
+<h5 id="查询顺序"><a href="#查询顺序" class="headerlink" title="查询顺序"></a>查询顺序</h5><p><code>setValue: forKey:</code>的查询顺序是这样的：</p>
+<p><code>setKey`</code>_key<code>、</code>_isKey<code>、</code>key<code>与</code>isKey`<br>注意：第一步查找的是 方法，第三部查找的是 成员变量。</p>
+<p><code>valueForKey:</code>的查询顺序是这样的：</p>
+<p><code>getKey</code>、<code>key</code>、<code>isKey</code> 与 <code>_key</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/KVC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-关联" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/关联/">关联</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/关联/" class="archive-article-date">
+  	<time datetime="2018-12-28T14:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/2018/12/28/关联/1.png" title="图片说明">
+<p>一个实例对象就对应一个<code>ObjectAssociationMap</code>，而<code>ObjectAssociationMap</code>中存储着多个此实例对象的关联对象的<code>key</code>以及<code>ObjcAssociation</code>，为<code>ObjcAssociation</code>中存储着关联对象的<code>value</code>和<code>policy</code>策略。</p>
+<p>由此我们可以知道关联对象并不是放在了原来的对象里面，而是自己维护了一个全局的<code>map</code>用来存放每一个对象及其对应关联属性表格。</p>
+<p><code>AssociationsManager</code>里面是由一个静态<code>AssociationsHashMap</code>来存储所有的关联对象的。这相当于把所有对象的关联对象都存在一个全局<code>map</code>里面。而<code>map</code>的的<code>key</code>是这个对象的指针地址，而这个<code>map</code>的<code>value</code>又是另外一个<code>AssociationsHashMap</code>，里面保存了关联对象的<code>kv</code>对。</p>
+<p>对象<code>dealloc</code>时<code>runtime</code>会调用<code>objc_destructInstance</code>里面会判断这个对象有没有关联对象，如果有，会调用<code>_object_remove_assocations</code>做关联对象的清理工作。<br>同时会判断是否有<code>weak</code>对象，然后置为<code>nil</code><br>weak对象和关联对象不需要主动释放，<code>dealloc</code>会自动释放。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/关联/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-category" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/category/">category</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/category/" class="archive-article-date">
+  	<time datetime="2018-12-28T14:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>category</code>的主要作用是为已经存在的类添加方法</p>
+<ul>
+<li>可以把类的实现分开在几个不同的文件里面</li>
+<li>声明私有方法</li>
+</ul>
+<p><code>extension</code>看起来很像一个匿名的<code>category</code>，但是<code>extension</code>和有名字的<code>category</code>几乎完全是两个东西。 <code>extension</code>在编译期决议，它就是类的一部分。<code>extension</code>一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加<code>extension</code>，所以你无法为系统的类比如<code>NSString</code>添加<code>extension</code>。</p>
+<p><code>category</code>的方法没有“完全替换掉”原来类已经有的方法，也就是说如果<code>category</code>和原来类都有<code>methodA</code>，那么<code>category</code>附加完成之后，类的方法列表里会有两个<code>methodA</code><br><code>category</code>的方法被放到了新方法列表的前面，而原来类的方法被放到了新方法列表的后面，这也就是我们平常所说的<code>category</code>的方法会“覆盖”掉原来类的同名方法，这是因为运行时在查找方法的时候是顺着方法列表的顺序查找的。如果想调用原来的方法，可以自己获取方法列表，然后去查找<code>SEL</code>，看自己想调用第几个<code>SEL</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/category/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-多线程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
