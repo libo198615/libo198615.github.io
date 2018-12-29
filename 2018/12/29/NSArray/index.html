@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Hexo</title>
+  <title>NSArray | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://libo198615.github.io/page/2/index.html">
+  <meta name="description" content="1234567891011121314151617181920212223242526NSArray *arr = @[@1, @2, @3];NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];// for in 改变可变数据会崩溃//    for (NSNumber *num in muArr) &amp;#123;//">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSArray">
+<meta property="og:url" content="https://libo198615.github.io/2018/12/29/NSArray/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1234567891011121314151617181920212223242526NSArray *arr = @[@1, @2, @3];NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];// for in 改变可变数据会崩溃//    for (NSNumber *num in muArr) &amp;#123;//">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-29T11:01:02.622Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="NSArray">
+<meta name="twitter:description" content="1234567891011121314151617181920212223242526NSArray *arr = @[@1, @2, @3];NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];// for in 改变可变数据会崩溃//    for (NSNumber *num in muArr) &amp;#123;//">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -180,94 +184,51 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-多线程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+            <article id="post-NSArray" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/多线程/">多线程</a>
+    <h1 class="article-title" itemprop="name">
+      NSArray
     </h1>
   
 
         
-        <a href="/2018/12/28/多线程/" class="archive-article-date">
-  	<time datetime="2018-12-28T01:07:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+        <a href="/2018/12/29/NSArray/" class="archive-article-date">
+  	<time datetime="2018-12-29T11:00:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>GCD 公开有 5 个不同的队列：运行在主线程中的 main queue，3 个不同优先级的后台队列，以及一个优先级更低的后台队列（用于 I/O）。 另外，开发者可以创建自定义队列：串行或者并行队列。自定义队列非常强大，在自定义队列中被调度的所有 block 最终都将被放入到系统的全局队列中和线程池中。</p>
-<p>在 GCD 下，有时候你可能会看到这样的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 警告：不要使用这些代码。</span><br><span class="line">dispatch_async(backgroundQueue, ^&#123;</span><br><span class="line">    NSData* contents = [NSData dataWithContentsOfURL:url]</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        // 处理取到的日期</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>乍看起来没什么问题，但是这段代码却有致命缺陷。你没有办法去取消这个同步的网络请求。它将阻塞住线程直到它完成。如果请求一直没结果，那就只能干等到超时（比如 dataWithContentsOfURL: 的超时时间是 30 秒）。</p>
-<h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是一种资源，用于执行队列中的任务</p>
-<p>线程（thread）是组成进程的子单元，操作系统的调度器可以对线程进行单独的调度。<br>多线程可以在单核 CPU 上同时（或者至少看作同时）运行。操作系统将小的时间片分配给每一个线程，这样就能够让用户感觉到有多个任务在同时进行。如果 CPU 是多核的，那么线程就可以真正的以并发方式被执行</p>
-<h5 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h5><p>1、进程是资源分配的最小单位，线程是程序执行的最小单位<br>2、进程有自己的独立地址空间，每启动一个进程，系统就会为它分配地址空间，建立数据表来维护代码段、堆栈段和数据段，这种操作非常昂贵。<br>而线程是共享进程中的数据的，使用相同的地址空间，因此CPU切换一个线程的花费远比进程要小很多，同时创建一个线程的开销也比进程要小很多。<br>3、线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据，而进程之间的通信需要以通信的方式进行<br>4、但是多进程程序更健壮，多线程程序只要有一个线程死掉，整个进程也死掉了，而一个进程死掉并不会对另外一个进程造成影响，因为进程有自己独立的地址空间。</p>
-<p>二、进程与线程的资源：<br>1、堆与栈<br>堆：是大家共有的空间，分全局堆和局部堆。堆在操作系统对进程初始化的时候分配，运行过程中也可以向系统要额外的堆，但是记得用完了要还给操作系统，要不然就是内存泄漏。<br>栈：是个线程独有的，保存其运行状态和局部自动变量的。栈在线程开始的时候初始化，每个线程的栈互相独立，因此，栈是<code>thread safe</code>的。操作系统在切换线程的时候会自动的切换栈，就是切换<code>ＳＳ／ＥＳＰ</code>寄存器。栈空间不需要在高级语言里面显式的分配和释放。</p>
-<h5 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h5><ul>
-<li>管道</li>
-<li>共享内存</li>
-<li>socket</li>
-<li>消息队列</li>
-</ul>
-<h5 id="队列："><a href="#队列：" class="headerlink" title="队列："></a>队列：</h5><p>队列用于管理任务，CPU队列中的任务分发给线程执行，每个队列（至少）对应一个线程</p>
-<ul>
-<li>串行队列：队列中的任务按顺序执行，对应一个线程</li>
-<li>并行队列：队列中的任务可以分发给不同的线程同时执行，可以对应多个线程</li>
-</ul>
-<p>队列会默认创建新线程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">dispatch_queue_t serialQueue = dispatch_queue_create(&quot;serial&quot;, NULL);</span><br><span class="line">dispatch_queue_t concurrentQueue = dispatch_queue_create(&quot;concurrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"></span><br><span class="line">dispatch_async(serialQueue, ^&#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(concurrentQueue, ^&#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;NSThread: 0x1c406a740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">&lt;NSThread: 0x1c0473b00&gt;&#123;number = 3, name = (null)&#125;</span><br><span class="line">&lt;NSThread: 0x1c40673c0&gt;&#123;number = 4, name = (null)&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="GCD-vs-NSOperation"><a href="#GCD-vs-NSOperation" class="headerlink" title="GCD vs NSOperation"></a>GCD vs NSOperation</h5><p><code>GCD</code>是将任务添加到队列中（串行/并发/主队列），并且制定任务执行的函数（同步/异步），其性能最好，底层是C语言的API。只能设置某一个队列的优先级，<br>常用的功能包括<br>一次性执行 <code>dispatch_once</code>，<br>延迟操作<code>dispatch_after</code>（这里是延迟推到线程中，而不是在线程中等待，因此比如设置延迟1秒执行，但是一秒后只是推到了线程中，不会立刻执行），调度组等，<br><code>dispatch_barrier_async</code>栅栏来控制异步操作的顺序<br><code>dispatch_apply</code>充分利用多核进行快速迭代遍历<br><code>dispatch_group_t</code>队列组，添加到队列组中的任务完成之后会调用<code>dispatch_group_notify</code> 函数，可以实现类似A、B两个耗时操作都完成之后，去主线程更新UI的操作</p>
-<p><code>NSOperation</code>把操作（异步）添加到队列中（全局的并发队列），是OC框架，更加面向对象，是对GCD的封装，可以随时取消已经设定准备要执行的任务，已经执行的除外，可以设置队列中每一个操作的优先级，其基本功能包括设置最大操作并发数<code>maxConcurrentOperationCount</code>，继续/暂停/全部取消，可以对队列设置操作的依赖关系，通过<code>KVO</code>监听<code>NSOperation</code> 对象的属性，如 <code>isCancelled</code>、<code>isFinished</code>；对象可重用。<br>操作依赖：<code>[operation2 addDependency:operation1]</code>;  (<code>operation2</code> 依赖于<code>operation1</code>的完成，但这两个任务要加入到同一个队列中)</p>
-<h5 id="同步-amp-异步-串行-amp-并发"><a href="#同步-amp-异步-串行-amp-并发" class="headerlink" title="同步&amp;异步 串行&amp;并发"></a>同步&amp;异步 串行&amp;并发</h5><ul>
-<li>同步执行</li>
-</ul>
-<p>比如这里的<code>dispatch_sync</code>，这个函数会把一个<code>block</code>加入到指定的队列中，而且会一直等到执行完<code>blcok</code>，这个函数才返回。因此在<code>block</code>执行完之前，调用<code>dispatch_sync</code>方法的线程是阻塞的。</p>
-<ul>
-<li>异步执行</li>
-</ul>
-<p>一般使用<code>dispatch_async</code>，这个函数也会把一个<code>block</code>加入到指定的队列中，但是和同步执行不同的是，这个函数把<code>block</code>加入队列后不等<code>block</code>的执行就立刻返回了。</p>
-<ul>
-<li>串行队列</li>
-</ul>
-<p>比如这里的<code>dispatch_get_main_queue</code>。这个队列中所有任务，一定按照先来后到的顺序执行。对于每一个不同的串行队列，系统会为这个队列建立唯一的线程来执行代码。</p>
-<ul>
-<li>并发队列</li>
-</ul>
-<p>比如使用<code>dispatch_get_global_queue</code>。这个队列中的任务也是按照先来后到的顺序开始执行，注意是开始，但是它们的执行结束时间是不确定的，取决于每个任务的耗时。对于n个并发队列，<code>GCD</code>不会创建对应的n个线程而是进行适当的优化</p>
-<h5 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h5><p>向另一个串行队列添加任务不一定导致死锁呢，因为队列是可以嵌套的，比如在A队列（串行）添加一个任务a，在a这个任务中向B队列（串行）添加任务b，在b这个任务中又向A队列添加任务，这就间接满足了:在某一个串行队列中，同步的向这个队列添加<code>block</code>。</p>
-<p>所以判断是否发生死锁的最好方法就是看有没有在串行队列（当然也包括主队列）中向这个队列添加任务。又因为我们知道每个串行队列对应一个线程，所以只要不在某个线程中调用会阻塞这个线程的方法即可。</p>
-<h5 id="串行队列"><a href="#串行队列" class="headerlink" title="串行队列"></a>串行队列</h5><p>串行队列 异步任务，会创建子线程，且只创建一个子线程，异步任务执行是有序的。<br>串行队列 同步任务，不创建新线程，同步任务执行是有序的。本例在主线程中执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;start--%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;end--%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;</span><br><span class="line">--------------------- </span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  4</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  5</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  6</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  7</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  8</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  9</span><br><span class="line">end--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  9</span><br></pre></td></tr></table></figure></p>
-<h5 id="并行队列"><a href="#并行队列" class="headerlink" title="并行队列"></a>并行队列</h5><p>并行队列 异步任务 创建子线程，且多个子线程(demo有时只打印一个)，异步任务打印结果无序。<br>并行队列 同步任务，不创建新线程，同步任务执行是有序的，会阻塞当前线程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;start--%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;end--%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;</span><br><span class="line">--------------------- </span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  4</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  6</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  5</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  9</span><br><span class="line">end--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x283d53d00&gt;&#123;number = 5, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x283d31d80&gt;&#123;number = 6, name = (null)&#125;  6</span><br></pre></td></tr></table></figure></p>
-<h5 id="dispatch-apply"><a href="#dispatch-apply" class="headerlink" title="dispatch_apply"></a>dispatch_apply</h5><p>dispatch_apply函数是dispatch_sync函数和Dispatch Group的关联API,该函数按指定的次数将指定的Block追加到指定的Dispatch Queue中,并等到全部的处理执行结束<br>是否有序执行取决于所添加到的 queue是串行还是并行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line"></span><br><span class="line">    dispatch_apply(100, q, ^(size_t index) &#123;</span><br><span class="line">        NSLog(@&quot;%zu&quot;, index);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;done&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
-<h5 id="atomic"><a href="#atomic" class="headerlink" title="atomic"></a>atomic</h5><p><code>atomic</code>的作用只是给<code>getter</code>和<code>setter</code>加了个锁，<code>atomic</code>只能保证代码进入<code>getter</code>或者<code>setter</code>函数内部时是安全的，一旦出了<code>getter</code>和<code>setter</code>，多线程安全只能靠程序员自己保障了。所以<code>atomic</code>属性和使用<code>property</code>的多线程安全并没什么直接的联系。另外，<code>atomic</code>由于加锁也会带来一些性能损耗，所以我们在编写iOS代码的时候，一般声明<code>property</code>为<code>nonatomic</code>，在需要做多线程安全的场景，自己去额外加锁做同步。</p>
-<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><p>停车场剩余4个车位，那么即使同时来了四辆车也能停的下。如果此时来了五辆车，那么就有一辆需要等待。</p>
-<p>信号量的值就相当于剩余车位的数目，<br><code>dispatch_semaphore_wait</code>函数就相当于来了一辆车，<code>dispatch_semaphore_signal</code>就相当于走了一辆车。停车位的剩余数目在初始化的时候就已经指明了<code>dispatch_semaphore_create（long value）</code>。</p>
-<h3 id="死锁-1"><a href="#死锁-1" class="headerlink" title="死锁"></a>死锁</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 在A线程中同步调用A线程的方法</span><br><span class="line">dispatch_sync(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, [NSThreadcurrentThread]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>sync 会等到 后面block 执行完成才返回， sync 又再 dispatch_get_main_queue() 队列中，<br>它是串行队列，sync 是后加入的，前一个是主线程，<br>所以 sync 想执行 block 必须等待主线程执行完成，主线程等待 sync 返回，去执行后续内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 这样可以</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.SerialQueue&quot;, NULL);</span><br><span class="line">    dispatch_async(serialQueue, ^&#123;</span><br><span class="line">        [self log];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)log &#123;</span><br><span class="line">    dispatch_sync(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        NSLog(@&quot;momo run&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 这样可以</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.SerialQueue&quot;, NULL);</span><br><span class="line">    dispatch_sync(serialQueue, ^&#123;</span><br><span class="line">        [self log];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)log &#123;</span><br><span class="line">    dispatch_queue_t serialQueue1 = dispatch_queue_create(&quot;com.SerialQueue1&quot;, NULL);</span><br><span class="line">    dispatch_sync(serialQueue1, ^&#123;</span><br><span class="line">        NSLog(@&quot;momo run&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;work 1 start&quot;);</span><br><span class="line">    dispatch_queue_t serialQueue = dispatch_queue_create(&quot;com.SerialQueue&quot;, NULL);</span><br><span class="line">    dispatch_sync(serialQueue, ^&#123;</span><br><span class="line">        NSLog(@&quot;work 2 start&quot;);</span><br><span class="line">        [self log];</span><br><span class="line">        NSLog(@&quot;work 2 end&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@&quot;work 1 end&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)delay &#123;</span><br><span class="line">    NSLog(@&quot;work 4 start&quot;);</span><br><span class="line">    dispatch_sync(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        NSLog(@&quot;momo run&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@&quot;work 4 end&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)log &#123;</span><br><span class="line">    NSLog(@&quot;work 3 start&quot;);</span><br><span class="line">    dispatch_queue_t serialQueue1 = dispatch_queue_create(&quot;com.SerialQueue1&quot;, NULL);</span><br><span class="line">    dispatch_async(serialQueue1, ^&#123;</span><br><span class="line">        [self delay];</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@&quot;work 3 end&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>// 只要在<code>work 4 start</code>之前<code>work 1 end</code>就不会出现死锁<br>// 向一个串行队列中同步添加block<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">work 1 start</span><br><span class="line">work 2 start</span><br><span class="line">work 3 start</span><br><span class="line">work 3 end</span><br><span class="line">work 2 end</span><br><span class="line">work 1 end</span><br><span class="line">work 4 start</span><br><span class="line">momo run</span><br><span class="line">work 4 end</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>同步和异步代表会不会开辟新的线程。串行和并发代表任务执行的方式。</li>
-<li>同步串行和同步并发，任务执行的方式是一样的。没有区别，因为没有开辟新的线程，所有的任务都是在一条线程(当前线程)里面执行。</li>
-<li>异步串行和异步并发，任务执行的方式是有区别的，异步串行会开辟一条新的线程，队列中所有任务按照添加的顺序一个一个执行，异步并发会开辟多条线程，至于具体开辟多少条线程，是由系统决定的，但是所有的任务好像就是同时执行的一样。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">for (int i=0; i&lt;3; i++) &#123;</span><br><span class="line">    dispatch_async(q, ^&#123;</span><br><span class="line">        NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">---------</span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x282f05a40&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">end--&lt;NSThread: 0x282f05a40&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  2</span><br></pre></td></tr></table></figure>
-<h5 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait;</span><br><span class="line">- (void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(id)arg waitUntilDone:(BOOL)wait;</span><br></pre></td></tr></table></figure>
-<h5 id="切换线程"><a href="#切换线程" class="headerlink" title="切换线程"></a>切换线程</h5><p>runloop<br>通过出发某个runloop的端口</p>
-<p><a href="https://www.jianshu.com/p/43e66dab535b" target="_blank" rel="noopener">https://www.jianshu.com/p/43e66dab535b</a></p>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = @[@1, @2, @3];</span><br><span class="line">NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];</span><br><span class="line"></span><br><span class="line">// for in 改变可变数据会崩溃</span><br><span class="line">//    for (NSNumber *num in muArr) &#123;</span><br><span class="line">//        if (num.integerValue == 2) &#123;</span><br><span class="line">//            [muArr removeObject:num];</span><br><span class="line">//        &#125;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; muArr.count - 1; i ++) &#123; // muArr.count 也在随时变</span><br><span class="line">NSNumber *num = muArr[i];</span><br><span class="line">if (num.integerValue == 2) &#123;</span><br><span class="line">[muArr removeObject:num];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// block 内部可以修改可变数组的元素，而不用__blok</span><br><span class="line">[muArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">if ([obj integerValue] == 2) &#123;</span><br><span class="line">[muArr removeObject:obj];</span><br><span class="line">&#125;</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">// 对于集合中对象数很多的情况下，for in 的遍历速度非常之快，但小规模的遍历并不明显（还没普通for循环快）</span><br><span class="line">// Value查询index的时候, 面对大量的数组推荐使用 enumerateObjectsWithOptions的并行方法.</span><br></pre></td></tr></table></figure>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -287,16 +248,84 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/多线程/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://libo198615.github.io/2018/12/29/NSArray/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/12/29/NSCoding/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          NSCoding
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/29/Block/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Block</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -316,350 +345,14 @@
 
 
 
-
-  
-    <article id="post-KVO" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/27/KVO/">KVO</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/27/KVO/" class="archive-article-date">
-  	<time datetime="2018-12-27T08:24:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h5><p>与<code>KVC</code>相同，OC在实现<code>KVO</code>时没有采用实现接口的方式，而是针对<code>NSObject</code>创建了一个类别,通过这样的方式使得<code>NSObject</code>的子类可以自行实现<code>NSKeyValueObserving</code>类别定义的相关方法，其他的如<code>NSArray</code>、<code>NSSet</code>这样的集合类也都定义了相关的类别，因此也可以对集合类型进行<code>KVO</code>的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 <code>@Max</code>,<code>@Min</code></p>
-<p>观察者观察的是属性，只有遵循<code>KVO</code> 变更属性值的方式才会执行<code>KVO</code> 的回调方法，例如是否执行了 <code>setter</code> 方法、或者是否使用了 <code>KVC</code> 赋值。<br>如果赋值没有通过 <code>setter</code> 方法或者 <code>KVC</code>，而是直接修改属性对应的成员变量，例如：仅调用<code>_name = @&quot;newName&quot;</code>，这时是不会触发<code>KVO</code> 机制，更加不会调用回调方法的。</p>
-<p>通过category和关联向类中添加属性，可以被KVO监听</p>
-<h5 id="正确使用"><a href="#正确使用" class="headerlink" title="正确使用"></a>正确使用</h5><ul>
-<li>需要主动移除</li>
-</ul>
-<p><code>A_VC</code> 持有 <code>model</code>的引用，<code>push</code>到<code>B_VC</code>，并将<code>model</code>赋值给<code>B_VC</code>的<code>model</code>。<code>B_VC</code>添加对<code>model.name</code>的监听，不移除，此时<code>pop</code>到<code>A_VC</code>,更改<code>model.name</code>，因为监听对象<code>B_VC</code>的指针为野指针，会崩溃。</p>
-<ul>
-<li>静态变量的地址可以保证<code>context</code>的独一无二</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static void * SubViewControllerBalanceObserverContext = &amp;SubViewControllerBalanceObserverContext;</span><br></pre></td></tr></table></figure>
-<p><code>superVC</code>和<code>subVC</code>都监听了<code>model.name</code>，当<code>model.name</code>改变时,子类会收到两次监听，一次是自己的，另一次因为<code>superVC</code>的监听，但<code>self</code>依然是<code>subVC</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    if (context == SubViewControllerBalanceObserverContext)</span><br><span class="line">&#123;</span><br><span class="line">        NSLog(@&quot;SubViewController NewBalance: %lf&quot;, self.model.balance);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.model removeObserver:self forKeyPath:@&quot;balance&quot; context:SubViewControllerBalanceObserverContext</span><br></pre></td></tr></table></figure>
-<p>正确做法是判断不是自己的，主动调用父类的监听方法。<br><code>object</code>是被监听的对象</p>
-<p><code>KVO</code>的<code>addObserver</code>和<code>removeObserver</code>需要是成对的，如果重复<code>remove</code>则会导致<code>NSRangeException</code>类型的<code>Crash</code>，如果忘记<code>remove</code>则会在观察者释放后再次接收到<code>KVO</code>回调时<code>Crash</code>。</p>
-<h5 id="手动调用KVO"><a href="#手动调用KVO" class="headerlink" title="手动调用KVO"></a>手动调用KVO</h5><p>KVO在属性发生改变时的调用是自动的，如果想要手动控制这个调用时机，或想自己实现KVO属性的调用，则可以通过KVO提供的方法进行调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)setBalance:(double)theBalance &#123;</span><br><span class="line">    if (theBalance != _balance) &#123;</span><br><span class="line">        [self willChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">        _balance = theBalance;</span><br><span class="line">        [self didChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//balance属性实现该方法</span><br><span class="line">+ (BOOL)automaticallyNotifiesObserversOfBalance</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h5><p>基于<code>runtime</code><br><code>Apple</code> 使用了 <code>isa</code> 混写（<code>isa-swizzling</code>）来实现 <code>KVO</code> 。当观察对象<code>A</code>时，<code>KVO</code>机制动态创建一个新的名为：<code>NSKVONotifying_A</code> 的新类，该类继承自对象<code>A</code>的本类，且 <code>KVO</code> 为 <code>NSKVONotifying_A</code> 重写观察属性的 <code>setter</code> 方法，<code>setter</code> 方法会负责在调用原 <code>setter</code> 方法之前和之后，通知所有观察对象属性值的更改情况。</p>
-<p><code>NSKVONotifying_A</code> 类剖析：在这个过程，被观察对象的 <code>isa</code> 指针从指向原来的 <code>A</code> 类，被 <code>KVO</code>机制修改为指向系统新创建的子类 <code>NSKVONotifying_A</code> 类，来实现当前类属性值改变的监听；<br>所以当我们从应用层面上看来，完全没有意识到有新的类出现，这是系统“隐瞒”了对 <code>KVO</code> 的底层实现过程，让我们误以为还是原来的类。但是此时如果我们创建一个新的名为<code>“NSKVONotifying_A”</code>的类，就会发现系统运行到注册 <code>KVO</code> 的那段代码时程序就崩溃，因为系统在注册监听的时候动态创建了名为 <code>NSKVONotifying_A</code> 的中间类，并指向这个中间类了。</p>
-<p>子类<code>setter</code>方法剖析：<code>KVO</code> 的键值观察通知依赖于 <code>NSObject</code> 的两个方法:<code>willChangeValueForKey:</code>和 <code>didChangevlueForKey:</code>，在存取数值的前后分别调用 2 个方法：<br>被观察属性发生改变之前，<code>willChangeValueForKey:</code>被调用，通知系统该 <code>keyPath</code> 的属性值即将变更；当改变发生后， <code>didChangeValueForKey:</code> 被调用，通知系统该 <code>keyPath</code> 的属性值已经变更；之后， <code>observeValueForKey:ofObject:change:context:</code> 也会被调用。且重写观察属性的 <code>setter</code> 方法这种继承方式的注入是在运行时而不是编译时实现的。<br><code>KVO</code> 为子类的观察者属性重写调用存取方法的工作原理在代码中相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(NSString *)newName&#123;</span><br><span class="line">    [self willChangeValueForKey:@&quot;name&quot;];    //KVO 在调用存取方法之前总调用</span><br><span class="line">    [super setValue:newName forKey:@&quot;name&quot;]; //调用父类的存取方法</span><br><span class="line">    [self didChangeValueForKey:@&quot;name&quot;];     //KVO 在调用存取方法之后总调用</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="object-getClass"><a href="#object-getClass" class="headerlink" title="object_getClass"></a>object_getClass</h5><p>重写了<code>NSKVONotifying_A</code>的<code>class</code>方法，所以调用<code>class</code>方法返回的还是之前的A类，需要调用<code>object_getClass</code>来获取<code>isa</code>指向的class类<br>为什么上面调用<code>runtime</code>的<code>object_getClass</code>函数，就可以获取到真正的类呢？</p>
-<p>调用<code>object_getClass</code>函数后其返回的是一个<code>Class</code>类型，<code>Class</code>是<code>objc_class</code>定义的一个<code>typedef</code>别名，通过<code>objc_class</code>就可以获取到对象的isa指针指向的Class，也就是对象的类对象。</p>
-<p>由此可以推测，object_getClass函数内部返回的是对象的isa指针。</p>
-<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>苹果提供的<code>KVO</code>自身存在很多问题，首要问题在于，<code>KVO</code>如果使用不当很容易崩溃。例如重复<code>add</code>和<code>remove</code>导致的<code>Crash</code>，<code>Observer</code>被释放导致的崩溃，<code>keyPath</code>传错导致的崩溃等。</p>
-<h5 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h5><p><code>FBKVOViewController</code>是<code>facebook</code>团队开源的框架，提供简介的接口帮我调用kvo的功能。其核心的设计是 ：利用单例对象（_FBKVOSharedController）来接受对象属性改变的回调。保证了回调的安全。当接受到观察对象的属性改变回调时 ，在根据<code>context</code>，向上转发回调到你定义的代码块中。<br><img src="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1043" alt="d4dcf916444f9a8df82e9fda842a7566.png"></p>
-<p><a href="https://blog.csdn.net/u014205968/article/details/78224820" target="_blank" rel="noopener">https://blog.csdn.net/u014205968/article/details/78224820</a><br><a href="https://www.jianshu.com/p/e59bb8f59302" target="_blank" rel="noopener">https://www.jianshu.com/p/e59bb8f59302</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/27/KVO/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-溢出" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/26/溢出/">溢出</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/26/溢出/" class="archive-article-date">
-  	<time datetime="2018-12-26T14:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="无符号数和有符号数的区别"><a href="#无符号数和有符号数的区别" class="headerlink" title="无符号数和有符号数的区别"></a>无符号数和有符号数的区别</h5><p>无符号数：无符号数就是没有正负号之分，表示的是自然数<br>有符号数：有符号数有正负号之分，在计算机中0表示正数，1表示负数<br>int型 占32位， 则取值范围为[-2^31, 2^31-1] </p>
-<h5 id="原码，反码，补码"><a href="#原码，反码，补码" class="headerlink" title="原码，反码，补码"></a>原码，反码，补码</h5><p>对于无符号数来讲它是没有原码，反码，补码之分的。(原码，反码，补码相同）<br>有符号数才有原码，反码，补码编码方式<br>　　<br>正数的原码，反码，补码相同<br>负数:<br>    原码：10001100<br>    反码：11110011<br>    补码：11110100 (计算机存储的是补码，操作时都以补码操作)反码+1</p>
-<p>例：正数 12<br>    原码：00001100<br>    反码：00001100<br>    补码：00001100
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-　　　　　　　　　　</p>
-<h5 id="计算机为什么使用补码存储数据"><a href="#计算机为什么使用补码存储数据" class="headerlink" title="计算机为什么使用补码存储数据"></a>计算机为什么使用补码存储数据</h5><p>优点：<br>1.避免了0的编码有两个<br>2.符号位和有效值位可以一起处理，减法通过加法就可以实现，只有加法，没有减法<br>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<br><img src="/2018/12/26/溢出/IMG_0146.BMP"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/26/溢出/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-为什么寄存器比内存快？" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/26/为什么寄存器比内存快？/">为什么寄存器比内存快？</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/26/为什么寄存器比内存快？/" class="archive-article-date">
-  	<time datetime="2018-12-26T13:19:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>计算机的存储层次之中，寄存器最快，内存其次，最慢的是硬盘。</p>
-<ul>
-<li>距离不同</li>
-</ul>
-<p>距离不是主要因素，但是最好懂，所以放在最前面说。内存离CPU比较远，所以要耗费更长的时间读取。</p>
-<p>以3GHz的CPU为例，电流每秒钟可以振荡30亿次，每次耗时大约为0.33纳秒。光在1纳秒的时间内，可以前进30厘米。也就是说，在CPU的一个时钟周期内，光可以前进10厘米。因此，如果内存距离CPU超过5厘米，就不可能在一个时钟周期内完成数据的读取，这还没有考虑硬件的限制和电流实际上达不到光速。相比之下，寄存器在CPU内部，当然读起来会快一点。</p>
-<p>距离对于桌面电脑影响很大，对于手机影响就要小得多。手机CPU的时钟频率比较慢，而且手机的内存紧挨着CPU。</p>
-<ul>
-<li>硬件设计不同</li>
-</ul>
-<p>苹果公司新推出的iPhone 5s，CPU是A7，寄存器有6000多位（31个64位寄存器，加上32个128位寄存器）。而iPhone 5s的内存是1GB，约为80亿位（bit）。这意味着，高性能、高成本、高耗电的设计可以用在寄存器上，反正只有6000多位，而不能用在内存上。因为每个位的成本和能耗只要增加一点点，就会被放大80亿倍。</p>
-<p>事实上确实如此，内存的设计相对简单，每个位就是一个电容和一个晶体管，而寄存器的设计则完全不同，多出好几个电子元件。并且通电以后，寄存器的晶体管一直有电，而内存的晶体管只有用到的才有电，没用到的就没电，这样有利于省电。这些设计上的因素，决定了寄存器比内存读取速度更快。</p>
-<ul>
-<li>工作方式不同</li>
-</ul>
-<p>寄存器的工作方式很简单，只有两步：（1）找到相关的位，（2）读取这些位。</p>
-<p>内存的工作方式就要复杂得多：</p>
-<p>（1）找到数据的指针。（指针可能存放在寄存器内，所以这一步就已经包括寄存器的全部工作了。）</p>
-<p>（2）将指针送往内存管理单元（MMU），由MMU将虚拟的内存地址翻译成实际的物理地址。</p>
-<p>（3）将物理地址送往内存控制器（memory controller），由内存控制器找出该地址在哪一根内存插槽（bank）上。</p>
-<p>（4）确定数据在哪一个内存块（chunk）上，从该块读取数据。</p>
-<p>（5）数据先送回内存控制器，再送回CPU，然后开始使用。</p>
-<p>内存的工作流程比寄存器多出许多步。每一步都会产生延迟，累积起来就使得内存比寄存器慢得多。</p>
-<p><a href="http://www.ruanyifeng.com/blog/2013/10/register.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/10/register.html</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/26/为什么寄存器比内存快？/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/26/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/26/hello-world/" class="archive-article-date">
-  	<time datetime="2018-12-26T03:13:49.484Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/26/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -682,8 +375,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
