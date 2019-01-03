@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Category: 计算机基础 | Hexo</title>
+  <title>加密 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://libo198615.github.io/categories/计算机基础/index.html">
+  <meta name="description" content="对称加密算法  在加密和解密时使用的是同一个秘钥；其速度快，对称性加密通常在消息发送方需要加密大量数据时使用在对称加密算法中常用的算法有：DES、AES等。  非对称加密算法  需要两个密钥来进行加密和解密，公钥 和 私钥非对称加密与对称加密相比，其安全性更好：对称加密的通信双方使用相同的秘钥，如果一方的秘钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对秘钥，一个用来加密，一个用来解密，而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="加密">
+<meta property="og:url" content="https://libo198615.github.io/2019/01/02/加密/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="对称加密算法  在加密和解密时使用的是同一个秘钥；其速度快，对称性加密通常在消息发送方需要加密大量数据时使用在对称加密算法中常用的算法有：DES、AES等。  非对称加密算法  需要两个密钥来进行加密和解密，公钥 和 私钥非对称加密与对称加密相比，其安全性更好：对称加密的通信双方使用相同的秘钥，如果一方的秘钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对秘钥，一个用来加密，一个用来解密，而">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-02T12:46:47.104Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="加密">
+<meta name="twitter:description" content="对称加密算法  在加密和解密时使用的是同一个秘钥；其速度快，对称性加密通常在消息发送方需要加密大量数据时使用在对称加密算法中常用的算法有：DES、AES等。  非对称加密算法  需要两个密钥来进行加密和解密，公钥 和 私钥非对称加密与对称加密相比，其安全性更好：对称加密的通信双方使用相同的秘钥，如果一方的秘钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对秘钥，一个用来加密，一个用来解密，而">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -180,37 +184,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-加密" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      加密
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/02/加密/" class="archive-article-date">
+
+        
+        <a href="/2019/01/02/加密/" class="archive-article-date">
   	<time datetime="2019-01-02T12:45:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/02/加密/">加密</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>对称加密算法</li>
+</ul>
+<p>在加密和解密时使用的是同一个秘钥；<br>其速度快，对称性加密通常在消息发送方需要加密大量数据时使用<br>在对称加密算法中常用的算法有：DES、AES等。</p>
+<ul>
+<li>非对称加密算法</li>
+</ul>
+<p>需要两个密钥来进行加密和解密，公钥 和 私钥<br>非对称加密与对称加密相比，其安全性更好：对称加密的通信双方使用相同的秘钥，如果一方的秘钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对秘钥，一个用来加密，一个用来解密，而且公钥是公开的，秘钥是自己保存的，不需要像对称加密那样在通信之前要先同步秘钥。<br>非对称加密的缺点是加密和解密花费时间长、速度慢，只适合对少量数据进行加密。<br>在非对称加密中使用的主要算法有：RSA。</p>
+<h5 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h5><p>Base64加密特点：</p>
+<ul>
+<li>数据加密之后，数据量会变大，变大1/3左右。</li>
+<li>可进行反向解密。</li>
+<li>编码后有个非常显著的特点，末尾有个=号。</li>
+</ul>
+<h5 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h5><p>MD5加密（MD5是一种摘要，而非加密，只是经常与加密配合使用）</p>
+<ul>
+<li>压缩性 : 任意长度的数据,算出的MD5值长度都是固定的。</li>
+<li>容易计算 : 从原数据计算出MD5值很容易。</li>
+<li>抗修改性 : 对原数据进行任何改动，哪怕只修改一个字节，所得到的MD5值都有很大区别。</li>
+<li>弱抗碰撞 : 已知原数据和其MD5值，想找到一个具有相同MD5值的数据（即伪造数据）是非常困难的。</li>
+<li>强抗碰撞 : 想找到两个不同数据，使他们具有相同的MD5值，是非常困难的。</li>
+</ul>
+<h5 id="AES加密"><a href="#AES加密" class="headerlink" title="AES加密"></a>AES加密</h5><ul>
+<li>AES强安全性、高性能、高效率、易用和灵活。</li>
+<li>在软件及硬件上都能快速地加解密且只需要很少的存储资源。</li>
+<li>比<code>DES</code>安全性高</li>
+</ul>
+<h5 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h5><p>非对称加密算法 https</p>
+<h5 id="加密与签名区别（RSA）"><a href="#加密与签名区别（RSA）" class="headerlink" title="加密与签名区别（RSA）"></a>加密与签名区别（RSA）</h5><ul>
+<li>最大的区别是，加密是可逆的，而签名是不可逆的。</li>
+<li>加密是对数据进行机密性保护，签名主要用于身份验证</li>
+</ul>
+<h5 id="前端是否需要对密码进行加密传输"><a href="#前端是否需要对密码进行加密传输" class="headerlink" title="前端是否需要对密码进行加密传输"></a>前端是否需要对密码进行加密传输</h5><p>前端的加密本身不能对网站的安全性有任何提高功能，所有的关于网站的安全技术都应该放在后台，但是这也不是完全没有意义，可以增加攻击成本，尽可能降低攻击带来的损失，毕竟丢了密文比丢了明文要强</p>
+<h5 id="数据安全的原则"><a href="#数据安全的原则" class="headerlink" title="数据安全的原则"></a>数据安全的原则</h5><p>在网络上”不允许”传输用户隐私数据的”明文”<br>在本地”不允许”保存用户隐私数据的”明文”</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -223,103 +280,113 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://libo198615.github.io/2019/01/02/加密/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
+<nav id="article-nav">
+  
+    <a href="/2019/01/02/信号量/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          信号量
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/02/Autorelease/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Autorelease</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/26/溢出/" class="archive-article-date">
-  	<time datetime="2018-12-26T14:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/26/溢出/">溢出</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/26/为什么寄存器比内存快？/" class="archive-article-date">
-  	<time datetime="2018-12-26T13:19:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/26/为什么寄存器比内存快？/">为什么寄存器比内存快？</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -342,10 +409,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Category: 计算机基础 | Hexo</title>
+  <title>修饰符 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://libo198615.github.io/categories/计算机基础/index.html">
+  <meta name="description" content="@property@property = ivar + getter + setter;  添加实例变量 生成getter setter 方法   protocol1@property (nonatomic, strong) NSString *name;   不自动生成getter setter，表名实现此协议的类必须自己声明NSString *name不声明也可以写self.name，但当调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修饰符">
+<meta property="og:url" content="https://libo198615.github.io/2019/01/02/修饰符/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="@property@property = ivar + getter + setter;  添加实例变量 生成getter setter 方法   protocol1@property (nonatomic, strong) NSString *name;   不自动生成getter setter，表名实现此协议的类必须自己声明NSString *name不声明也可以写self.name，但当调用">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-02T12:55:07.415Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="修饰符">
+<meta name="twitter:description" content="@property@property = ivar + getter + setter;  添加实例变量 生成getter setter 方法   protocol1@property (nonatomic, strong) NSString *name;   不自动生成getter setter，表名实现此协议的类必须自己声明NSString *name不声明也可以写self.name，但当调用">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -180,146 +184,321 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-修饰符" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/02/加密/" class="archive-article-date">
-  	<time datetime="2019-01-02T12:45:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/02/加密/">加密</a>
+    <h1 class="article-title" itemprop="name">
+      修饰符
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/01/02/修饰符/" class="archive-article-date">
+  	<time datetime="2019-01-02T12:54:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="property"><a href="#property" class="headerlink" title="@property"></a>@property</h5><p>@property = ivar + getter + setter;</p>
+<ol>
+<li>添加实例变量</li>
+<li>生成<code>getter</code> <code>setter</code> 方法</li>
+</ol>
+<ul>
+<li>protocol<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>不自动生成<code>getter</code> <code>setter</code>，表名实现此协议的类必须自己声明<code>NSString *name</code><br>不声明也可以写<code>self.name</code>，但当调用<code>setter`</code>getter<code>方法时会因为找不到方法而崩溃
+即使自己不添加属性</code>NSString *name<code>，而只添加</code>setter<code></code>getter<code>方法，你会发现，</code>setter<code>方法无法写，因为没有</code>ivar<code>，你调用不了</code>_name`。</p>
+<ul>
+<li>category<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>不自动生成<code>getter</code> <code>setter</code>,<br>自己无法写<code>setter</code>方法，因为没有<code>ivar</code>，你调用不了<code>_name</code>。</p>
+<h5 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h5><p>Runtime维护了一个weak表，用于存储指向某个对象的所有weak指针。<br>weak表其实是一个hash（哈希）表，Key是所指对象的地址，Value是weak指针的地址数组。<br>当<code>A</code>对象销毁时.以<code>A</code>的内存地址为Key， 在这个 <code>weak</code> 表中搜索</p>
+<h5 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h5><p>浅拷贝：只是对指向对象的指针进行拷贝<br>深拷贝：直接拷贝对象到内存中一块区域，然后把新对象的指针指向这块内存</p>
+<p>遵循<code>NSCopying</code>协议的类可以发送<code>Copy</code>消息，<br>遵循<code>NSMutableCopying</code>协议的类可以发送<code>MutableCopy</code>消息。</p>
+<p>定义一个NSString类型属性时，为什么用copy不用strong?<br>如果用的就是<code>NSString</code>，<code>copy`</code>strong<code>没有区别，区别主要是使用</code>NSMutableSting`时</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可变对象</td>
+<td>strong</td>
+<td>分配内存指针指向原对象</td>
+<td></td>
+<td>值跟随原对象改变而改变</td>
+<td></td>
+</tr>
+<tr>
+<td>不可变对象</td>
+<td>copy</td>
+<td>分配内存指针指向原对象</td>
+<td>浅拷贝</td>
+<td>值跟随原对象改变而改变</td>
+<td></td>
+</tr>
+<tr>
+<td>不可变对象</td>
+<td>mutableCopy</td>
+<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
+<td>新对象可变</td>
+<td>值不受原对象值的改变的影响</td>
+<td></td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>strong</td>
+<td>分配内存指针指向原对象</td>
+<td></td>
+<td>值跟随原对象改变而改变</td>
+<td></td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>copy</td>
+<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
+<td>新对象不可变</td>
+<td>值不受原对象值的改变的影响</td>
+<td></td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>mutableCopy</td>
+<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
+<td>新对象可变</td>
+<td>值不受原对象值的改变的影响</td>
+</tr>
+</tbody>
+</table>
+<h5 id="以下规则，string-array都适用"><a href="#以下规则，string-array都适用" class="headerlink" title="以下规则，string array都适用"></a>以下规则，string array都适用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">if (_name != name) &#123;</span><br><span class="line">[_name release];</span><br><span class="line">_name = [name copy]; // 这是面试时优化的点 [name retain]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) NSString *c_String;</span><br><span class="line">@property (nonatomic, strong) NSString *s_String;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line">// before change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line">// after change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NSMutableString<br>strong 开辟内存，分配指针，指向原始数据<br>copy 开辟内存，复制原始数据 ，开辟内存，分配指针，指向复制后的数据<br>原始数据改变 在原内存上更新数据，strong指向的也是改变后的地址，内容更新，copy指向的是复制后的内容地址，内容不变<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSString *tempString = [NSString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">tempString = @&quot;change&quot;;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0xa000c505a04b2028 strongString:0xa000c505a04b2028 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff5f4bc738 strongString:0x7f9990d0c8f0 copyString:0x7f9990d0c8e8</span><br><span class="line"></span><br><span class="line">tempString:change strongString:original copyString:original</span><br><span class="line">tempString:0x100757b90 strongString:0xa000c505a04b2028 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff5f4bc738 strongString:0x7f9990d0c8f0 copyString:0x7f9990d0c8e8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NSString<br>strong 开辟内存，分配指针，指向原始数据<br>copy 开辟内存，分配指针，指向原始数据<br>原始数据改变 分配内存，在新内存上设置新值，原数据内存区和strong copy指针不变<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">_s_String = tempString;</span><br><span class="line">_c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:originalchange</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br></pre></td></tr></table></figure>
+<p>如果我们不用self.点语法，这样就不会调用 getter setter 方法，copy也就不会起作用了</p>
+<h5 id="mutaleArr"><a href="#mutaleArr" class="headerlink" title="mutaleArr"></a>mutaleArr</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MySark *sark = [[MySark alloc] init];</span><br><span class="line">sark.name = @&quot;cat&quot;;</span><br><span class="line"></span><br><span class="line">NSMutableArray *mArr = [NSMutableArray arrayWithObject:sark];</span><br><span class="line">self.c_arr = mArr;</span><br><span class="line">self.s_arr = mArr;</span><br><span class="line">NSLog(@&quot;before change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br><span class="line"></span><br><span class="line">[mArr removeAllObjects];</span><br><span class="line">NSLog(@&quot;after change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">before change</span><br><span class="line">mArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) strongArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongArr:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongArr:0x104c0bee8 copyArr:0x104c0bee0</span><br><span class="line">after change</span><br><span class="line">mArr:(</span><br><span class="line">) strongString:(</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongString:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongString:0x104c0bee8 copyArr:0x104c0bee0</span><br></pre></td></tr></table></figure>
+<p>集合类型，内容不复制，指针引用内容</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>例子</th>
+<th>操作</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可变对象</td>
+<td>arr</td>
+<td>copy</td>
+<td>arr</td>
+</tr>
+<tr>
+<td>不可变对象</td>
+<td>arr</td>
+<td>mutableCopy</td>
+<td>mutableArr</td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>mutableArr</td>
+<td>copy</td>
+<td>arr</td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>mutableArr</td>
+<td>mutableCopy</td>
+<td>mutableArr</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>copy 产出不可变对象</li>
+<li>mutablecopy 产出可变对象</li>
+</ul>
+<p>直接的 NSArray 不是 isMemberOfClass:[NSArray class]<br>由于类簇的性质，这类对象实际返回的实例有不确定性。</p>
+<p>NSArray对象可能会在运行时发现其实运作的是NSCFArray(来自Core Foundation框架(C语言的实现版本),很多Cocoa对象都是如此做桥接的)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = [NSArray array];</span><br><span class="line">if ([arr isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isKindOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isKindOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isKindOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isMemberOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isMemberOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ([[arr mutableCopy] isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isKindOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isKindOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isKindOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isMemberOfClass:[NSMutableDictionary class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isMemberOfClass:[NSMutableDictionary class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NSMutableArray *mutableArr = [arr mutableCopy];</span><br><span class="line">[mutableArr addObject:@&quot;b&quot;];</span><br><span class="line">NSLog(@&quot;%@&quot;,mutableArr);</span><br><span class="line"></span><br><span class="line">MyArray *myArr = [[MyArray alloc] init];</span><br><span class="line">if ([myArr isMemberOfClass:[MyArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isMemberOfClass:[MyArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isKindOfClass:[MyArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isKindOfClass:[MyArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isKindOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[arr isKindOfClass:[NSArray class]]</span><br><span class="line">[[arr mutableCopy] isKindOfClass:[NSArray class]]</span><br><span class="line">[[arr mutableCopy] isKindOfClass:[NSMutableArray class]]</span><br><span class="line">( b )</span><br><span class="line">[myArr isMemberOfClass:[MyArray class]]</span><br><span class="line">[myArr isKindOfClass:[MyArray class]]</span><br><span class="line">[myArr isKindOfClass:[NSArray class]]</span><br></pre></td></tr></table></figure>
+<h5 id="delegate-用assign还weak？"><a href="#delegate-用assign还weak？" class="headerlink" title="delegate 用assign还weak？"></a>delegate 用assign还weak？</h5><p>assign属性一般是对C基本数据类型成员变量的声明，当然也可以用在对象类型成员变量上，只是其代表的意义只是单纯地拷贝所赋值变量的指针。即如果对某assign成员变量B赋值某对象A的指针，则此B只是简单地保存此指针的值，且并不持有对象A，也就意味着如果A被销毁，则B就指向了一个已经被销毁的对象，如果再对其发送消息会引发崩溃。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 只能在自己类内部使用的</span><br><span class="line">@interface MyTest : NSObject&#123; </span><br><span class="line">NSString *mystr; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// .m</span><br><span class="line">mystr = @&quot;dog&quot;;</span><br></pre></td></tr></table></figure>
+<h5 id="unsafe-unretained"><a href="#unsafe-unretained" class="headerlink" title="unsafe_unretained"></a>unsafe_unretained</h5><p>和assign类似，但是它适用于对象类型，当目标被摧毁时，属性值不会自动清空（unsafe）。这是和weak的区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, unsafe_unretained)  TestObj *s2;</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://libo198615.github.io/2019/01/02/修饰符/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
+<nav id="article-nav">
+  
+    <a href="/2019/01/02/dealloc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          dealloc
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/02/NSURLSession的优势/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NSURLSession的优势</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/26/溢出/" class="archive-article-date">
-  	<time datetime="2018-12-26T14:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/26/溢出/">溢出</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/26/为什么寄存器比内存快？/" class="archive-article-date">
-  	<time datetime="2018-12-26T13:19:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/26/为什么寄存器比内存快？/">为什么寄存器比内存快？</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -342,10 +521,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
