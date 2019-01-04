@@ -182,6 +182,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SDWebImage" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/SDWebImage/">SDWebImage</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/SDWebImage/" class="archive-article-date">
+  	<time datetime="2019-01-04T05:44:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>通过<code>category</code>为<code>UIImageView</code>添加设置方法，使我们的代码和<code>SDWebImage</code>解耦.</li>
+<li>提供多个方法设置图片的<code>URL</code>，用户需要则使用带有更多参数的方法，否则会使用默认参数进行调用，但最终调用的是同一个设置方法。同时提供了<code>SDWebImageOptions</code>来配置不同的情况。</li>
+<li>调用方法时首先取消当前<code>UIImageView</code>上的下载<br><code>[self sd_cancelImageLoadOperationWithKey:validOperationKey];</code></li>
+<li>将当前<code>UIImageView</code>和<code>URL</code>进行管理<br><code>objc_setAssociatedObject(self, &amp;imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</code></li>
+<li>判断<code>URL</code>是否是<code>faildURL</code>，如果是，根据传入的<code>options</code>参数判断是否需要重新下载，不是则直接返回。<code>SDWebImage</code>保存了所有下载失败的<code>url</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (url.absoluteString.length == 0 || (!(options &amp; SDWebImageRetryFailed) &amp;&amp; isFailedUrl)) &#123;</span><br><span class="line">    ...</span><br><span class="line">    return operation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (strong, nonatomic, nonnull) NSMutableSet&lt;NSURL *&gt; *failedURLs;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>根据我们传入的<code>options</code>判断是否从内存、磁盘中获取缓存的图片；不获取缓存图片或没有缓存图片则开始下载。</li>
+<li>下载时先判断是否已有以此<code>URL</code>为<code>key</code>的下载<br><code>SDWebImageDownloaderOperation *operation = [self.URLOperations objectForKey:url];</code><br>如果没有则创建一个<code>operation</code>，并将其加入到下载队列中</li>
+</ol>
+<h5 id="SDMemoryCache"><a href="#SDMemoryCache" class="headerlink" title="SDMemoryCache"></a>SDMemoryCache</h5><p>初始化时注册通知<code>UIApplicationDidReceiveMemoryWarningNotification</code><br>如果内存紧张，清除所有缓存</p>
+<h5 id="SDImageCache"><a href="#SDImageCache" class="headerlink" title="SDImageCache"></a>SDImageCache</h5><p>存储的<code>key</code>是<code>url</code>的<code>MD5</code>值</p>
+<p>初始化时注册通知<code>UIApplicationWillTerminateNotification</code><br>APP退出时删除部分缓存，使缓存总量控制在预设总量的1/2,删除顺序从最旧的开始（获取时间，更新时间）</p>
+<p>初始化时注册通知<code>UIApplicationDidEnterBackgroundNotification</code><br>取消没有完成的下载，同时执行<code>UIApplicationWillTerminateNotification</code>的相关清理工作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (void)backgroundDeleteOldFiles &#123;</span><br><span class="line">    Class UIApplicationClass = NSClassFromString(@&quot;UIApplication&quot;);</span><br><span class="line">    if(!UIApplicationClass || ![UIApplicationClass respondsToSelector:@selector(sharedApplication)]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    UIApplication *application = [UIApplication performSelector:@selector(sharedApplication)];</span><br><span class="line">    __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^&#123;</span><br><span class="line">        // Clean up any unfinished task business by marking where you</span><br><span class="line">        // stopped or ending the task outright.</span><br><span class="line">        [application endBackgroundTask:bgTask];</span><br><span class="line">        bgTask = UIBackgroundTaskInvalid;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    // Start the long-running task and return immediately.</span><br><span class="line">    [self deleteOldFilesWithCompletionBlock:^&#123;</span><br><span class="line">        [application endBackgroundTask:bgTask];</span><br><span class="line">        bgTask = UIBackgroundTaskInvalid;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h5><p>线程安全，主线程更新UI</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/SDWebImage/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-frame-bounds" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -922,81 +1013,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/03/const-static/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-int所占位数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/int所占位数/">int long 所占位数</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/int所占位数/" class="archive-article-date">
-  	<time datetime="2019-01-03T09:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>重点注意 long<br>// 32<br><code>int64_t</code> <code>double</code> <code>long long</code> 8位，其他4位<br>// 64<br><code>int</code> <code>int32_t</code> 4位，其他8位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//    // 32                           // 位数  数值</span><br><span class="line">//    int         t1 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int32_t     t2 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int64_t     t3 = pow(2, 62);    // 8    4611686018427387904</span><br><span class="line">//    NSInteger   t4 = pow(2, 32);    // 4    2147483647</span><br><span class="line">//    double      t5 = pow(2, 64);    // 8    18446744073709551616.000000</span><br><span class="line">//    long        t6 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    long long   t7 = pow(2, 62);    // 8    4611686018427387904</span><br><span class="line"></span><br><span class="line">//    // 64                           // 位数  数值</span><br><span class="line">//    int         t1 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int32_t     t2 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int64_t     t3 = pow(2, 63);    // 8    9223372036854775807</span><br><span class="line">//    NSInteger   t4 = pow(2, 63);    // 8    9223372036854775807</span><br><span class="line">//    double      t5 = pow(2, 64);    // 8    18446744073709551616.000000</span><br><span class="line">//    long        t6 = pow(2, 63);    // 8    9223372036854775807</span><br><span class="line">//    long long   t7 = pow(2, 63);    // 8    9223372036854775807</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/int所占位数/">展开全文 >></a>
         </p>
       
 
