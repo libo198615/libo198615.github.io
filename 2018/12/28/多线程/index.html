@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="GCD 公开有 5 个不同的队列：运行在主线程中的 main queue，3 个不同优先级的后台队列，以及一个优先级更低的后台队列（用于 I/O）。 另外，开发者可以创建自定义队列：串行或者并行队列。自定义队列非常强大，在自定义队列中被调度的所有 block 最终都将被放入到系统的全局队列中和线程池中。 在 GCD 下，有时候你可能会看到这样的代码 1234567// 警告：不要使用这些代码。di">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-28T14:34:18.976Z">
+<meta property="og:updated_time" content="2019-01-06T13:38:27.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程">
 <meta name="twitter:description" content="GCD 公开有 5 个不同的队列：运行在主线程中的 main queue，3 个不同优先级的后台队列，以及一个优先级更低的后台队列（用于 I/O）。 另外，开发者可以创建自定义队列：串行或者并行队列。自定义队列非常强大，在自定义队列中被调度的所有 block 最终都将被放入到系统的全局队列中和线程池中。 在 GCD 下，有时候你可能会看到这样的代码 1234567// 警告：不要使用这些代码。di">
@@ -272,6 +272,34 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">for (int i=0; i&lt;3; i++) &#123;</span><br><span class="line">    dispatch_async(q, ^&#123;</span><br><span class="line">        NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">---------</span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x282f05a40&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">end--&lt;NSThread: 0x282f05a40&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x282f54080&gt;&#123;number = 3, name = (null)&#125;  2</span><br></pre></td></tr></table></figure>
 <h5 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)performSelectorOnMainThread:(SEL)aSelector withObject:(id)arg waitUntilDone:(BOOL)wait;</span><br><span class="line">- (void)performSelector:(SEL)aSelector onThread:(NSThread *)thr withObject:(id)arg waitUntilDone:(BOOL)wait;</span><br></pre></td></tr></table></figure>
 <h5 id="切换线程"><a href="#切换线程" class="headerlink" title="切换线程"></a>切换线程</h5><p>runloop<br>通过出发某个runloop的端口</p>
+<h5 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h5><ul>
+<li><p>新建状态</p>
+</li>
+<li><p>就绪状态</p>
+</li>
+</ul>
+<p>处于就绪状态的线程并不一定立即运行run()方法，线程还必须同其他线程竞争CPU时间，只有获得CPU时间才可以运行线程。因为在单CPU的计算机系统中，不可能同时运行多个线程，一个时刻仅有一个线程处于运行状态。因此此时可能有多个线程处于就绪状态。对多个处于就绪状态的线程是由Java运行时系统的线程调度程序来调度的。</p>
+<ul>
+<li>运行状态（running）</li>
+</ul>
+<p>当线程获得CPU时间后，它才进入运行状态，真正开始执行run()方法。</p>
+<ul>
+<li>阻塞状态（blocked）</li>
+</ul>
+<p>线程运行过程中，可能由于各种原因进入阻塞状态：</p>
+<p>①线程通过调用sleep方法进入睡眠状态；</p>
+<p>②线程调用一个在I/O上被阻塞的操作，即该操作在输入输出操作完成之前不会返回到它的调用者；</p>
+<p>③线程试图得到一个锁，而该锁正被其他线程持有；</p>
+<p>④线程在等待某个触发条件；</p>
+<p>所谓阻塞状态是正在运行的线程没有运行结束，暂时让出CPU，这时其他处于就绪状态的线程就可以获得CPU时间，进入运行状态。</p>
+<ul>
+<li>死亡状态（dead）</li>
+</ul>
+<p>有两个原因会导致线程死亡：</p>
+<p>①run方法正常退出而自然死亡；</p>
+<p>②一个未捕获的异常终止了run方法而使线程猝死；</p>
+<p>为了确定线程在当前是否存活着（就是要么是可运行的，要么是被阻塞了），需要使用isAlive方法，如果是可运行或被阻塞，这个方法返回true；如果线程仍旧是new状态且不是可运行的，或者线程死亡了，则返回false。</p>
+<p>临界资源就是一次只允许一个进程访问的资源，一个进程在使用临界资源的时候，另一个进程是无法访问的</p>
 <p><a href="https://www.jianshu.com/p/43e66dab535b" target="_blank" rel="noopener">https://www.jianshu.com/p/43e66dab535b</a></p>
 
       

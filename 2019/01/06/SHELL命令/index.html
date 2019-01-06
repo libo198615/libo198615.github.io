@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Archives: 2019 | Hexo</title>
+  <title>SHELL命令 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://libo198615.github.io/archives/2019/index.html">
+  <meta name="description" content="mkdir选项与参数：  -m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～ -p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！  在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问1mkdir -m 700 /usr/meng/test 在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SHELL命令">
+<meta property="og:url" content="https://libo198615.github.io/2019/01/06/SHELL命令/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="mkdir选项与参数：  -m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～ -p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！  在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问1mkdir -m 700 /usr/meng/test 在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-06T15:17:04.092Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="SHELL命令">
+<meta name="twitter:description" content="mkdir选项与参数：  -m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～ -p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！  在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问1mkdir -m 700 /usr/meng/test 在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -186,75 +190,172 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-SHELL命令" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/shell函数/" class="archive-article-date">
-  	<time datetime="2019-01-06T15:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/shell函数/">shell函数</a>
+    <h1 class="article-title" itemprop="name">
+      SHELL命令
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SHELL命令//" class="article-tag-list-link color3">SHELL命令</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/SHELL命令/" class="archive-article-date">
+        
+        <a href="/2019/01/06/SHELL命令/" class="archive-article-date">
   	<time datetime="2019-01-06T15:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/SHELL命令/">SHELL命令</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h5><p>选项与参数：</p>
+<ul>
+<li>-m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～</li>
+<li>-p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！</li>
+</ul>
+<p>在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -m 700 /usr/meng/test</span><br></pre></td></tr></table></figure></p>
+<p>在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、执行，同组用户可读和执行，其他用户无权访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p-m 750 bin/os_1</span><br></pre></td></tr></table></figure></p>
+<h5 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 删除 models文件夹 和里面所有内容</span><br><span class="line">rm -rf models</span><br></pre></td></tr></table></figure>
+<p>选项与参数：</p>
+<ul>
+<li>-f ：就是 force 的意思，忽略不存在的文件，不会出现警告信息；</li>
+<li>-i ：互动模式，在删除前会询问使用者是否动作</li>
+<li>-r ：递归删除啊！最常用在目录的删除了！这是非常危险的选项！！！</li>
+</ul>
+<p>将刚刚在 cp 的范例中创建的 bashrc 删除掉！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -i bashrc</span><br><span class="line">rm: remove regular file `bashrc&apos;? y</span><br></pre></td></tr></table></figure></p>
+<p>如果加上 -i 的选项就会主动询问喔，避免你删除到错误的档名！</p>
+<h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h5><p>删除空文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir -p aa/bb // 如果删除bb后aa为空目录，则将aa一并删除</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -d &quot;MGFacepp/build&quot; ]; then</span><br><span class="line">    rm -rf MGFacepp/build</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h5 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 调到当前目录的上上两层</span><br><span class="line">cd ../..</span><br></pre></td></tr></table></figure>
+<p><code>cd</code> (切换目录)</p>
+<p><code>cd</code>是<code>Change Directory</code>的缩写，这是用来变换工作目录的命令。</p>
+<h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h5><p>文件夹重名要先删除已经存在的文件夹  jenkins 和 终端 有区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp -r test/ newTest</span><br><span class="line">YES|cp -r test/ newTest 有重名文件则覆盖</span><br></pre></td></tr></table></figure></p>
+<p>选项与参数：</p>
+<ul>
+<li><strong>-i：</strong>若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</li>
+<li><strong>-p：</strong>连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</li>
+<li><strong>-r：</strong>递归持续复制，用於目录的复制行为；(常用)</li>
+</ul>
+<h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a // 显示所有档案及目录</span><br></pre></td></tr></table></figure>
+<p>选项与参数：</p>
+<ul>
+<li>-a ：全部的文件，连同隐藏档</li>
+<li>-l ：长数据串列出，包含文件的属性与权限等等数据；</li>
+</ul>
+<h5 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h5><ul>
+<li><p>显示普通字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;name&quot; // name</span><br><span class="line">echo name   // name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示转义字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;\&quot;name\&quot;&quot; // &quot;name&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read name // 从命令行读取用户输入</span><br><span class="line">echo &quot;your name is $name&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示换行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo -e &quot;OK! \n&quot; # -e 开启转义</span><br><span class="line">echo hello</span><br><span class="line"></span><br><span class="line">OK!</span><br><span class="line"></span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo `date`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><ul>
+<li>-H或–with-filename 在显示符合范本样式的那一列之前，表示该列所属的文件名称。</li>
+<li>-l或–file-with-matches 列出文件内容符合指定的范本样式的文件名称。</li>
+<li>-L或–files-without-match 列出文件内容不符合指定的范本样式的文件名称。</li>
+<li>-n或–line-number 在显示符合范本样式的那一列之前，标示出该列的列数编号。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">grep -Hn  &apos;print&apos;  pack_all.py</span><br><span class="line"></span><br><span class="line">pack_all.py:36:    print (&quot;########### read modle info ############&quot;)</span><br><span class="line">pack_all.py:38:        print(line)</span><br><span class="line">pack_all.py:60:    print (&quot;model info = %s&quot; % model_info)</span><br><span class="line">pack_all.py:78:    print (confsList)</span><br><span class="line">pack_all.py:80:    print (&quot;confsList = %s&quot; % (confsList))</span><br><span class="line">pack_all.py:82:    print (&quot;confs_real = %s&quot; % confs_real)</span><br><span class="line">pack_all.py:88:    print (config_offsets)</span><br><span class="line">pack_all.py:94:        print (&quot;confs_real.len = %s&quot; % len(confs_real))</span><br><span class="line">pack_all.py:102:        print (&quot;json_str length = %s&quot; % len(json_str))</span><br><span class="line">pack_all.py:111:        print (&quot;config_size_map = %s&quot; % config_size_map)</span><br><span class="line">pack_all.py:113:#            print(x, config_size_map[x], model_dict[real2fake[x]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="lipo"><a href="#lipo" class="headerlink" title="lipo"></a>lipo</h5><ul>
+<li><p>查看静态库支持的CPU架构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info file.a</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>合并静态度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lipo -create 静态库路径1  静态库路径2   -output 整合后的静态库路径</span><br><span class="line"></span><br><span class="line">lipo -create file1.a file2.a  -output  newFile.a</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静态库拆分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo file.a  -thin  armv7  -output armv7.a</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="ln-软链接"><a href="#ln-软链接" class="headerlink" title="ln 软链接"></a>ln 软链接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd 到要软链接到的目录</span><br><span class="line">ln -s ../../../要链接的文件</span><br><span class="line">// 按两下 tab 键可以显示../../ 目录下文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s // symbolic link</span><br><span class="line">ln  // hard link</span><br></pre></td></tr></table></figure>
+<p>文件分为用户数据 (user data) 与元数据 (metadata)。<br>用户数据，即文件数据块 (data block)，数据块是记录文件真实内容的地方；<br>而元数据则是文件的附加属性，如文件大小、创建时间、所有者等信息。在 Linux 中，元数据中的 inode 号（inode 是文件元数据的一部分但其并不包含文件名，inode 号即索引节点号）才是文件的唯一标识而非文件名。文件名仅是为了方便人们的记忆和使用，系统或程序通过 inode 号寻找正确的文件数据块</p>
+<p>硬链接或软链接都不会将原始文档复制一份<br>软连接以路径的形式存在，可以对目录进行链接，<br>硬链接以文件副本的形式存在，但不占用实际空间，删除原始文件后，硬链接不受影响<br>硬链接、软链接有不同的元数据。 软链接有不同的inode号，硬链接有相同的inode号，所以硬链接限制更多，不能跨操作系统。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 拖拽多个文件</span><br><span class="line">ln -s 拖拽的多个文件 目标文件夹</span><br></pre></td></tr></table></figure>
+<h5 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h5><p>print working directory 打印当前工作目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br><span class="line">/Users/megvii/....</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 将当前目录压入堆栈</span><br><span class="line">pushd `pwd`</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pushd：</li>
+</ul>
+<ul>
+<li><p>切换到作为参数的目录，并把原目录和当前目录压入到一个虚拟的堆栈中</p>
+</li>
+<li><p>如果不指定参数，则会回到前一个目录，并把堆栈中最近的两个目录作交换</p>
+</li>
+</ul>
+<ul>
+<li>popd： </li>
+</ul>
+<ul>
+<li>切换到堆栈中第二目录中，并将堆栈中最近的目录弹出</li>
+</ul>
+<ul>
+<li>dirs: </li>
+</ul>
+<ul>
+<li>列出当前堆栈中保存的目录列表</li>
+</ul>
+<p>-v参数可以在目录前加上编号<br>我们可以看到:最近压入堆栈的目录位于最上面<br>在最近的两个目录之间切换:用pushd不加参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">pushd /boot/grub/</span><br><span class="line">/boot/grub /usr/share/kde4/apps/kget /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /boot/grub</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">pushd</span><br><span class="line">/usr/share/kde4/apps/kget /boot/grub /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /usr/share/kde4/apps/kget</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">pushd</span><br><span class="line">/boot/grub /usr/share/kde4/apps/kget /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /boot/grub</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">如何把目录从堆栈中删除?用popd即可</span><br><span class="line"></span><br><span class="line">dirs -v</span><br><span class="line">0  /usr/local/sbin</span><br><span class="line">1  ~</span><br><span class="line">2  /boot/grub</span><br><span class="line">3  /usr/share/kde4/apps/kget</span><br><span class="line"></span><br><span class="line">popd</span><br><span class="line">~ /boot/grub /usr/share/kde4/apps/kget</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/share/kde4/apps/kget</span><br><span class="line"></span><br><span class="line">popd +1</span><br><span class="line">~ /usr/share/kde4/apps/kget</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br></pre></td></tr></table></figure></p>
+<p>说明：可以看到popd不加参数的运行情况:popd把堆栈顶端的目录从堆栈中删除，并切换于位于新的顶端的目录<br>说明之二: popd 加有参数 +n时，n是堆栈中的第n个目录，表示把堆栈中第n个目录从堆栈中删除<br>dirs可以清空目录堆栈 用 -c参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/share/kde4/apps/kget</span><br><span class="line">dirs -c</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br></pre></td></tr></table></figure></p>
+<h5 id="strings"><a href="#strings" class="headerlink" title="strings"></a>strings</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 是否包含 aaa 不区分大小写</span><br><span class="line">strings file | grep -i aaa</span><br></pre></td></tr></table></figure>
+<h5 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h5><p>以系统管理者的身份执行命令</p>
+<h5 id="tree"><a href="#tree" class="headerlink" title="tree"></a>tree</h5><p>以树状图列出目录内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -C // 在文件和目录清单上加上色彩，便于区分各种类型</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -L 2</span><br></pre></td></tr></table></figure>
+<h5 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h5><ul>
+<li>插入模式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i 进入</span><br><span class="line">esc 退出</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 终端进入vim</span><br><span class="line">vim  进入</span><br><span class="line">1. esc  </span><br><span class="line">2. :wq(保存退出) / :q!(不保存退出)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 终端下</span><br><span class="line">vim test.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./test.sh  #使脚本具有执行权限</span><br><span class="line">./test.sh  #执行脚本</span><br></pre></td></tr></table></figure>
+<h5 id="zip-tar"><a href="#zip-tar" class="headerlink" title="zip  tar"></a>zip  tar</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 将 /home/html/目录下的所有文件夹和文件打包为当前目录下的 html.zip</span><br><span class="line">zip -q -r html.zip /home/html</span><br><span class="line">// -q 不显示指令执行过程</span><br><span class="line">// -r 递归处理</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 压缩 a.c 为 test.tar</span><br><span class="line">tar -czvf test.tar a.c</span><br><span class="line">// -c (--create)建立新的备份文件</span><br><span class="line">// -z (--gzip)(--ungzip)通过gzip指令处理备份文件</span><br><span class="line">// -v (--verbose)显示指令执行过程</span><br><span class="line">// -f (--file)指定备份文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 解压文件</span><br><span class="line">tar -xzvf test.tar a.c</span><br><span class="line">// -x (--extract)(-get)从备份文件中还原文件</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -267,324 +368,112 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://libo198615.github.io/2019/01/06/SHELL命令/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/定时器/" class="archive-article-date">
-  	<time datetime="2019-01-06T14:57:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/01/06/shell函数/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          shell函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/06/定时器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">定时器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/定时器/">定时器</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/生命周期/" class="archive-article-date">
-  	<time datetime="2019-01-06T13:38:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/生命周期/">生命周期</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/知识点/" class="archive-article-date">
-  	<time datetime="2019-01-06T13:33:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/知识点/">知识点</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/错误调试/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/错误调试/">错误调试</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/NSError/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:42:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/NSError/">NSError</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/编译链接/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:39:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/编译链接/">编译链接</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/06/iOS图片加载速度极限优化—FastImageCache解析/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:35:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/06/iOS图片加载速度极限优化—FastImageCache解析/">iOS图片加载速度极限优化—FastImageCache解析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/05/Object-C高级编程/" class="archive-article-date">
-  	<time datetime="2019-01-05T06:22:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/05/Object-C高级编程/">Objective-C高级编程+iOS与OS+X多线程和内存管理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/书籍//" class="article-tag-list-link color3">书籍</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2019/page/2/">2</a><a class="page-number" href="/archives/2019/page/3/">3</a><a class="page-number" href="/archives/2019/page/4/">4</a><a class="extend next" rel="next" href="/archives/2019/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -608,8 +497,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
