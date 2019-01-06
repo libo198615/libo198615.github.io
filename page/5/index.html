@@ -57,6 +57,8 @@
 	        
 				<li><a href="/categories/随笔">随笔</a></li>
 	        
+				<li><a href="/categories/书籍">书籍</a></li>
+	        
 				<li><a href="/categories/iOS">iOS</a></li>
 	        
 				<li><a href="/categories/C++">C++</a></li>
@@ -133,6 +135,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -153,19 +157,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/">主页</a></li>
+					<li style="width: 12.5%"><a href="/">主页</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/随笔">随笔</a></li>
+					<li style="width: 12.5%"><a href="/categories/随笔">随笔</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/算法">算法</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/算法">算法</a></li>
 		        
 				</ul>
 			</nav>
@@ -181,6 +187,86 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-category" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/28/category/">category</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/28/category/" class="archive-article-date">
+  	<time datetime="2018-12-28T14:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>category</code>的主要作用是为已经存在的类添加方法</p>
+<ul>
+<li>可以把类的实现分开在几个不同的文件里面</li>
+<li>声明私有方法</li>
+</ul>
+<p><code>extension</code>看起来很像一个匿名的<code>category</code>，但是<code>extension</code>和有名字的<code>category</code>几乎完全是两个东西。 <code>extension</code>在编译期决议，它就是类的一部分。<code>extension</code>一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加<code>extension</code>，所以你无法为系统的类比如<code>NSString</code>添加<code>extension</code>。</p>
+<p><code>category</code>的方法没有“完全替换掉”原来类已经有的方法，也就是说如果<code>category</code>和原来类都有<code>methodA</code>，那么<code>category</code>附加完成之后，类的方法列表里会有两个<code>methodA</code><br><code>category</code>的方法被放到了新方法列表的前面，而原来类的方法被放到了新方法列表的后面，这也就是我们平常所说的<code>category</code>的方法会“覆盖”掉原来类的同名方法，这是因为运行时在查找方法的时候是顺着方法列表的顺序查找的。如果想调用原来的方法，可以自己获取方法列表，然后去查找<code>SEL</code>，看自己想调用第几个<code>SEL</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/28/category/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-多线程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
