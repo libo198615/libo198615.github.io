@@ -188,6 +188,380 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/git-tag/">Git Tag</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/git-tag/" class="archive-article-date">
+  	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/git-tag/1.png" title="图片说明"></p>
+<p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
+<p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
+<p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/git-tag/3.png" title="图片说明"></p>
+<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/git-tag/4.png" title="图片说明"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/git-tag/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/在sourceTree中使用rebase/" class="archive-article-date">
+  	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原始状态<br><img src="/2019/01/09/在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/在sourceTree中使用rebase/9.png" title="图片说明"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/在sourceTree中使用rebase/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-制作自己的pod" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/制作自己的pod/">制作自己的pod</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/制作自己的pod/" class="archive-article-date">
+  	<time datetime="2019-01-09T06:56:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-在github上创建一个空白工程-APPHelp，克隆到本地"><a href="#1-在github上创建一个空白工程-APPHelp，克隆到本地" class="headerlink" title="1. 在github上创建一个空白工程 APPHelp，克隆到本地"></a>1. 在github上创建一个空白工程 <code>APPHelp</code>，克隆到本地</h2><h2 id="2-在终端-cd-到-APPHelp-目录，执行"><a href="#2-在终端-cd-到-APPHelp-目录，执行" class="headerlink" title="2. 在终端 cd 到 APPHelp 目录，执行"></a>2. 在终端 cd 到 <code>APPHelp</code> 目录，执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create APPHelp</span><br></pre></td></tr></table></figure>
+<p>会创建 <code>APPHelp.podspec</code><br><br>使用xcode打开，可以看里面的注释，我这里放一个自己使用的精简版的，可以对照着改<br>里面的注释被我删掉了，可能是我用的注释格式不正确“//   #”,注意点都写在了下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Pod::Spec.new do |s|</span><br><span class="line"></span><br><span class="line">s.name         = &quot;APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.version      = &quot;0.0.1&quot;</span><br><span class="line"></span><br><span class="line">s.summary      = &quot;app开发常用知识点收集&quot;</span><br><span class="line"></span><br><span class="line">s.homepage     = &quot;https://github.com/libo198615/APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.license = &#123; :type =&gt; &apos;MIT&apos;, :text =&gt; &lt;&lt;-LICENSE</span><br><span class="line">Copyright PPAbner 2016-2017</span><br><span class="line">LICENSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s.author             = &#123; &quot;boli&quot; =&gt; &quot;libo198615@163.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.platform     = :ios</span><br><span class="line"></span><br><span class="line">s.source       = &#123; :git =&gt; &quot;https://github.com/libo198615/APPHelp.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.source_files  = &quot;Pod/**/*&quot;</span><br><span class="line"></span><br><span class="line">s.public_header_files = &quot;Pod/**/*.h&quot;</span><br><span class="line"></span><br><span class="line">s.requires_arc = true</span><br><span class="line"></span><br><span class="line">s.ios.deployment_target = &quot;8.0&quot;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag"><a href="#3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag" class="headerlink" title="3. 将 APPHelp.podspec和你自己的文件提交到github，创建APPHelp.podspec中相应的 0.0.1的分支或者tag"></a>3. 将 <code>APPHelp.podspec</code>和你自己的文件提交到github，创建<code>APPHelp.podspec</code>中相应的 <code>0.0.1</code>的分支或者tag</h2><p>里面的内容需要改成自己的信息，其中s.source_files和s.public_header_files中如果有其它文件夹，要用两个*，不然也会报错，应该是正则匹配的问题，这里不深究了。</p>
+<h2 id="4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方"><a href="#4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方" class="headerlink" title="4. 执行下面命令，验证APPHelp.podspec是否正确，如果有错误请细读一下APPHelp.podspec看是否有设置不对的地方"></a>4. 执行下面命令，验证<code>APPHelp.podspec</code>是否正确，如果有错误请细读一下<code>APPHelp.podspec</code>看是否有设置不对的地方</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec lint APPHelp.podspec</span><br></pre></td></tr></table></figure>
+<h2 id="5-提交-APPHelp-podspec-到-CocoaPods"><a href="#5-提交-APPHelp-podspec-到-CocoaPods" class="headerlink" title="5. 提交 APPHelp.podspec 到 CocoaPods"></a>5. 提交 <code>APPHelp.podspec</code> 到 <code>CocoaPods</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果是第一次提交，需要注册一下</span><br><span class="line">$ pod trunk register 邮箱 &apos;昵称&apos; --description=&apos; 这里写描述&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push APPHelp.podspec</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/制作自己的pod/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-flutter" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/08/flutter/">flutter</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/08/flutter/" class="archive-article-date">
+  	<time datetime="2019-01-08T10:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h5><p>打开$HOME/.bash_profile(在你的/Users/.bash_profile目录下，如果没有，可以新建，可以使用command+shift+.组合健来显示与隐藏文件)文件，加入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL=https://pub.flutter-io.cn </span><br><span class="line">export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn</span><br><span class="line">export PATH=[你克隆 Flutter 仓库的路径]/flutter/bin:$PATH</span><br></pre></td></tr></table></figure></p>
+<p>保存，运行 <code>source $HOME/.bash_profile</code> 刷新当前窗口。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/08/flutter/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-深入理解计算机系统" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/07/深入理解计算机系统/">深入理解计算机系统</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/07/深入理解计算机系统/" class="archive-article-date">
+  	<time datetime="2019-01-07T08:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="静态连接"><a href="#静态连接" class="headerlink" title="静态连接"></a>静态连接</h5><ul>
+<li>符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来</li>
+<li>重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
+</ul>
+<h5 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h5><ul>
+<li>可重定位目标文件</li>
+<li>可执行目标文件</li>
+<li>共享目标文件<br>编译器和汇编器生成可重定位目标文件包括共享目标文件<br>连接器生成可执行目标文件</li>
+</ul>
+<h5 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h5><p>共享库是一个目标模块，在运行或加载时，可以加载到任意的内存地址，并和一个在内存中的程序链接起来。在<code>Linux</code>系统中通常用<code>.so</code>后缀来表示。</p>
+<ul>
+<li>共享方式<br>对于一个库只有一个<code>.so</code>文件。所有引用该库的可执行目标文件共享这个<code>.so</code>文件中的代码和数据，而不是像静态库的内容那样被复制和嵌入到引用它们的可执行文件中。<br>在内存中，一个共享库的<code>.text</code>节的一个副本可以被不同的正在运行的进程共享。</li>
+</ul>
+<p>当加载器加载和运行可执行文件<code>A</code>时，注意到其中包含一个<code>.interp</code>节，这一节包含动态连接器的路径名，动态连接器本身就是一个共享目标（Linux系统上是ld-linux.xo）。加载器不会像它通常所做地那样将控制传递给应用，而是加载和运行这个动态连接器。然后动态连接器通过执行重定位完成连接任务，最后将控制传递给应用程序。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/07/深入理解计算机系统/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-shell函数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -833,541 +1207,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/06/知识点/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-错误调试" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/错误调试/">错误调试</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/错误调试/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="dSYM"><a href="#dSYM" class="headerlink" title="dSYM"></a>dSYM</h5><p><code>Xcode</code>编译项目后，我们会看到一个同名的 <code>dSYM</code> 文件，<code>dSYM</code> 是保存 <code>16</code> 进制函数地址映射信息的中转文件，我们调试的 <code>symbols</code> 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 <code>dSYM</code> 文件，位于 <code>/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 </p>
-<h5 id="dSYM-文件有什么作用"><a href="#dSYM-文件有什么作用" class="headerlink" title="dSYM 文件有什么作用"></a>dSYM 文件有什么作用</h5><p>当我们软件 <code>release</code> 模式打包或上线后，不会像我们在 <code>Xcode</code> 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 <code>crash report</code> 文件了，<code>iOS</code> 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 <code>Xcode</code> 的 <code>Organizer</code> 可以将 <code>iOS</code> 设备中的 <code>DeviceLog</code> 导出成 <code>crash</code> 文件，这个时候我们就可以通过出错的函数地址去查询 <code>dSYM</code> 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 <code>dSYM</code> 文件，这也是为什么我们很有必要保存每个发布版本的 <code>Archives</code> 文件了。</p>
-<h5 id="如何将文件一一对应每一个"><a href="#如何将文件一一对应每一个" class="headerlink" title="如何将文件一一对应每一个"></a>如何将文件一一对应每一个</h5><p>xx.app 和 xx.app.dSYM 文件都有对应的 UUID，crash 文件也有自己的 UUID，只要这三个文件的 UUID 一致，我们就可以通过他们解析出正确的错误函数信息了。<br>1.查看 xx.app 文件的 UUID，terminal 中输入命令 ：<br>dwarfdump –uuid xx.app/xx (xx代表你的项目名)<br>2.查看 xx.app.dSYM 文件的 UUID ，在 terminal 中输入命令：<br>dwarfdump –uuid xx.app.dSYM<br>3.crash 文件内第一行 Incident Identifier 就是该 crash 文件的 UUID。<br>dSYM工具于是我抽了几个小时的时间将这些命令封装到一个应用中，也为以后解决bug提供了便利。<br>使用步骤:<br>1.将打包发布软件时的xcarchive文件拖入软件窗口内的任意位置(支持多个文件同时拖入，注意：文件名不要包含空格)<br>2.选中任意一个版本的xcarchive文件，右边会列出该xcarchive文件支持的CPU类型，选中错误对应的CPU类型。<br>3.对比错误给出的UUID和工具界面中给出的UUID是否一致。4.将错误地址输入工具的文本框中，点击分析。Mac app下载地址  项目源码地址</p>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/错误调试/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSError" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/NSError/">NSError</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/NSError/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:42:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)doSomethingError:(NSError**)error</span><br></pre></td></tr></table></figure>
-<p>传递给方法的参数是个指针，而该指针本身又指向另外一个指针，那个指针指向NSError对象。或者也可以把它当成一个直接指向NSError对象的指针。这样一来，此方法不仅能有普通的返回值，而且还能经由”输出参数”把NSError对象回传给调用者。其用法如下:<br>在方法里面被赋值，指针是引用传值，会生成一个新指针（新指针还是指向‘指向error’的指针，可以通过这个双指针获得error对象）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">BOOL ret = [object doSomethingError:&amp;error];</span><br><span class="line">if (error) &#123;</span><br><span class="line">// There was an error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>像这样的方法一般都会返回Boolean值，用以表示该操作是成功了还是失败了。如果调用者不关注具体的错误信息，那么直接判断这个Boolean值就好；若是关注具体错误，那就检查经由”输出参数”所返回的那个错误对象。在不想知道具体错误的时候，可以给error参数传入nil。比方说，可以如下使用此方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL ret = [object doSomethingError:nil];</span><br><span class="line">if (ret) &#123;</span><br><span class="line">// There was an error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>实际上，在使用ARC时，编译器会把方法签名中的NSError转换成NSError__autoreleasing，也就是说，指针所指的对象会在方法执行完毕后自动释放。这个对象必须自动释放，因为”doSomething:”方法不能保证其调用者可以把此方法中创建的NSError释放掉，所以必须加入autorelease。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/NSError/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-编译链接" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/编译链接/">编译链接</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/编译链接/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:39:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <img src="/2019/01/06/编译链接/1.png" title="图片说明">
-<p>程序中的源代码计算机是无法识别的，需要将写好的代码转成0、1二进制代码，计算机才能识别。将源代码转成二进制代码需要两步：编译和链接。</p>
-<ul>
-<li>预处理：分析程序前先处理的语句，它可以识别散布在程序中的特定语句。所有的预处理语句都适用“＃”开头，这个符号必须是一行中的第一个非空字符。</li>
-</ul>
-<p>预处理可以大概分为三类：文件包含、宏定义和条件编译。</p>
-<ol>
-<li><p>文件包含<br>文件包含：在当前文件中用到其它文件中的函数或方法或其它信息时，可以将其它文件的头文件包含进来，然后再当前文件中使用，文件包含一般放到文件的开头。<br>&lt;&gt;会先去找系统文件，如果找不到，再去找自定义文件。所以正确的选择样式，能够提高程序的执行效率。</p>
-</li>
-<li><p>宏定义</p>
-</li>
-<li><p>条件编译<br>条件编译主要分为两种：一种是判断是否定义过某个宏，根据是否定义过这个宏，来决定是否编译某段代码。另外，还有一组语句和条件结构中的阶梯if结构非常类似，但是写法上有区别，是#if、#elif、#else、#endif组成。需要注意的是，无论哪种，都要有#endif 结束标志。此外，最重要的一点是：条件编译中的条件不能使用普通变量，一般会选择使用宏定义。</p>
-</li>
-</ol>
-<ul>
-<li>编译是通过编译器将每个文件的代码都转为二进制代码，在这个过程中，如果有语法错误，会有编译失败的提示，如果成功，那么会生成对应多个目标文件。</li>
-<li>在一个文件中可能会用到其他文件，因此，还需要将编译生成的目标文件和系统提供的文件组合到一起，这个过程就是链接。</li>
-</ul>
-<h5 id="main函数之前"><a href="#main函数之前" class="headerlink" title="main函数之前"></a>main函数之前</h5><ul>
-<li><p>系统先读取App的可执行文件(Mach-O文件)，从里面获得<code>dyld</code>的路径，然后加载<code>dyld</code>,<code>dyld</code>去初始化运行环境。</p>
-</li>
-<li><p>开启缓存策略，加载程序相关依赖库(其中也包含我们的可执行文件)，并对这些库进行链接，最后调用每个依赖库的初始化方法，在这一步，<code>runtime</code>被初始化。</p>
-</li>
-<li><p>当所有依赖库的初始化后，轮到最后一位(程序可执行文件)进行初始化，在这时<code>runtime</code>会对项目中所有类进行类机构初始化，然后调用所有的<code>load</code>方法。最后<code>dyld</code>返回<code>main</code>函数地址，<code>main</code>函数被调用，我们便来到程序入口<code>main</code>函数。</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/编译链接/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS图片加载速度极限优化—FastImageCache解析" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/iOS图片加载速度极限优化—FastImageCache解析/">iOS图片加载速度极限优化—FastImageCache解析</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/iOS图片加载速度极限优化—FastImageCache解析/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:35:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://blog.cnbang.net/tech/2578/" target="_blank" rel="noopener">http://blog.cnbang.net/tech/2578/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/iOS图片加载速度极限优化—FastImageCache解析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Object-C高级编程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/05/Object-C高级编程/">Objective-C高级编程+iOS与OS+X多线程和内存管理</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/05/Object-C高级编程/" class="archive-article-date">
-  	<time datetime="2019-01-05T06:22:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最早买的两本计算机书籍，一本是《设计模式》，一本是《Objective-C高级编程+iOS与OS+X多线程和内存管理》。看过了，以为掌握了里面的知识，跟大牛聊天时发现自己的内功不足，还以为有什么其他的渠道获取知识，最后他推荐我读下《Objective-C高级编程+iOS与OS+X多线程和内存管理》。当时也没好意思说自己读过。<br>此次趁着博客搬家，重读一遍，顺便做些笔记</p>
-<h5 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h5><table>
-<thead>
-<tr>
-<th>对象操作</th>
-<th>方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>生成并持有对象</td>
-<td>alloc / new / copy / mutableCopy</td>
-</tr>
-<tr>
-<td>持有对象</td>
-<td>retain</td>
-</tr>
-<tr>
-<td>释放对象</td>
-<td>release</td>
-</tr>
-<tr>
-<td>废弃对象</td>
-<td>dealloc</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>使用以下名称开头的方法名，也是自己生成并持有对象</li>
-</ul>
-<ul>
-<li>allocMyObject</li>
-<li>newThatObject</li>
-<li>copyThis</li>
-<li>mutableCopyYourObject</li>
-</ul>
-<ul>
-<li>取得非自己生成并持有的对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id obj = [NSArray array];</span><br><span class="line">[obj retain];</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>// 实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (id)object &#123;</span><br><span class="line">    id obj = [[obj alloc] init];</span><br><span class="line">    [obj autorelease];</span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>严格按照命名规则来判断是否持有对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 取得的对象存在，但自己不持有对象</span><br><span class="line">id obj1 = [obj0 object];</span><br><span class="line">// 可以通过 retain 方法将调用 autorelease 方法取得的对象变为自己持有</span><br><span class="line">[obj1 retain];</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>过渡释放或释放autorelease对象会崩溃</li>
-</ul>
-<h5 id="alloc-实现"><a href="#alloc-实现" class="headerlink" title="alloc 实现"></a>alloc 实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">id obj = [NSObject alloc];</span><br><span class="line"></span><br><span class="line">+ (id)alloc &#123;</span><br><span class="line">    return [self allocWithZone:NSDefaultMallocZone()];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)z &#123;</span><br><span class="line">    return NSAllocateObject(self, 0, z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct obj_layout &#123;</span><br><span class="line">    NSUInteger retained;</span><br><span class="line">&#125;;</span><br><span class="line">inline id NSAllocateObject(Class aClass, NSUInteger extraBytes, NSZone *zone) &#123;</span><br><span class="line">    int size = 计算机容纳对象所需内存大小;</span><br><span class="line">    id new = NSZoneMalloc(zone, size);</span><br><span class="line">    memset(new, 0, size);</span><br><span class="line">    new = (id) &amp; ((struct obj_layout *)new)[1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>NSAllocateObject</code>函数通过<code>NSZoneMalloc</code>函数来分配存放对象所需的内存空间，之后将该内存空间置0，最后返回作为对象而使用的指针<br><img src="/2019/01/05/Object-C高级编程/1.png" title="图片说明"></p>
-<h5 id="retainCount-retain-release-的实现"><a href="#retainCount-retain-release-的实现" class="headerlink" title="retainCount / retain / release 的实现"></a>retainCount / retain / release 的实现</h5><ul>
-<li>retainCount<br>__CFDoExternRefOperation<br>CFBasicHashGetCountOfKey</li>
-<li>retain<br>__CFDoExterRefOperation<br>CFBasicHashAddValue</li>
-<li>release<br>__CFDoExternRefOperation<br>CFBasicHashRemoveValue<br>(CFBasicHashRemoveValue 返回0时，- release调用dealloc)</li>
-</ul>
-<p>可以在内存的头部存放引用计数器，也可以像苹果一样采用散列表来管理引用计数<br>通过内存块头部管理应用计数的好处</p>
-<ul>
-<li>少量代码即可完成</li>
-<li>能够统一管理引用计数用内存块与对象内存块<br>通过应用计数表管理应用计数的好处</li>
-<li>对象内存块的分配无需考虑内存块头部</li>
-<li>应用计数表各记录中存有内存块地址，可从各个记录追溯到各对象的内存块。这样调试时有举足轻重的作用，即使出现故障导致对象占用的内存块损坏，但只要引用计数表没有被破坏，就能够确认各内存块的位置</li>
-</ul>
-<h5 id="autorelease"><a href="#autorelease" class="headerlink" title="autorelease"></a>autorelease</h5><p>如果autorelease NSAutoreleasePool对象会如何<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</span><br><span class="line">[pool autorelease];</span><br></pre></td></tr></table></figure></p>
-<p>异常，一般对象调用的是<code>NSObject</code>的<code>autorelease</code>实例方法，但对于<code>NSAutoreleasePool</code>类，<code>autorelease</code>实例方法已被该类重载，因此运行时就会出错</p>
-<h5 id="strong"><a href="#strong" class="headerlink" title="__strong"></a>__strong</h5><p><code>__strong</code>是id类型和对象类型默认的所有权修饰符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    id __strong obj = [[NSObject alloc] init];</span><br><span class="line">&#125;</span><br><span class="line">// obj超出作用域，强引用失效，所以自动释放自己持有的对象，对象的所有者不存在，因此废弃该对象</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // 获取非自己生成并持有的对象</span><br><span class="line">    id __strong obj = [NSMutableArray array];</span><br><span class="line">&#125;</span><br><span class="line">// obj超出其作用域，强引用失效，释放对象</span><br></pre></td></tr></table></figure>
-<p><code>__strong</code> <code>__weak</code> <code>__autoreleasing</code>，可以保证将附有这些修饰符的自动变量初始化为<code>nil</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj0;</span><br><span class="line">id __weak obj1;</span><br><span class="line">id __autoreleasing obj2;</span><br><span class="line">等同于</span><br><span class="line">id __strong obj0 = nil;</span><br><span class="line">id __weak obj1 = nil;</span><br><span class="line">id __autoreleasing obj2 = nil;</span><br></pre></td></tr></table></figure></p>
-<p>正如苹果宜称的那样，通过<code>strong</code> 修饰符，不必再次键入<code>retain</code>或者<code>release</code>，完美地满足了“引用计数式内存管理的思考方式”:</p>
-<ul>
-<li>自己生成的对象，自己所持有。</li>
-<li>非自己生成的对象，自己也能持有。</li>
-<li>不再需要自己持有的对象时释放。</li>
-<li>非自己持有的对象无法释放。</li>
-</ul>
-<p>前两项“自己生成的对象，自己持有”和“非自己生成的对象，自己也能持有”只需通过对带strong 修饰符的变量赋值便可达成。通过废弃带<code>_strong</code> 修饰符的变量(变量作用域结束或是成员变量所属对象废弃)或者对变量赋值，都可以做到“不再需要自己持有的对象时释放”。最后一项“非自己持有的对象无法释放”，由于不必再次键入<code>release</code>，所以原本就不会执行。这些都满足于引用计数式内存管理的思考方式。</p>
-<p>因为id类型和对象类型的所有权修饰符默认为 <code>_strong</code>修饰符，所以不需要写上“__strong”。使ARC有效及简单的编程遵循了Objective-C 内存管理的思考方式。</p>
-<h5 id="weak"><a href="#weak" class="headerlink" title="__weak"></a>__weak</h5><p>互相循环引用<br><img src="/2019/01/05/Object-C高级编程/4.png" title="图片说明"></p>
-<p>自引用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id test = [[Test alloc] init];</span><br><span class="line">[test setObject:test];</span><br></pre></td></tr></table></figure></p>
-<img src="/2019/01/05/Object-C高级编程/5.png" title="图片说明">
-<h5 id="unsafe-unretained"><a href="#unsafe-unretained" class="headerlink" title="__unsafe_unretained"></a>__unsafe_unretained</h5><p>和<code>__weak</code>一样是弱引用，但是他不属于ARC的内存管理工作，在ios4中使用，高版本可使用<code>__weak</code></p>
-<h5 id="autoreleasepool"><a href="#autoreleasepool" class="headerlink" title="autoreleasepool"></a>autoreleasepool</h5><p>编译器会检查方法名是否以 alloc / new / copy / mutableCopy 开始，如果不是则自动将返回值的对象注册到 autoreleasepool。init方法返回值的对象不注册到autoreleasepool</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (id)array &#123;</span><br><span class="line">    id obj = [[NSMutableArray alloc] init];</span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为没有显示指定所有权修饰符，所以<code>id obj</code>同附有<code>__strong</code>修饰符<code>id __strong obj</code>是一样的。由于<code>return</code>使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，但该对象作为函数f的返回值，编译器自动将其注册到<code>autoreleasepool</code><br>最后一个可非显示的使用<code>__autoreleasing</code>修饰符的例子。<code>id obj</code>推出的是<code>id __strong obj</code>，<code>id *obj</code>推出的是<code>id __autoreseasing *obj</code>。对象的指针<code>NSObject **obj</code>便成为<code>NSObject * __autoreleasing *obj</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError **)error;</span><br></pre></td></tr></table></figure></p>
-<p>id 的指针或对象的指针会默认附加上 __autoreleasing修饰符，所以等同于以下源代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError * __autoreleasing *)error;</span><br></pre></td></tr></table></figure></p>
-<p><code>__autoreleasing</code>修饰符的变量作为对象取得参数，与除 alloc / new / copy / mutableCopy 外其他方法的返回值取得对象完全一样，都会注册到 <code>autoreleasepool</code>,并取得非自己生成并持有的对象</p>
-<p>以下源代码会产生编译错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">NSError **pError = &amp;error;</span><br><span class="line">// initializing &apos;NSError *__autoreleasing *&apos;with an expression of type &apos;NSError *__strong *&apos; changes retain/release properties of pointer NSError **pError = &amp;error;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">NSError * __strong *pError = &amp;error;</span><br><span class="line">// 编译正常</span><br></pre></td></tr></table></figure>
-<h5 id="ARC规则"><a href="#ARC规则" class="headerlink" title="ARC规则"></a>ARC规则</h5><ul>
-<li>不能使用 retain release retainCount autorelease</li>
-<li>不能使用 NSAllocateObject NSDealloateObject</li>
-<li>须遵守内存管理的方法命名规则<br>以<code>init</code>开始的方法必须是实例方法，并且必须要返回对象，该对象并不注册到autoreleasepool上，基本上只是对alloc方法返回值的对象进行初始化处理并返回该对象<br>例外 <code>- (void)initialize;</code></li>
-<li>使用@autoreleasepool 替代 NSAutoreleasePool</li>
-<li>不能使用区域 NSZone</li>
-<li>对象型变量不能作为C语言结构体的成员<br>C语言的规约上没有方法来管理结构体成员的生存周期。因为ARC把内存管理工作分配给编译器，所以编译器必须能够知道并管理对象的生存周期。例如C语言的自动变量（局部变量）可使用该变量的作用域管理对象。但对于C语言的结构体成员来说，这在标准上就是不可实现的。<br>要把对象类型变量加入到结构体成员中，可强制转换为<code>void *</code>或是附加<code>__unsafe_unretained</code></li>
-<li>显示转换 id  和 void *<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">void *p = obj;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>在ARC无效时可以，但在ARC有效时会引起编译错误<code>implicit conversion of an Objective-C pointer to &#39;void *&#39; is disallowed with ARC</code><br>在ARC有效时，可以使用<code>__bridge</code>进行转换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">void *p = (__bridge void *)obj;</span><br></pre></td></tr></table></figure></p>
-<p><code>Core Foundation</code>对象与<code>Objective-C</code>对象没有区别，所以在ARC无效时，只用简单的C语音的转换也能实现互换。另外这种转换不需要使用额外的CPU资源，被称为免费桥</p>
-<p>思考：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">id obj0 = [[NSObject alloc] init];</span><br><span class="line">// obj0 的指针指向生成的对象，对象的引用计数为1</span><br><span class="line">id obj1 = obj0;</span><br><span class="line">// obj1 的指针指向对象，对象的引用计数为2</span><br><span class="line">obj0 = nil // [obj0 release];</span><br><span class="line">// obj0 的指针指向 null，对象的引用计数为1</span><br><span class="line">id obj2 = obj1;</span><br><span class="line">// obj2 的指针指向对象，对象的引用计数为2</span><br><span class="line">obj2 = obj1;</span><br><span class="line">// obj2 的指针只有一个（虽然是重复赋值），对象的引用计数为2</span><br></pre></td></tr></table></figure></p>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>声明动态数组用指针<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __strong *array = nil;</span><br></pre></td></tr></table></figure></p>
-<p>由于<code>id *类型</code>默认为<code>id __autoreleasing *类型</code>，所以有必要显示指定为<code>__strong</code>修饰符。虽然保证了附有<code>__strong</code>修饰符的<code>id</code>类型变量被初始化为<code>nil</code>，但并不保证附有<code>__strong</code>修饰符的<code>id</code>指针l型变量被初始化为<code>nil</code><br>使用<code>calloc</code>函数确保想分配的附有<code>__strong</code>修饰符变量的容量占有的内存块<br><code>array = (id __strong *)calloc(enteries, sizeof(id));</code><br>该源代码分配了entries个所需的内存块，由于使用<code>__strong</code>修饰符的变量必须先将其初始化为<code>nil</code>，所以这里使用分配区域初始化为0的<code>calloc</code>函数来分配内存。不使用<code>calloc</code>函数，在使用<code>malloc</code>函数分配内存后可用<code>memset</code>等函数将内存填充为0.<br>像下面，将<code>nil</code>代入到<code>malloc</code>函数f所分配的数组元素中是非常危险的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array = (id __strong *)malloc(sizeof(id) * entries);</span><br><span class="line">for (NSUInteger i = 0; i &lt; entries; i++) &#123;</span><br><span class="line">    array[i] = nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这是因为由<code>malloc</code>函数分配的内存区域没有被初始化为0，因此<code>nil</code>会被赋值给附有<code>__strong</code>修饰符的并被赋值了随机地址的变量中，从而释放一个不存在的对象。</p>
-<ul>
-<li>动态数组<br>在动态数组中操作附有<code>__strong</code>修饰符的变量与静态数组有很大差异，需要自己释放所有的元素。如以下源代码所示，在只是简单的用<code>free</code>函数废弃了数组用内存块的情况下，数组各元素所赋值的对象不能再次释放，从而引起内存泄漏<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free(array);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这是因为在静态数组中，编译器能够根据变量的作用域自动插入释放赋值对象的代码，而在动态数组中，编译器不能确定数组的生存周期，所以无从处理。</p>
-<blockquote>
-<p>可能是由于free是C语音函数的原因，使用OC做实验，数组和可变数组释放后，其内部变量也被释放，也可能是苹果有内部的处理，还需进一步研究</p>
-</blockquote>
-<h5 id="ARC的实现"><a href="#ARC的实现" class="headerlink" title="ARC的实现"></a>ARC的实现</h5><ul>
-<li>__strong<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj = [[NSObject alloc] init];</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>模拟器代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id obj = objc_msgSend(NSObject, @selector(alloc));</span><br><span class="line">objc_msgSend(obj, @selector(init));</span><br><span class="line">objc_release(obj);</span><br></pre></td></tr></table></figure></p>
-<p>2此调用<code>objc_msgSend</code>，变量作用域结束时编译器自动通过<code>objc_release</code>释放对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj = [NSMutableArray array];</span><br></pre></td></tr></table></figure>
-<p>编译器代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id obj = objc_msgSend(NSMutableArray, @selector(array));</span><br><span class="line">objc_retainAutoreleaseReturnValue(obj);</span><br><span class="line">objc_release(obj);</span><br></pre></td></tr></table></figure></p>
-<p><code>objc_retainAutoreleaseReturnValue</code>函数主要用于优化程序运行。它用于自己持有（retain）对象的函数，但它持有的对象应为返回注册在<code>autoreleasepool</code>中对象的方法，或是函数的返回值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (id)array &#123;</span><br><span class="line">    return [[NSMutableArray alloc] init];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译器的模拟代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (id)array &#123;</span><br><span class="line">    id obj = objc_msgSend(NSMutableArray, @selector(alloc));</span><br><span class="line">    objc_msgSend(obj, @selector(init));</span><br><span class="line">    return objc_autoreleaseReturnValue(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>objc_autoreleaseReturnValue</code>用于 alloc / new / copy / mutableCopy 方法以外的 <code>NSMutableArray</code>类的array类方法等返回对象的实现上<br>像上面代码这样，返回注册到<code>autoreleasepool</code>中对象的方法使用了<code>objc_autoreleaseReturnValue</code>函数返回注册到<code>autoreleasepool</code>中的对象。但是<code>objc_autoreleaseReturnValue</code>函数同<code>objc_autorelease</code>函数不同，一般不限于注册对象到<code>autoreleasepool</code>中。<br><code>objc_autoreleaseReturnValue</code>函数会检查使用该函数的方法或函数调用方法的执行命令列表，如果方法或函数的调用方在调用了方法或函数后紧接着调用<code>objc_retainAutoreleaseReturnValue()</code>函数，那么就不将返回的对象注册到<code>autoreleasepool</code>中，而是直接传递到方法或函数的调用方。<br><img src="/2019/01/05/Object-C高级编程/6.png" title="图片说明"></p>
-<ul>
-<li>__weak <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __weak obj1 = obj;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>编译器代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id obj1;</span><br><span class="line">obj1 = 0;</span><br><span class="line">objc_storeWeak(&amp;obj1, obj); // 注册到weak表</span><br><span class="line">objc_storeWeak(&amp;obj1, 0); // 从weak表中删除</span><br></pre></td></tr></table></figure></p>
-<p>对象被废弃时最后调用的<code>objc_clear_deallocating</code>函数的动作如下</p>
-<ol>
-<li>从weak表中获取废弃对象的地址为键值的记录</li>
-<li>将包含在记录中的所有附有__weak修饰符变量的地址，赋值为nil</li>
-<li>从weak表中删除该记录</li>
-<li>从引用计数表中删除废弃对象的地址为键值的记录<br>如此，使用<strong>weak修饰符的变量所应用的对象被废弃，则将nil赋值给该变量这一功能即被实现，大量使用</strong>weak，会消耗CPU资源</li>
-</ol>
-<h5 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@autoreleasepool &#123;</span><br><span class="line">    id __strong obj = [[NSObject alloc] init];</span><br><span class="line">    id __autoreleasing o = obj;</span><br><span class="line">    // retain count = 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj = [[NSObject alloc] init];</span><br><span class="line">@autoreleasepool &#123;</span><br><span class="line">    id _autoreleasing = obj; // retain count = 2</span><br><span class="line">&#125;</span><br><span class="line">// pool 释放 retain count = 1</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/书籍//" class="article-tag-list-link color3">书籍</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/05/Object-C高级编程/">展开全文 >></a>
         </p>
       
 
