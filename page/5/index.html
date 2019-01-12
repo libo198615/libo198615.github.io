@@ -63,6 +63,8 @@
 	        
 				<li><a href="/categories/C++">C++</a></li>
 	        
+				<li><a href="/categories/Swift">Swift</a></li>
+	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
@@ -137,6 +139,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -157,21 +161,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/">主页</a></li>
+					<li style="width: 11.11111111111111%"><a href="/">主页</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/随笔">随笔</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/随笔">随笔</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/算法">算法</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/算法">算法</a></li>
 		        
 				</ul>
 			</nav>
@@ -187,6 +193,413 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-SDK开发注意点" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/SDK开发注意点/">SDK开发注意点</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/SDK开发注意点/" class="archive-article-date">
+  	<time datetime="2019-01-03T12:29:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、source control<br>git</p>
+<p>2、代码接口设计<br>开放最小功能接口，只对外开发满足开发所需的最小的接口集。<br>开放的每个接口命名良好，输入输出注释清晰无歧义，功能单一。<br>面向接口编程，提供扩展点方便用户定制功能。</p>
+<p>3、前缀命名<br>sdk中的所有类和enum建议增加特定前缀。</p>
+<p>4 platforms<br>最低版本支持。如果sdk不支持低版本的ios系统，并使用了高版本ios系统提供的功能，那么当运行在低版本设备上时，会导致crash。</p>
+<p>5、发布方式<br>目前主流的发布方式有Cocoapods、Framework、.a三种。</p>
+<p>A、 开源方式： 推荐使用Cocoapods。<br>B、 非开源方式</p>
+<p>库是共享代码的方式，分为静态库和动态库，其中静态库链接时完整地拷贝至可执行文件中，被多次使用就有多份冗余拷贝。动态库链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。ios中静态库的形式有.a和.framework；动态库的形式有.dylib和.framework。注意在ios上，系统的.framework是动态库，我们自己建立的.framework是静态库。</p>
+<p>Framework可以将资源文件包含在自己的bundle中。<br>Framework的自包含能力更强，无须单独提供.h头文件。</p>
+<p>6、 测试</p>
+<p>sdk的主要用途是提供给其他的开发者使用，这样特殊的场景非常适合测试驱动开发。测试驱动开发的基本思想就是在开发功能代码之前，先编写测试代码。也就是说在明确要开发某个功能后，先思考如何对这个功能进行测试，完成测试代码的编写，然后编写相关的代码满足这些测试用例。后续循环进行添加其他功能，直到完成全部功能的开发。</p>
+<p>7、 文档</p>
+<p>8 模拟器和真机</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/03/SDK开发注意点/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Protocol" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/Protocol/">Protocol</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/Protocol/" class="archive-article-date">
+  	<time datetime="2019-01-03T12:25:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本质是一个类<br>可以继承<br>默认是<code>required</code>，但是可以编译通过，编译器默认你有这个方法，可以调用,只是在调用时会崩溃</p>
+<p><code>category</code> 和<code>protocol</code> 类似，但是<code>category</code>不能强制要求子类实现其声明的方法</p>
+<p>在定义<code>protocol</code>协议时最好让其继承<code>NSObject协议，否则无法使用</code>respondsToSelector`方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ([obj respondsToSelector:@selector(method)]) &#123;</span><br><span class="line">    [obj method];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/03/Protocol/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NSNotification" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/NSNotification/">NSNotification</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/NSNotification/" class="archive-article-date">
+  	<time datetime="2019-01-03T12:19:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在发送消息时是同步的<br>想要异步，可在接受消息时使用<code>dispatch_async</code>进行异步处理</p>
+<p>对于删除监听器这一步骤在iOS9以后似乎变得不那么重要，iOS9开始不再对已经销毁的监听器发送通知，当监听器对象销毁后发送通知也不会造成野指针错误，这一点比KVO更加安全，KVO在监听器对象销毁后仍会触发回调函数就可能造成野指针错误</p>
+<h5 id="注册监听"><a href="#注册监听" class="headerlink" title="注册监听"></a>注册监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObserver:(id)observer selector:(SEL)aSelector name:(nullable NSString *)aName object:(nullable id)anObject;</span><br><span class="line">- (id &lt;NSObject&gt;)addObserverForName:(nullable NSString *)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (^)(NSNotification *note))block;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>object</li>
+</ul>
+<p>在发送通知的时候也会传递一个<code>object</code>参数，一般情况下发送通知的<code>object</code>参数传递的是发送方自己，那么在注册监听者这里，<code>object</code>参数指代的也是发送方的这个<code>object</code>参数，意思就是接收<code>object</code>对象发出的名为<code>name</code>的通知，如果有其它发送方发出同样<code>name</code>的通知，是不会接收到通知的。如果把<code>name</code>和<code>object</code>这两个参数同时置为nil，则会接收所有的通知</p>
+<p>第二种方式对于大家来说比较陌生，这里多了一个参数queue和一个block，block即受到通知时执行的回调，参数queue指定了这个block在哪个线程中执行，如果queue传的是nil,则表示这个回调block在发送通知的线程中执行，也即同步执行。</p>
+<ul>
+<li>NSNotificationQueue(通知队列)</li>
+</ul>
+<p>如果我们使用普通的<code>- (void)postNotification:(NSNotification *)notification</code>这种方法来发送通知，那么这个通知就会直接发送到<code>notification Center</code>，<code>notificationCenter</code>则会直接将其发送给注册了该通知的观察者。<br>但是如果我们使用<code>NSNotificationQueue</code>就不一样了，通知不是直接发送给<code>notificationCenter</code>，而是先发送给<code>NSNotificationQueue</code>，然后由<code>NSNotificationQueue</code>决定在当前<code>runloop</code>结束或者空闲的时候转发给<code>notification Center</code>，再由<code>notification</code>转发给注册的观察者。通过<code>NSNotificationQueue</code>，可以<br>合并重复的通知，以便只发送一个通知。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/03/NSNotification/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-load" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/load/">load initialize</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/load/" class="archive-article-date">
+  	<time datetime="2019-01-03T12:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><code>+load</code> 会在程序加载时调用，</li>
+<li><code>+initialize</code> 会在第一次调用类的类方法或实例方法之前被调用。</li>
+</ul>
+<h5 id="load"><a href="#load" class="headerlink" title="load"></a>load</h5>
+<p><code>+load</code>方法在这个文件被程序装载时调用。只要是在<code>Compile Sources</code>中出现的文件总是会被装载，这与这个类是否被用到无关，因此<code>+load</code>方法总是在`main函数之前调用。</p>
+<p>由于调用<code>load</code>方法时的环境很不安全，我们应该尽量减少<code>load</code>方法的逻辑。另一个原因是<code>load</code>方法是线程安全的，它内部使用了锁，所以我们应该避免线程阻塞在<code>load</code>方法中。<br>一个常见的使用场景是在<code>load</code>方法中实现<code>Method Swizzle：</code></p>
+<h5 id="initialize"><a href="#initialize" class="headerlink" title="initialize"></a>initialize</h5><p><code>initialize</code>自动调用父类的<code>initialize</code>。即使子类没有实现<code>initialize</code>方法，也会调用父类的方法，这会导致一个很严重的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// In Parent.m</span><br><span class="line">+ (void)initialize &#123;</span><br><span class="line">    NSLog(@&quot;Initialize Parent, caller Class %@&quot;, [self class]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// In Child.m</span><br><span class="line">// 注释掉initialize方法</span><br><span class="line"></span><br><span class="line">// In main.m</span><br><span class="line">Child *child = [Child new];</span><br></pre></td></tr></table></figure></p>
+<p>运行后发现父类的<code>initialize</code>方法竟然调用了两次：<br>这是因为在创建子类对象时，首先要创建父类对象，所以会调用一次父类的<code>initialize</code>方法，然后创建子类时，尽管自己没有实现<code>initialize</code>方法，但还是会调用到父类的方法。<br>虽然<code>initialize</code>方法对一个类而言只会调用一次，但这里由于出现了两个类，所以调用两次符合规则，但不符合我们的需求。正确使用<code>initialize</code>方法的姿势如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// In Parent.m</span><br><span class="line">+ (void)initialize &#123;</span><br><span class="line">    if (self == [Parent class]) &#123;</span><br><span class="line">        NSLog(@&quot;Initialize Parent, caller Class %@&quot;, [self class]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>加上判断后，就不会因为子类而调用到自己的<code>initialize</code>方法了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>load和initialize方法内部使用了锁，因此它们是线程安全的。</p>
+<p>load -&gt; main() -&gt; initialize<br>| 方法 | 首次调用 | category装载顺序  | 调用父类 |<br>| — | — | — | — |<br>| load | 加载即调用，main函数之前 | 有关 | 子类不实现，不调用父类 |<br>| initialize | 首次使用调用，main函数之后 | 无关 | 子类不实现同样会调用父类，导致父类调用两次 |  </p>
+<img src="/2019/01/03/load/2.png" title="图片说明">
+<img src="/2019/01/03/load/3.png" title="图片说明">
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/03/load/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-bridge" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/bridge/">__bridge</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/bridge/" class="archive-article-date">
+  	<time datetime="2019-01-03T12:05:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>__bridge</code><br>CF和OC对象转化时只涉及对象类型不涉及对象所有权的转化<br>实现id类型与void*类型的相互转换<br><code>__bridge_transfer</code><br>常用在CF对象转化成OC对象时，将CF对象的所有权交给OC对象，此时ARC就能自动管理该内存<br><code>__bridge_retained</code><br>将OC对象转化成CF对象，且OC对象的所有权也交给CF对象来管理</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/03/bridge/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-事件链" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -682,566 +1095,9 @@
 
 
   
-    <article id="post-dealloc" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/dealloc/">dealloc</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/02/dealloc/" class="archive-article-date">
-  	<time datetime="2019-01-02T12:54:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>执行一个叫object_cxxDestruct的东西干了点什么事<br>执行_object_remove_assocations去除和这个对象assocate的对象（常用于category中添加带变量的属性，这也是为什么ARC下没必要remove一遍的原因）<br>执行objc_clear_deallocating，清空引用计数表并清除弱引用表，将所有weak引用指nil（这也就是weak变量能安全置空的所在）</p>
-<p>viewController dealloc 先调用，里面的子view的<code>dealloc</code>再调用，因为vc强引用子view,子view无法先释放。同时带来一个问题，vc可以释放，但是他的子View<br>可能没有释放，造成内存泄漏</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/dealloc/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-修饰符" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/修饰符/">修饰符</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/02/修饰符/" class="archive-article-date">
-  	<time datetime="2019-01-02T12:54:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="property"><a href="#property" class="headerlink" title="@property"></a>@property</h5><p>@property = ivar + getter + setter;</p>
-<ol>
-<li>添加实例变量</li>
-<li>生成<code>getter</code> <code>setter</code> 方法</li>
-</ol>
-<ul>
-<li>protocol<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>不自动生成<code>getter</code> <code>setter</code>，表名实现此协议的类必须自己声明<code>NSString *name</code><br>不声明也可以写<code>self.name</code>，但当调用<code>setter`</code>getter<code>方法时会因为找不到方法而崩溃
-即使自己不添加属性</code>NSString *name<code>，而只添加</code>setter<code></code>getter<code>方法，你会发现，</code>setter<code>方法无法写，因为没有</code>ivar<code>，你调用不了</code>_name`。</p>
-<ul>
-<li>category<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>不自动生成<code>getter</code> <code>setter</code>,<br>自己无法写<code>setter</code>方法，因为没有<code>ivar</code>，你调用不了<code>_name</code>。</p>
-<h5 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h5><p>Runtime维护了一个weak表，用于存储指向某个对象的所有weak指针。<br>weak表其实是一个hash（哈希）表，Key是所指对象的地址，Value是weak指针的地址数组。<br>当<code>A</code>对象销毁时.以<code>A</code>的内存地址为Key， 在这个 <code>weak</code> 表中搜索</p>
-<h5 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h5><p>浅拷贝：只是对指向对象的指针进行拷贝<br>深拷贝：直接拷贝对象到内存中一块区域，然后把新对象的指针指向这块内存</p>
-<p>遵循<code>NSCopying</code>协议的类可以发送<code>Copy</code>消息，<br>遵循<code>NSMutableCopying</code>协议的类可以发送<code>MutableCopy</code>消息。</p>
-<p>定义一个NSString类型属性时，为什么用copy不用strong?<br>如果用的就是<code>NSString</code>，<code>copy`</code>strong<code>没有区别，区别主要是使用</code>NSMutableSting`时</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>不可变对象</td>
-<td>strong</td>
-<td>分配内存指针指向原对象</td>
-<td></td>
-<td>值跟随原对象改变而改变</td>
-<td></td>
-</tr>
-<tr>
-<td>不可变对象</td>
-<td>copy</td>
-<td>分配内存指针指向原对象</td>
-<td>浅拷贝</td>
-<td>值跟随原对象改变而改变</td>
-<td></td>
-</tr>
-<tr>
-<td>不可变对象</td>
-<td>mutableCopy</td>
-<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
-<td>新对象可变</td>
-<td>值不受原对象值的改变的影响</td>
-<td></td>
-</tr>
-<tr>
-<td>可变对象</td>
-<td>strong</td>
-<td>分配内存指针指向原对象</td>
-<td></td>
-<td>值跟随原对象改变而改变</td>
-<td></td>
-</tr>
-<tr>
-<td>可变对象</td>
-<td>copy</td>
-<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
-<td>新对象不可变</td>
-<td>值不受原对象值的改变的影响</td>
-<td></td>
-</tr>
-<tr>
-<td>可变对象</td>
-<td>mutableCopy</td>
-<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
-<td>新对象可变</td>
-<td>值不受原对象值的改变的影响</td>
-</tr>
-</tbody>
-</table>
-<h5 id="以下规则，string-array都适用"><a href="#以下规则，string-array都适用" class="headerlink" title="以下规则，string array都适用"></a>以下规则，string array都适用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">if (_name != name) &#123;</span><br><span class="line">[_name release];</span><br><span class="line">_name = [name copy]; // 这是面试时优化的点 [name retain]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) NSString *c_String;</span><br><span class="line">@property (nonatomic, strong) NSString *s_String;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line">// before change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line">// after change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br></pre></td></tr></table></figure>
-<ul>
-<li>NSMutableString<br>strong 开辟内存，分配指针，指向原始数据<br>copy 开辟内存，复制原始数据 ，开辟内存，分配指针，指向复制后的数据<br>原始数据改变 在原内存上更新数据，strong指向的也是改变后的地址，内容更新，copy指向的是复制后的内容地址，内容不变<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSString *tempString = [NSString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">tempString = @&quot;change&quot;;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0xa000c505a04b2028 strongString:0xa000c505a04b2028 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff5f4bc738 strongString:0x7f9990d0c8f0 copyString:0x7f9990d0c8e8</span><br><span class="line"></span><br><span class="line">tempString:change strongString:original copyString:original</span><br><span class="line">tempString:0x100757b90 strongString:0xa000c505a04b2028 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff5f4bc738 strongString:0x7f9990d0c8f0 copyString:0x7f9990d0c8e8</span><br></pre></td></tr></table></figure>
-<ul>
-<li>NSString<br>strong 开辟内存，分配指针，指向原始数据<br>copy 开辟内存，分配指针，指向原始数据<br>原始数据改变 分配内存，在新内存上设置新值，原数据内存区和strong copy指针不变<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">_s_String = tempString;</span><br><span class="line">_c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:originalchange</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br></pre></td></tr></table></figure>
-<p>如果我们不用self.点语法，这样就不会调用 getter setter 方法，copy也就不会起作用了</p>
-<h5 id="mutaleArr"><a href="#mutaleArr" class="headerlink" title="mutaleArr"></a>mutaleArr</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MySark *sark = [[MySark alloc] init];</span><br><span class="line">sark.name = @&quot;cat&quot;;</span><br><span class="line"></span><br><span class="line">NSMutableArray *mArr = [NSMutableArray arrayWithObject:sark];</span><br><span class="line">self.c_arr = mArr;</span><br><span class="line">self.s_arr = mArr;</span><br><span class="line">NSLog(@&quot;before change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br><span class="line"></span><br><span class="line">[mArr removeAllObjects];</span><br><span class="line">NSLog(@&quot;after change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">before change</span><br><span class="line">mArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) strongArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongArr:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongArr:0x104c0bee8 copyArr:0x104c0bee0</span><br><span class="line">after change</span><br><span class="line">mArr:(</span><br><span class="line">) strongString:(</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongString:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongString:0x104c0bee8 copyArr:0x104c0bee0</span><br></pre></td></tr></table></figure>
-<p>集合类型，内容不复制，指针引用内容</p>
-<table>
-<thead>
-<tr>
-<th>类型</th>
-<th>例子</th>
-<th>操作</th>
-<th>结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>不可变对象</td>
-<td>arr</td>
-<td>copy</td>
-<td>arr</td>
-</tr>
-<tr>
-<td>不可变对象</td>
-<td>arr</td>
-<td>mutableCopy</td>
-<td>mutableArr</td>
-</tr>
-<tr>
-<td>可变对象</td>
-<td>mutableArr</td>
-<td>copy</td>
-<td>arr</td>
-</tr>
-<tr>
-<td>可变对象</td>
-<td>mutableArr</td>
-<td>mutableCopy</td>
-<td>mutableArr</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>copy 产出不可变对象</li>
-<li>mutablecopy 产出可变对象</li>
-</ul>
-<p>直接的 NSArray 不是 isMemberOfClass:[NSArray class]<br>由于类簇的性质，这类对象实际返回的实例有不确定性。</p>
-<p>NSArray对象可能会在运行时发现其实运作的是NSCFArray(来自Core Foundation框架(C语言的实现版本),很多Cocoa对象都是如此做桥接的)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = [NSArray array];</span><br><span class="line">if ([arr isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isKindOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isKindOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isKindOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isMemberOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[arr isMemberOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ([[arr mutableCopy] isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isKindOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isKindOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isKindOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isMemberOfClass:[NSMutableDictionary class]]) &#123;</span><br><span class="line">NSLog( @&quot;[[arr mutableCopy] isMemberOfClass:[NSMutableDictionary class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NSMutableArray *mutableArr = [arr mutableCopy];</span><br><span class="line">[mutableArr addObject:@&quot;b&quot;];</span><br><span class="line">NSLog(@&quot;%@&quot;,mutableArr);</span><br><span class="line"></span><br><span class="line">MyArray *myArr = [[MyArray alloc] init];</span><br><span class="line">if ([myArr isMemberOfClass:[MyArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isMemberOfClass:[MyArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isKindOfClass:[MyArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isKindOfClass:[MyArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">NSLog(@&quot;[myArr isKindOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[arr isKindOfClass:[NSArray class]]</span><br><span class="line">[[arr mutableCopy] isKindOfClass:[NSArray class]]</span><br><span class="line">[[arr mutableCopy] isKindOfClass:[NSMutableArray class]]</span><br><span class="line">( b )</span><br><span class="line">[myArr isMemberOfClass:[MyArray class]]</span><br><span class="line">[myArr isKindOfClass:[MyArray class]]</span><br><span class="line">[myArr isKindOfClass:[NSArray class]]</span><br></pre></td></tr></table></figure>
-<h5 id="delegate-用assign还weak？"><a href="#delegate-用assign还weak？" class="headerlink" title="delegate 用assign还weak？"></a>delegate 用assign还weak？</h5><p>assign属性一般是对C基本数据类型成员变量的声明，当然也可以用在对象类型成员变量上，只是其代表的意义只是单纯地拷贝所赋值变量的指针。即如果对某assign成员变量B赋值某对象A的指针，则此B只是简单地保存此指针的值，且并不持有对象A，也就意味着如果A被销毁，则B就指向了一个已经被销毁的对象，如果再对其发送消息会引发崩溃。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 只能在自己类内部使用的</span><br><span class="line">@interface MyTest : NSObject&#123; </span><br><span class="line">NSString *mystr; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// .m</span><br><span class="line">mystr = @&quot;dog&quot;;</span><br></pre></td></tr></table></figure>
-<h5 id="unsafe-unretained"><a href="#unsafe-unretained" class="headerlink" title="unsafe_unretained"></a>unsafe_unretained</h5><p>和assign类似，但是它适用于对象类型，当目标被摧毁时，属性值不会自动清空（unsafe）。这是和weak的区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, unsafe_unretained)  TestObj *s2;</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/修饰符/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSURLSession的优势" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/NSURLSession的优势/">NSURLSession的优势</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/02/NSURLSession的优势/" class="archive-article-date">
-  	<time datetime="2019-01-02T12:50:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>NSURLSession</code>最直接的改进就是可以配置每个<code>session</code>的缓存，协议，<code>cookie</code>，以及证书策略(credential policy),甚至跨程序共享这些信息。这将允许程序和网络基础框架之间相互独立，不会发生干扰。每个<code>NSURLSession</code>对象都由一个<code>NSURLSessionConfiguration</code>对象进行初始化，后者指定了刚才提到的那些策略以及一些用来增强移动设备上性能的新选项。</p>
-<p><code>NSURLSession</code>中另一大块就是<code>session task</code>。它负责处理数据的加载以及文件的数据在客户端与服务器之间的上传和下载。<code>NSURLSessionTask</code>和<code>NSURLConnection</code>最大的相似之处在于它也负责数据中的加载，最大的不同之处在于所有的<code>task</code>共享其创造者<code>NSURLSession</code></p>
-<p>所有的 <code>task</code> 都是可以取消，暂停或者恢复的。当一个 <code>download task</code> 取消时，可以通过选项来创建一个恢复数据（resume data），然后可以传递给下一次新创建的 <code>download task</code>，以便继续之前的下载。</p>
-<p>不同于直接使用<code>alloc-init</code>初始化方法，<code>task</code> 是由一个<code>NSURLSession</code>创建的。每个 <code>task</code> 的构造方法都对应有或者没有<code>completionHandler</code>这个<code>block</code> 的两个版本，例如：有这样两个构造方法<code>–dataTaskWithRequest:</code>和<code>–dataTaskWithRequest:completionHandler:</code>。这与<code>NSURLConnection</code>的<code>-sendAsynchronousRequest:queue:completionHandler:</code>方法类似，通过指定<code>completionHandler</code>这个<code>block</code> 将创建一个隐式的 <code>delegate</code>，来替代该 <code>task</code> 原来的 <code>delegate——session</code>。对于需要 <code>override</code> 原有 <code>session task</code> 的 <code>delegate</code> 的默认行为的情况，我们需要使用这种不带completionHandler的版本。</p>
-<p>NSURLSession既拥有 seesion 的 delegate 方法，又拥有 task 的 delegate 方法用来处理鉴权查询。session 的 delegate 方法处理连接层的问题，诸如服务器信任，客户端证书的评估，NTLM和Kerberos协议这类问题，而 task 的 delegate 则处理以网络请求为基础的问题，如 Basic，Digest，以及代理身份验证（Proxy authentication）等。</p>
-<p>NSURLSessionConfiguration<br>NSURLSessionConfiguration对象用于对NSURLSession对象进行初始化。NSURLSessionConfiguration对以前NSMutableURLRequest所提供的网络请求层的设置选项进行了扩充，提供给我们相当大的灵活性和控制权。从指定可用网络，到 cookie，安全性，缓存策略，再到使用自定义协议，启动事件的设置，以及用于移动设备优化的几个新属性，你会发现使用NSURLSessionConfiguration可以找到几乎任何你想要进行配置的选项。</p>
-<p>NSURLSession在初始化时会把配置它的NSURLSessionConfiguration对象进行一次 copy，并保存到自己的configuration属性中，而且这个属性是只读的。因此之后再修改最初配置 session 的那个 configuration 对象对于 session 是没有影响的。也就是说，configuration 只在初始化时被读取一次，之后都是不会变化的。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/NSURLSession的优势/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-信号量" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/信号量/">信号量</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/02/信号量/" class="archive-article-date">
-  	<time datetime="2019-01-02T12:46:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>dispatch_semaphore_signal</code>是发送一个信号，自然会让信号总量加1，<br><code>dispatch_semaphore_wait</code>等待信号，当信号总量少于0的时候就会一直等待，否则就可以正常的执行，并让信号总量-1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 创建队列组</span><br><span class="line">dispatch_group_t group = dispatch_group_create();   </span><br><span class="line">// 创建信号量，并且设置值为10</span><br><span class="line">dispatch_semaphore_t semaphore = dispatch_semaphore_create(10);   </span><br><span class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);   </span><br><span class="line">for (int i = 0; i &lt; 100; i++)   </span><br><span class="line">&#123;   </span><br><span class="line">    // 由于是异步执行的，所以每次循环Block里面的dispatch_semaphore_signal根本还没有执行就会执行dispatch_semaphore_wait，从而semaphore-1.当循环10此后，semaphore等于0，则会阻塞线程，直到执行了Block的dispatch_semaphore_signal 才会继续执行</span><br><span class="line">    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);   </span><br><span class="line">    dispatch_group_async(group, queue, ^&#123;   </span><br><span class="line">        NSLog(@&quot;%i&quot;,i);   </span><br><span class="line">        sleep(2);   </span><br><span class="line">        // 每次发送信号则semaphore会+1，</span><br><span class="line">        dispatch_semaphore_signal(semaphore);   </span><br><span class="line">    &#125;);   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在开发中我们需要等待某个网络回调完之后才执行后面的操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">_block BOOL isok = NO;  </span><br><span class="line"></span><br><span class="line">dispatch_semaphore_t sema = dispatch_semaphore_create(0);  </span><br><span class="line">Engine *engine = [[Engine alloc] init];  </span><br><span class="line">[engine queryCompletion:^(BOOL isOpen) &#123;  </span><br><span class="line">    isok = isOpen;  </span><br><span class="line">    dispatch_semaphore_signal(sema);  </span><br><span class="line">&#125; onError:^(int errorCode, NSString *errorMessage) &#123;  </span><br><span class="line">    isok = NO;  </span><br><span class="line">    dispatch_semaphore_signal(sema);  </span><br><span class="line">&#125;];  </span><br><span class="line"></span><br><span class="line">dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);  </span><br><span class="line">// 创建的时候信号量为 0 ，执行到此时要等待</span><br><span class="line">// todo what you want to do after net callback</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/信号量/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-加密" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/加密/">加密</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/02/加密/" class="archive-article-date">
-  	<time datetime="2019-01-02T12:45:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>对称加密算法</li>
-</ul>
-<p>在加密和解密时使用的是同一个秘钥；<br>其速度快，对称性加密通常在消息发送方需要加密大量数据时使用<br>在对称加密算法中常用的算法有：DES、AES等。</p>
-<ul>
-<li>非对称加密算法</li>
-</ul>
-<p>需要两个密钥来进行加密和解密，公钥 和 私钥<br>非对称加密与对称加密相比，其安全性更好：对称加密的通信双方使用相同的秘钥，如果一方的秘钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对秘钥，一个用来加密，一个用来解密，而且公钥是公开的，秘钥是自己保存的，不需要像对称加密那样在通信之前要先同步秘钥。<br>非对称加密的缺点是加密和解密花费时间长、速度慢，只适合对少量数据进行加密。<br>在非对称加密中使用的主要算法有：RSA。</p>
-<h5 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h5><p>Base64加密特点：</p>
-<ul>
-<li>数据加密之后，数据量会变大，变大1/3左右。</li>
-<li>可进行反向解密。</li>
-<li>编码后有个非常显著的特点，末尾有个=号。</li>
-</ul>
-<h5 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h5><p>MD5加密（MD5是一种摘要，而非加密，只是经常与加密配合使用）</p>
-<ul>
-<li>压缩性 : 任意长度的数据,算出的MD5值长度都是固定的。</li>
-<li>容易计算 : 从原数据计算出MD5值很容易。</li>
-<li>抗修改性 : 对原数据进行任何改动，哪怕只修改一个字节，所得到的MD5值都有很大区别。</li>
-<li>弱抗碰撞 : 已知原数据和其MD5值，想找到一个具有相同MD5值的数据（即伪造数据）是非常困难的。</li>
-<li>强抗碰撞 : 想找到两个不同数据，使他们具有相同的MD5值，是非常困难的。</li>
-</ul>
-<h5 id="AES加密"><a href="#AES加密" class="headerlink" title="AES加密"></a>AES加密</h5><ul>
-<li>AES强安全性、高性能、高效率、易用和灵活。</li>
-<li>在软件及硬件上都能快速地加解密且只需要很少的存储资源。</li>
-<li>比<code>DES</code>安全性高</li>
-</ul>
-<h5 id="RSA加密"><a href="#RSA加密" class="headerlink" title="RSA加密"></a>RSA加密</h5><p>非对称加密算法 https</p>
-<h5 id="加密与签名区别（RSA）"><a href="#加密与签名区别（RSA）" class="headerlink" title="加密与签名区别（RSA）"></a>加密与签名区别（RSA）</h5><ul>
-<li>最大的区别是，加密是可逆的，而签名是不可逆的。</li>
-<li>加密是对数据进行机密性保护，签名主要用于身份验证</li>
-</ul>
-<h5 id="前端是否需要对密码进行加密传输"><a href="#前端是否需要对密码进行加密传输" class="headerlink" title="前端是否需要对密码进行加密传输"></a>前端是否需要对密码进行加密传输</h5><p>前端的加密本身不能对网站的安全性有任何提高功能，所有的关于网站的安全技术都应该放在后台，但是这也不是完全没有意义，可以增加攻击成本，尽可能降低攻击带来的损失，毕竟丢了密文比丢了明文要强</p>
-<h5 id="数据安全的原则"><a href="#数据安全的原则" class="headerlink" title="数据安全的原则"></a>数据安全的原则</h5><p>在网络上”不允许”传输用户隐私数据的”明文”<br>在本地”不允许”保存用户隐私数据的”明文”</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/加密/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
