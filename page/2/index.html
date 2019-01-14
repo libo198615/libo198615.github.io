@@ -194,6 +194,404 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MVVM" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/MVVM/">MVVM</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/MVVM/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:08:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="mvc"><a href="#mvc" class="headerlink" title="mvc"></a>mvc</h5><img src="/2019/01/09/MVVM/1.png" title="图片说明">
+<p>典型的 <code>MVC</code> 设置。<code>Model</code> 呈现数据，<code>View</code> 呈现用户界面，而 <code>View Controller</code> 调节它两者之间的交互</p>
+<p>现实中<br><img src="/2019/01/09/MVVM/2.png" title="图片说明"></p>
+<p>在典型的 <code>MVC</code> 应用里，许多逻辑被放在 <code>View Controller</code> 里。它们中的一些确实属于 <code>View Controller</code>，但更多的是所谓的“表示逻辑（presentation logic）”，以 <code>MVVM</code> 属术语来说，就是那些将 <code>Model</code> 数据转换为<code>View</code> 可以呈现的东西的事情，例如将一个 <code>NSDate</code> 转换为一个格式化过的 <code>NSString</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    SUGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;Goods&quot;];</span><br><span class="line">    cell.goods = self.dataSource[indexPath.row];</span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SUGoodsCell.m</span><br><span class="line">@implementation SUGoodsCell</span><br><span class="line">- (void)setGoods:(SUGoods *)goods</span><br><span class="line">&#123;</span><br><span class="line">    _goods = goods</span><br><span class="line">    /// config data ....</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>这个<code>SUGoodsCell</code>，正是由<code>View</code>直接来调用<code>Model</code>，所以事实上典型的<code>MV</code>C的原则已经违背了，但是这种情况是一直发生的甚至于人们不觉得这里有哪些不对。如果严格遵守<code>MVC</code>的话，你会把对<code>cell</code>的设置放在<code>Controller</code>中，不向<code>View</code>传递一个<code>Model</code>对象，这样就会大大增加<code>Controller</code>的体积。</p>
+<h5 id="厚重的View-Controller"><a href="#厚重的View-Controller" class="headerlink" title="厚重的View Controller"></a>厚重的View Controller</h5><p>M：模型model的对象通常非常的简单。根据Apple的文档，model应包括数据和操作数据的业务逻辑。而在实践中，model层往往非常薄，不管怎样，model层的业务逻辑不应被拖入到controller。</p>
+<p>V：视图view通常是UIKit控件。View的如何构建何必让Controller知晓，同时View不应该直接引用model（PS：现实中，你懂的！），并且仅仅通过IBAction事件引用controller。业务逻辑很明显不归入view，视图本身没有任何业务。</p>
+<p>C：控制器controller。Controller是app的“胶水代码”：协调模型和视图之间的所有交互。控制器负责管理他们所拥有的视图的视图层次结构，还要响应视图的loading、appearing、disappearing等等，同时往往也会充满我们不愿暴露的model的模型逻辑以及不愿暴露给视图的业务逻辑。</p>
+<p>网络数据的请求及后续处理，本地数据库操作，以及一些带有工具性质辅助方法都加大了Massive View Controller的产生。</p>
+<h5 id="无处安放的网络逻辑"><a href="#无处安放的网络逻辑" class="headerlink" title="无处安放的网络逻辑"></a>无处安放的网络逻辑</h5><p>苹果使用的MVC的定义是这么说的：所有的对象都可以被归类为一个model，一个view，或是一个controller。</p>
+<p>你可能试着把它放在Model对象里，但是也会很棘手，因为网络调用应该使用异步，这样如果一个网络请求比持有它的model生命周期更长，事情将变的复杂。显然View里面做网络请求那就更格格不入了，因此只剩下Controller了。若这样，这又加剧了Massive View Controller的问题。若不这样，何处才是网络逻辑的家呢？</p>
+<h5 id="较差的可测试性"><a href="#较差的可测试性" class="headerlink" title="较差的可测试性"></a>较差的可测试性</h5><p>由于View Controller混合了视图处理逻辑和业务逻辑，分离这些成分的单元测试成了一个艰巨的任务。若一个Massive View Controller有上万行代码，要你编写个单元测试，我敢保证，你不是想写，你是想死，分分钟填表走人。</p>
+<h5 id="MVVM（Model-View-View-Mode）"><a href="#MVVM（Model-View-View-Mode）" class="headerlink" title="MVVM（Model View View-Mode）"></a>MVVM（Model View View-Mode）</h5><p>MVVM：一个 MVC 的增强版，我们正式连接了视图和控制器，并将表示逻辑从 Controller 移出放到一个新的对象里，即 View Model<br>促进了 UI 代码与业务逻辑的分离。它正式规范了视图和控制器紧耦合的性质<br><img src="/2019/01/09/MVVM/3.png" title="图片说明"></p>
+<p>view 和 view controller 都不能直接引用model，而是引用视图模型（viewModel）</p>
+<p>viewModel 是一个放置用户输入验证逻辑，视图显示逻辑，发起网络请求和其他代码的地方</p>
+<p>使用MVVM会轻微的增加代码量，但总体上减少了代码的复杂性</p>
+<p>MVVM 配合一个绑定机制效果最好</p>
+<p><a href="https://objccn.io/issue-13-1/" target="_blank" rel="noopener">https://objccn.io/issue-13-1/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/MVVM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-组合模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/组合模式/">组合模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/组合模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:07:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用于把一组相似的对象当作一个单一的对象。组合模式依据树形结构来组合对象，用来表示部分以及整体层次<br>例子：<br>公司的员工表<br>创建CEO和创建主管、普通员工一样，只是CEO下有下属列表，里面包括各个主管，主管的下属列表里包含相对应的员工。当打印所有员工时，只打印CEO和他的下属（循环打印）即可，CEO代表了这个树形结构的顶点</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/组合模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-单例模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/单例模式/">单例模式 - 创建型模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/单例模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<p>意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+<p>主要解决：一个全局使用的类频繁地创建与销毁。</p>
+<p>场景：确保程序运行期某个类，只有一份实例，用于进行资源共享控制。<br>实例：[UIApplication sharedApplication]。</p>
+<h5 id="全局变量和单例模式的区别"><a href="#全局变量和单例模式的区别" class="headerlink" title="全局变量和单例模式的区别"></a>全局变量和单例模式的区别</h5><p>全局变量是对一个对象的静态引用，全局变量确实可以提供单例模式实现的全局访问功能，但是它并不能保证应用程序只有一个实例；编码规范也明确的指出应该要少使用全局变量，因为过多的使用全局变量会造成代码难读；全局变量并不能实现继承。</p>
+<p>单例模式虽然在继承上不能很好的处理，但是还是可以实现继承的；单例模式在类中保存了它的唯实例这个类，可以保证只能创建一个实例，同时它还提供了一个访问该唯一实例的全局访问点。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/单例模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-适配器模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/适配器模式/">适配器模式 - 结构型模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/适配器模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:03:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>适配器模式（Adapter Pattern）是作为两个不兼容的接口之间的桥梁。这种类型的设计模式属于结构型模式，它结合了两个独立接口的功能。</p>
+<p>这种模式涉及到一个单一的类，该类负责加入独立的或不兼容的接口功能。举个真实的例子，读卡器是作为内存卡和笔记本之间的适配器。您将内存卡插入读卡器，再将读卡器插入笔记本，这样就可以通过笔记本来读取内存卡。</p>
+<p>意图：将一个类的接口转换成客户希望的另外一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/适配器模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-原型模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/原型模式/">原型模式 - 创建型模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/原型模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原型模式（Prototype Pattern）是用于创建重复的对象，同时又能保证性能。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式是实现了一个原型接口，该接口用于创建当前对象的克隆。当直接创建对象的代价比较大时，则采用这种模式。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/原型模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-工厂模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -565,409 +963,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/09/inline/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/git-tag/">Git Tag</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/git-tag/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/1.png" title="图片说明"></p>
-<p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
-<p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
-<p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/3.png" title="图片说明"></p>
-<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/git-tag/4.png" title="图片说明"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/git-tag/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/在sourceTree中使用rebase/" class="archive-article-date">
-  	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原始状态<br><img src="/2019/01/09/在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/在sourceTree中使用rebase/9.png" title="图片说明"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/在sourceTree中使用rebase/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-制作自己的pod" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/制作自己的pod/">制作自己的pod</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/制作自己的pod/" class="archive-article-date">
-  	<time datetime="2019-01-09T06:56:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-在github上创建一个空白工程-APPHelp，克隆到本地"><a href="#1-在github上创建一个空白工程-APPHelp，克隆到本地" class="headerlink" title="1. 在github上创建一个空白工程 APPHelp，克隆到本地"></a>1. 在github上创建一个空白工程 <code>APPHelp</code>，克隆到本地</h2><h2 id="2-在终端-cd-到-APPHelp-目录，执行"><a href="#2-在终端-cd-到-APPHelp-目录，执行" class="headerlink" title="2. 在终端 cd 到 APPHelp 目录，执行"></a>2. 在终端 cd 到 <code>APPHelp</code> 目录，执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create APPHelp</span><br></pre></td></tr></table></figure>
-<p>会创建 <code>APPHelp.podspec</code><br><br>使用xcode打开，可以看里面的注释，我这里放一个自己使用的精简版的，可以对照着改<br>里面的注释被我删掉了，可能是我用的注释格式不正确“//   #”,注意点都写在了下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Pod::Spec.new do |s|</span><br><span class="line"></span><br><span class="line">s.name         = &quot;APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.version      = &quot;0.0.1&quot;</span><br><span class="line"></span><br><span class="line">s.summary      = &quot;app开发常用知识点收集&quot;</span><br><span class="line"></span><br><span class="line">s.homepage     = &quot;https://github.com/libo198615/APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.license = &#123; :type =&gt; &apos;MIT&apos;, :text =&gt; &lt;&lt;-LICENSE</span><br><span class="line">Copyright PPAbner 2016-2017</span><br><span class="line">LICENSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s.author             = &#123; &quot;boli&quot; =&gt; &quot;libo198615@163.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.platform     = :ios</span><br><span class="line"></span><br><span class="line">s.source       = &#123; :git =&gt; &quot;https://github.com/libo198615/APPHelp.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.source_files  = &quot;Pod/**/*&quot;</span><br><span class="line"></span><br><span class="line">s.public_header_files = &quot;Pod/**/*.h&quot;</span><br><span class="line"></span><br><span class="line">s.requires_arc = true</span><br><span class="line"></span><br><span class="line">s.ios.deployment_target = &quot;8.0&quot;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
-<h2 id="3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag"><a href="#3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag" class="headerlink" title="3. 将 APPHelp.podspec和你自己的文件提交到github，创建APPHelp.podspec中相应的 0.0.1的分支或者tag"></a>3. 将 <code>APPHelp.podspec</code>和你自己的文件提交到github，创建<code>APPHelp.podspec</code>中相应的 <code>0.0.1</code>的分支或者tag</h2><p>里面的内容需要改成自己的信息，其中s.source_files和s.public_header_files中如果有其它文件夹，要用两个*，不然也会报错，应该是正则匹配的问题，这里不深究了。</p>
-<h2 id="4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方"><a href="#4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方" class="headerlink" title="4. 执行下面命令，验证APPHelp.podspec是否正确，如果有错误请细读一下APPHelp.podspec看是否有设置不对的地方"></a>4. 执行下面命令，验证<code>APPHelp.podspec</code>是否正确，如果有错误请细读一下<code>APPHelp.podspec</code>看是否有设置不对的地方</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec lint APPHelp.podspec</span><br></pre></td></tr></table></figure>
-<h2 id="5-提交-APPHelp-podspec-到-CocoaPods"><a href="#5-提交-APPHelp-podspec-到-CocoaPods" class="headerlink" title="5. 提交 APPHelp.podspec 到 CocoaPods"></a>5. 提交 <code>APPHelp.podspec</code> 到 <code>CocoaPods</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果是第一次提交，需要注册一下</span><br><span class="line">$ pod trunk register 邮箱 &apos;昵称&apos; --description=&apos; 这里写描述&apos;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push APPHelp.podspec</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/制作自己的pod/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-flutter" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/08/flutter/">flutter</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/08/flutter/" class="archive-article-date">
-  	<time datetime="2019-01-08T10:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h5><p>打开$HOME/.bash_profile(在你的/Users/.bash_profile目录下，如果没有，可以新建，可以使用command+shift+.组合健来显示与隐藏文件)文件，加入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL=https://pub.flutter-io.cn </span><br><span class="line">export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn</span><br><span class="line">export PATH=[你克隆 Flutter 仓库的路径]/flutter/bin:$PATH</span><br></pre></td></tr></table></figure></p>
-<p>保存，运行 <code>source $HOME/.bash_profile</code> 刷新当前窗口。</p>
-<ul>
-<li>brew<br>镜像：<code>git remote set-url origin https://git.coding.net/homebrew/homebrew.git</code></li>
-</ul>
-<p>brew update  error<br>Error: An unexpected error occurred during the <code>brew link</code> step<br>The formula built, but is not symlinked into /usr/local<br>Permission denied @ dir_s_mkdir - /usr/local/Frameworks<br>Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /usr/local/Frameworks</span><br><span class="line">sudo chown $(whoami):admin /usr/local/Frameworks</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>material 一种标准的移动端和web端的视觉设计语言</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter/material.dart&apos;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>=&gt; Dart 中单行函数或方法的简写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void main() =&gt; runApp(new MyApp());</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<ul>
-<li>使用外部包(package)</li>
-</ul>
-<p>在<code>pubspec.yaml</code>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">english_works: ^3.1.0</span><br></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">package get</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
-<p>引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:english_words/english_words.dart&apos;;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="Statefulwidge-有状态的部件"><a href="#Statefulwidge-有状态的部件" class="headerlink" title="Statefulwidge 有状态的部件"></a><code>Statefulwidge</code> 有状态的部件</h4><p>需要两个类</p>
-<ol>
-<li><code>StatefulWidget</code> 不可变</li>
-<li><code>State</code> 在widget声明周期始终存在<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class RandomWords extends StatefulWidget &#123;</span><br><span class="line">    @override</span><br><span class="line">    createState() =&gt; new RandomWordsState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class RandomWordsState extends State&lt;RandomWords&gt; &#123;</span><br><span class="line">    @override</span><br><span class="line">    Widget build(BuildContext context) &#123;</span><br><span class="line">        final wordPair = new WordPair.randow();</span><br><span class="line">        return new Text(wordPair.asPascalCase);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">body: new Center (</span><br><span class="line">    child: new RandomWords(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="创建一个无限滚动的-ListView"><a href="#创建一个无限滚动的-ListView" class="headerlink" title="创建一个无限滚动的 ListView"></a>创建一个无限滚动的 <code>ListView</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class RandomWordsState extens State &lt;RandomWords&gt; &#123;</span><br><span class="line">    // _开始的变量会强制变成私有的</span><br><span class="line">    final _suggestions = &lt;WordPair&gt;[];</span><br><span class="line">    final _biggerFont = const TextStyle(fontSize: 18.0);</span><br><span class="line"></span><br><span class="line">    // 此方法构建显示建议单词对的ListView</span><br><span class="line">    Widget _buildSuggestions() &#123;</span><br><span class="line">        return new ListView.buider(</span><br><span class="line">            padding: const EdgeInsets.all(16.0),</span><br><span class="line"></span><br><span class="line">            itemBuilder:(context, i) &#123;</span><br><span class="line">                // 在每一列之前，添加一个1像素高的分割线 widget</span><br><span class="line">                if (i.isOdd) return new Divider();</span><br><span class="line"></span><br><span class="line">                final index = i ~/ 2; // 除法</span><br><span class="line">                if (index &gt;= _suggestions.length) &#123;</span><br><span class="line">                    _suggestions.allAll(generateWordPairs().take(10));</span><br><span class="line">                &#125;</span><br><span class="line">                return _buildRow(_sugestions[index]);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 对于每一个单词对，_buildSuggestions函数都会调用一次_buildRow</span><br><span class="line">    Widget _buildRow(WordPair pair) &#123;</span><br><span class="line">        return new ListTitle(</span><br><span class="line">            title: new Text(</span><br><span class="line">                pair.asPascalCase,</span><br><span class="line">                style: _biggerFont,</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/08/flutter/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-深入理解计算机系统" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/07/深入理解计算机系统/">深入理解计算机系统</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/07/深入理解计算机系统/" class="archive-article-date">
-  	<time datetime="2019-01-07T08:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="静态连接"><a href="#静态连接" class="headerlink" title="静态连接"></a>静态连接</h5><ul>
-<li>符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来</li>
-<li>重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
-</ul>
-<h5 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h5><ul>
-<li>可重定位目标文件</li>
-<li>可执行目标文件</li>
-<li>共享目标文件<br>编译器和汇编器生成可重定位目标文件包括共享目标文件<br>连接器生成可执行目标文件</li>
-</ul>
-<h5 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h5><p>共享库是一个目标模块，在运行或加载时，可以加载到任意的内存地址，并和一个在内存中的程序链接起来。在<code>Linux</code>系统中通常用<code>.so</code>后缀来表示。</p>
-<ul>
-<li>共享方式<br>对于一个库只有一个<code>.so</code>文件。所有引用该库的可执行目标文件共享这个<code>.so</code>文件中的代码和数据，而不是像静态库的内容那样被复制和嵌入到引用它们的可执行文件中。<br>在内存中，一个共享库的<code>.text</code>节的一个副本可以被不同的正在运行的进程共享。</li>
-</ul>
-<p>当加载器加载和运行可执行文件<code>A</code>时，注意到其中包含一个<code>.interp</code>节，这一节包含动态连接器的路径名，动态连接器本身就是一个共享目标（Linux系统上是ld-linux.xo）。加载器不会像它通常所做地那样将控制传递给应用，而是加载和运行这个动态连接器。然后动态连接器通过执行重定位完成连接任务，最后将控制传递给应用程序。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/07/深入理解计算机系统/">展开全文 >></a>
         </p>
       
 
