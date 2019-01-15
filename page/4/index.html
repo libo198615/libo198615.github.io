@@ -194,6 +194,540 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SHELL命令" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/06/SHELL命令/">SHELL命令</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/06/SHELL命令/" class="archive-article-date">
+  	<time datetime="2019-01-06T15:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h5><p>选项与参数：</p>
+<ul>
+<li>-m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～</li>
+<li>-p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！</li>
+</ul>
+<p>在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -m 700 /usr/meng/test</span><br></pre></td></tr></table></figure></p>
+<p>在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、执行，同组用户可读和执行，其他用户无权访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p-m 750 bin/os_1</span><br></pre></td></tr></table></figure></p>
+<h5 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 删除 models文件夹 和里面所有内容</span><br><span class="line">rm -rf models</span><br></pre></td></tr></table></figure>
+<p>选项与参数：</p>
+<ul>
+<li>-f ：就是 force 的意思，忽略不存在的文件，不会出现警告信息；</li>
+<li>-i ：互动模式，在删除前会询问使用者是否动作</li>
+<li>-r ：递归删除啊！最常用在目录的删除了！这是非常危险的选项！！！</li>
+</ul>
+<p>将刚刚在 cp 的范例中创建的 bashrc 删除掉！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -i bashrc</span><br><span class="line">rm: remove regular file `bashrc&apos;? y</span><br></pre></td></tr></table></figure></p>
+<p>如果加上 -i 的选项就会主动询问喔，避免你删除到错误的档名！</p>
+<h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h5><p>删除空文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir -p aa/bb // 如果删除bb后aa为空目录，则将aa一并删除</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -d &quot;MGFacepp/build&quot; ]; then</span><br><span class="line">    rm -rf MGFacepp/build</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h5 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 调到当前目录的上上两层</span><br><span class="line">cd ../..</span><br></pre></td></tr></table></figure>
+<p><code>cd</code> (切换目录)</p>
+<p><code>cd</code>是<code>Change Directory</code>的缩写，这是用来变换工作目录的命令。</p>
+<h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h5><p>文件夹重名要先删除已经存在的文件夹  jenkins 和 终端 有区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp -r test/ newTest</span><br><span class="line">YES|cp -r test/ newTest 有重名文件则覆盖</span><br></pre></td></tr></table></figure></p>
+<p>选项与参数：</p>
+<ul>
+<li><strong>-i：</strong>若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</li>
+<li><strong>-p：</strong>连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</li>
+<li><strong>-r：</strong>递归持续复制，用於目录的复制行为；(常用)</li>
+</ul>
+<h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a // 显示所有档案及目录</span><br></pre></td></tr></table></figure>
+<p>选项与参数：</p>
+<ul>
+<li>-a ：全部的文件，连同隐藏档</li>
+<li>-l ：长数据串列出，包含文件的属性与权限等等数据；</li>
+</ul>
+<h5 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h5><ul>
+<li><p>显示普通字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;name&quot; // name</span><br><span class="line">echo name   // name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示转义字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;\&quot;name\&quot;&quot; // &quot;name&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read name // 从命令行读取用户输入</span><br><span class="line">echo &quot;your name is $name&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示换行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo -e &quot;OK! \n&quot; # -e 开启转义</span><br><span class="line">echo hello</span><br><span class="line"></span><br><span class="line">OK!</span><br><span class="line"></span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo `date`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><ul>
+<li>-H或–with-filename 在显示符合范本样式的那一列之前，表示该列所属的文件名称。</li>
+<li>-l或–file-with-matches 列出文件内容符合指定的范本样式的文件名称。</li>
+<li>-L或–files-without-match 列出文件内容不符合指定的范本样式的文件名称。</li>
+<li>-n或–line-number 在显示符合范本样式的那一列之前，标示出该列的列数编号。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">grep -Hn  &apos;print&apos;  pack_all.py</span><br><span class="line"></span><br><span class="line">pack_all.py:36:    print (&quot;########### read modle info ############&quot;)</span><br><span class="line">pack_all.py:38:        print(line)</span><br><span class="line">pack_all.py:60:    print (&quot;model info = %s&quot; % model_info)</span><br><span class="line">pack_all.py:78:    print (confsList)</span><br><span class="line">pack_all.py:80:    print (&quot;confsList = %s&quot; % (confsList))</span><br><span class="line">pack_all.py:82:    print (&quot;confs_real = %s&quot; % confs_real)</span><br><span class="line">pack_all.py:88:    print (config_offsets)</span><br><span class="line">pack_all.py:94:        print (&quot;confs_real.len = %s&quot; % len(confs_real))</span><br><span class="line">pack_all.py:102:        print (&quot;json_str length = %s&quot; % len(json_str))</span><br><span class="line">pack_all.py:111:        print (&quot;config_size_map = %s&quot; % config_size_map)</span><br><span class="line">pack_all.py:113:#            print(x, config_size_map[x], model_dict[real2fake[x]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="lipo"><a href="#lipo" class="headerlink" title="lipo"></a>lipo</h5><ul>
+<li><p>查看静态库支持的CPU架构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info file.a</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>合并静态度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lipo -create 静态库路径1  静态库路径2   -output 整合后的静态库路径</span><br><span class="line"></span><br><span class="line">lipo -create file1.a file2.a  -output  newFile.a</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静态库拆分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo file.a  -thin  armv7  -output armv7.a</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="ln-软链接"><a href="#ln-软链接" class="headerlink" title="ln 软链接"></a>ln 软链接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd 到要软链接到的目录</span><br><span class="line">ln -s ../../../要链接的文件</span><br><span class="line">// 按两下 tab 键可以显示../../ 目录下文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s // symbolic link</span><br><span class="line">ln  // hard link</span><br></pre></td></tr></table></figure>
+<p>文件分为用户数据 (user data) 与元数据 (metadata)。<br>用户数据，即文件数据块 (data block)，数据块是记录文件真实内容的地方；<br>而元数据则是文件的附加属性，如文件大小、创建时间、所有者等信息。在 Linux 中，元数据中的 inode 号（inode 是文件元数据的一部分但其并不包含文件名，inode 号即索引节点号）才是文件的唯一标识而非文件名。文件名仅是为了方便人们的记忆和使用，系统或程序通过 inode 号寻找正确的文件数据块</p>
+<p>硬链接或软链接都不会将原始文档复制一份<br>软连接以路径的形式存在，可以对目录进行链接，<br>硬链接以文件副本的形式存在，但不占用实际空间，删除原始文件后，硬链接不受影响<br>硬链接、软链接有不同的元数据。 软链接有不同的inode号，硬链接有相同的inode号，所以硬链接限制更多，不能跨操作系统。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 拖拽多个文件</span><br><span class="line">ln -s 拖拽的多个文件 目标文件夹</span><br></pre></td></tr></table></figure>
+<h5 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h5><p>print working directory 打印当前工作目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br><span class="line">/Users/megvii/....</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 将当前目录压入堆栈</span><br><span class="line">pushd `pwd`</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pushd：</li>
+</ul>
+<ul>
+<li><p>切换到作为参数的目录，并把原目录和当前目录压入到一个虚拟的堆栈中</p>
+</li>
+<li><p>如果不指定参数，则会回到前一个目录，并把堆栈中最近的两个目录作交换</p>
+</li>
+</ul>
+<ul>
+<li>popd： </li>
+</ul>
+<ul>
+<li>切换到堆栈中第二目录中，并将堆栈中最近的目录弹出</li>
+</ul>
+<ul>
+<li>dirs: </li>
+</ul>
+<ul>
+<li>列出当前堆栈中保存的目录列表</li>
+</ul>
+<p>-v参数可以在目录前加上编号<br>我们可以看到:最近压入堆栈的目录位于最上面<br>在最近的两个目录之间切换:用pushd不加参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">pushd /boot/grub/</span><br><span class="line">/boot/grub /usr/share/kde4/apps/kget /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /boot/grub</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">pushd</span><br><span class="line">/usr/share/kde4/apps/kget /boot/grub /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /usr/share/kde4/apps/kget</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">pushd</span><br><span class="line">/boot/grub /usr/share/kde4/apps/kget /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /boot/grub</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">如何把目录从堆栈中删除?用popd即可</span><br><span class="line"></span><br><span class="line">dirs -v</span><br><span class="line">0  /usr/local/sbin</span><br><span class="line">1  ~</span><br><span class="line">2  /boot/grub</span><br><span class="line">3  /usr/share/kde4/apps/kget</span><br><span class="line"></span><br><span class="line">popd</span><br><span class="line">~ /boot/grub /usr/share/kde4/apps/kget</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/share/kde4/apps/kget</span><br><span class="line"></span><br><span class="line">popd +1</span><br><span class="line">~ /usr/share/kde4/apps/kget</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br></pre></td></tr></table></figure></p>
+<p>说明：可以看到popd不加参数的运行情况:popd把堆栈顶端的目录从堆栈中删除，并切换于位于新的顶端的目录<br>说明之二: popd 加有参数 +n时，n是堆栈中的第n个目录，表示把堆栈中第n个目录从堆栈中删除<br>dirs可以清空目录堆栈 用 -c参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/share/kde4/apps/kget</span><br><span class="line">dirs -c</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br></pre></td></tr></table></figure></p>
+<h5 id="strings"><a href="#strings" class="headerlink" title="strings"></a>strings</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 是否包含 aaa 不区分大小写</span><br><span class="line">strings file | grep -i aaa</span><br></pre></td></tr></table></figure>
+<h5 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h5><p>以系统管理者的身份执行命令</p>
+<h5 id="tree"><a href="#tree" class="headerlink" title="tree"></a>tree</h5><p>以树状图列出目录内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -C // 在文件和目录清单上加上色彩，便于区分各种类型</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -L 2</span><br></pre></td></tr></table></figure>
+<h5 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h5><ul>
+<li>插入模式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i 进入</span><br><span class="line">esc 退出</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 终端进入vim</span><br><span class="line">vim  进入</span><br><span class="line">1. esc  </span><br><span class="line">2. :wq(保存退出) / :q!(不保存退出)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 终端下</span><br><span class="line">vim test.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./test.sh  #使脚本具有执行权限</span><br><span class="line">./test.sh  #执行脚本</span><br></pre></td></tr></table></figure>
+<h5 id="zip-tar"><a href="#zip-tar" class="headerlink" title="zip  tar"></a>zip  tar</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 将 /home/html/目录下的所有文件夹和文件打包为当前目录下的 html.zip</span><br><span class="line">zip -q -r html.zip /home/html</span><br><span class="line">// -q 不显示指令执行过程</span><br><span class="line">// -r 递归处理</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 压缩 a.c 为 test.tar</span><br><span class="line">tar -czvf test.tar a.c</span><br><span class="line">// -c (--create)建立新的备份文件</span><br><span class="line">// -z (--gzip)(--ungzip)通过gzip指令处理备份文件</span><br><span class="line">// -v (--verbose)显示指令执行过程</span><br><span class="line">// -f (--file)指定备份文件</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 解压文件</span><br><span class="line">tar -xzvf test.tar a.c</span><br><span class="line">// -x (--extract)(-get)从备份文件中还原文件</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SHELL命令//" class="article-tag-list-link color3">SHELL命令</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/06/SHELL命令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-定时器" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/06/定时器/">定时器</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/06/定时器/" class="archive-article-date">
+  	<time datetime="2019-01-06T14:57:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="创建方法比较"><a href="#创建方法比较" class="headerlink" title="创建方法比较"></a>创建方法比较</h5><img src="/2019/01/06/定时器/1.png" title="图片说明">
+<p>如果你想使用<code>timerWithTimeInterval</code>或<code>initWithFireDate</code>的话, 需要使用<code>NSRunloop</code>的以下方法将NSTimer加入到runloop中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)addTimer:(NSTimer *)aTimer forMode:(NSString *)mode</span><br></pre></td></tr></table></figure></p>
+<img src="/2019/01/06/定时器/2.png" title="图片说明">
+<h5 id="invalide"><a href="#invalide" class="headerlink" title="invalide"></a>invalide</h5><img src="/2019/01/06/定时器/3.png" title="图片说明">
+<h5 id="runloop"><a href="#runloop" class="headerlink" title="runloop"></a>runloop</h5><p>是创建NSTimer, 加入到runloop后, 除了ViewController之外iOS系统也会强引用NSTimer对象<br><img src="/2019/01/06/定时器/4.png" title="图片说明"><br>当调用invalidate方法时, 移除runloop后, iOS系统会解除对NSTimer对象的强引用, 当ViewController销毁时, ViewController和NSTimer就都可以释放了<br><img src="/2019/01/06/定时器/5.png" title="图片说明"></p>
+<h5 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h5><p>// 在 ViewWillDisappear<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[_timer invalidate];// 真正销毁NSTimer对象的地方</span><br><span class="line">_timer=nil;// 对象置nil是一种规范和习惯</span><br></pre></td></tr></table></figure></p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>将target设置为 weakSelf // 不行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) UIViewController *superViewController;</span><br><span class="line"></span><br><span class="line">// 将weakSelf 赋值给 superViewController 和将self 赋值给 superViewController 是一样的</span><br><span class="line">// superViewController 本身是强引用 </span><br><span class="line">// block结构体把weakSelf作为了自己的属性,直接引用了weakSelf内存空间中保存的self指针,而这个weakSelf并没有增加self的引用计数,所以self依然可以释放.如果说这样就砍断了循环引用</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>block<br>使用block的形式替换掉原先的“target-selector”方式，打断_timer对于其他对象的引用。<br>官方已经在iOS10之后加入了新的api，从而支持了block形式创建timer：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MSWeakTimer<br>使用GCD来实现，没有引用循环的问题并且线程安全。</p>
+</li>
+<li>category<br>1.为NSTimer添加一个Category方法<br>NSTimer+WeakTimer.h<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)zx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>NSTimer+WeakTimer.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)zx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler</span><br><span class="line">&#123;</span><br><span class="line">return [self scheduledTimerWithTimeInterval:timeInterval</span><br><span class="line">target:self</span><br><span class="line">selector:@selector(handlerBlockInvoke:)</span><br><span class="line">userInfo:[handler copy]</span><br><span class="line">repeats:repeats];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)handlerBlockInvoke:(NSTimer *)timer</span><br><span class="line">&#123;</span><br><span class="line">void (^block)() = timer.userInfo;</span><br><span class="line">if (block) &#123;</span><br><span class="line">block();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.如何使用这个Category方法<br>创建一个NSTimer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)startPolling</span><br><span class="line">&#123;</span><br><span class="line">__weak typeof(self)weakSelf = self;</span><br><span class="line">self.timer = [NSTimer zx_scheduledTimerWithTimeInterval:5.0 repeats:YES handlerBlock:^void(void)&#123;</span><br><span class="line">__strong typeof(weakSelf)strongSelf = weakSelf;</span><br><span class="line">[strongSelf doPolling];</span><br><span class="line">&#125;];</span><br><span class="line">&#125;</span><br><span class="line">执行轮询任务slector</span><br><span class="line"></span><br><span class="line">- (void)doPolling</span><br><span class="line">&#123;</span><br><span class="line">//Todo...;</span><br><span class="line">&#125;</span><br><span class="line">销毁NSTimer对象</span><br><span class="line"></span><br><span class="line">- (void)stopPolling</span><br><span class="line">&#123;</span><br><span class="line">[self.timer invalidate];</span><br><span class="line">self.timer = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc</span><br><span class="line">&#123;</span><br><span class="line">[self.timer invalidate];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>计时器现在的targer是NSTimer类对象。这段代码先是定义了个弱引用，令其指向self,然后block捕获这个引用，而不直接去捕获普通的self变量，也就是说self不会为计时器所保留。当block开始执行时，立刻生成strong强引用，以保证实例在执行期间持续存活，不被释放。</p>
+<p>采用这种写法后，外界指向NSTimer的实例最后一个引用被释放后，则创建NSTimer的实例也随之被系统回收。</p>
+<h5 id="不准原因分析："><a href="#不准原因分析：" class="headerlink" title="不准原因分析："></a>不准原因分析：</h5><p>定时器被添加在主线程中，由于定时器在一个RunLoop中被检测一次，所以如果在这一次的RunLoop中做了耗时的操作，当前RunLoop持续的时间超过了定时器的间隔时间，那么下一次定时就被延后了。<br>解决方法：<br>1、在子线程中创建timer，在主线程进行定时任务的操作<br>2、在子线程中创建timer，在子线程中进行定时任务的操作，需要UI操作时切换回主线程进行操作</p>
+<ul>
+<li>CADisplayLink<br>CADisplayLink是一个频率能达到屏幕刷新率的定时器类。iPhone屏幕刷新频率为60帧/秒，也就是说最小间隔可以达到1/60s。</li>
+<li>GCD定时器<br>我们知道，RunLoop是dispatch_source_t实现的timer，所以理论上来说，GCD定时器的精度比NSTimer只高不低。</li>
+</ul>
+<h5 id="CADisplayLink"><a href="#CADisplayLink" class="headerlink" title="CADisplayLink"></a>CADisplayLink</h5><p>CADisplayLink是基于屏幕刷新的周期，所以其一般很准时，每秒刷新60次。其本质也是通过RunLoop，所以不难看出，当RunLoop选择其他模式或被耗时操作过多时，仍旧会造成延迟。<br>其使用步骤为 创建CADisplayLink-&gt;添加至RunLoop中-&gt;终止-&gt;销毁。代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建CADisplayLink</span><br><span class="line">CADisplayLink *disLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(linkMethod)];</span><br><span class="line">// 添加至RunLoop中</span><br><span class="line">[disLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];</span><br><span class="line">// 终止定时器</span><br><span class="line">[disLink invalidate];</span><br><span class="line">// 销毁对象</span><br><span class="line">disLink = nil;</span><br></pre></td></tr></table></figure></p>
+<p>在日常开发中，适当使用CADisplayLink甚至有优化作用。比如对于需要动态计算进度的进度条，由于起进度反馈主要是为了UI更新，那么当计算进度的频率超过帧数时，就造成了很多无谓的计算。如果将计算进度的方法绑定到CADisplayLink上来调用，则只在每次屏幕刷新时计算进度，优化了性能。MBProcessHUB则是利用了这一特性。</p>
+<h5 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h5><p>GCD定时器是<code>dispatch_source_t</code>类型的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/** 创建定时器对象</span><br><span class="line">* para1: DISPATCH_SOURCE_TYPE_TIMER 为定时器类型</span><br><span class="line">* para2-3: 中间两个参数对定时器无用</span><br><span class="line">* para4: 最后为在什么调度队列中使用</span><br><span class="line">*/</span><br><span class="line">_gcdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));</span><br><span class="line">/** 设置定时器</span><br><span class="line">* para2: 任务开始时间</span><br><span class="line">* para3: 任务的间隔</span><br><span class="line">* para4: 可接受的误差时间，设置0即不允许出现误差</span><br><span class="line">* Tips: 单位均为纳秒</span><br><span class="line">*/</span><br><span class="line">dispatch_source_set_timer(_gcdTimer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);</span><br><span class="line">/** 设置定时器任务</span><br><span class="line">* 可以通过block方式</span><br><span class="line">* 也可以通过C函数方式</span><br><span class="line">*/</span><br><span class="line">dispatch_source_set_event_handler(_gcdTimer, ^&#123;</span><br><span class="line">static int gcdIdx = 0;</span><br><span class="line">NSLog(@&quot;GCD Method: %d&quot;, gcdIdx++);</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">if(gcdIdx == 5) &#123;</span><br><span class="line">// 终止定时器</span><br><span class="line">dispatch_suspend(_gcdTimer);</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line">// 启动任务，GCD计时器创建后需要手动启动</span><br><span class="line">dispatch_resume(_gcdTimer);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>GCD更准时的原因<br>通过观察代码，我们可以发现GCD定时器实际上是使用了dispatch源(dispatch source)，dispatch源监听系统内核对象并处理。<code>dispatch</code>类似生产者消费者模式，通过监听系统内核对象，在生产者生产数据后自动通知相应的<code>dispatch</code>队列执行，后者充当消费者。通过系统级调用，更加精准。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/06/定时器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-生命周期" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/06/生命周期/">生命周期</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/06/生命周期/" class="archive-article-date">
+  	<time datetime="2019-01-06T13:38:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="ios程序启动"><a href="#ios程序启动" class="headerlink" title="ios程序启动"></a>ios程序启动</h5><img src="/2019/01/06/生命周期/1.png" title="图片说明">
+<h5 id="UIViewController-的-生命周期"><a href="#UIViewController-的-生命周期" class="headerlink" title="UIViewController 的 生命周期"></a>UIViewController 的 生命周期</h5><p>#pragma mark — life circle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 第一步都走这个方法，不要在这里做View相关操作，View在loadView方法中才初始化</span><br><span class="line">- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil &#123;</span><br><span class="line">NSLog(@&quot;%s&quot;, __FUNCTION__);</span><br><span class="line">if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 如果连接了串联图storyBoard 走这个方法</span><br><span class="line">- (instancetype)initWithCoder:(NSCoder *)aDecoder &#123;</span><br><span class="line">NSLog(@&quot;%s&quot;, __FUNCTION__);</span><br><span class="line">if (self = [super initWithCoder:aDecoder]) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// xib 加载 完成</span><br><span class="line">// 所有视图的outlet和action已经连接，但还没有被确定</span><br><span class="line">- (void)awakeFromNib &#123;</span><br><span class="line">[super awakeFromNib];</span><br><span class="line">NSLog(@&quot;%s&quot;, __FUNCTION__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 加载视图(默认从nib)</span><br><span class="line">/*</span><br><span class="line">当执行到loadView方法时，如果视图控制器是通过nib创建，那么视图控制器已经从nib文件中被解档并创建好了，接下来任务就是对view进行初始化。</span><br><span class="line"></span><br><span class="line">loadView方法在UIViewController对象的view被访问且为空的时候调用。这是它与awakeFromNib方法的一个区别。</span><br><span class="line">假设我们在处理内存警告时释放view属性:self.view = nil。因此loadView方法在视图控制器的生命周期内可能被调用多次。</span><br><span class="line">loadView方法不应该直接被调用，而是由系统调用。它会加载或创建一个view并把它赋值给UIViewController的view属性。</span><br><span class="line"></span><br><span class="line">在创建view的过程中，首先会根据nibName去找对应的nib文件然后加载。如果nibName为空或找不到对应的nib文件，则会创建一个空视图(这种情况一般是纯代码)</span><br><span class="line"></span><br><span class="line">注意:在重写loadView方法的时候，不要调用父类的方法。</span><br><span class="line">*/</span><br><span class="line">- (void)loadView &#123;</span><br><span class="line">NSLog(@&quot;%s&quot;, __FUNCTION__);</span><br><span class="line">self.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];</span><br><span class="line">self.view.backgroundColor = [UIColor redColor];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 视图控制器中的视图加载完成，viewController自带的view加载完成</span><br><span class="line">// 当loadView将view载入内存中，会进一步调用viewDidLoad方法来进行进一步设置。此时，视图层次已经放到内存中，通常，我们对于各种初始化数据的载入，初始设定、修改约束、移除视图等很多操作都可以这个方法中实现。</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">NSLog(@&quot;%s&quot;, __FUNCTION__);</span><br><span class="line">[super viewDidLoad];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewWillAppear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">// view 即将布局其Subviews。 比如view的bounds改变了</span><br><span class="line">- (void)viewWillLayoutSubviews &#123;&#125;</span><br><span class="line"></span><br><span class="line">// view 已经布局其 Subviews</span><br><span class="line">- (void)viewDidLayoutSubviews &#123;&#125;</span><br><span class="line"></span><br><span class="line">//视图已经出现</span><br><span class="line">- (void)viewDidAppear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">//视图将要消失</span><br><span class="line">- (void)viewWillDisappear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">//视图已经消失</span><br><span class="line">- (void)viewDidDisappear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">//出现内存警告  //模拟内存警告:点击模拟器-&gt;hardware-&gt; Simulate Memory Warning</span><br><span class="line">- (void)didReceiveMemoryWarning &#123;</span><br><span class="line">NSLog(@&quot;%s&quot;, __FUNCTION__);</span><br><span class="line">[super didReceiveMemoryWarning];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 视图被销毁</span><br><span class="line">- (void)dealloc &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="main-之前"><a href="#main-之前" class="headerlink" title="main()之前"></a>main()之前</h5><ol>
+<li>二进制文件初始化</li>
+<li>交由ImageLoader 读取image，其中包含了我们的类，方法等各种符号（Class、Protocol 、Selector、 IMP）</li>
+<li>接下来load_images 中调用call_load_methods方法，遍历所有加载进来的Class，按继承层次依次调用Class的+load和其他Category的+load方法<h5 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h5><h5 id="main-之后"><a href="#main-之后" class="headerlink" title="main() 之后"></a>main() 之后</h5></li>
+<li>UIApplicationMain</li>
+</ol>
+<ul>
+<li><p>创建UIApplication对象</p>
+</li>
+<li><p>创建UIApplication的delegate对象</p>
+</li>
+</ul>
+<ol start="2">
+<li>delegate对象开始处理(监听)系统事件(没有storyboard)</li>
+</ol>
+<ul>
+<li><p>程序启动完毕的时候, 就会调用代理的application:didFinishLaunchingWithOptions:方法</p>
+</li>
+<li><p>在application:didFinishLaunchingWithOptions:中创建UIWindow</p>
+</li>
+<li><p>创建和设置UIWindow的rootViewController</p>
+</li>
+<li><p>显示窗口</p>
+</li>
+</ul>
+<p>3.根据Info.plist获得最主要storyboard的文件名,加载最主要的storyboard(有storyboard)</p>
+<ul>
+<li><p>创建UIWindow</p>
+</li>
+<li><p>创建和设置UIWindow的rootViewController</p>
+</li>
+<li><p>显示窗口</p>
+</li>
+</ul>
+<h5 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h5><ul>
+<li>预编译<br>预编译主要用来处理那些源文件中以 #开头的预编译命令，比如#include等</li>
+<li>语义分析<br>语义分析主要做的事情就是类型检查、以及符号表管理</li>
+<li>生成中间代码<br>编译器前端负责产生机器无关的中间代码，编译器后端负责对中间代码进行优化并转化为目标机器代码</li>
+<li>目标代码的生成与优化<br>编译器后端主要包括代码生成器、代码优化器。代码生成器将中间代码转换为目标代码，代码优化器主要是进行一些优化，比如删除多余指令，选择合适寻址方式等</li>
+<li>汇编<br>目标代码需要经过汇编器处理，才能变成机器上可以执行的指令。生成对应的.o文件</li>
+<li>链接<br>链接器（这里指的是静态链接器）将多个目标文件合并为一个可执行文件，</li>
+<li>代码签名</li>
+<li>启动<br>加载所依赖的dylibs</li>
+</ul>
+<h5 id="view"><a href="#view" class="headerlink" title="view"></a>view</h5><p>1.UIView生命周期加载阶段。在loadView阶段（内存加载阶段），先是把自己本身都加到superView上面，再去寻找自己的subView并依次添加。到此为止，只和addSubview操作有关，和是否显示无关。等到所有的subView都在内存层面加载完成了，会调用一次viewWillAppear，然后会把加载好的一层层view，分别绘制到window上面。然后layoutSubview，DrawRect，加载即完成。</p>
+<p>2.UIView生命周期移除阶段。会先依次移除本view的moveToWindow，然后依次移除所有子视图，掉他们的moveToWindow，view就在window上消失不见了，然后在removeFromSuperView，然后dealloc，dealloc之后再removeSubview。（但不理解为什么dealloc之后再removeSubview）</p>
+<p>3.如果没有子视图，则不会接收到didAddSubview和willRemoveSubview消息。</p>
+<p>4.和superView，window相关的方法，可以通过参数（superView/window）或者self.superView/self.window,判断是创建还是销毁，如果指针不为空，是创建，如果为空，就是销毁。这四个方法，在整个view的生命周期中，都会被调用2次，一共是8次。</p>
+<p>5.removeFromSuperview和dealloc在view的生命周期中，调且只调用一次，可以用来removeObserver，移除计时器等操作。（layoutSubview可能会因为子视图的调整，多次调用)</p>
+<p>6.UIView是在被加到自己的父视图上之后，才开始会寻找添加自己的子视图（数据层面的添加，并不是加到window上面）。UIView是在调用dealloc中，移除自己的子视图，所有子视图移除并销毁内存之后，才会销毁自己的内存，dealloc完成。</p>
+<ul>
+<li>使用init方法初始化View<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIView *view = [UIView alloc] init];</span><br><span class="line">[self.view addSubView:view];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>依次输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initWithFrame:  </span><br><span class="line">init  </span><br><span class="line">setNeedsLayout  </span><br><span class="line">layoutSubviews</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>使用initWithFrame:初始化view</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initWithFrame:</span><br><span class="line">setNeedsLayout</span><br><span class="line">layoutSubviews</span><br><span class="line">drawRect:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用xib或Storyboard方式添加<br>在Storyboard或Xib中添加view</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initWithCoder:</span><br><span class="line">awakeFromNib</span><br><span class="line">layoutSubviews</span><br><span class="line">drawRect:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用xib代码初始化View</p>
+</li>
+</ul>
+<p>[[NSBundle mainBundle] loadNibNamed:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">initWithCoder:</span><br><span class="line">awakeFromNib</span><br><span class="line">setNeedsLayout</span><br><span class="line">layoutSubviews</span><br><span class="line">drawRect:</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/06/生命周期/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-知识点" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/06/知识点/">知识点</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/06/知识点/" class="archive-article-date">
+  	<time datetime="2019-01-06T13:33:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="p"><a href="#p" class="headerlink" title="%p"></a>%p</h5><p>作用：输出内存地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString *name = @&quot;xxxx&quot;;</span><br><span class="line">NSLog(@&quot;%p&quot;,name);</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name);</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1025" alt="5cd5b2014b6097215634f329d9386d13.png"></p>
+<p>解释：</p>
+<p>1、前者是字符串 “xxxx” 内存首地址<br>2、后者是指针name 内存首地址</p>
+<h5 id="NSSet"><a href="#NSSet" class="headerlink" title="NSSet"></a>NSSet</h5><p>NSSet到底什么类型，其实它和NSArray功能性质一样，用于存储对象，属于集合；NSSet  ， NSMutableSet类声明编程接口对象，无序的集合，在内存中存储方式是不连续的，不像NSArray（是有序的集合）类声明编程接口对象是有序集合，在内存中存储位置是连续的；</p>
+<p>NSSet和我们常用NSArry区别是：在搜索一个一个元素时NSSet比NSArray效率高，主要是它用到了一个算法hash(散列，也可直译为哈希)；<br>比如你要存储元素A，一个hash算法直接就能直接找到A应该存储的位置；同样，当你要访问A时，一个hash过程就能找到A存储的位置。而对于NSArray，若想知道A到底在不在数组中，则需要便利整个数组，显然效率较低了；</p>
+<h5 id="分辨率"><a href="#分辨率" class="headerlink" title="分辨率"></a>分辨率</h5><p>分辨率就是屏幕上横、纵的总象素点数</p>
+<ul>
+<li>物理分辨率是硬件所支持的，如果我们设计的时候用单位px，可以说是物理分辨率尺寸。</li>
+<li>逻辑分辨率是软件可以达到的，如果我们设计的时候用单位pt，可以说是逻辑分辨率尺寸。</li>
+</ul>
+<h5 id="NSClassFromString"><a href="#NSClassFromString" class="headerlink" title="NSClassFromString"></a>NSClassFromString</h5><p>正常来说，使用如下方法来对不确定的类进行初始化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id myObj = [[NSClassFromString(@&quot;MySpecialClass&quot;) alloc] init];</span><br><span class="line">和</span><br><span class="line">id myObj = [[MySpecialClass alloc] init];</span><br></pre></td></tr></table></figure></p>
+<p>是一样的。</p>
+<p>但是，如果你的程序中并不存在MySpecialClass这个类，下面的写法会出错，而上面的写法只是返回一个空对象而已。<br>因此，在某些情况下，可以使用NSClassFromString来进行你不确定的类的初始化。<br>NSClassFromString的好处是：<br>1 弱化连接，因此并不会把没有的Framework也link到程序中。<br>2 不需要使用import，因为类是动态加载的，只要存在就可以加载。因此如果你的toolchain中没有某个类的头文件定义，而你确信这个类是可以用的，那么也可以用这种方法。</p>
+<h5 id="layoutIfNeeded"><a href="#layoutIfNeeded" class="headerlink" title="layoutIfNeeded"></a>layoutIfNeeded</h5><p>先调用<code>setNeedsLayout</code>,标记为需要重新布局,在下个UI刷新循环中系统自动调用<code>layoutSubviews</code>进行刷新<br>调用<code>layoutIfNeeded</code>，判断是否被标记为需要重新布局，如果有，则立即调用<code>layoutSubviews</code>进行刷新</p>
+<p>14）我们能将 int 强制转换为 byte 类型的变量吗？如果该值大于 byte 类型的范围，将会出现什么现象？<br>是的，我们可以做强制转换，但是 Java 中 int 是 32 位的，而 byte 是 8 位的，所以，如果强制转化是，int 类型的高 24 位将会被丢弃，byte 类型的范围是从 -128 到 128。 </p>
+<p>15）Java 中 ++ 操作符是线程安全的吗？<br>不是线程安全的操作。它涉及到多个指令，如读取变量值，增加，然后存储回内存，这个过程可能会出现多个线程交差。 </p>
+<p>16）a = a + b 与 a += b 的区别？<br>+= 隐式的将加操作的结果类型强制转换为持有结果的类型。如果两这个整型相加，如 byte、short 或者 int，首先会将它们提升到 int 类型，然后在执行加法操作。如果加法操作的结果比 a 的最大值要大，则 a+b 会出现编译错误，但是 a += b 没问题，如下：<br>byte a = 127;<br>byte b = 127;<br>b = a + b; // error : cannot convert from int to byte<br>b += a; // ok </p>
+<p>注：其实无论 a+b 的值为多少，编译器都会报错，因为 a+b 操作会将 a、b 提升为 int 类型，所以将 int 类型赋值给 byte 就会编译出错 </p>
+<p>17）我能在不进行强制转换的情况下将一个 double 值赋值给 long 类型的变量吗？<br>不行，你不能在没有强制类型转换的前提下将一个 double 值赋值给 long 类型的变量，因为 double 类型的范围比 long 类型更广，所以必须要进行强制转换。 </p>
+<p>18）3*0.1 == 0.3 将会返回什么？true 还是 false？<br>false，因为有些浮点数不能完全精确的表示出来。 </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/06/知识点/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-错误调试" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -885,337 +1419,9 @@
 
 
   
-    <article id="post-APP瘦身" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/APP瘦身/">APP瘦身</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/04/APP瘦身/" class="archive-article-date">
-  	<time datetime="2019-01-04T14:35:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>一是处理代码里打警告<br>方法废弃警告<br>类型转换警告<br>unsed警告等。</li>
-<li>二是删除一些重复图片<br>当时用的是<code>PhotoSweepper</code>，软件只能查出来重复的图片，但是删的时候还是要注意留谁，建议把不准的看下重复图片的像素。</li>
-</ul>
-<h5 id="无用图片"><a href="#无用图片" class="headerlink" title="无用图片"></a>无用图片</h5><p><code>LSUnusedResources</code> 做的改进</p>
-<p>查找：选定的目录下的所有资源文件。这一步与上述方案1区别不大，都是调用 find 命令查找指定后缀名的文件。<br>匹配：与上述方案不同，我不是对每个资源文件名都做一次全文搜索匹配，因为加入项目的资源太多，这里会导致性能快速下降。而我只是针对源码、Xib、Storyboard 和 plist 等文件，先全文搜索其中可能是引用了资源的字符串，然后用资源名和字符串做匹配。<br>优化匹配结果<br>Unused 会把大量实际上有使用的资源，当做未使用的资源输出。LSUnusedResources 则不会出现这样的问题，并且使得结果更加优化。</p>
-<p>举例说明：<br>你在工程中添加了下面资源:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">icon_tag_0.png</span><br><span class="line">icon_tag_1.png</span><br><span class="line">icon_tag_2.png</span><br><span class="line">icon_tag_3.png</span><br></pre></td></tr></table></figure></p>
-<p>然后用字符串拼接的方式在代码中引用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSInteger index = random() % 4;</span><br><span class="line">UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@&quot;icon_tag_%d&quot;, index]];</span><br></pre></td></tr></table></figure></p>
-<p>icon_tag_x.png 是不应该被当做未使用的资源的，只是以一种比较隐晦的方式间接引用了，所以不应该出现在结果列表中。</p>
-<h5 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h5><p>编译器优化级别<br>Build Settings-&gt;Optimization Level有几个编译优化选项，release版应该选择Fastest, Smalllest，这个选项会开启那些不增加代码大小的全部优化，并让可执行文件尽可能小。</p>
-<p>去除符号信息<br>Strip Debug Symbols During Copy 和 Symbols Hidden by Default 在release版本应该设为yes，可以去除不必要的调试符号。Symbols Hidden by Default会把所有符号都定义成”private extern”，具体意思和作用我还不清楚，有待研究，但设了后会减小体积。这些选项目前都是XCode默认选项，但旧版XCode生成的项目可能不是，可以检查一下。</p>
-<img src="/2019/01/04/APP瘦身/1.png" title="图片说明">
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/APP瘦身/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-drawRect" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/drawRect/">drawRect layoutSubview</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/04/drawRect/" class="archive-article-date">
-  	<time datetime="2019-01-04T14:31:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>viewDidLoad</code> -&gt; <code>viewWillAppear</code> -&gt; <code>drawRect</code> - <code>viewDidAppear</code>;</p>
-<h5 id="drawRect"><a href="#drawRect" class="headerlink" title="drawRect"></a>drawRect</h5><p>1、如果在UIView初始化时没有设置rect大小，将直接导致drawRect不被自动调用。<br>2、该方法在调用sizeThatFits后被调用，所以可以先调用sizeToFit计算出size。然后系统自动调用drawRect:方法。<br>3、通过设置contentMode属性值为UIViewContentModeRedraw。那么将在每次设置或更改frame的时候自动调用drawRect:。<br>4、直接调用setNeedsDisplay，或者setNeedsDisplayInRect:触发drawRect:，但是有个前提条件是rect不能为0. </p>
-<h5 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h5><p>1、若使用UIView绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate的ref并且不能用于画图。drawRect：方法不能手动显示调用，必须通过调用setNeedsDisplay 或者 setNeedsDisplayInRect ，让系统自动调该方法。<br>2、若使用calayer绘图，只能在drawInContext: 中（类似于drawRect）绘制，或者在delegate中的相应方法绘制。同样也是调用setNeedDisplay等间接调用以上方法。<br>3、若要实时画图，不能使用gestureRecognizer，只能使用touchbegan等方法来掉用setNeedsDisplay实时刷新屏幕</p>
-<h5 id="layoutSubView"><a href="#layoutSubView" class="headerlink" title="layoutSubView"></a>layoutSubView</h5><p>调用时机  (父控件-&gt;本View-&gt;子控件)</p>
-<p>1、本View init初始化不会触发layoutSubviews<br>本View的frame为0时,addSubView也不会调用layoutSubViews但是是用initWithFrame 进行初始化时，当rect的值不为CGRectZero时,也会触发本View的LayoutSubViews;<br> 2,本View直接调用setLayoutSubViews;<br>3、子控件addSubview会触发本View的layoutSubviews;(最常用)<br>4,子控件的frame发生改变时,会调用本View的layoutSubViews;<br>5,本View的size(frame)发生变化时,会调用父控件的LayoutSubViews;<br>6,父控件的frame发生变化时,会调用本View的layoutSubViews;<br>7、滚动一个UIScrollView会触发本View的layoutSubviews<br>8、旋转Screen会触发父控件的layoutSubviews事件(控制器的ViewWillLayoutSubView)</p>
-<p>layoutSubviews方法调用先于drawRect，也就是先布局子视图，在重绘。<br>系统会自动调用layoutSubviews ,不要手动调用,如果要强制更新布局,可以调用setNeedsLayout方法,如果想立即显示View,需要调用layoutIfNeeded方法;</p>
-<p>-setNeedsLayout<br>标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，但layoutSubviews一定会被调用<br>-layoutIfNeeded<br>如果有需要刷新的标记，立即调用layoutSubviews进行布局（如果没有标记，不会调用layoutSubviews）</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/drawRect/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSHasTable" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/NSHasTable/">NSHasTable NSMapTable</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/04/NSHasTable/" class="archive-article-date">
-  	<time datetime="2019-01-04T14:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用技术+1</p>
-<p>NSHashTable是可变的,没有不可变的对应类<br>NSHashTable可以持有成员的弱引用<br>NSHashTable可以在加入成员时进行copy操作<br>NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
-<p>NSMapTable是NSDictionary的通用版本,NSMapTable具有下面特性:<br>NSMapTable是可变的,没有不可变的类<br>NSMapTable可以持有键和值的弱引用,当键或值当中的一个被释放时,整个这一项就会被移除掉<br>NSMapTable可以在加入成员时进行copy操作<br>NSMapTable可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
-<h5 id="NSDictionary-的局限性"><a href="#NSDictionary-的局限性" class="headerlink" title="NSDictionary 的局限性"></a>NSDictionary 的局限性</h5><p>NSDictionary 提供了 key -&gt; object 的映射。从本质上讲，NSDictionary 中存储的 object 位置是由 key 来索引的。</p>
-<p>由于对象存储在特定位置，NSDictionary 中要求 key 的值不能改变（否则 object 的位置会错误）。为了保证这一点，NSDictionary 会始终复制 key 到自己私有空间。</p>
-<p>这个 key 的复制行为也是 NSDictionary 如何工作的基础，但这也有一个限制：你只能使用 OC 对象作为 NSDictionary 的 key，并且必须支持 NSCopying 协议。此外，key 应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。</p>
-<p>这意味着，NSDictionary 中真的只适合将值类型的对象作为 key（如简短字符串和数字）。并不适合自己的模型类来做对象到对象的映射。</p>
-<p><a href="http://www.isaced.com/post-235.html" target="_blank" rel="noopener">http://www.isaced.com/post-235.html</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/NSHasTable/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSDictionary" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/NSDictionary/">NSDictionary</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/04/NSDictionary/" class="archive-article-date">
-  	<time datetime="2019-01-04T14:05:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在OC中<code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。<br>那么问题来了什么是hash表呢？<br>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。<br>读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称为一个箱子（bin），箱子中存放的是键值对。<br><img src="/2019/01/04/NSDictionary/1.png" title="图片说明"></p>
-<ul>
-<li>hash表存储过程简单介绍：</li>
-</ul>
-<p>根据<code>key</code>值计算出它的<code>hash</code>值<code>h</code>；<br>假设箱子的个数是<code>n</code>，那么键值对应该放在第<code>h%n</code>个箱子中。<br>如果该箱子中已经有了键值对，就是用开放寻址法或者拉链法解决冲突。使用拉链法解决哈希冲突时，每个箱子其实是一个链表，属于同一个箱子的所有键值对都会排列在链表中。</p>
-<p>依此我们得出结论： OC中的字典其实是一个数组，数组中每一个元素同样为一个链表实现的数组，也就是数组中套数组。</p>
-<p>那么对应在oc中字典是如何进行存储的呢？</p>
-<p>在oc中每一个对象创建时，都默认生成一个hashCode,也就是经过hash算法生成的一串数字，当利用key去取字典中的value时，若是使用遍历或者二分查找等方法，效率相对较低，于是出现了根据每一个key生成的hashCode将键值对放到hasCode对应的数组中的指定位置，这样当用key去取值时，便不必遍历去获取，既可以根据hashCode直接取出。因为hashCode的值过大，或许经过取余获取一个较小的数字，假如是对999进行取余运算，那么得到的结果始终处于0-999之间。但是，这样做的弊端在于取余所得到的值，可能是相同的，这样可能导致完全不相干的键值对被新的键值对（取余后值key相等）所覆盖，于是出现了数组中套链表实现的数组。这样，key值取余得到值相等的键值对，都将保存在同一个链表数组中，当查找key对应的值时，首先获取到该链表数组，然后遍历数组，取正确的key所对应的值即可。</p>
-<h5 id="iOS使用自定义对象作为NSDictionary的key"><a href="#iOS使用自定义对象作为NSDictionary的key" class="headerlink" title="iOS使用自定义对象作为NSDictionary的key"></a>iOS使用自定义对象作为NSDictionary的key</h5><p>The key for value. The key is copied (using copyWithZone:; keys must conform to the NSCopying protocol). If aKey already exists in the dictionary, anObject takes its place.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/NSDictionary/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 

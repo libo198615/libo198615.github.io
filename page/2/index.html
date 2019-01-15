@@ -194,6 +194,402 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-swift-where" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift-where/">swift_where</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift-where/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:04:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>do catch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">enum ExceptionError: Error &#123;</span><br><span class="line">    case httpCode(Int)</span><br><span class="line">&#125;</span><br><span class="line">func throwError() throws &#123;</span><br><span class="line">    thtow ExceptionError.httpCode(500)</span><br><span class="line">&#125;</span><br><span class="line">do &#123;</span><br><span class="line">    try throwError()</span><br><span class="line">&#125; catch ExceptionError.httpCode(let httpCode) where httpCode &gt;= 500 &#123;</span><br><span class="line">    print(&quot;server error&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>switch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var value:(Int, String) = (1, &quot;小明&quot;)</span><br><span class="line">switch value &#123;</span><br><span class="line">    case let (x, y) where x &lt; 60;</span><br><span class="line">        print(&quot;不及格&quot;)</span><br><span class="line">    default:</span><br><span class="line">        print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for score in scores where score &gt;= 60 &#123;</span><br><span class="line">    print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for in</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arrayOne = [1, 2, 3, 4, 5];</span><br><span class="line">let dictionary = [1:&quot;a&quot;, 2:&quot;b&quot;]</span><br><span class="line">for i in arrayOne where dictionary[i] != nil &#123;</span><br><span class="line">    print (i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol aProtocol()</span><br><span class="line">extension aProtocol where Self: UIView &#123;</span><br><span class="line">    // 只给遵守aProtocol协议的UIView添加拓展</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>if let   guard中的where使用 , 替代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var optionName: String? = &quot;hang&quot;</span><br><span class="line">if let name = optionName , name.hasprefix(&quot;H&quot;) &#123;</span><br><span class="line">    print(name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Swift4 中的改进</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">可以在 associatedtype 后面声明的类型后追加 where 约束语句</span><br><span class="line"></span><br><span class="line">protocol aProtocol &#123;</span><br><span class="line">    associatedtype Element</span><br><span class="line">    associatedtype SubSequence: Sequence where </span><br><span class="line">        SubSequence.Iterator.Element == Iterator.Element</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">由于 associatedtype 支持追加 where ，swift4标准库中的 Sequence 中的 Element 声明如下</span><br><span class="line">它限定了 Sequence 中 Element 这个类型必须和 Iterator.Element 的类型一致，省去了拓展中的不必要判断</span><br><span class="line"></span><br><span class="line">protocol Sequence &#123;</span><br><span class="line">    associatedtype Element where Self.Element = Self.Iterator.Element</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift-where/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-throws" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift-throws/">throws VS rethrows</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift-throws/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对错误的处理方式</p>
+<ol>
+<li>throw 将错误提交到上一层调用去处理</li>
+<li>try</li>
+<li>do-catch</li>
+</ol>
+<h4 id="do-catch"><a href="#do-catch" class="headerlink" title="do-catch"></a>do-catch</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">    try expression</span><br><span class="line">    statements</span><br><span class="line">&#125; catch pattern 1 &#123;</span><br><span class="line">    statements</span><br><span class="line">&#125; catch pattern 2 where condition &#123;</span><br><span class="line">    statements</span><br><span class="line">&#125; catch &#123;</span><br><span class="line">    // the clause matches any error </span><br><span class="line">    // and binds the error to a local constant named error</span><br><span class="line">    print(error)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">enum MyError : Error &#123;</span><br><span class="line">    case ErrorOne</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func willThrow(_ type:NSInteger)throws -&gt; NSString &#123;</span><br><span class="line">    if type == 1 &#123;</span><br><span class="line">        throw MyError.ErrorTwo</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;一切都很好&quot;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">//调用</span><br><span class="line"> do &#123;</span><br><span class="line">    let str = try self.willThrow(1)</span><br><span class="line">    //以下是非错误时的代码</span><br><span class="line">    //如果有错误出现，这里将不会执行</span><br><span class="line">    print(str) </span><br><span class="line">&#125; catch &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="try"><a href="#try" class="headerlink" title="try"></a>try</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Converting Errors to Optional Values</span><br><span class="line"></span><br><span class="line">func someThrowingFunction() throws -&gt; Int &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let x = try? someThrowingFunction()</span><br><span class="line"></span><br><span class="line">let y: Int?</span><br><span class="line">do &#123;</span><br><span class="line">    y = try someThrowingFunction()</span><br><span class="line">&#125; catch &#123;</span><br><span class="line">    y = nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="rethrows"><a href="#rethrows" class="headerlink" title="rethrows"></a>rethrows</h4><hr>
+<p>针对的不是函数或者方法本身，而是他携带的闭包类型的参数，当他的闭包类型的参数throws的时候，我们要使用rethrows将这个异常向上传递</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift-throws/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-static-class" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift-static-class/">static VS class</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift-static-class/" class="archive-article-date">
+  	<time datetime="2019-01-11T13:56:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="static"><a href="#static" class="headerlink" title="static"></a>static</h4><ul>
+<li><p>类方法</p>
+</li>
+<li><p>单例</p>
+</li>
+</ul>
+<p>类方法</p>
+<p>函数一般指类方法，方法一般指实例方法</p>
+<ul>
+<li>enum struct     // static</li>
+<li>class                  // class</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct Point &#123;</span><br><span class="line">    let x: Double</span><br><span class="line">    let y: Double</span><br><span class="line"></span><br><span class="line">    // 存储属性</span><br><span class="line">    static let zero = Point(x: 0, y: 0)</span><br><span class="line"></span><br><span class="line">    // 计算属性</span><br><span class="line">    static var pArr: [Point] &#123;</span><br><span class="line">        return [Point(x: 1, y: 1)]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 类方法</span><br><span class="line">    static func add(p1: Point, p2: Point) -&gt; Point &#123;</span><br><span class="line">        return Point(x: p1.x+p2.x, y: p1.y+p2.y)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在 class中不能用class来修饰计算属性，但可以像下面这样</span><br><span class="line">class MyManager &#123;</span><br><span class="line">    static let sharedInstance = MyManger()</span><br><span class="line">    private init() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有一个比较特殊的是 protocol。在 Swift 中 class，struct 和 enum 都是可以实现某个 protocol 的。那么如果我们想在 protocol 里定义一个类型域上的方法或者计算属性的话，应该用哪个关键字呢？答案是使用 static 进行定义。在使用的时候，struct 或 enum 中仍然使用 static，而在 class 里我们既可以使用 class 关键字，也可以用 static<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">protocol MyProtocol &#123;</span><br><span class="line">    static func foo() -&gt; String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct MyStruct: MyProtocol &#123;</span><br><span class="line">    static func foo() -&gt; String &#123;</span><br><span class="line">        return &quot;MyStruct&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">enum MyEnum: MyProtocol &#123;</span><br><span class="line">    static func foo() -&gt; String &#123;</span><br><span class="line">        return &quot;MyEnum&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyClass: MyProtocol &#123;</span><br><span class="line">    // 在 class 中可以使用 class</span><br><span class="line">    class func foo() -&gt; String &#123;</span><br><span class="line">        return &quot;MyClass.foo()&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 也可以使用 static</span><br><span class="line">    static func bar() -&gt; String &#123;</span><br><span class="line">        return &quot;MyClass.bar()&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 静态方法和类方法还是有区别的</span><br><span class="line">// 静态方法默认带了final特性</span><br><span class="line">class A &#123;</span><br><span class="line">    class func test()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    static func test1()&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class AA:A &#123;</span><br><span class="line">    override class func test()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    static func test1()&#123;&#125;  // error Cannot override static method</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift-static-class/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift修饰符" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift修饰符/">swift修饰符</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift修饰符/" class="archive-article-date">
+  	<time datetime="2019-01-11T13:30:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Self"><a href="#Self" class="headerlink" title="Self"></a>Self</h4><ul>
+<li><p>protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protocol Copyavle &#123;</span><br><span class="line">    func copy() -&gt; Self</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class引用类型，可以使用Self作为函数的返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ClassA &#123;</span><br><span class="line">    func action() -&gt; Self &#123;</span><br><span class="line">        return self</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>struct值类型，不能使用Self作为函数返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct StructA &#123;</span><br><span class="line">    func action() -&gt; StructA &#123;</span><br><span class="line">        return self</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h4 id="precedencegroup"><a href="#precedencegroup" class="headerlink" title="precedencegroup"></a>precedencegroup</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 优先运算符</span><br><span class="line"></span><br><span class="line">infix operator +* : InnerProductPrecedence // 定义一个中位操作符，即前后都是输入</span><br><span class="line"></span><br><span class="line">precedencegroup InnerProducePrecedence &#123;</span><br><span class="line">    // 结合律：内积的结果是一个 Double，不再会和其他内积结合使用，所以这里写成 none</span><br><span class="line">    associativity: none</span><br><span class="line">    // 优先级设置：高于普通运算。</span><br><span class="line">    // MultiplicationPrecedence（代表乘法和除法）</span><br><span class="line">    // AdditionPrecedence（代表加法和减法）</span><br><span class="line">    higherThan: MultiplicationPrecedence, AdditionPrecedence</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func +*(left: Vector2D, right: Vector2D) -&gt; Double &#123;</span><br><span class="line">    return left.x * right.x + left.y * right.y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let result = v1 +* v2 // 14</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/// The return type of functions that do not return normally, that is, a type</span><br><span class="line">/// with no values.</span><br><span class="line">///</span><br><span class="line">/// Use `Never` as the return type when declaring a closure, function, or</span><br><span class="line">/// method that unconditionally throws an error, traps, or otherwise does</span><br><span class="line">/// not terminate.</span><br><span class="line">///</span><br><span class="line">///     func crashAndBurn() -&gt; Never &#123;</span><br><span class="line">///         fatalError(&quot;Something very, very bad happened&quot;)</span><br><span class="line">///     &#125;</span><br><span class="line">public enum Never &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h4><p>可改变 <code>struct enumeration</code> 的实参</p>
+<p><code>swift</code> 包含三种类型</p>
+<ul>
+<li>struct // value type</li>
+<li>enum // value type</li>
+<li>class  // reference type  默认可以修改属性值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct Point &#123;</span><br><span class="line">    var x = 0, y = 0</span><br><span class="line">    mutating func moveBy(x: Int, y: Int) &#123;</span><br><span class="line">        self.x += x</span><br><span class="line">        self.y += y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">enum TriStateSwitch &#123;</span><br><span class="line">    case Off, Low, High</span><br><span class="line">    mutating func next() &#123;</span><br><span class="line">        switch self &#123;</span><br><span class="line">            case .Off:</span><br><span class="line">                self = .Low</span><br><span class="line">            case .Low:</span><br><span class="line">                self = .High</span><br><span class="line">            case . High:</span><br><span class="line">                self = .Off</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a>lazy</h4><p><code>swift</code> 懒加载相当于静态空间，只运行一次。<br>只有第一次访问时才加载，如果永远不访问，它就不创建</p>
+<p>// 两种写法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lazy var name = &quot;Dog&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lazy var a: Int = &#123;</span><br><span class="line">    pring(&quot;a = 1&quot;)</span><br><span class="line">    return 1</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 只打印一次</span><br><span class="line">classA.a</span><br><span class="line">classA.a</span><br></pre></td></tr></table></figure>
+<p>如果在<code>closure</code>里面使用了<code>self</code>，也不会造成循环引用的问题，我们可以放心使用。注意：如果这个属性没有被<code>lazy</code>修饰，在<code>closure</code>里面是不能使用<code>self</code>的，因为这时<code>self</code>还没有初始化完成。</p>
+<hr>
+<h4 id="if-if-let"><a href="#if-if-let" class="headerlink" title="if    if let"></a>if    if let</h4><p>如果常量是可选项<code>Optional</code>，<code>if</code>判断后仍然需要解包<code>!</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let name: String? = &quot;老王&quot;</span><br><span class="line">let age: Int? = 10</span><br><span class="line">if name != nil &amp;&amp; age != nil &#123;</span><br><span class="line">    print(name! + String(age!))     </span><br><span class="line">&#125;</span><br><span class="line">// 输出:老王10</span><br></pre></td></tr></table></figure></p>
+<p>如果常量是可选项<code>Optional</code>，<code>if let</code>判断后不需要解包<code>!</code>，<code>{}</code>内一定有值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let name: String? = &quot;老王&quot;</span><br><span class="line">let age: Int? = 10// if let 连用,判断对象的值是否为&apos;nil&apos;</span><br><span class="line">if let nameNew = name,let ageNew = age &#123;</span><br><span class="line">    // 进入分支后,nameNew 和 ageNew 一定有值</span><br><span class="line">    print(nameNew + String(ageNew)) </span><br><span class="line">&#125;</span><br><span class="line">// 输出:老王10</span><br></pre></td></tr></table></figure></p>
+<p><code>if var</code>的用法，和<code>if let</code>的区别就是可以在<code>{}</code>内修改变量的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let name: String? = &quot;老王&quot;</span><br><span class="line">let age: Int? = 10</span><br><span class="line">if var nameNew = name,let ageNew = age &#123;</span><br><span class="line">    // &apos;var&apos;修饰,可以修改&apos;nameNew&apos;的值,&apos;let&apos;修改的不可以修改</span><br><span class="line">    nameNew = &quot;老李&quot;</span><br><span class="line">    print(nameNew + String(ageNew))     </span><br><span class="line">&#125;</span><br><span class="line">// 输出:老李10</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="guard"><a href="#guard" class="headerlink" title="guard"></a>guard</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let age = 5</span><br><span class="line">    </span><br><span class="line">guard age &gt;= 10 else &#123;</span><br><span class="line">    print(&quot;error&quot;)</span><br><span class="line">    return // 不加return，编译器会提示错误</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="final"><a href="#final" class="headerlink" title="final"></a>final</h5><p>可以防止类<code>class</code>被继承，还可以防止子类重写父类的属性、方法以及下标。需要注意的是，<code>final</code>修饰符只能用于类，不能修饰结构体<code>struct</code>和枚举<code>enum</code>，<br> 因为结构体和枚举只能遵循协议<code>protocol</code>。虽然协议也可以遵循其他协议，但是它并不能重写遵循的协议的任何成员，这就是结构体和枚举不需要final修饰的原因</p>
+<hr>
+<h4 id="Defer"><a href="#Defer" class="headerlink" title="Defer"></a>Defer</h4><p>代码压入栈，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func lookforSomething(name:String) &#123;</span><br><span class="line">    print(&quot;begin&quot;)</span><br><span class="line">    if name == &quot;&quot;&#123;</span><br><span class="line">        print(&quot;1-1&quot;)</span><br><span class="line">        defer&#123;</span><br><span class="line">            print(&quot;2-1&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        print(&quot;1-2&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    print(&quot;1-3&quot;)</span><br><span class="line">    defer&#123;</span><br><span class="line">        print(&quot;3-1&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    print(&quot;eng&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>begin</strong></p>
+<p><strong>1-1</strong></p>
+<p><strong>1-2</strong></p>
+<p><strong>2-1</strong></p>
+<p><strong>1-3</strong></p>
+<p><strong>eng</strong></p>
+<p><strong>3-1</strong></p>
+<hr>
+<h4 id="associatedtype"><a href="#associatedtype" class="headerlink" title="associatedtype"></a>associatedtype</h4><p><code>associatedtype</code>类型是在<code>protocol中</code> 代指一个确定类型并要求该类型实现指定方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">protocol Container &#123;   </span><br><span class="line">  associatedtype ItemType    </span><br><span class="line">  mutating func append(_ item:ItemType)   </span><br><span class="line">  var count:Int &#123; </span><br><span class="line">    get</span><br><span class="line">   &#125;    </span><br><span class="line">  subscript(i:Int) -&gt; ItemType &#123; </span><br><span class="line">    get</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义一个协议时，有的时候声明一个或多个关联类型作为协议定义的一部分将会非常有用。关联类型为协议中的某个类型提供了一个占位名（或者说别名），其代表的实际类型在协议被采纳时才会被指定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public protocol Sequence &#123;</span><br><span class="line"></span><br><span class="line">    /// A type representing the sequence&apos;s elements.</span><br><span class="line">    associatedtype Element where Self.Element == Self.Iterator.Element</span><br><span class="line"></span><br><span class="line">    /// A type that provides the sequence&apos;s iteration interface and</span><br><span class="line">    /// encapsulates its iteration state.</span><br><span class="line">    associatedtype Iterator : IteratorProtocol</span><br><span class="line"></span><br><span class="line">    /// A type that represents a subsequence of some of the sequence&apos;s elements.</span><br><span class="line">    associatedtype SubSequence</span><br><span class="line"></span><br><span class="line">    /// Returns an iterator over the elements of this sequence.</span><br><span class="line">    public func makeIterator() -&gt; Self.Iterator</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="discardableResult"><a href="#discardableResult" class="headerlink" title="@discardableResult"></a>@discardableResult</h4><p>取消如果不使用返回值的警告</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift修饰符/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MVVM" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -680,321 +1076,9 @@
 
 
   
-    <article id="post-代理模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/代理模式/">代理模式 - 结构型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/代理模式/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:57:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个类代表另一个类的功能。这种类型的设计模式属于结构型模式。</p>
-<p>意图：为其他对象提供一种代理以控制对这个对象的访问。</p>
-<p>主要解决：在直接访问对象时带来的问题，比如说：要访问的对象在远程的机器上。在面向对象系统中，有些对象由于某些原因（比如对象创建开销很大，或者某些操作需要安全控制，或者需要进程外的访问），直接访问会给使用者或者系统结构带来很多麻烦，我们可以在访问此对象时加上一个对此对象的访问层。</p>
-<p>场景：当一个类的某些功能需要由别的类来实现，但是又不确定具体会是哪个类实现。<br>实例：tableview的 数据源delegate，通过和protocol的配合，完成委托诉求。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/代理模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-观察者" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/观察者/">观察者 - 行为模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/观察者/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:55:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>意图：定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</p>
-<p>主要解决：一个对象状态改变给其他对象通知的问题，而且要考虑到易用和低耦合，保证高度的协作。</p>
-<p>何时使用：一个对象（目标对象）的状态发生改变，所有的依赖对象（观察者对象）都将得到通知，进行广播通知。</p>
-<p>如何解决：使用面向对象技术，可以将这种依赖关系弱化。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/观察者/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-建造者模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/建造者模式/">建造者模式 - 创建型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/建造者模式/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:53:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>使用多个简单的对象一步一步构建成一个复杂的对象。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>意图：将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。</p>
-<p>主要解决：主要解决在软件系统中，有时候面临着”一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成；由于需求的变化，这个复杂对象的各个部分经常面临着剧烈的变化，但是将它们组合在一起的算法却相对稳定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)createCar &#123;</span><br><span class="line">    create 发动机</span><br><span class="line">    create 轮胎</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/建造者模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-inline" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/inline/">inline VS define</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/inline/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:50:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>define<br>定义预编译时处理的宏，只是简单的字符串替换，无类型检查。</li>
-<li>inline</li>
-</ul>
-<ol>
-<li><code>inline</code>关键字用来定义一个类的内联函数，引入它的主要原因是用它替代C中的宏定义，编译阶段完成。  </li>
-<li>内联函数要做类型安全检查，<code>inline</code>是指嵌入代码，在调用函数的地方不是跳转，而是把代码直接写到那里去，对于短小的函数来说，<code>inline</code>函数可以得到一定效率的提升，和c时代的宏函数相比，<code>inline</code>函数更加安全可靠，这个是以增加空间的消耗为代价的。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/inline/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 

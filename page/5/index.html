@@ -194,6 +194,334 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-APP瘦身" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/APP瘦身/">APP瘦身</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/APP瘦身/" class="archive-article-date">
+  	<time datetime="2019-01-04T14:35:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>一是处理代码里打警告<br>方法废弃警告<br>类型转换警告<br>unsed警告等。</li>
+<li>二是删除一些重复图片<br>当时用的是<code>PhotoSweepper</code>，软件只能查出来重复的图片，但是删的时候还是要注意留谁，建议把不准的看下重复图片的像素。</li>
+</ul>
+<h5 id="无用图片"><a href="#无用图片" class="headerlink" title="无用图片"></a>无用图片</h5><p><code>LSUnusedResources</code> 做的改进</p>
+<p>查找：选定的目录下的所有资源文件。这一步与上述方案1区别不大，都是调用 find 命令查找指定后缀名的文件。<br>匹配：与上述方案不同，我不是对每个资源文件名都做一次全文搜索匹配，因为加入项目的资源太多，这里会导致性能快速下降。而我只是针对源码、Xib、Storyboard 和 plist 等文件，先全文搜索其中可能是引用了资源的字符串，然后用资源名和字符串做匹配。<br>优化匹配结果<br>Unused 会把大量实际上有使用的资源，当做未使用的资源输出。LSUnusedResources 则不会出现这样的问题，并且使得结果更加优化。</p>
+<p>举例说明：<br>你在工程中添加了下面资源:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">icon_tag_0.png</span><br><span class="line">icon_tag_1.png</span><br><span class="line">icon_tag_2.png</span><br><span class="line">icon_tag_3.png</span><br></pre></td></tr></table></figure></p>
+<p>然后用字符串拼接的方式在代码中引用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSInteger index = random() % 4;</span><br><span class="line">UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@&quot;icon_tag_%d&quot;, index]];</span><br></pre></td></tr></table></figure></p>
+<p>icon_tag_x.png 是不应该被当做未使用的资源的，只是以一种比较隐晦的方式间接引用了，所以不应该出现在结果列表中。</p>
+<h5 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h5><p>编译器优化级别<br>Build Settings-&gt;Optimization Level有几个编译优化选项，release版应该选择Fastest, Smalllest，这个选项会开启那些不增加代码大小的全部优化，并让可执行文件尽可能小。</p>
+<p>去除符号信息<br>Strip Debug Symbols During Copy 和 Symbols Hidden by Default 在release版本应该设为yes，可以去除不必要的调试符号。Symbols Hidden by Default会把所有符号都定义成”private extern”，具体意思和作用我还不清楚，有待研究，但设了后会减小体积。这些选项目前都是XCode默认选项，但旧版XCode生成的项目可能不是，可以检查一下。</p>
+<img src="/2019/01/04/APP瘦身/1.png" title="图片说明">
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/APP瘦身/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-drawRect" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/drawRect/">drawRect layoutSubview</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/drawRect/" class="archive-article-date">
+  	<time datetime="2019-01-04T14:31:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>viewDidLoad</code> -&gt; <code>viewWillAppear</code> -&gt; <code>drawRect</code> - <code>viewDidAppear</code>;</p>
+<h5 id="drawRect"><a href="#drawRect" class="headerlink" title="drawRect"></a>drawRect</h5><p>1、如果在UIView初始化时没有设置rect大小，将直接导致drawRect不被自动调用。<br>2、该方法在调用sizeThatFits后被调用，所以可以先调用sizeToFit计算出size。然后系统自动调用drawRect:方法。<br>3、通过设置contentMode属性值为UIViewContentModeRedraw。那么将在每次设置或更改frame的时候自动调用drawRect:。<br>4、直接调用setNeedsDisplay，或者setNeedsDisplayInRect:触发drawRect:，但是有个前提条件是rect不能为0. </p>
+<h5 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h5><p>1、若使用UIView绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate的ref并且不能用于画图。drawRect：方法不能手动显示调用，必须通过调用setNeedsDisplay 或者 setNeedsDisplayInRect ，让系统自动调该方法。<br>2、若使用calayer绘图，只能在drawInContext: 中（类似于drawRect）绘制，或者在delegate中的相应方法绘制。同样也是调用setNeedDisplay等间接调用以上方法。<br>3、若要实时画图，不能使用gestureRecognizer，只能使用touchbegan等方法来掉用setNeedsDisplay实时刷新屏幕</p>
+<h5 id="layoutSubView"><a href="#layoutSubView" class="headerlink" title="layoutSubView"></a>layoutSubView</h5><p>调用时机  (父控件-&gt;本View-&gt;子控件)</p>
+<p>1、本View init初始化不会触发layoutSubviews<br>本View的frame为0时,addSubView也不会调用layoutSubViews但是是用initWithFrame 进行初始化时，当rect的值不为CGRectZero时,也会触发本View的LayoutSubViews;<br> 2,本View直接调用setLayoutSubViews;<br>3、子控件addSubview会触发本View的layoutSubviews;(最常用)<br>4,子控件的frame发生改变时,会调用本View的layoutSubViews;<br>5,本View的size(frame)发生变化时,会调用父控件的LayoutSubViews;<br>6,父控件的frame发生变化时,会调用本View的layoutSubViews;<br>7、滚动一个UIScrollView会触发本View的layoutSubviews<br>8、旋转Screen会触发父控件的layoutSubviews事件(控制器的ViewWillLayoutSubView)</p>
+<p>layoutSubviews方法调用先于drawRect，也就是先布局子视图，在重绘。<br>系统会自动调用layoutSubviews ,不要手动调用,如果要强制更新布局,可以调用setNeedsLayout方法,如果想立即显示View,需要调用layoutIfNeeded方法;</p>
+<p>-setNeedsLayout<br>标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，但layoutSubviews一定会被调用<br>-layoutIfNeeded<br>如果有需要刷新的标记，立即调用layoutSubviews进行布局（如果没有标记，不会调用layoutSubviews）</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/drawRect/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NSHasTable" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/NSHasTable/">NSHasTable NSMapTable</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/NSHasTable/" class="archive-article-date">
+  	<time datetime="2019-01-04T14:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用技术+1</p>
+<p>NSHashTable是可变的,没有不可变的对应类<br>NSHashTable可以持有成员的弱引用<br>NSHashTable可以在加入成员时进行copy操作<br>NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
+<p>NSMapTable是NSDictionary的通用版本,NSMapTable具有下面特性:<br>NSMapTable是可变的,没有不可变的类<br>NSMapTable可以持有键和值的弱引用,当键或值当中的一个被释放时,整个这一项就会被移除掉<br>NSMapTable可以在加入成员时进行copy操作<br>NSMapTable可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
+<h5 id="NSDictionary-的局限性"><a href="#NSDictionary-的局限性" class="headerlink" title="NSDictionary 的局限性"></a>NSDictionary 的局限性</h5><p>NSDictionary 提供了 key -&gt; object 的映射。从本质上讲，NSDictionary 中存储的 object 位置是由 key 来索引的。</p>
+<p>由于对象存储在特定位置，NSDictionary 中要求 key 的值不能改变（否则 object 的位置会错误）。为了保证这一点，NSDictionary 会始终复制 key 到自己私有空间。</p>
+<p>这个 key 的复制行为也是 NSDictionary 如何工作的基础，但这也有一个限制：你只能使用 OC 对象作为 NSDictionary 的 key，并且必须支持 NSCopying 协议。此外，key 应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。</p>
+<p>这意味着，NSDictionary 中真的只适合将值类型的对象作为 key（如简短字符串和数字）。并不适合自己的模型类来做对象到对象的映射。</p>
+<p><a href="http://www.isaced.com/post-235.html" target="_blank" rel="noopener">http://www.isaced.com/post-235.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/NSHasTable/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NSDictionary" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/NSDictionary/">NSDictionary</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/NSDictionary/" class="archive-article-date">
+  	<time datetime="2019-01-04T14:05:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在OC中<code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。<br>那么问题来了什么是hash表呢？<br>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。<br>读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称为一个箱子（bin），箱子中存放的是键值对。<br><img src="/2019/01/04/NSDictionary/1.png" title="图片说明"></p>
+<ul>
+<li>hash表存储过程简单介绍：</li>
+</ul>
+<p>根据<code>key</code>值计算出它的<code>hash</code>值<code>h</code>；<br>假设箱子的个数是<code>n</code>，那么键值对应该放在第<code>h%n</code>个箱子中。<br>如果该箱子中已经有了键值对，就是用开放寻址法或者拉链法解决冲突。使用拉链法解决哈希冲突时，每个箱子其实是一个链表，属于同一个箱子的所有键值对都会排列在链表中。</p>
+<p>依此我们得出结论： OC中的字典其实是一个数组，数组中每一个元素同样为一个链表实现的数组，也就是数组中套数组。</p>
+<p>那么对应在oc中字典是如何进行存储的呢？</p>
+<p>在oc中每一个对象创建时，都默认生成一个hashCode,也就是经过hash算法生成的一串数字，当利用key去取字典中的value时，若是使用遍历或者二分查找等方法，效率相对较低，于是出现了根据每一个key生成的hashCode将键值对放到hasCode对应的数组中的指定位置，这样当用key去取值时，便不必遍历去获取，既可以根据hashCode直接取出。因为hashCode的值过大，或许经过取余获取一个较小的数字，假如是对999进行取余运算，那么得到的结果始终处于0-999之间。但是，这样做的弊端在于取余所得到的值，可能是相同的，这样可能导致完全不相干的键值对被新的键值对（取余后值key相等）所覆盖，于是出现了数组中套链表实现的数组。这样，key值取余得到值相等的键值对，都将保存在同一个链表数组中，当查找key对应的值时，首先获取到该链表数组，然后遍历数组，取正确的key所对应的值即可。</p>
+<h5 id="iOS使用自定义对象作为NSDictionary的key"><a href="#iOS使用自定义对象作为NSDictionary的key" class="headerlink" title="iOS使用自定义对象作为NSDictionary的key"></a>iOS使用自定义对象作为NSDictionary的key</h5><p>The key for value. The key is copied (using copyWithZone:; keys must conform to the NSCopying protocol). If aKey already exists in the dictionary, anObject takes its place.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/NSDictionary/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NSCache" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -699,331 +1027,9 @@
 
 
   
-    <article id="post-Protocol" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/Protocol/">Protocol</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/Protocol/" class="archive-article-date">
-  	<time datetime="2019-01-03T12:25:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本质是一个类<br>可以继承<br>默认是<code>required</code>，但是可以编译通过，编译器默认你有这个方法，可以调用,只是在调用时会崩溃</p>
-<p><code>category</code> 和<code>protocol</code> 类似，但是<code>category</code>不能强制要求子类实现其声明的方法</p>
-<p>在定义<code>protocol</code>协议时最好让其继承<code>NSObject协议，否则无法使用</code>respondsToSelector`方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if ([obj respondsToSelector:@selector(method)]) &#123;</span><br><span class="line">    [obj method];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/Protocol/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSNotification" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/NSNotification/">NSNotification</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/NSNotification/" class="archive-article-date">
-  	<time datetime="2019-01-03T12:19:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在发送消息时是同步的<br>想要异步，可在接受消息时使用<code>dispatch_async</code>进行异步处理</p>
-<p>对于删除监听器这一步骤在iOS9以后似乎变得不那么重要，iOS9开始不再对已经销毁的监听器发送通知，当监听器对象销毁后发送通知也不会造成野指针错误，这一点比KVO更加安全，KVO在监听器对象销毁后仍会触发回调函数就可能造成野指针错误</p>
-<h5 id="注册监听"><a href="#注册监听" class="headerlink" title="注册监听"></a>注册监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObserver:(id)observer selector:(SEL)aSelector name:(nullable NSString *)aName object:(nullable id)anObject;</span><br><span class="line">- (id &lt;NSObject&gt;)addObserverForName:(nullable NSString *)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (^)(NSNotification *note))block;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>object</li>
-</ul>
-<p>在发送通知的时候也会传递一个<code>object</code>参数，一般情况下发送通知的<code>object</code>参数传递的是发送方自己，那么在注册监听者这里，<code>object</code>参数指代的也是发送方的这个<code>object</code>参数，意思就是接收<code>object</code>对象发出的名为<code>name</code>的通知，如果有其它发送方发出同样<code>name</code>的通知，是不会接收到通知的。如果把<code>name</code>和<code>object</code>这两个参数同时置为nil，则会接收所有的通知</p>
-<p>第二种方式对于大家来说比较陌生，这里多了一个参数queue和一个block，block即受到通知时执行的回调，参数queue指定了这个block在哪个线程中执行，如果queue传的是nil,则表示这个回调block在发送通知的线程中执行，也即同步执行。</p>
-<ul>
-<li>NSNotificationQueue(通知队列)</li>
-</ul>
-<p>如果我们使用普通的<code>- (void)postNotification:(NSNotification *)notification</code>这种方法来发送通知，那么这个通知就会直接发送到<code>notification Center</code>，<code>notificationCenter</code>则会直接将其发送给注册了该通知的观察者。<br>但是如果我们使用<code>NSNotificationQueue</code>就不一样了，通知不是直接发送给<code>notificationCenter</code>，而是先发送给<code>NSNotificationQueue</code>，然后由<code>NSNotificationQueue</code>决定在当前<code>runloop</code>结束或者空闲的时候转发给<code>notification Center</code>，再由<code>notification</code>转发给注册的观察者。通过<code>NSNotificationQueue</code>，可以<br>合并重复的通知，以便只发送一个通知。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/NSNotification/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-load" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/load/">load initialize</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/load/" class="archive-article-date">
-  	<time datetime="2019-01-03T12:06:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><code>+load</code> 会在程序加载时调用，</li>
-<li><code>+initialize</code> 会在第一次调用类的类方法或实例方法之前被调用。</li>
-</ul>
-<h5 id="load"><a href="#load" class="headerlink" title="load"></a>load</h5>
-<p><code>+load</code>方法在这个文件被程序装载时调用。只要是在<code>Compile Sources</code>中出现的文件总是会被装载，这与这个类是否被用到无关，因此<code>+load</code>方法总是在`main函数之前调用。</p>
-<p>由于调用<code>load</code>方法时的环境很不安全，我们应该尽量减少<code>load</code>方法的逻辑。另一个原因是<code>load</code>方法是线程安全的，它内部使用了锁，所以我们应该避免线程阻塞在<code>load</code>方法中。<br>一个常见的使用场景是在<code>load</code>方法中实现<code>Method Swizzle：</code></p>
-<h5 id="initialize"><a href="#initialize" class="headerlink" title="initialize"></a>initialize</h5><p><code>initialize</code>自动调用父类的<code>initialize</code>。即使子类没有实现<code>initialize</code>方法，也会调用父类的方法，这会导致一个很严重的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// In Parent.m</span><br><span class="line">+ (void)initialize &#123;</span><br><span class="line">    NSLog(@&quot;Initialize Parent, caller Class %@&quot;, [self class]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// In Child.m</span><br><span class="line">// 注释掉initialize方法</span><br><span class="line"></span><br><span class="line">// In main.m</span><br><span class="line">Child *child = [Child new];</span><br></pre></td></tr></table></figure></p>
-<p>运行后发现父类的<code>initialize</code>方法竟然调用了两次：<br>这是因为在创建子类对象时，首先要创建父类对象，所以会调用一次父类的<code>initialize</code>方法，然后创建子类时，尽管自己没有实现<code>initialize</code>方法，但还是会调用到父类的方法。<br>虽然<code>initialize</code>方法对一个类而言只会调用一次，但这里由于出现了两个类，所以调用两次符合规则，但不符合我们的需求。正确使用<code>initialize</code>方法的姿势如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// In Parent.m</span><br><span class="line">+ (void)initialize &#123;</span><br><span class="line">    if (self == [Parent class]) &#123;</span><br><span class="line">        NSLog(@&quot;Initialize Parent, caller Class %@&quot;, [self class]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>加上判断后，就不会因为子类而调用到自己的<code>initialize</code>方法了。</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>load和initialize方法内部使用了锁，因此它们是线程安全的。</p>
-<p>load -&gt; main() -&gt; initialize<br>| 方法 | 首次调用 | category装载顺序  | 调用父类 |<br>| — | — | — | — |<br>| load | 加载即调用，main函数之前 | 有关 | 子类不实现，不调用父类 |<br>| initialize | 首次使用调用，main函数之后 | 无关 | 子类不实现同样会调用父类，导致父类调用两次 |  </p>
-<img src="/2019/01/03/load/2.png" title="图片说明">
-<img src="/2019/01/03/load/3.png" title="图片说明">
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/load/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-bridge" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/bridge/">__bridge</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/bridge/" class="archive-article-date">
-  	<time datetime="2019-01-03T12:05:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>__bridge</code><br>CF和OC对象转化时只涉及对象类型不涉及对象所有权的转化<br>实现id类型与void*类型的相互转换<br><code>__bridge_transfer</code><br>常用在CF对象转化成OC对象时，将CF对象的所有权交给OC对象，此时ARC就能自动管理该内存<br><code>__bridge_retained</code><br>将OC对象转化成CF对象，且OC对象的所有权也交给CF对象来管理</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/bridge/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 
