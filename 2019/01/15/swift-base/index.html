@@ -8,14 +8,17 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>swift_base | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="整形有符号整形 singed  无符号整形 unsigned 16位系统中的int    有符号 [-2^15, 2^15-1] = (-32768 ~ 32767)无符号 [0, 2^16] = (0 ~ 65535)12let minValue = UInt8.min   // 0let maxValue = UInt8.max // 255  On a 32-bit platform, In">
+<meta property="og:type" content="article">
 <meta property="og:title" content="swift_base">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/15/swift-base/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="整形有符号整形 singed  无符号整形 unsigned 16位系统中的int    有符号 [-2^15, 2^15-1] = (-32768 ~ 32767)无符号 [0, 2^16] = (0 ~ 65535)12let minValue = UInt8.min   // 0let maxValue = UInt8.max // 255  On a 32-bit platform, In">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-15T07:14:56.435Z">
+<meta property="og:updated_time" content="2019-01-16T09:11:20.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="swift_base">
+<meta name="twitter:description" content="整形有符号整形 singed  无符号整形 unsigned 16位系统中的int    有符号 [-2^15, 2^15-1] = (-32768 ~ 32767)无符号 [0, 2^16] = (0 ~ 65535)12let minValue = UInt8.min   // 0let maxValue = UInt8.max // 255  On a 32-bit platform, In">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -213,7 +216,66 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h4 id="整形"><a href="#整形" class="headerlink" title="整形"></a>整形</h4><p>有符号整形 singed  无符号整形 unsigned</p>
+<p>16位系统中的int   </p>
+<p>有符号 [-2^15, 2^15-1] = (-32768 ~ 32767)<br>无符号 [0, 2^16] = (0 ~ 65535)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let minValue = UInt8.min   // 0</span><br><span class="line">let maxValue = UInt8.max // 255</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>On a 32-bit platform, Int is the same size as Int32  4字节 每字节8位 2的32次方 </li>
+<li>On a 64-bit platform, Int is the same size as Int64</li>
+</ul>
+<p>Floating-Point Numbers</p>
+<ul>
+<li>Double represents a 64-bit floating-poing number</li>
+<li>Float represents a 32-bit floating-point number</li>
+</ul>
+<p>Double 精确度 15位<br>Float 最少只有6位</p>
+<ul>
+<li>类型别名 typealias  ( type  alias )</li>
+</ul>
+<p>使阅读代码更简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typealias AudioSample = UInt16</span><br><span class="line">var maxAmplitudeFound = AudioSample.min</span><br><span class="line">// maxAmplitudeFound 现在是 0</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Constants and Variables</strong></li>
+</ul>
+<p><code>let</code> 声明常量 </p>
+<p><code>var</code> 声明变量</p>
+<ul>
+<li><strong>Type Annotations</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>Printing Constans and Variables</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br><span class="line">name = &quot;a&quot; //swift 自我检查，没有赋值无法打印</span><br><span class="line">print(name)</span><br><span class="line">print(&quot;Your name is \(name)&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Booleans</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let orangesAreOrange = true</span><br><span class="line">let turnipsAreDelicious = false</span><br><span class="line"></span><br><span class="line">if (1)&#123;&#125;   // 错误， ‘Int’is not convertible to &apos;BooleanType&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类型转换</p>
+</li>
+</ul>
+<p>结合数字类常量或变量需要显示的将两个参数转换为同一数字类型。转换相当于生成一个新的数字类型，并没有改变原来常量的类型（常量不可以被改变）。字面量 3 和 字面量 0.1 可以直接相加，因为数字字面量本身没有明确的类型，它们的类型只在编译器需要求值的时候被推断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let five = 2 + 3.0</span><br><span class="line">var ten = five + 5.0</span><br><span class="line">let two = 2</span><br><span class="line">var seven = Int(five) + two</span><br><span class="line">print(&quot;\(five)   \(ten)  \(seven)&quot;)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>Tuples</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let http404Error = (404, &quot;Not Found&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>You can decompose a tuple’s contents into separate constant or variables, which you then  as usual:<br>let   ( statusCode,  statusMessage )  = http404Error</p>
+<p>If you only need some of the tuple’s values, ignore parts of the tuple with an underscore ( _ ) when you decompose the tuple:<br>let   (  statusCode, _  ) = http404Error<br>print( “The status code is ( statusCode )” )      //404</p>
+<p>Access the individual element values in a tuple using index numbers starting at zero:<br>print (“ The status code is ( http404Error.0 ) ”)     //404<br>let http200Status = ( statusCode:200, description:”ok” )<br>print (“ The status code is ( http200Status.statusCode ) ”)</p>
+<ul>
+<li><strong>Optionals</strong></li>
+</ul>
+<p>If you define an variable without providing a default value, the variable is automatically set to nil for you<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">var surveyAnser: String?</span><br><span class="line"></span><br><span class="line">// 隐式解析</span><br><span class="line">var name : String? = &quot;lee&quot;</span><br><span class="line">var age : Int? = 5</span><br><span class="line"></span><br><span class="line">if let people0 = age &#123;</span><br><span class="line">    println(people0) // 5</span><br><span class="line">&#125;</span><br><span class="line">if let people1 = name &#123;</span><br><span class="line">    println(people1) // lee</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func closure(name: String)&#123;</span><br><span class="line">    println(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var completion : (() -&gt; ())?</span><br><span class="line">completion = &#123;</span><br><span class="line">    println(&quot;completion&quot;)</span><br><span class="line">&#125;</span><br><span class="line">if let success = completion &#123;</span><br><span class="line">    success()   // completion</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var failure : ((name: String) -&gt; ())?</span><br><span class="line">failure = &#123; title in</span><br><span class="line">    println(&quot;\(title) failure&quot;)</span><br><span class="line">&#125;</span><br><span class="line">if let success = failure &#123;</span><br><span class="line">    success(name: &quot;lee&quot;) // lee failure</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>nil 不能用于非可选类型的变量或常量<br>oc：nil是一个指向一个不存在的对象的指针<br>swift：nil不是指针，它是一个确定的值，任何类型的可选状态都可以被设为nil，不只是对象类型</p>
+<ul>
+<li><strong>Assertions</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let age = -3</span><br><span class="line">assert(age &gt;= 0, &quot;A person&apos;s age cannot be less than zero&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>… 和 ..&lt;</li>
+</ul>
+<p><code>0...3</code> 就表示从 0 开始到 3 为止并包含 3 这个数字的范围，全闭合的范围操作；</p>
+<p><code>0..&lt;3</code> 不包含最后的 3<br>对于这样得到的数字的范围，我们可以对它进行 for…in 的访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i in 0...3 &#123;</span><br><span class="line">    print(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>//输出 0123</p>
+
       
 
       
@@ -243,6 +305,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
