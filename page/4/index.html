@@ -46,7 +46,7 @@
 			<img src="" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/">李波</a></h1>
 		</hgroup>
 		
 
@@ -118,7 +118,7 @@
 				<img src="" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">李波</h1>
 			</hgroup>
 			
 			
@@ -193,6 +193,82 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-深入理解计算机系统" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/07/深入理解计算机系统/">深入理解计算机系统</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/07/深入理解计算机系统/" class="archive-article-date">
+  	<time datetime="2019-01-07T08:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="静态连接"><a href="#静态连接" class="headerlink" title="静态连接"></a>静态连接</h5><ul>
+<li>符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来</li>
+<li>重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
+</ul>
+<h5 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h5><ul>
+<li>可重定位目标文件</li>
+<li>可执行目标文件</li>
+<li>共享目标文件<br>编译器和汇编器生成可重定位目标文件包括共享目标文件<br>连接器生成可执行目标文件</li>
+</ul>
+<h5 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h5><p>共享库是一个目标模块，在运行或加载时，可以加载到任意的内存地址，并和一个在内存中的程序链接起来。在<code>Linux</code>系统中通常用<code>.so</code>后缀来表示。</p>
+<ul>
+<li>共享方式<br>对于一个库只有一个<code>.so</code>文件。所有引用该库的可执行目标文件共享这个<code>.so</code>文件中的代码和数据，而不是像静态库的内容那样被复制和嵌入到引用它们的可执行文件中。<br>在内存中，一个共享库的<code>.text</code>节的一个副本可以被不同的正在运行的进程共享。</li>
+</ul>
+<p>当加载器加载和运行可执行文件<code>A</code>时，注意到其中包含一个<code>.interp</code>节，这一节包含动态连接器的路径名，动态连接器本身就是一个共享目标（Linux系统上是ld-linux.xo）。加载器不会像它通常所做地那样将控制传递给应用，而是加载和运行这个动态连接器。然后动态连接器通过执行重定位完成连接任务，最后将控制传递给应用程序。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/07/深入理解计算机系统/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-shell函数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -1195,271 +1271,6 @@
 
 
   
-    <article id="post-Object-C高级编程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/05/Object-C高级编程/">Objective-C高级编程+iOS与OS+X多线程和内存管理</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/05/Object-C高级编程/" class="archive-article-date">
-  	<time datetime="2019-01-05T06:22:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最早买的两本计算机书籍，一本是《设计模式》，一本是《Objective-C高级编程+iOS与OS+X多线程和内存管理》。看过了，以为掌握了里面的知识，跟大牛聊天时发现自己的内功不足，还以为有什么其他的渠道获取知识，最后他推荐我读下《Objective-C高级编程+iOS与OS+X多线程和内存管理》。当时也没好意思说自己读过。<br>此次趁着博客搬家，重读一遍，顺便做些笔记</p>
-<h5 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h5><table>
-<thead>
-<tr>
-<th>对象操作</th>
-<th>方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>生成并持有对象</td>
-<td>alloc / new / copy / mutableCopy</td>
-</tr>
-<tr>
-<td>持有对象</td>
-<td>retain</td>
-</tr>
-<tr>
-<td>释放对象</td>
-<td>release</td>
-</tr>
-<tr>
-<td>废弃对象</td>
-<td>dealloc</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>使用以下名称开头的方法名，也是自己生成并持有对象</li>
-</ul>
-<ul>
-<li>allocMyObject</li>
-<li>newThatObject</li>
-<li>copyThis</li>
-<li>mutableCopyYourObject</li>
-</ul>
-<ul>
-<li>取得非自己生成并持有的对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id obj = [NSArray array];</span><br><span class="line">[obj retain];</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>// 实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (id)object &#123;</span><br><span class="line">    id obj = [[obj alloc] init];</span><br><span class="line">    [obj autorelease];</span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>严格按照命名规则来判断是否持有对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 取得的对象存在，但自己不持有对象</span><br><span class="line">id obj1 = [obj0 object];</span><br><span class="line">// 可以通过 retain 方法将调用 autorelease 方法取得的对象变为自己持有</span><br><span class="line">[obj1 retain];</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>过渡释放或释放autorelease对象会崩溃</li>
-</ul>
-<h5 id="alloc-实现"><a href="#alloc-实现" class="headerlink" title="alloc 实现"></a>alloc 实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">id obj = [NSObject alloc];</span><br><span class="line"></span><br><span class="line">+ (id)alloc &#123;</span><br><span class="line">    return [self allocWithZone:NSDefaultMallocZone()];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)z &#123;</span><br><span class="line">    return NSAllocateObject(self, 0, z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct obj_layout &#123;</span><br><span class="line">    NSUInteger retained;</span><br><span class="line">&#125;;</span><br><span class="line">inline id NSAllocateObject(Class aClass, NSUInteger extraBytes, NSZone *zone) &#123;</span><br><span class="line">    int size = 计算机容纳对象所需内存大小;</span><br><span class="line">    id new = NSZoneMalloc(zone, size);</span><br><span class="line">    memset(new, 0, size);</span><br><span class="line">    new = (id) &amp; ((struct obj_layout *)new)[1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>NSAllocateObject</code>函数通过<code>NSZoneMalloc</code>函数来分配存放对象所需的内存空间，之后将该内存空间置0，最后返回作为对象而使用的指针<br><img src="/2019/01/05/Object-C高级编程/1.png" title="图片说明"></p>
-<h5 id="retainCount-retain-release-的实现"><a href="#retainCount-retain-release-的实现" class="headerlink" title="retainCount / retain / release 的实现"></a>retainCount / retain / release 的实现</h5><ul>
-<li>retainCount<br>__CFDoExternRefOperation<br>CFBasicHashGetCountOfKey</li>
-<li>retain<br>__CFDoExterRefOperation<br>CFBasicHashAddValue</li>
-<li>release<br>__CFDoExternRefOperation<br>CFBasicHashRemoveValue<br>(CFBasicHashRemoveValue 返回0时，- release调用dealloc)</li>
-</ul>
-<p>可以在内存的头部存放引用计数器，也可以像苹果一样采用散列表来管理引用计数<br>通过内存块头部管理应用计数的好处</p>
-<ul>
-<li>少量代码即可完成</li>
-<li>能够统一管理引用计数用内存块与对象内存块<br>通过应用计数表管理应用计数的好处</li>
-<li>对象内存块的分配无需考虑内存块头部</li>
-<li>应用计数表各记录中存有内存块地址，可从各个记录追溯到各对象的内存块。这样调试时有举足轻重的作用，即使出现故障导致对象占用的内存块损坏，但只要引用计数表没有被破坏，就能够确认各内存块的位置</li>
-</ul>
-<h5 id="autorelease"><a href="#autorelease" class="headerlink" title="autorelease"></a>autorelease</h5><p>如果autorelease NSAutoreleasePool对象会如何<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</span><br><span class="line">[pool autorelease];</span><br></pre></td></tr></table></figure></p>
-<p>异常，一般对象调用的是<code>NSObject</code>的<code>autorelease</code>实例方法，但对于<code>NSAutoreleasePool</code>类，<code>autorelease</code>实例方法已被该类重载，因此运行时就会出错</p>
-<h5 id="strong"><a href="#strong" class="headerlink" title="__strong"></a>__strong</h5><p><code>__strong</code>是id类型和对象类型默认的所有权修饰符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    id __strong obj = [[NSObject alloc] init];</span><br><span class="line">&#125;</span><br><span class="line">// obj超出作用域，强引用失效，所以自动释放自己持有的对象，对象的所有者不存在，因此废弃该对象</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // 获取非自己生成并持有的对象</span><br><span class="line">    id __strong obj = [NSMutableArray array];</span><br><span class="line">&#125;</span><br><span class="line">// obj超出其作用域，强引用失效，释放对象</span><br></pre></td></tr></table></figure>
-<p><code>__strong</code> <code>__weak</code> <code>__autoreleasing</code>，可以保证将附有这些修饰符的自动变量初始化为<code>nil</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj0;</span><br><span class="line">id __weak obj1;</span><br><span class="line">id __autoreleasing obj2;</span><br><span class="line">等同于</span><br><span class="line">id __strong obj0 = nil;</span><br><span class="line">id __weak obj1 = nil;</span><br><span class="line">id __autoreleasing obj2 = nil;</span><br></pre></td></tr></table></figure></p>
-<p>正如苹果宜称的那样，通过<code>strong</code> 修饰符，不必再次键入<code>retain</code>或者<code>release</code>，完美地满足了“引用计数式内存管理的思考方式”:</p>
-<ul>
-<li>自己生成的对象，自己所持有。</li>
-<li>非自己生成的对象，自己也能持有。</li>
-<li>不再需要自己持有的对象时释放。</li>
-<li>非自己持有的对象无法释放。</li>
-</ul>
-<p>前两项“自己生成的对象，自己持有”和“非自己生成的对象，自己也能持有”只需通过对带strong 修饰符的变量赋值便可达成。通过废弃带<code>_strong</code> 修饰符的变量(变量作用域结束或是成员变量所属对象废弃)或者对变量赋值，都可以做到“不再需要自己持有的对象时释放”。最后一项“非自己持有的对象无法释放”，由于不必再次键入<code>release</code>，所以原本就不会执行。这些都满足于引用计数式内存管理的思考方式。</p>
-<p>因为id类型和对象类型的所有权修饰符默认为 <code>_strong</code>修饰符，所以不需要写上“__strong”。使ARC有效及简单的编程遵循了Objective-C 内存管理的思考方式。</p>
-<h5 id="weak"><a href="#weak" class="headerlink" title="__weak"></a>__weak</h5><p>互相循环引用<br><img src="/2019/01/05/Object-C高级编程/4.png" title="图片说明"></p>
-<p>自引用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id test = [[Test alloc] init];</span><br><span class="line">[test setObject:test];</span><br></pre></td></tr></table></figure></p>
-<img src="/2019/01/05/Object-C高级编程/5.png" title="图片说明">
-<h5 id="unsafe-unretained"><a href="#unsafe-unretained" class="headerlink" title="__unsafe_unretained"></a>__unsafe_unretained</h5><p>和<code>__weak</code>一样是弱引用，但是他不属于ARC的内存管理工作，在ios4中使用，高版本可使用<code>__weak</code></p>
-<h5 id="autoreleasepool"><a href="#autoreleasepool" class="headerlink" title="autoreleasepool"></a>autoreleasepool</h5><p>编译器会检查方法名是否以 alloc / new / copy / mutableCopy 开始，如果不是则自动将返回值的对象注册到 autoreleasepool。init方法返回值的对象不注册到autoreleasepool</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+ (id)array &#123;</span><br><span class="line">    id obj = [[NSMutableArray alloc] init];</span><br><span class="line">    return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为没有显示指定所有权修饰符，所以<code>id obj</code>同附有<code>__strong</code>修饰符<code>id __strong obj</code>是一样的。由于<code>return</code>使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，但该对象作为函数f的返回值，编译器自动将其注册到<code>autoreleasepool</code><br>最后一个可非显示的使用<code>__autoreleasing</code>修饰符的例子。<code>id obj</code>推出的是<code>id __strong obj</code>，<code>id *obj</code>推出的是<code>id __autoreseasing *obj</code>。对象的指针<code>NSObject **obj</code>便成为<code>NSObject * __autoreleasing *obj</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError **)error;</span><br></pre></td></tr></table></figure></p>
-<p>id 的指针或对象的指针会默认附加上 __autoreleasing修饰符，所以等同于以下源代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)performOperationWithError:(NSError * __autoreleasing *)error;</span><br></pre></td></tr></table></figure></p>
-<p><code>__autoreleasing</code>修饰符的变量作为对象取得参数，与除 alloc / new / copy / mutableCopy 外其他方法的返回值取得对象完全一样，都会注册到 <code>autoreleasepool</code>,并取得非自己生成并持有的对象</p>
-<p>以下源代码会产生编译错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">NSError **pError = &amp;error;</span><br><span class="line">// initializing &apos;NSError *__autoreleasing *&apos;with an expression of type &apos;NSError *__strong *&apos; changes retain/release properties of pointer NSError **pError = &amp;error;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">NSError * __strong *pError = &amp;error;</span><br><span class="line">// 编译正常</span><br></pre></td></tr></table></figure>
-<h5 id="ARC规则"><a href="#ARC规则" class="headerlink" title="ARC规则"></a>ARC规则</h5><ul>
-<li>不能使用 retain release retainCount autorelease</li>
-<li>不能使用 NSAllocateObject NSDealloateObject</li>
-<li>须遵守内存管理的方法命名规则<br>以<code>init</code>开始的方法必须是实例方法，并且必须要返回对象，该对象并不注册到autoreleasepool上，基本上只是对alloc方法返回值的对象进行初始化处理并返回该对象<br>例外 <code>- (void)initialize;</code></li>
-<li>使用@autoreleasepool 替代 NSAutoreleasePool</li>
-<li>不能使用区域 NSZone</li>
-<li>对象型变量不能作为C语言结构体的成员<br>C语言的规约上没有方法来管理结构体成员的生存周期。因为ARC把内存管理工作分配给编译器，所以编译器必须能够知道并管理对象的生存周期。例如C语言的自动变量（局部变量）可使用该变量的作用域管理对象。但对于C语言的结构体成员来说，这在标准上就是不可实现的。<br>要把对象类型变量加入到结构体成员中，可强制转换为<code>void *</code>或是附加<code>__unsafe_unretained</code></li>
-<li>显示转换 id  和 void *<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">void *p = obj;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>在ARC无效时可以，但在ARC有效时会引起编译错误<code>implicit conversion of an Objective-C pointer to &#39;void *&#39; is disallowed with ARC</code><br>在ARC有效时，可以使用<code>__bridge</code>进行转换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">void *p = (__bridge void *)obj;</span><br></pre></td></tr></table></figure></p>
-<p><code>Core Foundation</code>对象与<code>Objective-C</code>对象没有区别，所以在ARC无效时，只用简单的C语音的转换也能实现互换。另外这种转换不需要使用额外的CPU资源，被称为免费桥</p>
-<p>思考：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">id obj0 = [[NSObject alloc] init];</span><br><span class="line">// obj0 的指针指向生成的对象，对象的引用计数为1</span><br><span class="line">id obj1 = obj0;</span><br><span class="line">// obj1 的指针指向对象，对象的引用计数为2</span><br><span class="line">obj0 = nil // [obj0 release];</span><br><span class="line">// obj0 的指针指向 null，对象的引用计数为1</span><br><span class="line">id obj2 = obj1;</span><br><span class="line">// obj2 的指针指向对象，对象的引用计数为2</span><br><span class="line">obj2 = obj1;</span><br><span class="line">// obj2 的指针只有一个（虽然是重复赋值），对象的引用计数为2</span><br></pre></td></tr></table></figure></p>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>声明动态数组用指针<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __strong *array = nil;</span><br></pre></td></tr></table></figure></p>
-<p>由于<code>id *类型</code>默认为<code>id __autoreleasing *类型</code>，所以有必要显示指定为<code>__strong</code>修饰符。虽然保证了附有<code>__strong</code>修饰符的<code>id</code>类型变量被初始化为<code>nil</code>，但并不保证附有<code>__strong</code>修饰符的<code>id</code>指针l型变量被初始化为<code>nil</code><br>使用<code>calloc</code>函数确保想分配的附有<code>__strong</code>修饰符变量的容量占有的内存块<br><code>array = (id __strong *)calloc(enteries, sizeof(id));</code><br>该源代码分配了entries个所需的内存块，由于使用<code>__strong</code>修饰符的变量必须先将其初始化为<code>nil</code>，所以这里使用分配区域初始化为0的<code>calloc</code>函数来分配内存。不使用<code>calloc</code>函数，在使用<code>malloc</code>函数分配内存后可用<code>memset</code>等函数将内存填充为0.<br>像下面，将<code>nil</code>代入到<code>malloc</code>函数f所分配的数组元素中是非常危险的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">array = (id __strong *)malloc(sizeof(id) * entries);</span><br><span class="line">for (NSUInteger i = 0; i &lt; entries; i++) &#123;</span><br><span class="line">    array[i] = nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这是因为由<code>malloc</code>函数分配的内存区域没有被初始化为0，因此<code>nil</code>会被赋值给附有<code>__strong</code>修饰符的并被赋值了随机地址的变量中，从而释放一个不存在的对象。</p>
-<ul>
-<li>动态数组<br>在动态数组中操作附有<code>__strong</code>修饰符的变量与静态数组有很大差异，需要自己释放所有的元素。如以下源代码所示，在只是简单的用<code>free</code>函数废弃了数组用内存块的情况下，数组各元素所赋值的对象不能再次释放，从而引起内存泄漏<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free(array);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这是因为在静态数组中，编译器能够根据变量的作用域自动插入释放赋值对象的代码，而在动态数组中，编译器不能确定数组的生存周期，所以无从处理。</p>
-<blockquote>
-<p>可能是由于free是C语音函数的原因，使用OC做实验，数组和可变数组释放后，其内部变量也被释放，也可能是苹果有内部的处理，还需进一步研究</p>
-</blockquote>
-<h5 id="ARC的实现"><a href="#ARC的实现" class="headerlink" title="ARC的实现"></a>ARC的实现</h5><ul>
-<li>__strong<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj = [[NSObject alloc] init];</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>模拟器代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id obj = objc_msgSend(NSObject, @selector(alloc));</span><br><span class="line">objc_msgSend(obj, @selector(init));</span><br><span class="line">objc_release(obj);</span><br></pre></td></tr></table></figure></p>
-<p>2此调用<code>objc_msgSend</code>，变量作用域结束时编译器自动通过<code>objc_release</code>释放对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj = [NSMutableArray array];</span><br></pre></td></tr></table></figure>
-<p>编译器代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id obj = objc_msgSend(NSMutableArray, @selector(array));</span><br><span class="line">objc_retainAutoreleaseReturnValue(obj);</span><br><span class="line">objc_release(obj);</span><br></pre></td></tr></table></figure></p>
-<p><code>objc_retainAutoreleaseReturnValue</code>函数主要用于优化程序运行。它用于自己持有（retain）对象的函数，但它持有的对象应为返回注册在<code>autoreleasepool</code>中对象的方法，或是函数的返回值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (id)array &#123;</span><br><span class="line">    return [[NSMutableArray alloc] init];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译器的模拟代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (id)array &#123;</span><br><span class="line">    id obj = objc_msgSend(NSMutableArray, @selector(alloc));</span><br><span class="line">    objc_msgSend(obj, @selector(init));</span><br><span class="line">    return objc_autoreleaseReturnValue(obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>objc_autoreleaseReturnValue</code>用于 alloc / new / copy / mutableCopy 方法以外的 <code>NSMutableArray</code>类的array类方法等返回对象的实现上<br>像上面代码这样，返回注册到<code>autoreleasepool</code>中对象的方法使用了<code>objc_autoreleaseReturnValue</code>函数返回注册到<code>autoreleasepool</code>中的对象。但是<code>objc_autoreleaseReturnValue</code>函数同<code>objc_autorelease</code>函数不同，一般不限于注册对象到<code>autoreleasepool</code>中。<br><code>objc_autoreleaseReturnValue</code>函数会检查使用该函数的方法或函数调用方法的执行命令列表，如果方法或函数的调用方在调用了方法或函数后紧接着调用<code>objc_retainAutoreleaseReturnValue()</code>函数，那么就不将返回的对象注册到<code>autoreleasepool</code>中，而是直接传递到方法或函数的调用方。<br><img src="/2019/01/05/Object-C高级编程/6.png" title="图片说明"></p>
-<ul>
-<li>__weak <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __weak obj1 = obj;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>编译器代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id obj1;</span><br><span class="line">obj1 = 0;</span><br><span class="line">objc_storeWeak(&amp;obj1, obj); // 注册到weak表</span><br><span class="line">objc_storeWeak(&amp;obj1, 0); // 从weak表中删除</span><br></pre></td></tr></table></figure></p>
-<p>对象被废弃时最后调用的<code>objc_clear_deallocating</code>函数的动作如下</p>
-<ol>
-<li>从weak表中获取废弃对象的地址为键值的记录</li>
-<li>将包含在记录中的所有附有__weak修饰符变量的地址，赋值为nil</li>
-<li>从weak表中删除该记录</li>
-<li>从引用计数表中删除废弃对象的地址为键值的记录<br>如此，使用<strong>weak修饰符的变量所应用的对象被废弃，则将nil赋值给该变量这一功能即被实现，大量使用</strong>weak，会消耗CPU资源</li>
-</ol>
-<h5 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@autoreleasepool &#123;</span><br><span class="line">    id __strong obj = [[NSObject alloc] init];</span><br><span class="line">    id __autoreleasing o = obj;</span><br><span class="line">    // retain count = 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">id __strong obj = [[NSObject alloc] init];</span><br><span class="line">@autoreleasepool &#123;</span><br><span class="line">    id _autoreleasing = obj; // retain count = 2</span><br><span class="line">&#125;</span><br><span class="line">// pool 释放 retain count = 1</span><br></pre></td></tr></table></figure>
-<h4 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h4><h5 id="截获自动变量"><a href="#截获自动变量" class="headerlink" title="截获自动变量"></a>截获自动变量</h5><p>将值赋值给<code>block</code>中截获的自动变量，会产生编译错误，提示使用<code>__block</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int val = 0;</span><br><span class="line">void (^blk)(void) = ^(val = 1;);</span><br></pre></td></tr></table></figure></p>
-<p>将值赋给OC对象，不改变OC对象指针，没有编译错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">id array = [[NSMutableArray alloc] init];</span><br><span class="line">voie (^blk)(void) = ^&#123;</span><br><span class="line">    id obj = [[NSObject alloc] init];</span><br><span class="line">    [array addObject:obj];</span><br><span class="line">    // array = nil; // 编译错误，改变了对象的指针</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h5 id="block-实质"><a href="#block-实质" class="headerlink" title="block 实质"></a>block 实质</h5><p>带有自动变量值的匿名函数<br>源码分析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main () &#123;</span><br><span class="line">    void (^blk)(void) = ^&#123;printf(&quot;block&quot;)&#125;;</span><br><span class="line">    blk();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p><code>^{printf(&quot;block&quot;)};</code>的源码为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static void __main_block_fun_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">    printf(&quot;block&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>__main_block_fun_0</code><br>根据block语法所属的函数名（此处为main）和该block语法在该函数出现的顺序值（此处为0）来给经clang变换的函数命名</p>
-</li>
-<li><p><code>struct __main_block_impl_0 *__cself</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">    struct __block_impl impl;</span><br><span class="line">    struct __main_block_desc_0 *Desc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>__block_impl</code> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct __block_impl &#123;</span><br><span class="line">    void *isa;</span><br><span class="line">    int Flags; // 标志位</span><br><span class="line">    int Reserved; // 版本升级所需的区域</span><br><span class="line">    void *FuncPtr; // 函数指针</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>__main_block_desc_0</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct __main_block_desc_0 &#123;</span><br><span class="line">    unsigned long reserved;</span><br><span class="line">    unsigned long Block_size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化含有这些结构体的<code>__main_block_impl_0</code>结构体的构造函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">__main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreStackBlock; // 初始化 isa</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>__main_block_impl_0</code> 调用过程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// void (*blk)(void) = ^&#123;printf(&quot;block&quot;);&#125;;</span><br><span class="line">struct __main_block_impl_0 tmp = __main_block_impl_0(__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line">struct __main_block_impl_0 *blk = &amp;tmp;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>该源代码将<code>__main_block_impl_0</code>结构体类型的自动变量，即栈上生成的<code>__main_block_impl_0</code>结构体实例的指针，赋值给<code>__main_block_impl_0</code>结构体指针类型的变量<code>blk</code></p>
-<ul>
-<li>使用block<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blk();</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(*blk-&gt;impl.FuncPtr)(blk);</span><br></pre></td></tr></table></figure>
-<p>使用函数指针调用函数</p>
-<h5 id="截获自动变量值"><a href="#截获自动变量值" class="headerlink" title="截获自动变量值"></a>截获自动变量值</h5><p>block语法表达式中使用的自动变量被作为成员变量追加到了<code>__main_block_impl_0</code>结构体中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">    struct __block_impl impl;</span><br><span class="line">    struct __main_block_desc_0 * Desc;</span><br><span class="line">    const char *fmt;</span><br><span class="line">    int val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>__main_block_impl_0</code>结构体实例的初始化如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">impl.Flags = 0;</span><br><span class="line">impl.FuncPtr = __main_block_func_0;</span><br><span class="line">Desc = &amp;__main_block_desc_0_DATA;</span><br><span class="line">fmt = &quot;val = %d&quot;;</span><br><span class="line">val = 10;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><code>^{printf(fmt, val);}</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">    const char *fmt = __cself-&gt;fmt;</span><br><span class="line">    int val = __cself-&gt;val;</span><br><span class="line">    printf(fmt, val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>总的来说，所谓“截获自动变量值”意味着执行<code>Block</code>时，<code>Block</code>语法表达式所使用的自动变量值被保存到<code>Block</code>的结构体实例中</p>
-<h5 id="block"><a href="#block" class="headerlink" title="__block"></a>__block</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__block int val = 10;</span><br></pre></td></tr></table></figure>
-<p>// 编译后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct __Block_byref_val_0 &#123;</span><br><span class="line">    void * __isa;</span><br><span class="line">    __Block_byref_val_0 * __forwarding;</span><br><span class="line">    int __flags;</span><br><span class="line">    int __size;</span><br><span class="line">    int val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用block<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^&#123;val = 1;&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>// 编译后代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">    __block_byref_val_0 *val = __cself-&gt;val;</span><br><span class="line">    (val-&gt;__forwarding-&gt;val) = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>Block</code>的<code>__main_block_impl_0</code>结构体实例持有指向<code>__block</code>变量的<code>__Block_byref_val_0</code>结构体实例的指针.<br><code>__Block_byref_val_0</code>结构体实例的成员变量<code>__forwarding</code>持有指向该实例自身的指针。通过成员变量<code>__forwarding</code>访问成员变量<code>val</code></p>
-<img src="/2019/01/05/Object-C高级编程/7.png" title="图片说明">
-<h5 id="Block存储域"><a href="#Block存储域" class="headerlink" title="Block存储域"></a>Block存储域</h5><img src="/2019/01/05/Object-C高级编程/8.png" title="图片说明">
-<ul>
-<li>NSConcreteGlobalBlock<br>在记录全局变量的地方使用<code>Block</code>语法时，生成的<code>Block</code>为<code>NSConcreteGlobalBlock</code>类对象</li>
-<li>NSConcreteMallocBlock<br>编译器自动将栈上的<code>block</code>复制到堆上，并将栈上的结构体实例成员变量<code>__forwarding</code>指针指向堆上的结构体实例<img src="/2019/01/05/Object-C高级编程/9.png" title="图片说明">
-多次<code>copy</code>不会有问题，不知道用什么修饰符时，用<code>copy</code>即可<br>在多个<code>Block</code>中使用同一个<code>__block</code>时，只在第一个<code>Block</code>从栈复制到堆上时，<code>__block</code>会从栈复制到堆上<img src="/2019/01/05/Object-C高级编程/10.png" title="图片说明">
-</li>
-</ul>
-<h5 id="截获对象"><a href="#截获对象" class="headerlink" title="截获对象"></a>截获对象</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typedef void(^blk_t)(id obj);</span><br><span class="line"></span><br><span class="line">blk_t blk;</span><br><span class="line">&#123;</span><br><span class="line">    id array = [[NSMutableArray alloc] init];</span><br><span class="line">    blk = ^(id obj)&#123;</span><br><span class="line">        [array addObject:obj];</span><br><span class="line">        NSLog(@&quot;array count = %ld&quot;, [array count]);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">blk([[NSObject alloc] init]); // 1</span><br><span class="line">blk([[NSObject alloc] init]); // 2</span><br><span class="line">blk([[NSObject alloc] init]); // 3</span><br></pre></td></tr></table></figure>
-<p>&lt;书中说上面的代码会强制结束，因为没有调用<code>copy</code>。实验情况并没有异常，可能是高版本的系统进行了自动的copy操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">    struct __block_impl impl;</span><br><span class="line">    struct __main_block_desc_0 * Desc;</span><br><span class="line">    id __strong array;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在OC中C语音结构体不能含有附有<code>__strong</code>修饰符的变量。因为编译器不知道应何时进行C语音结构体的初始化和废弃操作，不能很好地管理内存。<br>但是OC的运行时库能够准确把握<code>Block</code>从栈复制到堆上以及堆上的<code>Block</code>被废弃的时机，因此<code>Block</code>结构体中即使含有附有<code>__strong</code>或<code>__weak</code>修饰的变量，也可以恰当的进行初始化和废弃。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__block id __autoreleasing obj = [[NSObject alloc] init];</span><br></pre></td></tr></table></figure>
-<p>变量obj同时指定了<code>__autoreleasing</code>修饰符和<code>__block</code>说明符，会引起编译错误</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/书籍//" class="article-tag-list-link color3">书籍</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/05/Object-C高级编程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -1474,7 +1285,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 李波
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

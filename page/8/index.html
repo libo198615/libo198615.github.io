@@ -46,7 +46,7 @@
 			<img src="" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/">李波</a></h1>
 		</hgroup>
 		
 
@@ -118,7 +118,7 @@
 				<img src="" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">John Doe</h1>
+			  <h1 class="header-author js-header-author">李波</h1>
 			</hgroup>
 			
 			
@@ -193,6 +193,120 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-锁" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/02/锁/">锁</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/02/锁/" class="archive-article-date">
+  	<time datetime="2019-01-02T11:37:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><ul>
+<li>临界区</li>
+</ul>
+<p>对共享内存进行访问的程序片段。</p>
+<ul>
+<li>自旋锁</li>
+</ul>
+<p>是用于多线程同步的一种锁，线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。<br>由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则等待该自旋锁的线程会一直在哪里自旋，这就会浪费CPU时间。</p>
+<ul>
+<li>互斥锁</li>
+</ul>
+<p>是一种用于多线程编程中，防止两条线程同时对同一公共资源（比如全局变量）进行读写的机制。该目的通过将代码切片成一个一个的临界区而达成。</p>
+<ul>
+<li>读写锁</li>
+</ul>
+<p>是计算机程序的并发控制的一种同步机制，用于解决多线程对公共资源读写问题。读操作可并发重入，写操作是互斥的。 读写锁通常用互斥锁、条件变量、信号量实现。</p>
+<ul>
+<li>信号量</li>
+</ul>
+<p>是一种更高级的同步机制，互斥锁可以说是<code>semaphore</code>在仅取值0/1时的特例。信号量可以有更多的取值空间，用来实现更加复杂的同步，而不单单是线程间互斥。</p>
+<ul>
+<li>条件锁</li>
+</ul>
+<p>就是条件变量，当进程的某些资源要求不满足时就进入休眠，也就是锁住了。当资源被分配到了，条件锁打开，进程继续运行。</p>
+<h5 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h5><ul>
+<li>NSLock</li>
+<li>pthread_mutex</li>
+<li>@synchronized:</li>
+</ul>
+<p>实际项目中：AFNetworking中 isNetworkActivityOccurring属性的getter方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isNetworkActivityOccurring &#123;</span><br><span class="line">    @synchronized(self) &#123;</span><br><span class="line">        return self.activityCount &gt; 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h5><ul>
+<li>OSSpinLock 自旋锁</li>
+</ul>
+<p>性能最高的锁。原理很简单，就是一直 do while 忙等。它的缺点是当等待时会消耗大量 CPU 资源，所以它不适用于较长时间的任务。对于内存缓存的存取来说，它非常合适。</p>
+<ul>
+<li>os_unfair_lock</li>
+</ul>
+<h5 id="递归锁"><a href="#递归锁" class="headerlink" title="递归锁"></a>递归锁</h5><p>递归锁有一个特点，就是同一个线程可以加锁N次而不会引发死锁</p>
+<h5 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h5><img src="/2019/01/02/锁/1.png" title="图片说明">
+<p>现代操作系统在管理普通线程时，通常采用时间片轮转算法(Round Robin，简称 RR)。每个线程会被分配一段时间片(quantum)，通常在 10-100 毫秒左右。当线程用完属于自己的时间片以后，就会被操作系统挂起，放入等待队列中，直到下一次被分配时间片。</p>
+<p><a href="https://blog.csdn.net/deft_mkjing/article/details/79513500" target="_blank" rel="noopener">https://blog.csdn.net/deft_mkjing/article/details/79513500</a><br><a href="http://www.cocoachina.com/cms/wap.php?action=article&amp;from=timeline&amp;id=22402&amp;isappinstalled=0" target="_blank" rel="noopener">http://www.cocoachina.com/cms/wap.php?action=article&amp;from=timeline&amp;id=22402&amp;isappinstalled=0</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/02/锁/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-内存" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -1115,86 +1229,6 @@ offset: 有效数据起始位置偏移量<br>size: 实际占用的内存大小<b
 
 
   
-    <article id="post-category" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/category/">category</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/28/category/" class="archive-article-date">
-  	<time datetime="2018-12-28T14:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>category</code>的主要作用是为已经存在的类添加方法</p>
-<ul>
-<li>可以把类的实现分开在几个不同的文件里面</li>
-<li>声明私有方法</li>
-</ul>
-<p><code>extension</code>看起来很像一个匿名的<code>category</code>，但是<code>extension</code>和有名字的<code>category</code>几乎完全是两个东西。 <code>extension</code>在编译期决议，它就是类的一部分。<code>extension</code>一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加<code>extension</code>，所以你无法为系统的类比如<code>NSString</code>添加<code>extension</code>。</p>
-<p><code>category</code>的方法没有“完全替换掉”原来类已经有的方法，也就是说如果<code>category</code>和原来类都有<code>methodA</code>，那么<code>category</code>附加完成之后，类的方法列表里会有两个<code>methodA</code><br><code>category</code>的方法被放到了新方法列表的前面，而原来类的方法被放到了新方法列表的后面，这也就是我们平常所说的<code>category</code>的方法会“覆盖”掉原来类的同名方法，这是因为运行时在查找方法的时候是顺着方法列表的顺序查找的。如果想调用原来的方法，可以自己获取方法列表，然后去查找<code>SEL</code>，看自己想调用第几个<code>SEL</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/category/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -1209,7 +1243,7 @@ offset: 有效数据起始位置偏移量<br>size: 实际占用的内存大小<b
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 John Doe
+    		&copy; 2019 李波
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
