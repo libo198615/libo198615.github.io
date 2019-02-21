@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Archives: 2019 | Hexo</title>
+  <title>图解HTTP | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://libo198615.github.io/archives/2019/page/2/index.html">
+  <meta name="description" content="TCP/IP协议族分层 应用层  HTTP  传输层  TCP UDP  网络层 链路层  一条HTTP请求的流程  客户端发送请求 传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。 在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。  负责传输的IP协议IP（Internet Protocol）网际协议位于网络层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解HTTP">
+<meta property="og:url" content="https://libo198615.github.io/2019/01/20/HTTP/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="TCP/IP协议族分层 应用层  HTTP  传输层  TCP UDP  网络层 链路层  一条HTTP请求的流程  客户端发送请求 传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。 在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。  负责传输的IP协议IP（Internet Protocol）网际协议位于网络层">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/20/HTTP/1.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/20/HTTP/2.jpg">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/20/HTTP/3.jpg">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/20/HTTP/4.jpg">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/20/HTTP/4.jpg">
+<meta property="og:updated_time" content="2019-01-23T07:01:55.874Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="图解HTTP">
+<meta name="twitter:description" content="TCP/IP协议族分层 应用层  HTTP  传输层  TCP UDP  网络层 链路层  一条HTTP请求的流程  客户端发送请求 传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。 在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。  负责传输的IP协议IP（Internet Protocol）网际协议位于网络层">
+<meta name="twitter:image" content="https://libo198615.github.io/2019/01/20/HTTP/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -192,405 +202,203 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-HTTP" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      图解HTTP
+    </h1>
+  
+
+        
+        <a href="/2019/01/20/HTTP/" class="archive-article-date">
+  	<time datetime="2019-01-20T02:35:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="TCP-IP协议族分层"><a href="#TCP-IP协议族分层" class="headerlink" title="TCP/IP协议族分层"></a>TCP/IP协议族分层</h3><ol>
+<li>应用层</li>
+</ol>
+<p>HTTP</p>
+<ol start="2">
+<li>传输层</li>
+</ol>
+<p>TCP UDP</p>
+<ol start="3">
+<li>网络层</li>
+<li>链路层</li>
+</ol>
+<h3 id="一条HTTP请求的流程"><a href="#一条HTTP请求的流程" class="headerlink" title="一条HTTP请求的流程"></a>一条HTTP请求的流程</h3><img src="/2019/01/20/HTTP/1.png" title="图片说明">
+<ol>
+<li>客户端发送请求</li>
+<li>传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。</li>
+<li>在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。</li>
+</ol>
+<h3 id="负责传输的IP协议"><a href="#负责传输的IP协议" class="headerlink" title="负责传输的IP协议"></a>负责传输的<code>IP</code>协议</h3><p>IP（Internet Protocol）网际协议位于网络层。<code>IP</code>其实是一种协议的名称。不要和<code>IP地址</code>搞混</p>
+<p><code>IP</code> 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <code>IP 地址</code>和 <code>MAC 地址</code></p>
+<p><code>IP 地址</code>指明了节点被分配到的地址，<code>MAC 地址</code>是指网卡所属的固定地址。<code>IP 地址</code>可变换，但 <code>MAC 地址</code>基本上不会更改。</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。</p>
+<h3 id="各协议和HTTP的关系"><a href="#各协议和HTTP的关系" class="headerlink" title="各协议和HTTP的关系"></a>各协议和HTTP的关系</h3><img src="/2019/01/20/HTTP/2.jpg" title="图片说明">
+<h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><ul>
+<li>200 OK</li>
+<li>301 重定向</li>
+<li>302 临时重定向</li>
+<li>401 需要认证</li>
+<li>403 不允许访问</li>
+<li>404 服务器上没有请求的资源</li>
+</ul>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><img src="/2019/01/20/HTTP/3.jpg" title="图片说明">
+<p>代理服务器的基本行为就是接收客户端发送的请求后转发给其他服务器。每次通过代理服务器转发请求或响应时，会追加写入 Via 首部信息.使用代理服务器的理由有：利用缓存技术（稍后讲解）减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><img src="/2019/01/20/HTTP/4.jpg" title="图片说明">
+<p>利用网关可以由 HTTP 请求转化为其他协议通信</p>
+<h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: hackr.jp</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*; q=0.8</span><br><span class="line">Accept-Language: ja,en-us;q=0.7,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">DNT: 1</span><br><span class="line">Connection: keep-alive</span><br><span class="line">If-Modified-Since: Fri, 31 Aug 2007 02:02:20 GMT</span><br><span class="line">If-None-Match: &quot;45bae1-16a-46d776ac&quot;</span><br><span class="line">Cache-Control: max-age=0</span><br></pre></td></tr></table></figure>
+<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 304 Not Modified</span><br><span class="line">Date: Thu, 07 Jun 2012 07:21:36 GMT</span><br><span class="line">Server: Apache</span><br><span class="line">Connection: close</span><br><span class="line">Etag: &quot;45bae1-16a-46d776ac</span><br></pre></td></tr></table></figure>
+<h3 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control</span><br><span class="line">Connection:  Keep-Alive // 默认持久连接  </span><br><span class="line">Date: 报文创建时间</span><br><span class="line">Transfer-Encoding: 编码格式</span><br></pre></td></tr></table></figure>
+<h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Accept // 首部字段可通知服务器，用户代理能够处理的媒体类型及媒体类型的相对优先级</span><br><span class="line">Accept-Language // 用来告知服务器用户代理能够处理的自然语言集</span><br><span class="line">Authorization //  是用来告知服务器，用户代理的认证信息（证书值）。通常，想要通过服务器认证的用户代理会在接收到返回的 401 状态码响应后</span><br><span class="line">Host // 会告知服务器，请求的资源所处的互联网主机名和端口号</span><br><span class="line">If-Modified-Since //  字段指定的日期时间后，资源发生了更新，服务器会接受请求</span><br><span class="line">Range</span><br></pre></td></tr></table></figure>
+<h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ETag</span><br><span class="line">Server 告知客户端当前服务器上安装的 HTTP 服务器应用程序的信息</span><br><span class="line">Content-Type 说明了实体主体内对象的媒体类型</span><br><span class="line">Last-Modified 指明资源最终修改的时间</span><br><span class="line">Set-Cookie</span><br></pre></td></tr></table></figure>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><img src="/2019/01/20/HTTP/4.jpg" title="图片说明">
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/14/swift-1/" class="archive-article-date">
-  	<time datetime="2019-01-14T12:46:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/14/swift-1/">swift_1</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://libo198615.github.io/2019/01/20/HTTP/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/14/swift-type/" class="archive-article-date">
-  	<time datetime="2019-01-14T12:42:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/02/19/swift-tips/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          swift_tips
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/17/程序员的自我修养/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">程序员的自我修养</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/14/swift-type/">.type</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/13/RxSwift/" class="archive-article-date">
-  	<time datetime="2019-01-13T05:58:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/13/RxSwift/">RxSwift</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/12/swift-extention/" class="archive-article-date">
-  	<time datetime="2019-01-12T02:57:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/12/swift-extention/">swift_extention</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/11/swift-权限/" class="archive-article-date">
-  	<time datetime="2019-01-11T14:06:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/11/swift-权限/">swift_权限</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/11/swift-where/" class="archive-article-date">
-  	<time datetime="2019-01-11T14:04:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/11/swift-where/">swift_where</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/11/swift-throws/" class="archive-article-date">
-  	<time datetime="2019-01-11T14:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/11/swift-throws/">throws VS rethrows</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/11/swift-static-class/" class="archive-article-date">
-  	<time datetime="2019-01-11T13:56:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/11/swift-static-class/">static VS class</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/11/swift修饰符/" class="archive-article-date">
-  	<time datetime="2019-01-11T13:30:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/11/swift修饰符/">swift修饰符</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/09/MVVM/" class="archive-article-date">
-  	<time datetime="2019-01-09T09:08:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/09/MVVM/">MVVM</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2019/">&laquo; Prev</a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2019/page/3/">3</a><a class="page-number" href="/archives/2019/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/8/">8</a><a class="extend next" rel="next" href="/archives/2019/page/3/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -614,8 +422,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
