@@ -65,6 +65,8 @@
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
 	        
+				<li><a href="/categories/git">Git</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -121,6 +123,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -141,17 +145,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -845,17 +851,18 @@
 <h5 id="invalide"><a href="#invalide" class="headerlink" title="invalide"></a>invalide</h5><img src="/2019/01/06/定时器/3.png" title="图片说明">
 <h5 id="runloop"><a href="#runloop" class="headerlink" title="runloop"></a>runloop</h5><p>是创建NSTimer, 加入到runloop后, 除了ViewController之外iOS系统也会强引用NSTimer对象<br><img src="/2019/01/06/定时器/4.png" title="图片说明"><br>当调用invalidate方法时, 移除runloop后, iOS系统会解除对NSTimer对象的强引用, 当ViewController销毁时, ViewController和NSTimer就都可以释放了<br><img src="/2019/01/06/定时器/5.png" title="图片说明"></p>
 <h5 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h5><p>// 在 ViewWillDisappear<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[_timer invalidate];// 真正销毁NSTimer对象的地方</span><br><span class="line">_timer=nil;// 对象置nil是一种规范和习惯</span><br></pre></td></tr></table></figure></p>
-<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><p>将target设置为 weakSelf // 不行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) UIViewController *superViewController;</span><br><span class="line"></span><br><span class="line">// 将weakSelf 赋值给 superViewController 和将self 赋值给 superViewController 是一样的</span><br><span class="line">// superViewController 本身是强引用 </span><br><span class="line">// block结构体把weakSelf作为了自己的属性,直接引用了weakSelf内存空间中保存的self指针,而这个weakSelf并没有增加self的引用计数,所以self依然可以释放.如果说这样就砍断了循环引用</span><br></pre></td></tr></table></figure></p>
-<ul>
+<h5 id="循环引用的解决方法"><a href="#循环引用的解决方法" class="headerlink" title="循环引用的解决方法"></a>循环引用的解决方法</h5><ul>
+<li><p>将target设置为 weakSelf // 不行<br>同样是<code>target-action</code>方式<code>button</code>就不会出现循环引用的问题，这是因为<code>UIControl</code>的内部做了<code>weak</code>操作，即真正持有的时候是<code>weak</code>的并没有导致应用计数器加1，而<code>NSTimer</code>由于<code>runloop</code>的原因并没有做<code>weak</code>操作。</p>
+</li>
 <li><p>block<br>使用block的形式替换掉原先的“target-selector”方式，打断_timer对于其他对象的引用。<br>官方已经在iOS10之后加入了新的api，从而支持了block形式创建timer：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>MSWeakTimer<br>使用GCD来实现，没有引用循环的问题并且线程安全。</p>
 </li>
-<li>category<br>1.为NSTimer添加一个Category方法<br>NSTimer+WeakTimer.h<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)zx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler;</span><br></pre></td></tr></table></figure>
+<li>category<br>1.为NSTimer添加一个Category方法<br>NSTimer+WeakTimer.h<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)wx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>NSTimer+WeakTimer.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)zx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler</span><br><span class="line">&#123;</span><br><span class="line">return [self scheduledTimerWithTimeInterval:timeInterval</span><br><span class="line">target:self</span><br><span class="line">selector:@selector(handlerBlockInvoke:)</span><br><span class="line">userInfo:[handler copy]</span><br><span class="line">repeats:repeats];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)handlerBlockInvoke:(NSTimer *)timer</span><br><span class="line">&#123;</span><br><span class="line">void (^block)() = timer.userInfo;</span><br><span class="line">if (block) &#123;</span><br><span class="line">block();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>NSTimer+WeakTimer.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)wx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler</span><br><span class="line">&#123;</span><br><span class="line">return [self scheduledTimerWithTimeInterval:timeInterval</span><br><span class="line">target:self</span><br><span class="line">selector:@selector(handlerBlockInvoke:)</span><br><span class="line">userInfo:[handler copy]</span><br><span class="line">repeats:repeats];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)handlerBlockInvoke:(NSTimer *)timer</span><br><span class="line">&#123;</span><br><span class="line">void (^block)() = timer.userInfo;</span><br><span class="line">if (block) &#123;</span><br><span class="line">block();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>2.如何使用这个Category方法<br>创建一个NSTimer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)startPolling</span><br><span class="line">&#123;</span><br><span class="line">__weak typeof(self)weakSelf = self;</span><br><span class="line">self.timer = [NSTimer zx_scheduledTimerWithTimeInterval:5.0 repeats:YES handlerBlock:^void(void)&#123;</span><br><span class="line">__strong typeof(weakSelf)strongSelf = weakSelf;</span><br><span class="line">[strongSelf doPolling];</span><br><span class="line">&#125;];</span><br><span class="line">&#125;</span><br><span class="line">执行轮询任务slector</span><br><span class="line"></span><br><span class="line">- (void)doPolling</span><br><span class="line">&#123;</span><br><span class="line">//Todo...;</span><br><span class="line">&#125;</span><br><span class="line">销毁NSTimer对象</span><br><span class="line"></span><br><span class="line">- (void)stopPolling</span><br><span class="line">&#123;</span><br><span class="line">[self.timer invalidate];</span><br><span class="line">self.timer = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc</span><br><span class="line">&#123;</span><br><span class="line">[self.timer invalidate];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>计时器现在的targer是NSTimer类对象。这段代码先是定义了个弱引用，令其指向self,然后block捕获这个引用，而不直接去捕获普通的self变量，也就是说self不会为计时器所保留。当block开始执行时，立刻生成strong强引用，以保证实例在执行期间持续存活，不被释放。</p>
 <p>采用这种写法后，外界指向NSTimer的实例最后一个引用被释放后，则创建NSTimer的实例也随之被系统回收。</p>

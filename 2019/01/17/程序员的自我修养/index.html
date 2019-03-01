@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="隔离虚拟地址空间是指虚拟的、人们想象出来的地址空间，其实它并不存在，每个进程都有自己独立的虚拟空间，而且每个进程只能访问自己的地址空间，这样就有效地做到了进程的隔离。 ++i 实现过程 读取i到某个寄存器X。 X++。 将X的内容存储回i。  自增（++）操作在多线程环境下会出现错误是因为这个操作被编译为汇编代码之后不止一条指令，因此在执行的时候可能执行了一半就被调度系统打断，去执行别的代码。我们">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-17T06:38:36.670Z">
+<meta property="og:updated_time" content="2019-03-01T01:48:45.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的自我修养">
 <meta name="twitter:description" content="隔离虚拟地址空间是指虚拟的、人们想象出来的地址空间，其实它并不存在，每个进程都有自己独立的虚拟空间，而且每个进程只能访问自己的地址空间，这样就有效地做到了进程的隔离。 ++i 实现过程 读取i到某个寄存器X。 X++。 将X的内容存储回i。  自增（++）操作在多线程环境下会出现错误是因为这个操作被编译为汇编代码之后不止一条指令，因此在执行的时候可能执行了一半就被调度系统打断，去执行别的代码。我们">
@@ -68,6 +68,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/git">Git</a></li>
 	        
 			</ul>
 		</nav>
@@ -125,6 +127,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -145,17 +149,19 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 16.666666666666668%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 16.666666666666668%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -223,6 +229,16 @@
 <li><p>链接</p>
 </li>
 </ul>
+<hr>
+<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><ul>
+<li>栈<br>“栈：栈用于维护函数调用的上下文，离开了栈函数调用就没法实现”<br>“栈在程序运行中具有举足轻重的地位。最重要的，栈保存了一个函数调用所需要的维护信息，这常常被称为堆栈帧（Stack Frame）或活动记录（Activate Record）。堆栈帧一般包括如下几方面内容：</li>
+</ul>
+<p>函数的返回地址和参数。</p>
+<p>临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量。”<br>“保存的上下文：包括在函数调用前后需要保持不变的寄存器。”</p>
+<ul>
+<li>堆<br>“堆：堆是用来容纳应用程序动态分配的内存区域，当程序使用malloc或new分配内存时，得到的内存来自堆里”</li>
+</ul>
+<p>“光有栈对于面向过程的程序设计还远远不够，因为栈上的数据在函数返回的时候就会被释放掉，所以无法将数据传递至函数外部。而全局变量没有办法动态地产生，只能在编译的时候定义，有很多情况下缺乏表现力。在这种情况下，堆（Heap）是唯一的选择。”</p>
 
       
 
