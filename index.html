@@ -174,6 +174,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-NSInvocation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/05/NSInvocation/">NSInvocation</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/05/NSInvocation/" class="archive-article-date">
+  	<time datetime="2019-03-05T00:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>NSInvocation</code>是调用函数的另一种方式，它将调用者，函数名，参数封装到一个对象，然后通过一个<code>invoke</code>函数来执行被调用的函数，其思想就是命令者模式，将请求封装成对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation Test</span><br><span class="line"></span><br><span class="line">- (int)AddA:(int)a andB:(int)b &#123;   </span><br><span class="line"> 	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>一般调用函数的方式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Test *t = [Test new];</span><br><span class="line"></span><br><span class="line">int result = [t AddA:2 andB:3];</span><br></pre></td></tr></table></figure>
+<p>也可以用<code>performSelector</code>，但是只能有一个参数</p>
+<p>所以对于有多个参数的情况，就可以用·NSInvocation·来调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Test *t = [Test new];</span><br><span class="line"> //根据selector得到一个签名对象</span><br><span class="line">NSMethodSignature *sig= [[Test class] instanceMethodSignatureForSelector:@selector(AddA:andB:)]; </span><br><span class="line"> //根据该签名对象创建一个NSInvocation对象</span><br><span class="line">NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:sig];</span><br><span class="line"> //指定调用函数的对象</span><br><span class="line">invocation.target = t;</span><br><span class="line"> //指定要调用的函数名</span><br><span class="line">invocation.selector = @selector(AddA:andB:);</span><br><span class="line"> </span><br><span class="line">int a = 20;</span><br><span class="line">int b = 30;</span><br><span class="line">//指定参数，以指针方式，并且第一个参数的起始index是2，</span><br><span class="line">// 因为index为1，2的分别是self和selector</span><br><span class="line">[invocation setArgument:&amp;a atIndex:2];</span><br><span class="line">[invocation setArgument:&amp;b atIndex:3];</span><br><span class="line">//因为NSInvocation不会自己去retain参数，因此需要用户去retain，当然本例中其实没必要</span><br><span class="line">[invocation retainArguments];</span><br><span class="line">[invocation invoke];</span><br><span class="line"> </span><br><span class="line"> //获取返回值的过程略有点复杂,需要根据起类型长度分配空间，然后转为对象</span><br><span class="line"> //如果是int，BOOL等简单类型，返回的对象是NSNumber</span><br><span class="line"> //如果是其他类型的对象，返回的对象是NSValue</span><br><span class="line"> //判断返回值类型，用strcmp(returnType, @encode(NSInteger))</span><br><span class="line"> </span><br><span class="line">const char *returnType = sig.methodReturnType;</span><br><span class="line">id returnValue;</span><br><span class="line">NSUInteger length = [sig methodReturnLength];</span><br><span class="line">void *buffer = (void *)malloc(length);</span><br><span class="line">[invocation getReturnValue:buffer];</span><br><span class="line">//int的情况</span><br><span class="line">returnValue = [NSNumber numberWithInteger:*((NSInteger*)buffer)];</span><br><span class="line">//returnValue = [NSNumber numberWithBool:*((BOOL*)buffer)]; //bool 的情况</span><br><span class="line">//returnValue = [NSValue valueWithBytes:buffer objCType:returnType];</span><br><span class="line">// 其他类型的情况</span><br><span class="line">int result = [returnValue intValue];</span><br><span class="line">NSLog(@&quot;result=%d&quot;,result);</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/05/NSInvocation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-swift-知识点" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -1039,95 +1119,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/15/swift-base/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-willSet-didSet" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/14/swift-willSet-didSet/">swift_willSet_didSet</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/14/swift-willSet-didSet/" class="archive-article-date">
-  	<time datetime="2019-01-14T13:59:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    var date: NSDate&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            println(&quot;即将将日期从\(date)设定至\(newValue)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        didSet&#123;</span><br><span class="line">            println(&quot;已经将日期从\(oldValue)设定至\(date)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init()&#123;</span><br><span class="line">        date = NSDate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">let foo = MyClass()</span><br><span class="line">foo.date = foo.date.dateByAddingTimeInterval(10086)</span><br><span class="line"></span><br><span class="line">//输出</span><br><span class="line">即将将日期从2015-07-21 10:11:41 +0000设定至2015-07-21 12:59:47 +0000</span><br><span class="line">已经将日期从2015-07-21 10:11:41 +0000设定至2015-07-21 12:59:47 +0000</span><br></pre></td></tr></table></figure>
-<p>属性观察的一个重要用处是作为设置值的验证，比如上面的例子中我们不希望date超过当前时间的一年以上的话，我们可以将 didSet 修改一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    let oneYearInSecond: NSTimeInterval = 365 * 24 * 60 * 60</span><br><span class="line">    var date: NSDate&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            println(&quot;即将将日期从\(date)设定至\(newValue)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        didSet&#123;</span><br><span class="line">            if (date.timeIntervalSinceNow &gt; oneYearInSecond)&#123;</span><br><span class="line">                println(&quot;设定的时间太晚了&quot;)</span><br><span class="line">                date = NSDate().dateByAddingTimeInterval(oneYearInSecond)</span><br><span class="line">            &#125;</span><br><span class="line">            println(&quot;已经将日期从\(oldValue)设定至\(date)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init()&#123;</span><br><span class="line">        date = NSDate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><em>初始化方法对属性的设定，以及在willSet 和 didSet 中对属性的再次设定都不会再次触发属性观察的调用</em></p>
-<p>Swift 中所声明的属性包括存储属性和计算属性两种。</p>
-<ul>
-<li>存储属性将会在内存中实际分配地址对属性进行存储</li>
-<li>计算属性不存储，只是提供 set 和 get 两种方法</li>
-</ul>
-<p>在同一个类型中，属性观察和计算属性不能同时共存。<br>计算属性中我们可以重写它的set属性，已达到使用willSet和didSet同样的属性观察的目的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">    var number : Int&#123;</span><br><span class="line">        get&#123;</span><br><span class="line">            print(&quot;get&quot;)</span><br><span class="line">            return 1</span><br><span class="line">        &#125;</span><br><span class="line">        set&#123;</span><br><span class="line">            print(&quot;set&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class B:A &#123;</span><br><span class="line">    override var number: Int&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            print(&quot;willSet&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        didSet&#123;</span><br><span class="line">            print(&quot;didSet&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-<p>let b = B()<br>b.number = 0</p>
-<p>//输出<br>get<br>willSet<br>set<br>didSet</p>
-<p>//输出<br>willSet<br>set<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">set 和对应的属性观察的调用都在我们的预想之中。这里要注意的是 get 首先被调用了一次。这是因为我们实现了 didSet，didSet 中会用到 oldValue，而这个值需要在整个 set 动作之前进行获取并存储待用，否则将无法确保正确性。如果我们不实现 didSet 的话，这次 get 操作也将不存在。</span><br><span class="line"></span><br><span class="line">// 属性观察器 默认是 get</span><br></pre></td></tr></table></figure></p>
-<p>var label0 : UILabel{<br>    return UILabel(frame: CGRectMake(0, 0, 0, 0))<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// 闭包赋值 只执行一次</span><br></pre></td></tr></table></figure></p>
-<p>var label1: UILabel = {<br>        return UILabel(frame: CGRectMake(1, 1, 1, 1))<br>}()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">struct AlternativeRect &#123; </span><br><span class="line">    var origin = Point() </span><br><span class="line">    var size = Size()</span><br><span class="line">    var center: Point &#123; </span><br><span class="line">        get &#123; </span><br><span class="line">            let centerX = origin.x + (size.width / 2) </span><br><span class="line">            let centerY = origin.y + (size.height / 2) </span><br><span class="line">            return Point(x: centerX, y: centerY) </span><br><span class="line">        &#125; </span><br><span class="line">        set &#123; </span><br><span class="line">            origin.x = newValue.x - (size.width / 2) </span><br><span class="line">            origin.y = newValue.y - (size.height / 2) </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// 隐含信息 set get 中不出现center 自身，只涉及计算属性的计算来源</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/14/swift-willSet-didSet/">展开全文 >></a>
         </p>
       
 
