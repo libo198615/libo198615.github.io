@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1、setValue: forKeyPath: // 会查找本类里面属性，没有会继续查找父类里面属性。2、setValue: forKey:// 只查找本类里面的属性3、valueForKeyPath:4、valueForKey: 特别的 key 需要特别的处理不存在的key会崩溃可以重写下面的方法12-(id)valueForUndefinedKey:(NSString *)key- (void">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-28T14:57:10.794Z">
+<meta property="og:updated_time" content="2019-03-06T14:51:39.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVC">
 <meta name="twitter:description" content="1、setValue: forKeyPath: // 会查找本类里面属性，没有会继续查找父类里面属性。2、setValue: forKey:// 只查找本类里面的属性3、valueForKeyPath:4、valueForKey: 特别的 key 需要特别的处理不存在的key会崩溃可以重写下面的方法12-(id)valueForUndefinedKey:(NSString *)key- (void">
@@ -64,6 +64,8 @@
 				<li><a href="/categories/C++">C++</a></li>
 	        
 				<li><a href="/categories/Swift">Swift</a></li>
+	        
+				<li><a href="/categories/HTTP">HTTP</a></li>
 	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,19 +153,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -199,7 +205,7 @@
         <p>1、<code>setValue: forKeyPath:</code> // 会查找本类里面属性，没有会继续查找父类里面属性。<br>2、<code>setValue: forKey:</code>// 只查找本类里面的属性<br>3、<code>valueForKeyPath:</code><br>4、<code>valueForKey:</code></p>
 <h5 id="特别的-key-需要特别的处理"><a href="#特别的-key-需要特别的处理" class="headerlink" title="特别的 key 需要特别的处理"></a>特别的 key 需要特别的处理</h5><p>不存在的<code>key</code>会崩溃<br>可以重写下面的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-(id)valueForUndefinedKey:(NSString *)key</span><br><span class="line">- (void)setValue:(id)value forKey:(NSString *)key</span><br></pre></td></tr></table></figure></p>
 <h5 id="查询顺序"><a href="#查询顺序" class="headerlink" title="查询顺序"></a>查询顺序</h5><p><code>setValue: forKey:</code>的查询顺序是这样的：</p>
-<p><code>setKey`</code>_key<code>、</code>_isKey<code>、</code>key<code>与</code>isKey`<br>注意：第一步查找的是 方法，第三部查找的是 成员变量。</p>
+<p><code>setKey</code>、<code>_key</code>、<code>_isKey</code>、<code>key</code> 与 <code>isKey</code><br>注意：第一步查找的是 方法，第三部查找的是 成员变量。</p>
 <p><code>valueForKey:</code>的查询顺序是这样的：</p>
 <p><code>getKey</code>、<code>key</code>、<code>isKey</code> 与 <code>_key</code></p>
 

@@ -15,12 +15,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="概述与KVC相同，OC在实现KVO时没有采用实现接口的方式，而是针对NSObject创建了一个类别,通过这样的方式使得NSObject的子类可以自行实现NSKeyValueObserving类别定义的相关方法，其他的如NSArray、NSSet这样的集合类也都定义了相关的类别，因此也可以对集合类型进行KVO的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 @Max,@Min 观察者观察的">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1043">
-<meta property="og:updated_time" content="2018-12-27T08:54:05.337Z">
+<meta property="og:image" content="https://libo198615.github.io/2018/12/27/KVO/1.png">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1g0tiihijppj31aq0kadm4.jpg">
+<meta property="og:updated_time" content="2019-03-06T15:55:18.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVO">
 <meta name="twitter:description" content="概述与KVC相同，OC在实现KVO时没有采用实现接口的方式，而是针对NSObject创建了一个类别,通过这样的方式使得NSObject的子类可以自行实现NSKeyValueObserving类别定义的相关方法，其他的如NSArray、NSSet这样的集合类也都定义了相关的类别，因此也可以对集合类型进行KVO的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 @Max,@Min 观察者观察的">
-<meta name="twitter:image" content="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1043">
+<meta name="twitter:image" content="https://libo198615.github.io/2018/12/27/KVO/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -66,6 +67,8 @@
 				<li><a href="/categories/C++">C++</a></li>
 	        
 				<li><a href="/categories/Swift">Swift</a></li>
+	        
+				<li><a href="/categories/HTTP">HTTP</a></li>
 	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
@@ -131,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,19 +156,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -222,7 +229,9 @@
 <p>调用<code>object_getClass</code>函数后其返回的是一个<code>Class</code>类型，<code>Class</code>是<code>objc_class</code>定义的一个<code>typedef</code>别名，通过<code>objc_class</code>就可以获取到对象的isa指针指向的Class，也就是对象的类对象。</p>
 <p>由此可以推测，object_getClass函数内部返回的是对象的isa指针。</p>
 <h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>苹果提供的<code>KVO</code>自身存在很多问题，首要问题在于，<code>KVO</code>如果使用不当很容易崩溃。例如重复<code>add</code>和<code>remove</code>导致的<code>Crash</code>，<code>Observer</code>被释放导致的崩溃，<code>keyPath</code>传错导致的崩溃等。</p>
-<h5 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h5><p><code>FBKVOViewController</code>是<code>facebook</code>团队开源的框架，提供简介的接口帮我调用kvo的功能。其核心的设计是 ：利用单例对象（_FBKVOSharedController）来接受对象属性改变的回调。保证了回调的安全。当接受到观察对象的属性改变回调时 ，在根据<code>context</code>，向上转发回调到你定义的代码块中。<br><img src="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1043" alt="d4dcf916444f9a8df82e9fda842a7566.png"></p>
+<h5 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h5><p><code>FBKVOViewController</code>是<code>facebook</code>团队开源的框架，提供简洁的接口帮我调用kvo的功能。其核心的设计是 ：利用单例对象（_FBKVOSharedController）来接受对象属性改变的回调。保证了回调的安全。当接受到观察对象的属性改变回调时 ，再根据<code>context</code>，向上转发回调到你定义的代码块中。</p>
+<img src="/2018/12/27/KVO/1.png" title="图片说明">
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0tiihijppj31aq0kadm4.jpg" alt=""></p>
 <p><a href="https://blog.csdn.net/u014205968/article/details/78224820" target="_blank" rel="noopener">https://blog.csdn.net/u014205968/article/details/78224820</a><br><a href="https://www.jianshu.com/p/e59bb8f59302" target="_blank" rel="noopener">https://www.jianshu.com/p/e59bb8f59302</a></p>
 
       

@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://libo198615.github.io/2018/12/29/NSArray/15.png">
 <meta property="og:image" content="https://libo198615.github.io/2018/12/29/NSArray/16.png">
 <meta property="og:image" content="https://libo198615.github.io/2018/12/29/NSArray/17.png">
-<meta property="og:updated_time" content="2019-01-04T14:07:46.381Z">
+<meta property="og:updated_time" content="2019-03-06T13:02:59.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSArray">
 <meta name="twitter:description" content="1234567891011121314151617181920212223242526NSArray *arr = @[@1, @2, @3];NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];// for in 改变可变数据会崩溃//    for (NSNumber *num in muArr) &amp;#123;//">
@@ -72,6 +72,8 @@
 				<li><a href="/categories/C++">C++</a></li>
 	        
 				<li><a href="/categories/Swift">Swift</a></li>
+	        
+				<li><a href="/categories/HTTP">HTTP</a></li>
 	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
@@ -137,6 +139,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -157,19 +161,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -204,7 +210,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = @[@1, @2, @3];</span><br><span class="line">NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];</span><br><span class="line"></span><br><span class="line">// for in 改变可变数据会崩溃</span><br><span class="line">//    for (NSNumber *num in muArr) &#123;</span><br><span class="line">//        if (num.integerValue == 2) &#123;</span><br><span class="line">//            [muArr removeObject:num];</span><br><span class="line">//        &#125;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; muArr.count - 1; i ++) &#123; // muArr.count 也在随时变</span><br><span class="line">NSNumber *num = muArr[i];</span><br><span class="line">if (num.integerValue == 2) &#123;</span><br><span class="line">[muArr removeObject:num];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// block 内部可以修改可变数组的元素，而不用__blok</span><br><span class="line">[muArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">if ([obj integerValue] == 2) &#123;</span><br><span class="line">[muArr removeObject:obj];</span><br><span class="line">&#125;</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">// 对于集合中对象数很多的情况下，for in 的遍历速度非常之快，但小规模的遍历并不明显（还没普通for循环快）</span><br><span class="line">// Value查询index的时候, 面对大量的数组推荐使用 enumerateObjectsWithOptions的并行方法.</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = @[@1, @2, @3];</span><br><span class="line">NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];</span><br><span class="line"></span><br><span class="line">// for in 改变可变数据会崩溃</span><br><span class="line">//    for (NSNumber *num in muArr) &#123;</span><br><span class="line">//        if (num.integerValue == 2) &#123;</span><br><span class="line">//            [muArr removeObject:num];</span><br><span class="line">//        &#125;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; muArr.count - 1; i ++) &#123; // muArr.count 也在随时变</span><br><span class="line">	NSNumber *num = muArr[i];</span><br><span class="line">	if (num.integerValue == 2) &#123;</span><br><span class="line">		[muArr removeObject:num];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// block 内部可以修改可变数组的元素，而不用__blok</span><br><span class="line">[muArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">	if ([obj integerValue] == 2) &#123;</span><br><span class="line">		[muArr removeObject:obj];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">// 对于集合中对象数很多的情况下，for in 的遍历速度非常之快，但小规模的遍历并不明显（还没普通for循环快）</span><br><span class="line">// Value查询index的时候, 面对大量的数组推荐使用 enumerateObjectsWithOptions的并行方法.</span><br></pre></td></tr></table></figure>
 <h5 id="数组线程安全的思考"><a href="#数组线程安全的思考" class="headerlink" title="数组线程安全的思考"></a>数组线程安全的思考</h5><p>NSMutableArray是线程不安全的，当有多个线程同时对数组进行操作的时候可能导致崩溃或数据错误<br>用<code>dispatch_sync</code>读<br><code>dispatch_barrier_async</code>写</p>
 <h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>数组和字典属于类族，最好不要继承</p>
 <p>在 Cocoa 中有一种奇葩的类存在 Class Clusters。面向对象的编程告诉我们：“类可以继承，子类具有父类的方法”。而 Cocoa 中的 Class Clusters 虽然平时表现的像普通类一样，但子类却没法继承父类的方法。 NSMutableArray就是这样的存在。为什么会这样呢？因为 Class Clusters 内部其实是由多个私有的类和方法组成。虽然它有这样的弊端，但是好处还是不言而喻的。例如，NSNumber 其实也是这种类，这样一个类可以把各种不同的原始类型封装到一个类下面，提供统一的接口。这正设计模式中的抽象工厂模式。</p>

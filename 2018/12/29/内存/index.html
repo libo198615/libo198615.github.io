@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://libo198615.github.io/2018/12/29/内存/1.png">
 <meta property="og:image" content="https://libo198615.github.io/2018/12/29/内存/2.png">
-<meta property="og:updated_time" content="2019-01-02T05:46:55.342Z">
+<meta property="og:updated_time" content="2019-03-06T12:45:01.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存">
 <meta name="twitter:description" content="内存分类 栈区（stack） 由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。  堆区（heap） 一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收 全局区（静态区） 全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。  文字常量区">
@@ -67,6 +67,8 @@
 				<li><a href="/categories/C++">C++</a></li>
 	        
 				<li><a href="/categories/Swift">Swift</a></li>
+	        
+				<li><a href="/categories/HTTP">HTTP</a></li>
 	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
@@ -132,6 +134,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -152,19 +156,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -221,7 +227,7 @@
 <p>// retainCount<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uintptr_t objc_object::rootRetainCount() &#123;</span><br><span class="line">    if (isTaggedPointer()) return (uintptr_t)this;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>由此可见对于Tagged Pointer对象，并没有任何的引用计数操作，引用计数数量也只是单纯的返回自己地址罢了。</p>
 <ul>
-<li>Non-pointer isa</li>
+<li>isa指针</li>
 </ul>
 <p>在一个64位的指针内存中，第0位存储的是<code>indexed</code>标识符，它代表一个指针是否为<code>NONPOINTER</code>型，0代表不是，1代表是。<br>第1位<code>has_assoc</code>，1代表其指向的实例变量含有关联对象。<br>第2位为<code>has_cxx_dtor</code>，表明该对象是否使用了ARC来管理对象.<br>第3-35位<code>shiftcls</code>存储的就是这个指针的地址。<br>第42位为<code>weakly_referenced</code>，表明该指针对象是否有弱引用的指针指向。<br>第43位为<code>deallocing</code>，表明该对象是否正在被回收。<br>第44位为<code>has_sidetable_rc</code>，该指针是否引用了sidetable散列表。<br>第45-63位<code>extra_rc</code>装的就是这个实例变量的引用计数，当对象被引用时，其引用计数+1，但少量的引用计数是不会直接存放在sideTables表中的，对象的引用计数会先存在<code>NONPOINTER_ISA</code>的指针中的45-63位，当其被存满后，才会相应存入sideTables散列表中。</p>
 <p>// retain<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">id objc_object::rootRetain(bool tryRetain, bool handleOverflow) &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是对isa的extra_rc变量进行+1，前面说到isa会存很多东西</span><br><span class="line">    addc(newisa.bits, 1, 0, &amp;carry);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -253,12 +259,17 @@
 <p>通过struct Animal_IMPL结构体，我们不难看出结构体中有两个成员变量：一个isa指针和一个int型成员变量。Animal结构体对象实际需要的内存大小应该是16字节（指针8个字节，int型变量4个字节）。Animal结构体对象实际需要的内存大小是12字节，那系统给Animal对象实际分配的内存大小是多少呢？我们还是通过调用class_getInstanceSize和malloc_size这两个函数来看一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">//interface</span><br><span class="line">@interface Animal: NSObject</span><br><span class="line">&#123;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//implementation</span><br><span class="line">@implementation Animal</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSObject *objc = [[NSObject alloc] init];</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        NSLog(@&quot;animal对象实际需要的内存大小: %zd&quot;, class_getInstanceSize([animal class]));</span><br><span class="line">        NSLog(@&quot;animal对象实际分配的内存大小: %zd&quot;, malloc_size((__bridge const void *)(animal)));</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>//输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animal对象实际利用的内存大小: 16</span><br><span class="line">animal对象实际占用的内存大小: 16</span><br></pre></td></tr></table></figure></p>
 <p>我们发现Animal对象实际需要的内存大小是16字节，而不是我们之前推算出来的12字节，原因是字节对其，已16的整数倍分配</p>
-<h5 id="weak"><a href="#weak" class="headerlink" title="__weak"></a>__weak</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id __week obj1 = obj;</span><br><span class="line">``` </span><br><span class="line">编译器的模拟代码</span><br></pre></td></tr></table></figure>
-<p>id obj1;<br>obj1 = 0;<br>objc_storeWeak(&amp;obj1, obj);<br>objc_storeWeak(&amp;obj1, 0);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">`objc_storeWeak`函数把第二参数的赋值对象的地址作为键值，将第一参数的附有`__weak`修饰的变量的地址注册到`weak`表中。如果第二参数为0，则把变量的地址从`weak`表中删除。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### 操作引用计数器</span><br><span class="line"></span><br><span class="line">当使用`alloc`、`new`、`copy`、`mutableCopy`创建一个新对象时,该新对象的引用计数器为1</span><br><span class="line">当给对象发送一条retain消息时,对象的引用计数器+1(方法返回对象本身)</span><br><span class="line">当给对象发送一条release消息时对象的引用计数器-1(方法无返回值)</span><br><span class="line"></span><br><span class="line">- 僵尸对象: 所占用的内存已经被回收的对象,僵尸对象不能再使用</span><br><span class="line">- 野指针: 指向僵尸对象的指针,给野指针发送消息会报错EXC_BAD_ACCESS错误:访问了一块已经被回收的内存</span><br><span class="line">- 空指针: 没有指向任何对象的指针(存储的东西是nil,NULL,0),给空指针发送消息不会报错,系统什么也不会做,所以在对象被释放时将指针设置为nil可以避免野指针错误</span><br></pre></td></tr></table></figure></p>
-<p>Person *p = [[Person alloc] init]; // 引用计数器 = 1<br>[p release]; // 引用计数器 - 1 = 0,指针所指向的对象的内存被释放<br>[p release]; // 这句给野指针发送消息,会报野指针错误,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### 类工厂方法内存管理</span><br><span class="line">自己创建的对象要自己负责释放，而向下面这种需要返回的对象要使用`autorelease`，这样调用者就不用关心释放的问题。</span><br></pre></td></tr></table></figure></p>
+<h5 id="weak"><a href="#weak" class="headerlink" title="__weak"></a>__weak</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __week obj1 = obj;</span><br></pre></td></tr></table></figure>
+<p>编译器的模拟代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id obj1;</span><br><span class="line">obj1 = 0;</span><br><span class="line">objc_storeWeak(&amp;obj1, obj);</span><br><span class="line">objc_storeWeak(&amp;obj1, 0);</span><br></pre></td></tr></table></figure></p>
+<p><code>objc_storeWeak</code>函数把第二参数的赋值对象的地址作为键值，将第一参数的附有<code>__weak</code>修饰的变量的地址注册到<code>weak</code>表中。如果第二参数为0，则把变量的地址从<code>weak</code>表中删除。</p>
+<h5 id="操作引用计数器"><a href="#操作引用计数器" class="headerlink" title="操作引用计数器"></a>操作引用计数器</h5><p>当使用<code>alloc</code>、<code>new</code>、<code>copy</code>、<code>mutableCopy</code>创建一个新对象时,该新对象的引用计数器为1<br>当给对象发送一条retain消息时,对象的引用计数器+1(方法返回对象本身)<br>当给对象发送一条release消息时对象的引用计数器-1(方法无返回值)</p>
 <ul>
-<li>(instancetype)person<br>{<br>  // 使用self而不是使用Person是因为这样可以在子类调用该方法时会返回子类的对象<br>  return [[[self alloc] init] autorelease];<br>}<br><code>`</code></li>
+<li>僵尸对象: 所占用的内存已经被回收的对象,僵尸对象不能再使用</li>
+<li>野指针: 指向僵尸对象的指针,给野指针发送消息会报错EXC_BAD_ACCESS错误:访问了一块已经被回收的内存</li>
+<li>空指针: 没有指向任何对象的指针(存储的东西是nil,NULL,0),给空指针发送消息不会报错,系统什么也不会做,所以在对象被释放时将指针设置为nil可以避免野指针错误</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Person *p = [[Person alloc] init]; // 引用计数器 = 1</span><br><span class="line">[p release]; // 引用计数器 - 1 = 0,指针所指向的对象的内存被释放</span><br><span class="line">[p release]; // 这句给野指针发送消息,会报野指针错误,</span><br></pre></td></tr></table></figure>
+<h5 id="类工厂方法内存管理"><a href="#类工厂方法内存管理" class="headerlink" title="类工厂方法内存管理"></a>类工厂方法内存管理</h5><p>自己创建的对象要自己负责释放，而向下面这种需要返回的对象要使用<code>autorelease</code>，这样调用者就不用关心释放的问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)person</span><br><span class="line">&#123;</span><br><span class="line">    // 使用self而不是使用Person是因为这样可以在子类调用该方法时会返回子类的对象</span><br><span class="line">    return [[[self alloc] init] autorelease];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h5 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h5><p><code>nsnotification</code> <code>kvo</code> 不会是<code>viewController</code>的引用计数器加一，原因是取消通知和监听的方法放到了<code>dealloc</code>里，只要<code>dealloc</code>被调用，说明引用计数器为0，添加的通知和监听没有对引用计数器进行加一操作<br><code>NSTimer</code>会使<code>viewController</code>的引用计数器加一，因为放在<code>dealloc</code>里的<code>[timer interval];</code>不会执行，timer阻碍了<code>viewController</code>的释放。(还要考虑<code>runloop</code>)</p>
 <p><code>superView</code>先销毁，因为<code>superView</code>持有<code>subview</code>，<code>superView</code>不销毁<code>subView</code>的引用计数器不为0。也有可以<code>superView</code>已经释放，但是<code>subView</code>被其他对象引用而没有释放，此时可能造成内存泄漏</p>
 <p><a href="https://www.jianshu.com/p/17817e6efaf5" target="_blank" rel="noopener">https://www.jianshu.com/p/17817e6efaf5</a><br><a href="https://www.jianshu.com/p/9839c7306d17" target="_blank" rel="noopener">https://www.jianshu.com/p/9839c7306d17</a></p>

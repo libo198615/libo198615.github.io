@@ -16,7 +16,7 @@
 <meta property="og:description" content="RunLoop 说白了就是一种循环，只不过它这种循环比较高级。当没有事件时，RunLoop 会进入休眠状态，有事件发生时， RunLoop 会去找对应的 Handler 处理事件。 Runloop Mode 实际上是Source，Timer 和 Observer 的集合，不同的 Mode 把不同组的 Source，Timer 和 Observer 隔绝开来。Runloop 在某个时刻只能跑在一个">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://libo198615.github.io/2019/01/02/Runloop/1.png">
-<meta property="og:updated_time" content="2019-01-02T12:37:21.479Z">
+<meta property="og:updated_time" content="2019-03-06T00:37:39.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Runloop">
 <meta name="twitter:description" content="RunLoop 说白了就是一种循环，只不过它这种循环比较高级。当没有事件时，RunLoop 会进入休眠状态，有事件发生时， RunLoop 会去找对应的 Handler 处理事件。 Runloop Mode 实际上是Source，Timer 和 Observer 的集合，不同的 Mode 把不同组的 Source，Timer 和 Observer 隔绝开来。Runloop 在某个时刻只能跑在一个">
@@ -66,6 +66,8 @@
 				<li><a href="/categories/C++">C++</a></li>
 	        
 				<li><a href="/categories/Swift">Swift</a></li>
+	        
+				<li><a href="/categories/HTTP">HTTP</a></li>
 	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
@@ -131,6 +133,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,19 +155,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -198,12 +204,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>RunLoop 说白了就是一种循环，只不过它这种循环比较高级。当没有事件时，RunLoop 会进入休眠状态，有事件发生时， RunLoop 会去找对应的 Handler 处理事件。</p>
+        <p><code>RunLoop</code> 说白了就是一种循环，只不过它这种循环比较高级。当没有事件时，<code>RunLoop</code> 会进入休眠状态，有事件发生时， <code>RunLoop</code> 会去找对应的 <code>Handler</code> 处理事件。</p>
 <p><code>Runloop Mode</code> 实际上是<code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 的集合，不同的 <code>Mode</code> 把不同组的 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 隔绝开来。<code>Runloop</code> 在某个时刻只能跑在一个 <code>Mode</code> 下，处理这一个 <code>Mode</code> 当中的 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code>。</p>
 <p>苹果文档中提到的 Mode 有五个，分别是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSDefaultRunLoopMode</span><br><span class="line">NSConnectionReplyMode // 监控NSConnection对象</span><br><span class="line">NSModalPanelRunLoopMode // 标识用于modal panel（模态面板）的事件。</span><br><span class="line">NSEventTrackingRunLoopMode // Cocoa使用该模式来处理用户界面相关的事件。</span><br><span class="line">NSRunLoopCommonModes // 这是一组可配置的通用模式。将input sources与该模式关联则同时也将input sources与该组中的所有模式进行了关联</span><br></pre></td></tr></table></figure></p>
-<p>iOS 中公开暴露出来的只有 <code>NSDefaultRunLoopMode</code> 和 <code>NSRunLoopCommonModes</code>。 NSRunLoopCommonModes 实际上是一个 Mode 的集合，<br>让Run Loop运行在NSRunLoopCommonModes下是没有意义的，因为一个时刻Run Loop只能运行在一个特定模式下，而不可能是个模式集合。</p>
+<p>iOS 中公开暴露出来的只有 <code>NSDefaultRunLoopMode</code> 和 <code>NSRunLoopCommonModes</code>。 <code>NSRunLoopCommonModes</code> 实际上是所有<code>Mode</code>的集合，<br>让<code>Run Loop</code>运行在<code>NSRunLoopCommonModes</code>下是没有意义的，因为一个时刻<code>RunLoop</code>只能运行在一个特定模式下，而不可能是个模式集合。</p>
 <h5 id="CFRunLoopObserver"><a href="#CFRunLoopObserver" class="headerlink" title="CFRunLoopObserver"></a>CFRunLoopObserver</h5><p>CFRunLoopObserver是观察者，可以观察RunLoop的各种状态，并抛出回调。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/* Run Loop Observer Activities */</span><br><span class="line">typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) &#123;</span><br><span class="line">    kCFRunLoopEntry = (1UL &lt;&lt; 0), //即将进入run loop</span><br><span class="line">    kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1), //即将处理timer</span><br><span class="line">    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),//即将处理source</span><br><span class="line">    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),//即将进入休眠</span><br><span class="line">    kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),//被唤醒但是还没开始处理事件</span><br><span class="line">    kCFRunLoopExit = (1UL &lt;&lt; 7),//run loop已经退出</span><br><span class="line">    kCFRunLoopAllActivities = 0x0FFFFFFFU</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>Runloop 通过监控 Source 来决定有没有任务要做，除此之外，我们还可以用 Runloop Observer 来监控 Runloop 本身的状态。 Runloop Observer 可以监控上面的 Runloop 事件，具体流程如下图。</p>
+<p><code>Runloop</code> 通过监控 <code>Source</code> 来决定有没有任务要做，除此之外，我们还可以用 <code>Runloop Observer</code> 来监控 <code>Runloop</code> 本身的状态。 <code>Runloop Observer</code> 可以监控上面的<code>Runloop</code> 事件，具体流程如下图。</p>
 <img src="/2019/01/02/Runloop/1.png" title="图片说明">
 <h5 id="获取RunLoop"><a href="#获取RunLoop" class="headerlink" title="获取RunLoop"></a>获取RunLoop</h5><p>从苹果开放的API来看，不允许我们直接创建RunLoop对象，只能通过以下几个函数来获取RunLoop:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CFRunLoopRef CFRunLoopGetCurrent(void)</span><br><span class="line">CFRunLoopRef CFRunLoopGetMain(void)</span><br><span class="line">+(NSRunLoop *)currentRunLoop</span><br><span class="line">+(NSRunLoop *)mainRunLoop</span><br></pre></td></tr></table></figure></p>
 <p>前两个是Core Foundation中的API，后两个是Foundation中的API。</p>

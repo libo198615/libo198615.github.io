@@ -16,7 +16,7 @@
 <meta property="og:description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针） pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的autor">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://libo198615.github.io/2019/01/02/Autorelease/1.png">
-<meta property="og:updated_time" content="2019-01-02T12:45:44.741Z">
+<meta property="og:updated_time" content="2019-03-05T08:52:49.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Autorelease">
 <meta name="twitter:description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针） pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的autor">
@@ -66,6 +66,8 @@
 				<li><a href="/categories/C++">C++</a></li>
 	        
 				<li><a href="/categories/Swift">Swift</a></li>
+	        
+				<li><a href="/categories/HTTP">HTTP</a></li>
 	        
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
@@ -131,6 +133,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -151,19 +155,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 14.285714285714286%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 14.285714285714286%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+		        
+					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -222,7 +228,7 @@
 <p><code>Autorelease</code>实际上只是把对<code>release</code>的调用延迟了，对于每一个<code>Autorelease</code>，系统只是把该<code>Object</code>放入了当前的<code>AutoreleasePool</code>中，当该<code>pool</code>被释放时，该<code>pool</code>中的所有<code>Object</code>会被调用<code>Release</code>。</p>
 <h5 id="方法名检查"><a href="#方法名检查" class="headerlink" title="方法名检查"></a>方法名检查</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@interface XSQObject : NSObject</span><br><span class="line"></span><br><span class="line">+ (NSString *)newHelloWorldString;</span><br><span class="line">+ (NSString *)helloWorldString;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation XSQObject</span><br><span class="line"></span><br><span class="line">+ (NSString *)newHelloWorldString &#123;</span><br><span class="line">    return [[NSString alloc] initWithCString:&quot;HelloWorld&quot; encoding:NSUTF8StringEncoding];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (NSString *)helloWorldString &#123;</span><br><span class="line">    return [[NSString alloc] initWithCString:&quot;HelloWorld&quot; encoding:NSUTF8StringEncoding];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        __weak NSString *helloWorldString = [XSQObject helloWorldString];</span><br><span class="line">        __weak NSString *newHelloWorldString = [XSQObject newHelloWorldString];</span><br><span class="line">        //此处有warning: </span><br><span class="line">        //assigning retained object to weak variable; </span><br><span class="line">        //object will be released after assignment </span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;%@&quot;, helloWorldString);//输出HelloWorld</span><br><span class="line">        NSLog(@&quot;%@&quot;, newHelloWorldString);//输出null</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>虽然<code>[XSQObject helloWorldString]</code>和<code>[XSQObject newHelloWorldString]</code>两个方法的实现完全一样，但是它们返回的对象被赋值给<code>__weak</code>指针后，前者仍然存在，而后者则被销毁了。如果再加入<code>@autorelease</code>块做点实验，可以发现<code>helloWorldString</code>指向的对象其实已被注册到<code>autorelease pool</code>中。而以new开头的方法不会自动被注册到<code>autoreleasepool</code>中</p>
-<p>对比内存管理原则，这就像是在MRC下，不以<code>alloc/new/copy/mutableCopy</code>开头的方法，会对返回的对象发送<code>autorelease</code>消息一样。而事实上，在ARC下，编译器会检查方法名是否以<code>alloc/new/copy/mutableCopy</code>开头，如果不是，则自动将返回的对象注册到<code>autorelease pool</code>中。</p>
+<p>对比内存管理原则，这就像是在MRC下，不以<code>alloc/new/copy/mutableCopy</code>开头的方法，会对返回的对象发送<code>autorelease</code>消息一样。而事实上，在ARC下，编译器会检查方法名是否以<code>alloc/new/copy/mutableCopy</code>开头，如果是，会被<code>ARC</code>管理；如果不是，则自动将返回的对象注册到<code>autorelease pool</code>中。</p>
 <ul>
 <li>stringWithFormat:<br>因为stringWithFormat:这个方法，不是以alloc/new/copy/mutableCopy开头的呀，所以它返回的对象已经被注册到了autorelease pool里呀。</li>
 </ul>
