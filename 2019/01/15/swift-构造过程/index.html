@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>swift_构造过程 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值 与OC不同，swift的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化 存储属型属性 初始化为默认值 1var name = &amp;quot;defaultName&amp;quot;  初始化为可选值 1var name : String?  在构造函数中初始化 123456789v">
+  <meta name="description" content="构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值 与OC不同，swift的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化 存储属型属性 初始化为默认值 1var name = &quot;defaultName&quot;  初始化为可选值 1var name : String?  在构造函数中初始化 123456789var name: S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="swift_构造过程">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/15/swift-构造过程/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值 与OC不同，swift的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化 存储属型属性 初始化为默认值 1var name = &amp;quot;defaultName&amp;quot;  初始化为可选值 1var name : String?  在构造函数中初始化 123456789v">
+<meta property="og:description" content="构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值 与OC不同，swift的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化 存储属型属性 初始化为默认值 1var name = &quot;defaultName&quot;  初始化为可选值 1var name : String?  在构造函数中初始化 123456789var name: S">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://libo198615.github.io/2019/01/15/swift-构造过程/1.png">
 <meta property="og:image" content="https://libo198615.github.io/2019/01/15/swift-构造过程/2.png">
-<meta property="og:updated_time" content="2019-01-16T09:10:04.405Z">
+<meta property="og:updated_time" content="2019-03-07T00:51:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="swift_构造过程">
-<meta name="twitter:description" content="构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值 与OC不同，swift的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化 存储属型属性 初始化为默认值 1var name = &amp;quot;defaultName&amp;quot;  初始化为可选值 1var name : String?  在构造函数中初始化 123456789v">
+<meta name="twitter:description" content="构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值 与OC不同，swift的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化 存储属型属性 初始化为默认值 1var name = &quot;defaultName&quot;  初始化为可选值 1var name : String?  在构造函数中初始化 123456789var name: S">
 <meta name="twitter:image" content="https://libo198615.github.io/2019/01/15/swift-构造过程/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -73,6 +73,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/git">Git</a></li>
 	        
@@ -136,6 +138,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -156,21 +160,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -209,18 +215,18 @@
 <p>与<code>OC</code>不同，<code>swift</code>的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化</p>
 <h4 id="存储属型属性"><a href="#存储属型属性" class="headerlink" title="存储属型属性"></a>存储属型属性</h4><ol>
 <li><p>初始化为默认值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var name = &quot;defaultName&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"defaultName"</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>初始化为可选值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var name : String?</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name : <span class="type">String</span>?</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在构造函数中初始化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var name: String // 也可以是常量 let name: String</span><br><span class="line">// 可以通过传入参数来初始化</span><br><span class="line">init(name: String) &#123;</span><br><span class="line">    self.name = name</span><br><span class="line">&#125;</span><br><span class="line">// 也可以不用参数，也就是说直接在初始化函数中赋值即可</span><br><span class="line">init() &#123;</span><br><span class="line">    self.name = &quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span> <span class="comment">// 也可以是常量 let name: String</span></span><br><span class="line"><span class="comment">// 可以通过传入参数来初始化</span></span><br><span class="line"><span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 也可以不用参数</span></span><br><span class="line"><span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="keyword">self</span>.name = <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="默认构造器"><a href="#默认构造器" class="headerlink" title="默认构造器"></a>默认构造器</h4><p>如果<code>结构体</code>或<code>类</code>的所有属性都有默认值，同时没有自定义的构造器，它将获得一个默认构造器</p>
-<h5 id="结构体的逐一成员构造器"><a href="#结构体的逐一成员构造器" class="headerlink" title="结构体的逐一成员构造器"></a>结构体的逐一成员构造器</h5><p>如果结构体没有提供自定义的构造器，它们将自动获得一个逐一成员构造器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 即有逐一成员构造器，又有默认构造器（参数都有默认值）</span><br><span class="line">struct Size &#123;</span><br><span class="line">    var width: Double</span><br><span class="line">    var height: Double</span><br><span class="line">&#125;</span><br><span class="line">let twoByTwo = Size(width: 2.0, height: 2.0)</span><br></pre></td></tr></table></figure></p>
-<p>我们可以认为添加了默认构造器的代码为<br><figure class="highlight plain"><figcaption><span>Size &#123;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    var width: Double</span><br><span class="line">    var height: Double</span><br><span class="line">    init(width: Double, height: Double) &#123;</span><br><span class="line">        self.width = width</span><br><span class="line">        self.height = height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">所以width和height不用赋值，而改成class就不行，因为class没有提供默认的逐一成员构造器</span><br></pre></td></tr></table></figure></p>
+<h5 id="结构体的逐一成员构造器"><a href="#结构体的逐一成员构造器" class="headerlink" title="结构体的逐一成员构造器"></a>结构体的逐一成员构造器</h5><p>如果结构体没有提供自定义的构造器，它们将自动获得一个逐一成员构造器<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 即有逐一成员构造器，又有默认构造器（参数都有默认值）</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> width: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> twoByTwo = <span class="type">Size</span>(width: <span class="number">2.0</span>, height: <span class="number">2.0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>我们可以认为添加了默认构造器的代码为<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> width: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">init</span>(width: <span class="type">Double</span>, height: <span class="type">Double</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.width = width</span><br><span class="line">        <span class="keyword">self</span>.height = height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="值类型的构造器代理"><a href="#值类型的构造器代理" class="headerlink" title="值类型的构造器代理"></a>值类型的构造器代理</h4><p>构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为构造器代理，它能避免多个构造器间的代码重复。</p>
 <ul>
 <li><p>值类型<br>（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给自己的其它构造器。</p>

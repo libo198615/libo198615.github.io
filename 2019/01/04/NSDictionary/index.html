@@ -15,12 +15,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在OC中NSDictionary是使用hash表来实现key和value的映射和存储的。那么问题来了什么是hash表呢？哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://libo198615.github.io/2019/01/04/NSDictionary/1.png">
-<meta property="og:updated_time" content="2019-03-04T05:29:21.366Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0vcqwnsyfj30e40ca0t3.jpg">
+<meta property="og:updated_time" content="2019-03-08T06:20:09.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSDictionary">
 <meta name="twitter:description" content="在OC中NSDictionary是使用hash表来实现key和value的映射和存储的。那么问题来了什么是hash表呢？哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称">
-<meta name="twitter:image" content="https://libo198615.github.io/2019/01/04/NSDictionary/1.png">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0vcqwnsyfj30e40ca0t3.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +72,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/git">Git</a></li>
 	        
@@ -135,6 +137,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -155,21 +159,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -204,7 +210,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在OC中<code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。<br>那么问题来了什么是hash表呢？<br>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。<br>读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称为一个箱子，箱子中存放的是键值对。<br><img src="/2019/01/04/NSDictionary/1.png" title="图片说明"></p>
+        <p>在OC中<code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。<br>那么问题来了什么是hash表呢？<br>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。<br>读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称为一个箱子，箱子中存放的是键值对。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0vcqwnsyfj30e40ca0t3.jpg" alt=""></p>
 <ul>
 <li>hash表存储过程简单介绍：</li>
 </ul>

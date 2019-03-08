@@ -67,6 +67,8 @@
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
 	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
+	        
 				<li><a href="/categories/git">Git</a></li>
 	        
 			</ul>
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,21 +153,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -439,7 +445,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <img src="/2018/12/28/关联/1.png" title="图片说明">
+        <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0ve49qxwhj30s80hwwis.jpg" alt=""></p>
 <p>一个实例对象就对应一个<code>ObjectAssociationMap</code>，而<code>ObjectAssociationMap</code>中存储着多个此实例对象的关联对象的<code>key</code>以及<code>ObjcAssociation</code>，为<code>ObjcAssociation</code>中存储着关联对象的<code>value</code>和<code>policy</code>策略。</p>
 <p>由此我们可以知道关联对象并不是放在了原来的对象里面，而是自己维护了一个全局的<code>map</code>用来存放每一个对象及其对应关联属性表格。</p>
 <p><code>AssociationsManager</code>里面是由一个静态<code>AssociationsHashMap</code>来存储所有的关联对象的。这相当于把所有对象的关联对象都存在一个全局<code>map</code>里面。而<code>map</code>的的<code>key</code>是这个对象的指针地址，而这个<code>map</code>的<code>value</code>又是另外一个<code>AssociationsHashMap</code>，里面保存了关联对象的<code>kv</code>对。</p>
@@ -867,7 +873,10 @@
 <p>例：正数 12<br>    原码：00001100<br>    反码：00001100<br>    补码：00001100
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　</p>
-<h5 id="计算机为什么使用补码存储数据"><a href="#计算机为什么使用补码存储数据" class="headerlink" title="计算机为什么使用补码存储数据"></a>计算机为什么使用补码存储数据</h5><p>优点：<br>1.避免了0的编码有两个<br>2.符号位和有效值位可以一起处理，减法通过加法就可以实现，只有加法，没有减法<br>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<br><img src="/2018/12/26/溢出/IMG_0146.BMP"></p>
+<h5 id="计算机为什么使用补码存储数据"><a href="#计算机为什么使用补码存储数据" class="headerlink" title="计算机为什么使用补码存储数据"></a>计算机为什么使用补码存储数据</h5><p>优点：<br>1.避免了0的编码有两个<br>2.符号位和有效值位可以一起处理，减法通过加法就可以实现，只有加法，没有减法
+　　　　　　　　　　　　　　　　　　</p>
+<p>[^_^]: 　　　　　　　　<img src="/2018/12/26/溢出/IMG_0146.BMP"></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0vfdjz5usj307h086mx6.jpg" alt=""></p>
 
       
 

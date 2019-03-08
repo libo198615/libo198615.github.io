@@ -67,6 +67,8 @@
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
 	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
+	        
 				<li><a href="/categories/git">Git</a></li>
 	        
 			</ul>
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,21 +153,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -360,7 +366,8 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)operationDidStart &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    if (![self isCancelled]) &#123;</span><br><span class="line">        self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];</span><br><span class="line">        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];</span><br><span class="line">        for (NSString *runLoopMode in self.runLoopModes) &#123;</span><br><span class="line">            [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">            [self.outputStream scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">        &#125;</span><br><span class="line">        [self.outputStream open];</span><br><span class="line">        [self.connection start];</span><br><span class="line">    &#125;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidStartNotification object:self];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>首先，每一个请求对应一个AFHTTPRequestOperation实例对象（以下简称operation），每一个operation在初始化完成后都会被添加到一个NSOperationQueue中。<br>由这个NSOperationQueue来控制并发，系统会根据当前可用的核心数以及负载情况动态地调整最大的并发 operation 数量，我们也可以通过setMaxConcurrentoperationCount:方法来设置最大并发数。注意：并发数并不等于所开辟的线程数。具体开辟几条线程由系统决定。</p>
-<p>也就是说此处执行operation是并发的、多线程的。<br><img src="/2019/01/04/AFNetworking/1.png" title="图片说明"></p>
+<p>也就是说此处执行operation是并发的、多线程的。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0vdjb6l13j30fx0f6q2z.jpg" alt=""></p>
 <ul>
 <li>3.x<br>3.x 不需要常驻线程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.operationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">self.operationQueue.maxConcurrentOperationCount = 1;</span><br><span class="line">self.session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.operationQueue];</span><br></pre></td></tr></table></figure>
 </li>

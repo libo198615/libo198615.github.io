@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>深入理解计算机系统 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="静态连接 符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来 重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。  目标文件 可重定位目标文件 可执行目标文件 共享目标文件编译器和汇">
+  <meta name="description" content="静态链接 符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来 重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。  目标文件 可重定位目标文件 可执行目标文件 共享目标文件编译器和汇">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/07/深入理解计算机系统/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="静态连接 符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来 重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。  目标文件 可重定位目标文件 可执行目标文件 共享目标文件编译器和汇">
+<meta property="og:description" content="静态链接 符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来 重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。  目标文件 可重定位目标文件 可执行目标文件 共享目标文件编译器和汇">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-08T01:52:06.745Z">
+<meta property="og:updated_time" content="2019-03-07T09:14:44.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统">
-<meta name="twitter:description" content="静态连接 符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来 重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。  目标文件 可重定位目标文件 可执行目标文件 共享目标文件编译器和汇">
+<meta name="twitter:description" content="静态链接 符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来 重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。  目标文件 可重定位目标文件 可执行目标文件 共享目标文件编译器和汇">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -70,6 +70,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/git">Git</a></li>
 	        
@@ -133,6 +135,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -153,21 +157,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -202,7 +208,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="静态连接"><a href="#静态连接" class="headerlink" title="静态连接"></a>静态连接</h5><ul>
+        <h5 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h5><ul>
 <li>符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来</li>
 <li>重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
 </ul>

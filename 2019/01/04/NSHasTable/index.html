@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>NSHasTable NSMapTable | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用技术+1 NSHashTable是可变的,没有不可变的对应类NSHashTable可以持有成员的弱引用NSHashTable可以在加入成员时进行copy操作NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查  NSMapTable是NSDictionary的通用版本,NSMapTa">
+  <meta name="description" content="将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用计数+1 NSHashTable是可变的,没有不可变的对应类NSHashTable可以持有成员的弱引用NSHashTable可以在加入成员时进行copy操作NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查  NSMapTable是NSDictionary的通用版本,NSMapTa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NSHasTable NSMapTable">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/04/NSHasTable/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用技术+1 NSHashTable是可变的,没有不可变的对应类NSHashTable可以持有成员的弱引用NSHashTable可以在加入成员时进行copy操作NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查  NSMapTable是NSDictionary的通用版本,NSMapTa">
+<meta property="og:description" content="将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用计数+1 NSHashTable是可变的,没有不可变的对应类NSHashTable可以持有成员的弱引用NSHashTable可以在加入成员时进行copy操作NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查  NSMapTable是NSDictionary的通用版本,NSMapTa">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-06T02:20:57.247Z">
+<meta property="og:updated_time" content="2019-03-08T05:59:39.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSHasTable NSMapTable">
-<meta name="twitter:description" content="将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用技术+1 NSHashTable是可变的,没有不可变的对应类NSHashTable可以持有成员的弱引用NSHashTable可以在加入成员时进行copy操作NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查  NSMapTable是NSDictionary的通用版本,NSMapTa">
+<meta name="twitter:description" content="将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用计数+1 NSHashTable是可变的,没有不可变的对应类NSHashTable可以持有成员的弱引用NSHashTable可以在加入成员时进行copy操作NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查  NSMapTable是NSDictionary的通用版本,NSMapTa">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -70,6 +70,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/git">Git</a></li>
 	        
@@ -133,6 +135,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -153,21 +157,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -202,15 +208,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用技术+1</p>
-<p>NSHashTable是可变的,没有不可变的对应类<br>NSHashTable可以持有成员的弱引用<br>NSHashTable可以在加入成员时进行copy操作<br>NSHashTable可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
+        <p>将对象添加到容器时(NSSet, NSArray, NSDictionary)，会对该对象的引用计数+1</p>
+<p><code>NSHashTable</code>是可变的,没有不可变的对应类<br><code>NSHashTable</code>可以持有成员的弱引用<br><code>NSHashTable</code>可以在加入成员时进行copy操作<br><code>NSHashTable</code>可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
 <p>NSMapTable是NSDictionary的通用版本,NSMapTable具有下面特性:<br>NSMapTable是可变的,没有不可变的类<br>NSMapTable可以持有键和值的弱引用,当键或值当中的一个被释放时,整个这一项就会被移除掉<br>NSMapTable可以在加入成员时进行copy操作<br>NSMapTable可以存储任意的指针,通过指针来进行相等性和散列检查 </p>
-<h5 id="NSDictionary-的局限性"><a href="#NSDictionary-的局限性" class="headerlink" title="NSDictionary 的局限性"></a>NSDictionary 的局限性</h5><p>NSDictionary 提供了 key -&gt; object 的映射。从本质上讲，NSDictionary 中存储的 object 位置是由 key 来索引的。</p>
-<p>由于对象存储在特定位置，NSDictionary 中要求 key 的值不能改变（否则 object 的位置会错误）。为了保证这一点，NSDictionary 会始终复制 key 到自己的私有空间。</p>
-<p>这个 key 的复制行为也是 NSDictionary 如何工作的基础，但这也有一个限制：你只能使用 OC 对象作为 NSDictionary 的 key，并且必须支持 NSCopying 协议。此外，key 应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。</p>
+<h5 id="NSDictionary-的局限性"><a href="#NSDictionary-的局限性" class="headerlink" title="NSDictionary 的局限性"></a>NSDictionary 的局限性</h5><p>由于对象存储在特定位置，<code>NSDictionary</code>中要求<code>key</code> 的值不能改变（否则 object 的位置会错误）。为了保证这一点，<code>NSDictionary</code> 会始终复制 <code>key</code> 到自己的私有空间。</p>
+<p>这个 <code>key</code> 的复制行为也是<code>NSDictionary</code> 如何工作的基础，但这也有一个限制：你只能使用 OC 对象作为 <code>NSDictionary</code>的 <code>key</code>，并且必须支持 <code>NSCopying</code> 协议。此外，<code>key</code> 应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。</p>
 <p>这意味着，NSDictionary 中真的只适合将值类型的对象作为 key（如简短字符串和数字）。并不适合自己的模型类来做对象到对象的映射。</p>
 <p><a href="http://www.isaced.com/post-235.html" target="_blank" rel="noopener">http://www.isaced.com/post-235.html</a></p>
-<p>哈希表的本质是一个数组，数组中每一个元素称为一个箱子(bin)，箱子中存放的是键值对。</p>
+<p>哈希表的本质是一个数组，数组中每一个元素称为一个箱子，箱子中存放的是键值对。</p>
 <p>哈希表的存储过程如下:</p>
 <ol>
 <li>根据 key 计算出它的哈希值 h。</li>

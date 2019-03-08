@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="@property@property = ivar + getter + setter;  添加实例变量 生成getter setter 方法   protocol1@property (nonatomic, strong) NSString *name;   不自动生成getter setter，表明实现此协议的类必须自己声明NSString *name不声明也可以写self.name，但当调用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-05T07:32:02.947Z">
+<meta property="og:updated_time" content="2019-03-08T07:32:46.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="修饰符">
 <meta name="twitter:description" content="@property@property = ivar + getter + setter;  添加实例变量 生成getter setter 方法   protocol1@property (nonatomic, strong) NSString *name;   不自动生成getter setter，表明实现此协议的类必须自己声明NSString *name不声明也可以写self.name，但当调用">
@@ -70,6 +70,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/git">Git</a></li>
 	        
@@ -133,6 +135,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -153,21 +157,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -282,7 +288,7 @@
 </tr>
 </tbody>
 </table>
-<h5 id="以下规则，string-array都适用"><a href="#以下规则，string-array都适用" class="headerlink" title="以下规则，string array都适用"></a>以下规则，string array都适用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">	if (_name != name) &#123;</span><br><span class="line">	[_name release];</span><br><span class="line">	_name = [name copy]; // 这是面试时优化的点 [name retain]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="以下规则，string-array都适用"><a href="#以下规则，string-array都适用" class="headerlink" title="以下规则，string array都适用"></a>以下规则，string array都适用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">	if (_name != name) &#123;</span><br><span class="line">		[_name release];</span><br><span class="line">		_name = [name copy]; // 这是面试时优化的点 [name retain]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) NSString *c_String;</span><br><span class="line">@property (nonatomic, strong) NSString *s_String;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line">// before change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line">// after change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br></pre></td></tr></table></figure>

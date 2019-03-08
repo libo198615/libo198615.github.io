@@ -15,12 +15,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一个实例对象就对应一个ObjectAssociationMap，而ObjectAssociationMap中存储着多个此实例对象的关联对象的key以及ObjcAssociation，为ObjcAssociation中存储着关联对象的value和policy策略。 由此我们可以知道关联对象并不是放在了原来的对象里面，而是自己维护了一个全局的map用来存放每一个对象及其对应关联属性表格。 Assoc">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://libo198615.github.io/2018/12/28/关联/1.png">
-<meta property="og:updated_time" content="2018-12-28T14:47:24.610Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1g0ve49qxwhj30s80hwwis.jpg">
+<meta property="og:updated_time" content="2019-03-08T06:54:12.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关联">
 <meta name="twitter:description" content="一个实例对象就对应一个ObjectAssociationMap，而ObjectAssociationMap中存储着多个此实例对象的关联对象的key以及ObjcAssociation，为ObjcAssociation中存储着关联对象的value和policy策略。 由此我们可以知道关联对象并不是放在了原来的对象里面，而是自己维护了一个全局的map用来存放每一个对象及其对应关联属性表格。 Assoc">
-<meta name="twitter:image" content="https://libo198615.github.io/2018/12/28/关联/1.png">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1g0ve49qxwhj30s80hwwis.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +72,8 @@
 				<li><a href="/categories/shell">shell命令</a></li>
 	        
 				<li><a href="/categories/计算机基础">计算机基础</a></li>
+	        
+				<li><a href="/categories/设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/git">Git</a></li>
 	        
@@ -135,6 +137,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -155,21 +159,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -204,7 +210,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <img src="/2018/12/28/关联/1.png" title="图片说明">
+        <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0ve49qxwhj30s80hwwis.jpg" alt=""></p>
 <p>一个实例对象就对应一个<code>ObjectAssociationMap</code>，而<code>ObjectAssociationMap</code>中存储着多个此实例对象的关联对象的<code>key</code>以及<code>ObjcAssociation</code>，为<code>ObjcAssociation</code>中存储着关联对象的<code>value</code>和<code>policy</code>策略。</p>
 <p>由此我们可以知道关联对象并不是放在了原来的对象里面，而是自己维护了一个全局的<code>map</code>用来存放每一个对象及其对应关联属性表格。</p>
 <p><code>AssociationsManager</code>里面是由一个静态<code>AssociationsHashMap</code>来存储所有的关联对象的。这相当于把所有对象的关联对象都存在一个全局<code>map</code>里面。而<code>map</code>的的<code>key</code>是这个对象的指针地址，而这个<code>map</code>的<code>value</code>又是另外一个<code>AssociationsHashMap</code>，里面保存了关联对象的<code>kv</code>对。</p>
