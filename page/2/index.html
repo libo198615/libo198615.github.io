@@ -186,95 +186,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-swift-willSet-didSet" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/14/swift-willSet-didSet/">swift_willSet_didSet</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/14/swift-willSet-didSet/" class="archive-article-date">
-  	<time datetime="2019-01-14T13:59:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    var date: NSDate&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            println(&quot;即将将日期从\(date)设定至\(newValue)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        didSet&#123;</span><br><span class="line">            println(&quot;已经将日期从\(oldValue)设定至\(date)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init()&#123;</span><br><span class="line">        date = NSDate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">let foo = MyClass()</span><br><span class="line">foo.date = foo.date.dateByAddingTimeInterval(10086)</span><br><span class="line"></span><br><span class="line">//输出</span><br><span class="line">即将将日期从2015-07-21 10:11:41 +0000设定至2015-07-21 12:59:47 +0000</span><br><span class="line">已经将日期从2015-07-21 10:11:41 +0000设定至2015-07-21 12:59:47 +0000</span><br></pre></td></tr></table></figure>
-<p>属性观察的一个重要用处是作为设置值的验证，比如上面的例子中我们不希望date超过当前时间的一年以上的话，我们可以将 didSet 修改一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    let oneYearInSecond: NSTimeInterval = 365 * 24 * 60 * 60</span><br><span class="line">    var date: NSDate&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            println(&quot;即将将日期从\(date)设定至\(newValue)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        didSet&#123;</span><br><span class="line">            if (date.timeIntervalSinceNow &gt; oneYearInSecond)&#123;</span><br><span class="line">                println(&quot;设定的时间太晚了&quot;)</span><br><span class="line">                date = NSDate().dateByAddingTimeInterval(oneYearInSecond)</span><br><span class="line">            &#125;</span><br><span class="line">            println(&quot;已经将日期从\(oldValue)设定至\(date)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init()&#123;</span><br><span class="line">        date = NSDate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><em>初始化方法对属性的设定，以及在willSet 和 didSet 中对属性的再次设定都不会再次触发属性观察的调用</em></p>
-<p>Swift 中所声明的属性包括存储属性和计算属性两种。</p>
-<ul>
-<li>存储属性将会在内存中实际分配地址对属性进行存储</li>
-<li>计算属性不存储，只是提供 set 和 get 两种方法</li>
-</ul>
-<p>在同一个类型中，属性观察和计算属性不能同时共存。<br>计算属性中我们可以重写它的set属性，已达到使用willSet和didSet同样的属性观察的目的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">    var number : Int&#123;</span><br><span class="line">        get&#123;</span><br><span class="line">            print(&quot;get&quot;)</span><br><span class="line">            return 1</span><br><span class="line">        &#125;</span><br><span class="line">        set&#123;</span><br><span class="line">            print(&quot;set&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class B:A &#123;</span><br><span class="line">    override var number: Int&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            print(&quot;willSet&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        didSet&#123;</span><br><span class="line">            print(&quot;didSet&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-<p>let b = B()<br>b.number = 0</p>
-<p>//输出<br>get<br>willSet<br>set<br>didSet</p>
-<p>//输出<br>willSet<br>set<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">set 和对应的属性观察的调用都在我们的预想之中。这里要注意的是 get 首先被调用了一次。这是因为我们实现了 didSet，didSet 中会用到 oldValue，而这个值需要在整个 set 动作之前进行获取并存储待用，否则将无法确保正确性。如果我们不实现 didSet 的话，这次 get 操作也将不存在。</span><br><span class="line"></span><br><span class="line">// 属性观察器 默认是 get</span><br></pre></td></tr></table></figure></p>
-<p>var label0 : UILabel{<br>    return UILabel(frame: CGRectMake(0, 0, 0, 0))<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// 闭包赋值 只执行一次</span><br></pre></td></tr></table></figure></p>
-<p>var label1: UILabel = {<br>        return UILabel(frame: CGRectMake(1, 1, 1, 1))<br>}()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">struct AlternativeRect &#123; </span><br><span class="line">    var origin = Point() </span><br><span class="line">    var size = Size()</span><br><span class="line">    var center: Point &#123; </span><br><span class="line">        get &#123; </span><br><span class="line">            let centerX = origin.x + (size.width / 2) </span><br><span class="line">            let centerY = origin.y + (size.height / 2) </span><br><span class="line">            return Point(x: centerX, y: centerY) </span><br><span class="line">        &#125; </span><br><span class="line">        set &#123; </span><br><span class="line">            origin.x = newValue.x - (size.width / 2) </span><br><span class="line">            origin.y = newValue.y - (size.height / 2) </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// 隐含信息 set get 中不出现center 自身，只涉及计算属性的计算来源</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/14/swift-willSet-didSet/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-swift-1" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -1102,6 +1013,99 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/11/swift修饰符/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MVVM" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/MVVM/">MVVM</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/MVVM/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:08:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="mvc"><a href="#mvc" class="headerlink" title="mvc"></a>mvc</h5><img src="/2019/01/09/MVVM/1.png" title="图片说明">
+<p>典型的 <code>MVC</code> 设置。<code>Model</code> 呈现数据，<code>View</code> 呈现用户界面，而 <code>View Controller</code> 调节它两者之间的交互</p>
+<p>现实中<br><img src="/2019/01/09/MVVM/2.png" title="图片说明"></p>
+<p>在典型的 <code>MVC</code> 应用里，许多逻辑被放在 <code>View Controller</code> 里。它们中的一些确实属于 <code>View Controller</code>，但更多的是所谓的“表示逻辑（presentation logic）”，以 <code>MVVM</code> 属术语来说，就是那些将 <code>Model</code> 数据转换为<code>View</code> 可以呈现的东西的事情，例如将一个 <code>NSDate</code> 转换为一个格式化过的 <code>NSString</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    SUGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;Goods&quot;];</span><br><span class="line">    cell.goods = self.dataSource[indexPath.row];</span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SUGoodsCell.m</span><br><span class="line">@implementation SUGoodsCell</span><br><span class="line">- (void)setGoods:(SUGoods *)goods</span><br><span class="line">&#123;</span><br><span class="line">    _goods = goods</span><br><span class="line">    /// config data ....</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>这个<code>SUGoodsCell</code>，正是由<code>View</code>直接来调用<code>Model</code>，所以事实上典型的<code>MV</code>C的原则已经违背了，但是这种情况是一直发生的甚至于人们不觉得这里有哪些不对。如果严格遵守<code>MVC</code>的话，你会把对<code>cell</code>的设置放在<code>Controller</code>中，不向<code>View</code>传递一个<code>Model</code>对象，这样就会大大增加<code>Controller</code>的体积。</p>
+<h5 id="厚重的View-Controller"><a href="#厚重的View-Controller" class="headerlink" title="厚重的View Controller"></a>厚重的View Controller</h5><p>M：模型model的对象通常非常的简单。根据Apple的文档，model应包括数据和操作数据的业务逻辑。而在实践中，model层往往非常薄，不管怎样，model层的业务逻辑不应被拖入到controller。</p>
+<p>V：视图view通常是UIKit控件。View的如何构建何必让Controller知晓，同时View不应该直接引用model（PS：现实中，你懂的！），并且仅仅通过IBAction事件引用controller。业务逻辑很明显不归入view，视图本身没有任何业务。</p>
+<p>C：控制器controller。Controller是app的“胶水代码”：协调模型和视图之间的所有交互。控制器负责管理他们所拥有的视图的视图层次结构，还要响应视图的loading、appearing、disappearing等等，同时往往也会充满我们不愿暴露的model的模型逻辑以及不愿暴露给视图的业务逻辑。</p>
+<p>网络数据的请求及后续处理，本地数据库操作，以及一些带有工具性质辅助方法都加大了Massive View Controller的产生。</p>
+<h5 id="无处安放的网络逻辑"><a href="#无处安放的网络逻辑" class="headerlink" title="无处安放的网络逻辑"></a>无处安放的网络逻辑</h5><p>苹果使用的MVC的定义是这么说的：所有的对象都可以被归类为一个model，一个view，或是一个controller。</p>
+<p>你可能试着把它放在Model对象里，但是也会很棘手，因为网络调用应该使用异步，这样如果一个网络请求比持有它的model生命周期更长，事情将变的复杂。显然View里面做网络请求那就更格格不入了，因此只剩下Controller了。若这样，这又加剧了Massive View Controller的问题。若不这样，何处才是网络逻辑的家呢？</p>
+<h5 id="较差的可测试性"><a href="#较差的可测试性" class="headerlink" title="较差的可测试性"></a>较差的可测试性</h5><p>由于View Controller混合了视图处理逻辑和业务逻辑，分离这些成分的单元测试成了一个艰巨的任务。若一个Massive View Controller有上万行代码，要你编写个单元测试，我敢保证，你不是想写，你是想死，分分钟填表走人。</p>
+<h5 id="MVVM（Model-View-View-Mode）"><a href="#MVVM（Model-View-View-Mode）" class="headerlink" title="MVVM（Model View View-Mode）"></a>MVVM（Model View View-Mode）</h5><p>MVVM：一个 MVC 的增强版，我们正式连接了视图和控制器，并将表示逻辑从 Controller 移出放到一个新的对象里，即 View Model<br>促进了 UI 代码与业务逻辑的分离。它正式规范了视图和控制器紧耦合的性质<br><img src="/2019/01/09/MVVM/3.png" title="图片说明"></p>
+<p>view 和 view controller 都不能直接引用model，而是引用视图模型（viewModel）</p>
+<p>viewModel 是一个放置用户输入验证逻辑，视图显示逻辑，发起网络请求和其他代码的地方</p>
+<p>使用MVVM会轻微的增加代码量，但总体上减少了代码的复杂性</p>
+<p>MVVM 配合一个绑定机制效果最好</p>
+<p><a href="https://objccn.io/issue-13-1/" target="_blank" rel="noopener">https://objccn.io/issue-13-1/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/MVVM/">展开全文 >></a>
         </p>
       
 
