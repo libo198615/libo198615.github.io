@@ -888,24 +888,30 @@
 <table>
 <thead>
 <tr>
-<th>方法</th>
-<th style="text-align:left">首次调用</th>
-<th style="text-align:center">category装载顺序</th>
-<th style="text-align:right">调用父类 </th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>方法</td>
+<td>首次调用</td>
+<td>category装载顺序</td>
+<td>调用父类</td>
+</tr>
+<tr>
 <td>load</td>
-<td style="text-align:left">加载即调用，main函数之前</td>
-<td style="text-align:center">有关</td>
-<td style="text-align:right">子类不实现，不调用父类</td>
+<td>加载即调用，main函数之前</td>
+<td>有关</td>
+<td>子类不实现，不调用父类</td>
 </tr>
 <tr>
 <td>initialize</td>
-<td style="text-align:left">首次使用调用，main函数之后</td>
-<td style="text-align:center">无关</td>
-<td style="text-align:right">子类不实现同样会调用父类，导致父类调用两次</td>
+<td>首次使用调用，main函数之后</td>
+<td>无关</td>
+<td>子类不实现同样会调用父类，导致父类调用两次</td>
 </tr>
 </tbody>
 </table>

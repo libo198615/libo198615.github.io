@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>Autorelease | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针） pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的autor">
+  <meta name="description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针）  pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的auto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Autorelease">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/02/Autorelease/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针） pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的autor">
+<meta property="og:description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针）  pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的auto">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://libo198615.github.io/2019/01/02/Autorelease/1.png">
-<meta property="og:updated_time" content="2019-03-05T08:52:49.614Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0vfk5bmssj30em0dv750.jpg">
+<meta property="og:updated_time" content="2019-03-08T07:44:05.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Autorelease">
-<meta name="twitter:description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针） pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的autor">
-<meta name="twitter:image" content="https://libo198615.github.io/2019/01/02/Autorelease/1.png">
+<meta name="twitter:description" content="AutoreleasePoolPage 4 kb AutoreleasePool并没有单独的结构，而是由若干个AutoreleasePoolPage以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针）  pop当对象调用 autorelease 方法时，会将对象加入 AutoreleasePoolPage 的栈中autoreleasepool销毁时，将里面的auto">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0vfk5bmssj30em0dv750.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -211,7 +211,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><code>AutoreleasePoolPage</code> 4 kb</p>
-<p><code>AutoreleasePool</code>并没有单独的结构，而是由若干个<code>AutoreleasePoolPage</code>以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针）<br><img src="/2019/01/02/Autorelease/1.png" title="图片说明"></p>
+<p><code>AutoreleasePool</code>并没有单独的结构，而是由若干个<code>AutoreleasePoolPage</code>以双向链表的形式组合而成的栈结构（分别对应结构中的parent指针和child指针）</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0vfk5bmssj30em0dv750.jpg" alt=""></p>
 <h5 id="pop"><a href="#pop" class="headerlink" title="pop"></a>pop</h5><p>当对象调用 <code>autorelease</code> 方法时，会将对象加入 <code>AutoreleasePoolPage</code> 的栈中<br><code>autoreleasepool</code>销毁时，将里面的<code>autorelease</code>对象的引用计数器减一，清空里面所有的变量，引用计数器不为0的，被其他堆上的对象持有</p>
 <h5 id="AutoreleasePool-何时释放"><a href="#AutoreleasePool-何时释放" class="headerlink" title="AutoreleasePool 何时释放"></a>AutoreleasePool 何时释放</h5><ol>
 <li><code>Autorelease</code>对象是在当前的<code>runloop</code>迭代结束时释放的，而它能够释放的原因是系统在每个<code>runloop</code>迭代中都加入了自动释放池<code>Push</code>和<code>Pop</code>。 </li>

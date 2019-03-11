@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://libo198615.github.io/2018/12/27/KVO/1.png">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1g0tiihijppj31aq0kadm4.jpg">
-<meta property="og:updated_time" content="2019-03-06T15:55:18.592Z">
+<meta property="og:updated_time" content="2019-03-08T12:37:08.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVO">
 <meta name="twitter:description" content="概述与KVC相同，OC在实现KVO时没有采用实现接口的方式，而是针对NSObject创建了一个类别,通过这样的方式使得NSObject的子类可以自行实现NSKeyValueObserving类别定义的相关方法，其他的如NSArray、NSSet这样的集合类也都定义了相关的类别，因此也可以对集合类型进行KVO的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 @Max,@Min 观察者观察的">
@@ -212,7 +212,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h5><p>与<code>KVC</code>相同，OC在实现<code>KVO</code>时没有采用实现接口的方式，而是针对<code>NSObject</code>创建了一个类别,通过这样的方式使得<code>NSObject</code>的子类可以自行实现<code>NSKeyValueObserving</code>类别定义的相关方法，其他的如<code>NSArray</code>、<code>NSSet</code>这样的集合类也都定义了相关的类别，因此也可以对集合类型进行<code>KVO</code>的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 <code>@Max</code>,<code>@Min</code></p>
-<p>观察者观察的是属性，只有遵循<code>KVO</code> 变更属性值的方式才会执行<code>KVO</code> 的回调方法，例如是否执行了 <code>setter</code> 方法、或者是否使用了 <code>KVC</code> 赋值。<br>如果赋值没有通过 <code>setter</code> 方法或者 <code>KVC</code>，而是直接修改属性对应的成员变量，例如：仅调用<code>_name = @&quot;newName&quot;</code>，这时是不会触发<code>KVO</code> 机制，更加不会调用回调方法的。</p>
+<p>观察者观察的是属性，只有遵循<code>KVO</code> 变更属性值的方式才会执行<code>KVO</code> 的回调方法，例如是否执行了 <code>setter</code> 方法、或者是否使用了 <code>KVC</code> 赋值(也会调用set方法)。<br>如果赋值没有通过 <code>setter</code> 方法或者 <code>KVC</code>，而是直接修改属性对应的成员变量，例如：仅调用<code>_name = @&quot;newName&quot;</code>，这时是不会触发<code>KVO</code> 机制。</p>
 <p>通过category和关联向类中添加属性，可以被KVO监听</p>
 <h5 id="正确使用"><a href="#正确使用" class="headerlink" title="正确使用"></a>正确使用</h5><ul>
 <li>需要主动移除</li>

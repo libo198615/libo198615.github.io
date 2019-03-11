@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="viewDidLoad -&amp;gt; viewWillAppear -&amp;gt; drawRect - viewDidAppear; drawRect1、如果在UIView初始化时没有设置rect大小，将直接导致drawRect不被自动调用。2、该方法在调用sizeThatFits后被调用，所以可以先调用sizeToFit计算出size。然后系统自动调用drawRect:方法。3、通过设置conten">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-08T06:02:37.224Z">
+<meta property="og:updated_time" content="2019-03-08T08:41:51.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="drawRect layoutSubview">
 <meta name="twitter:description" content="viewDidLoad -&amp;gt; viewWillAppear -&amp;gt; drawRect - viewDidAppear; drawRect1、如果在UIView初始化时没有设置rect大小，将直接导致drawRect不被自动调用。2、该方法在调用sizeThatFits后被调用，所以可以先调用sizeToFit计算出size。然后系统自动调用drawRect:方法。3、通过设置conten">
@@ -209,11 +209,17 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><code>viewDidLoad</code> -&gt; <code>viewWillAppear</code> -&gt; <code>drawRect</code> - <code>viewDidAppear</code>;</p>
-<h5 id="drawRect"><a href="#drawRect" class="headerlink" title="drawRect"></a>drawRect</h5><p>1、如果在<code>UIView</code>初始化时没有设置<code>rect</code>大小，将直接导致<code>drawRect</code>不被自动调用。<br>2、该方法在调用<code>sizeThatFits</code>后被调用，所以可以先调用<code>sizeToFit</code>计算出<code>size</code>。然后系统自动调用<code>drawRect:</code>方法。<br>3、通过设置<code>contentMode</code>属性值为<code>UIViewContentModeRedraw</code>。那么将在每次设置或更改frame的时候自动调用drawRect:。<br>4、直接调用setNeedsDisplay，或者setNeedsDisplayInRect:触发drawRect:，但是有个前提条件是rect不能为0. </p>
-<h5 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h5><p>1、若使用UIView绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate的ref并且不能用于画图。drawRect：方法不能手动显示调用，必须通过调用setNeedsDisplay 或者 setNeedsDisplayInRect ，让系统自动调该方法。<br>2、若使用calayer绘图，只能在drawInContext: 中（类似于drawRect）绘制，或者在delegate中的相应方法绘制。同样也是调用setNeedDisplay等间接调用以上方法。<br>3、若要实时画图，不能使用gestureRecognizer，只能使用touchbegan等方法来调用setNeedsDisplay实时刷新屏幕</p>
-<h5 id="layoutSubView"><a href="#layoutSubView" class="headerlink" title="layoutSubView"></a>layoutSubView</h5><p>调用时机  (父控件-&gt;本View-&gt;子控件)</p>
-<p>1、本View init初始化不会触发layoutSubviews<br>本View的frame为0时,addSubView也不会调用layoutSubViews但是当使用initWithFrame 进行初始化时，当rect的值不为CGRectZero时,也会触发本View的LayoutSubViews;<br> 2,本View直接调用setLayoutSubViews;<br>3、子控件addSubview会触发本View的layoutSubviews;(最常用)<br>4,子控件的frame发生改变时,会调用本View的layoutSubViews;<br>5,本View的size(frame)发生变化时,会调用父控件的LayoutSubViews;<br>6,父控件的frame发生变化时,会调用本View的layoutSubViews;<br>7、滚动一个UIScrollView会触发本View的layoutSubviews<br>8、旋转Screen会触发父控件的layoutSubviews事件(控制器的ViewWillLayoutSubView)</p>
-<p>layoutSubviews方法调用先于drawRect，也就是先布局子视图，再重绘。<br>系统会自动调用layoutSubviews ,不要手动调用,如果要强制更新布局,可以调用setNeedsLayout方法,如果想立即显示View,需要调用layoutIfNeeded方法;</p>
+<h3 id="drawRect"><a href="#drawRect" class="headerlink" title="drawRect"></a>drawRect</h3><p>1、如果在<code>UIView</code>初始化时没有设置<code>rect</code>大小，将直接导致<code>drawRect</code>不被自动调用。<br>2、该方法在调用<code>sizeThatFits</code>后被调用，所以可以先调用<code>sizeToFit</code>计算出<code>size</code>。然后系统自动调用<code>drawRect:</code>方法。<br>3、通过设置<code>contentMode</code>属性值为<code>UIViewContentModeRedraw</code>。那么将在每次设置或更改frame的时候自动调用drawRect:。<br>4、直接调用setNeedsDisplay，或者setNeedsDisplayInRect:触发drawRect:，但是有个前提条件是rect不能为0. </p>
+<h3 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h3><p>1、若使用UIView绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate的ref并且不能用于画图。drawRect：方法不能手动显示调用，必须通过调用setNeedsDisplay 或者 setNeedsDisplayInRect ，让系统自动调该方法。<br>2、若使用calayer绘图，只能在drawInContext: 中（类似于drawRect）绘制，或者在delegate中的相应方法绘制。同样也是调用setNeedDisplay等间接调用以上方法。<br>3、若要实时画图，不能使用gestureRecognizer，只能使用touchbegan等方法来调用setNeedsDisplay实时刷新屏幕</p>
+<h3 id="layoutSubView"><a href="#layoutSubView" class="headerlink" title="layoutSubView"></a>layoutSubView</h3><p>调用时机  (父控件-&gt;本View-&gt;子控件)</p>
+<p>本<code>view</code>的<code>frame</code>改变时，可能会影自己的<code>subView</code>的<code>frame</code>和自己同一级的<code>view</code>，所以除了要调用自己<code>layoutSubView</code>还要调用<code>subView</code>的<code>layoutSubView</code></p>
+<ol>
+<li><p>本View init初始化不会触发layoutSubviews</p>
+</li>
+<li><p>子控件addSubview会触发本View的layoutSubviews;(最常用)</p>
+</li>
+</ol>
+<p><code>layoutSubviews</code>方法调用先于<code>drawRect</code>，也就是先布局子视图，再重绘。<br>系统会自动调用<code>layoutSubviews</code> ,不要手动调用,如果要强制更新布局,可以调用<code>setNeedsLayout</code>方法,如果想立即显示<code>View</code>,需要调用<code>layoutIfNeeded</code>方法;</p>
 <p>-setNeedsLayout<br>标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，但layoutSubviews一定会被调用<br>-layoutIfNeeded<br>如果有需要刷新的标记，立即调用layoutSubviews进行布局（如果没有标记，不会调用layoutSubviews）</p>
 
       
