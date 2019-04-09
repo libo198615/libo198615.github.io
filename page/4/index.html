@@ -53,23 +53,21 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/categories/书籍">书籍</a></li>
+				<li><a href="/categories/ 书籍">书籍</a></li>
 	        
-				<li><a href="/categories/iOS">iOS</a></li>
+				<li><a href="/categories/ iOS">iOS</a></li>
 	        
-				<li><a href="/categories/C++">C++</a></li>
+				<li><a href="/categories/ C++">C++</a></li>
 	        
-				<li><a href="/categories/Swift">Swift</a></li>
+				<li><a href="/categories/ Swift">Swift</a></li>
 	        
-				<li><a href="/categories/HTTP">HTTP</a></li>
+				<li><a href="/categories/ shell">shell命令</a></li>
 	        
-				<li><a href="/categories/shell">shell命令</a></li>
+				<li><a href="/categories/ 计算机基础">计算机基础</a></li>
 	        
-				<li><a href="/categories/计算机基础">计算机基础</a></li>
+				<li><a href="/categories/ 设计模式">设计模式</a></li>
 	        
-				<li><a href="/categories/设计模式">设计模式</a></li>
-	        
-				<li><a href="/categories/git">Git</a></li>
+				<li><a href="/categories/ git">Git</a></li>
 	        
 			</ul>
 		</nav>
@@ -131,8 +129,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -153,23 +149,21 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 11.11111111111111%"><a href="/categories/书籍">书籍</a></li>
+					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/iOS">iOS</a></li>
+					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/C++">C++</a></li>
+					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/Swift">Swift</a></li>
+					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/HTTP">HTTP</a></li>
+					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/shell">shell命令</a></li>
+					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/计算机基础">计算机基础</a></li>
+					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 11.11111111111111%"><a href="/categories/设计模式">设计模式</a></li>
-		        
-					<li style="width: 11.11111111111111%"><a href="/categories/git">Git</a></li>
+					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
 		        
 				</ul>
 			</nav>
@@ -185,6 +179,87 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/git-tag/">Git Tag</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/git-tag/" class="archive-article-date">
+  	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/git-tag/1.png" title="图片说明"></p>
+<p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
+<p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
+<p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/git-tag/3.png" title="图片说明"></p>
+<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/git-tag/4.png" title="图片说明"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/git-tag/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -1154,83 +1229,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/06/知识点/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-错误调试" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/错误调试/">错误调试</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/错误调试/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="dSYM"><a href="#dSYM" class="headerlink" title="dSYM"></a>dSYM</h5><p><code>Xcode</code>编译项目后，我们会看到一个同名的 <code>dSYM</code> 文件，<code>dSYM</code> 是保存 <code>16</code> 进制函数地址映射信息的中转文件，我们调试的 <code>symbols</code> 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 <code>dSYM</code> 文件，位于 <code>/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 </p>
-<h5 id="dSYM-文件有什么作用"><a href="#dSYM-文件有什么作用" class="headerlink" title="dSYM 文件有什么作用"></a>dSYM 文件有什么作用</h5><p>当我们软件 <code>release</code> 模式打包或上线后，不会像我们在 <code>Xcode</code> 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 <code>crash report</code> 文件了，<code>iOS</code> 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 <code>Xcode</code> 的 <code>Organizer</code> 可以将 <code>iOS</code> 设备中的 <code>DeviceLog</code> 导出成 <code>crash</code> 文件，这个时候我们就可以通过出错的函数地址去查询 <code>dSYM</code> 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 <code>dSYM</code> 文件，这也是为什么我们很有必要保存每个发布版本的 <code>Archives</code> 文件了。</p>
-<h5 id="如何将文件一一对应每一个"><a href="#如何将文件一一对应每一个" class="headerlink" title="如何将文件一一对应每一个"></a>如何将文件一一对应每一个</h5><p>xx.app 和 xx.app.dSYM 文件都有对应的 UUID，crash 文件也有自己的 UUID，只要这三个文件的 UUID 一致，我们就可以通过他们解析出正确的错误函数信息了。<br>1.查看 xx.app 文件的 UUID，terminal 中输入命令 ：<br>dwarfdump –uuid xx.app/xx (xx代表你的项目名)<br>2.查看 xx.app.dSYM 文件的 UUID ，在 terminal 中输入命令：<br>dwarfdump –uuid xx.app.dSYM<br>3.crash 文件内第一行 Incident Identifier 就是该 crash 文件的 UUID。<br>dSYM工具于是我抽了几个小时的时间将这些命令封装到一个应用中，也为以后解决bug提供了便利。<br>使用步骤:<br>1.将打包发布软件时的xcarchive文件拖入软件窗口内的任意位置(支持多个文件同时拖入，注意：文件名不要包含空格)<br>2.选中任意一个版本的xcarchive文件，右边会列出该xcarchive文件支持的CPU类型，选中错误对应的CPU类型。<br>3.对比错误给出的UUID和工具界面中给出的UUID是否一致。4.将错误地址输入工具的文本框中，点击分析。Mac app下载地址  项目源码地址</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0vdvv07utj30gz0icn3i.jpg" alt=""></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/错误调试/">展开全文 >></a>
         </p>
       
 
