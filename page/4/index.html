@@ -180,35 +180,27 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-swift-type" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/git-tag/">Git Tag</a>
+      <a class="article-title" href="/2019/01/14/swift-type/">.type</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/git-tag/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+        <a href="/2019/01/14/swift-type/" class="archive-article-date">
+  	<time datetime="2019-01-14T12:42:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/1.png" title="图片说明"></p>
-<p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
-<p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
-<p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/3.png" title="图片说明"></p>
-<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/git-tag/4.png" title="图片说明"></p>
-
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func printType&lt;T&gt;(of type: T.Type) &#123;</span><br><span class="line">    print(&quot;\(type)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">printType(of: Int.self) // Int</span><br><span class="line"></span><br><span class="line">print(Int.self) // Int</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct S &#123;&#125;</span><br><span class="line">protocol P &#123;&#125;</span><br><span class="line"></span><br><span class="line">print(&quot;\(type(of: S.self))&quot;)      // S.Type</span><br><span class="line">print(&quot;\(type(of: S.Type.self))&quot;) // S.Type.Type</span><br><span class="line">print(&quot;\(type(of: P.self))&quot;)      // P.Protocol</span><br><span class="line">print(&quot;\(type(of: P.Type.self))&quot;) // P.Type.Protocol</span><br></pre></td></tr></table></figure>
       
 
       
@@ -222,7 +214,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
         		</li>
       		
 		</ul>
@@ -231,7 +223,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/git-tag/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/14/swift-type/">展开全文 >></a>
         </p>
       
 
@@ -261,211 +253,93 @@
 
 
   
-    <article id="post-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-RxSwift" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
+      <a class="article-title" href="/2019/01/13/RxSwift/">RxSwift</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/在sourceTree中使用rebase/" class="archive-article-date">
-  	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+        <a href="/2019/01/13/RxSwift/" class="archive-article-date">
+  	<time datetime="2019-01-13T05:58:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>原始状态<br><img src="/2019/01/09/在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/在sourceTree中使用rebase/9.png" title="图片说明"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/在sourceTree中使用rebase/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-制作自己的pod" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/制作自己的pod/">制作自己的pod</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/制作自己的pod/" class="archive-article-date">
-  	<time datetime="2019-01-09T06:56:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-在github上创建一个空白工程-APPHelp，克隆到本地"><a href="#1-在github上创建一个空白工程-APPHelp，克隆到本地" class="headerlink" title="1. 在github上创建一个空白工程 APPHelp，克隆到本地"></a>1. 在github上创建一个空白工程 <code>APPHelp</code>，克隆到本地</h2><h2 id="2-在终端-cd-到-APPHelp-目录，执行"><a href="#2-在终端-cd-到-APPHelp-目录，执行" class="headerlink" title="2. 在终端 cd 到 APPHelp 目录，执行"></a>2. 在终端 cd 到 <code>APPHelp</code> 目录，执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create APPHelp</span><br></pre></td></tr></table></figure>
-<p>会创建 <code>APPHelp.podspec</code><br><br>使用xcode打开，可以看里面的注释，我这里放一个自己使用的精简版的，可以对照着改<br>里面的注释被我删掉了，可能是我用的注释格式不正确“//   #”,注意点都写在了下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Pod::Spec.new do |s|</span><br><span class="line"></span><br><span class="line">s.name         = &quot;APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.version      = &quot;0.0.1&quot;</span><br><span class="line"></span><br><span class="line">s.summary      = &quot;app开发常用知识点收集&quot;</span><br><span class="line"></span><br><span class="line">s.homepage     = &quot;https://github.com/libo198615/APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.license = &#123; :type =&gt; &apos;MIT&apos;, :text =&gt; &lt;&lt;-LICENSE</span><br><span class="line">Copyright PPAbner 2016-2017</span><br><span class="line">LICENSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s.author             = &#123; &quot;boli&quot; =&gt; &quot;libo198615@163.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.platform     = :ios</span><br><span class="line"></span><br><span class="line">s.source       = &#123; :git =&gt; &quot;https://github.com/libo198615/APPHelp.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.source_files  = &quot;Pod/**/*&quot;</span><br><span class="line"></span><br><span class="line">s.public_header_files = &quot;Pod/**/*.h&quot;</span><br><span class="line"></span><br><span class="line">s.requires_arc = true</span><br><span class="line"></span><br><span class="line">s.ios.deployment_target = &quot;8.0&quot;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
-<h2 id="3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag"><a href="#3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag" class="headerlink" title="3. 将 APPHelp.podspec和你自己的文件提交到github，创建APPHelp.podspec中相应的 0.0.1的分支或者tag"></a>3. 将 <code>APPHelp.podspec</code>和你自己的文件提交到github，创建<code>APPHelp.podspec</code>中相应的 <code>0.0.1</code>的分支或者tag</h2><p>里面的内容需要改成自己的信息，其中s.source_files和s.public_header_files中如果有其它文件夹，要用两个*，不然也会报错，应该是正则匹配的问题，这里不深究了。</p>
-<h2 id="4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方"><a href="#4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方" class="headerlink" title="4. 执行下面命令，验证APPHelp.podspec是否正确，如果有错误请细读一下APPHelp.podspec看是否有设置不对的地方"></a>4. 执行下面命令，验证<code>APPHelp.podspec</code>是否正确，如果有错误请细读一下<code>APPHelp.podspec</code>看是否有设置不对的地方</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec lint APPHelp.podspec</span><br></pre></td></tr></table></figure>
-<h2 id="5-提交-APPHelp-podspec-到-CocoaPods"><a href="#5-提交-APPHelp-podspec-到-CocoaPods" class="headerlink" title="5. 提交 APPHelp.podspec 到 CocoaPods"></a>5. 提交 <code>APPHelp.podspec</code> 到 <code>CocoaPods</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果是第一次提交，需要注册一下</span><br><span class="line">$ pod trunk register 邮箱 &apos;昵称&apos; --description=&apos; 这里写描述&apos;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push APPHelp.podspec</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/制作自己的pod/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-flutter" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/08/flutter/">flutter</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/08/flutter/" class="archive-article-date">
-  	<time datetime="2019-01-08T10:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h5><p>打开$HOME/.bash_profile(在你的/Users/.bash_profile目录下，如果没有，可以新建，可以使用command+shift+.组合健来显示与隐藏文件)文件，加入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PUB_HOSTED_URL=https://pub.flutter-io.cn </span><br><span class="line">export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn</span><br><span class="line">export PATH=[你克隆 Flutter 仓库的路径]/flutter/bin:$PATH</span><br></pre></td></tr></table></figure></p>
-<p>保存，运行 <code>source $HOME/.bash_profile</code> 刷新当前窗口。</p>
-<ul>
-<li>brew<br>镜像：<code>git remote set-url origin https://git.coding.net/homebrew/homebrew.git</code></li>
-</ul>
-<p>brew update  error<br>Error: An unexpected error occurred during the <code>brew link</code> step<br>The formula built, but is not symlinked into /usr/local<br>Permission denied @ dir_s_mkdir - /usr/local/Frameworks<br>Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /usr/local/Frameworks</span><br><span class="line">sudo chown $(whoami):admin /usr/local/Frameworks</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>material 一种标准的移动端和web端的视觉设计语言</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter/material.dart&apos;;</span><br></pre></td></tr></table></figure>
+        <p>以下是本人的笔记，如果有幸被你看到，最好看一下<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/" target="_blank" rel="noopener">官网</a></p>
+<img src="/2019/01/13/RxSwift/3.jpg" title="图片说明">
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol>
+<li><code>Observable</code>发送信号<code>String</code>,<code>Int</code></li>
+<li><code>map</code>信号变换<code>Bool</code></li>
+<li><code>Observer</code>接收信号<h3 id="Observable-可被监听的序列"><a href="#Observable-可被监听的序列" class="headerlink" title="Observable 可被监听的序列"></a>Observable 可被监听的序列</h3>可以发送信号的序列，信号类型为<code>String</code>,<code>Bool</code>,<code>Int</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let stringObservable: Observable&lt;String&gt; = textField.rx.text.orEmpty.asObservable()</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>=&gt; Dart 中单行函数或方法的简写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void main() =&gt; runApp(new MyApp());</span><br></pre></td></tr></table></figure>
+</ol>
+<p>主要使用<code>Observable</code>下面的是其变种</p>
+<ul>
+<li>Single 要么只能发出一个元素，要么产生一个 error 事件</li>
+<li>Completable 要么只能产生一个 completed 事件，要么产生一个 error 事件。</li>
+<li>Driver</li>
+<li>ControlEvent 专门用于描述 UI 控件所产生的事件， 不会产生 error 事件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let numbers: Observable&lt;Int&gt; = Observable.create &#123; observer -&gt; Disposable in</span><br><span class="line">            </span><br><span class="line">    observer.onNext(0)</span><br><span class="line">    observer.onNext(1)</span><br><span class="line">    observer.onNext(2)</span><br><span class="line">    observer.onCompleted()</span><br><span class="line">            </span><br><span class="line">    return Disposables.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<hr>
+<h3 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h3><p>观察者 响应Observable发出的信号</p>
 <ul>
-<li>使用外部包(package)</li>
+<li>AnyObserver</li>
+<li>Binder 不会处理错误事件 确保在主线程</li>
 </ul>
-<p>在<code>pubspec.yaml</code>中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">english_works: ^3.1.0</span><br></pre></td></tr></table></figure></p>
-<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">package get</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
-<p>引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:english_words/english_words.dart&apos;;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="Statefulwidge-有状态的部件"><a href="#Statefulwidge-有状态的部件" class="headerlink" title="Statefulwidge 有状态的部件"></a><code>Statefulwidge</code> 有状态的部件</h4><p>需要两个类</p>
+<p>// create AnyObserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let observer: AnyObserver&lt;Data&gt; = AnyObserver &#123; (event) in</span><br><span class="line">    switch event &#123;</span><br><span class="line">        case .next(let data):</span><br><span class="line">            print(&quot;Data Task Success with count: \(data.count)&quot;)</span><br><span class="line">        case .error(let error):</span><br><span class="line">            print(&quot;Data Task Error: \(error)&quot;)</span><br><span class="line">        default:</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    URLSession.shared.rx.data(request: URLRequest(url: URL.init(string: &quot;a&quot;)!))</span><br><span class="line">        .subscribe(observer)</span><br><span class="line">        .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
+<p>// create Binder<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let usernameValidOutlet = UIView()</span><br><span class="line">let observer: Binder&lt;Bool&gt; = Binder(usernameValidOutlet) &#123; (view, isHidden) in</span><br><span class="line">    view.isHidden = isHidden</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usernameValid</span><br><span class="line">    .bind(to: observer)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
+<p>让所有<code>view</code>都实现这种观察,来响应信号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">extension Reactive where Base: UIView &#123;</span><br><span class="line">    public var isHidden: Binder&lt;Bool&gt; &#123;</span><br><span class="line">        return Binder(self.base) &#123; view, hidden in</span><br><span class="line">            view.isHidden = hidden</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usernameValid</span><br><span class="line">.bind(to: usernameValidOutlet.rx.isHidden)</span><br><span class="line">.disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">textField.rx.text.asObservable().bind(to: label.rx.text)</span><br></pre></td></tr></table></figure>
+<h3 id="Observable-发送信号"><a href="#Observable-发送信号" class="headerlink" title="Observable 发送信号"></a>Observable 发送信号</h3><p>// 创建 信号</p>
 <ol>
-<li><code>StatefulWidget</code> 不可变</li>
-<li><code>State</code> 在widget声明周期始终存在<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class RandomWords extends StatefulWidget &#123;</span><br><span class="line">    @override</span><br><span class="line">    createState() =&gt; new RandomWordsState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class RandomWordsState extends State&lt;RandomWords&gt; &#123;</span><br><span class="line">    @override</span><br><span class="line">    Widget build(BuildContext context) &#123;</span><br><span class="line">        final wordPair = new WordPair.randow();</span><br><span class="line">        return new Text(wordPair.asPascalCase);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>调用 Observable.create</li>
+<li>在构建函数里面描述元素的产生过程</li>
+<li>调用 observer.onCompleted() 表示完成</li>
 </ol>
-<p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">body: new Center (</span><br><span class="line">    child: new RandomWords(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Observer-响应信号"><a href="#Observer-响应信号" class="headerlink" title="Observer 响应信号"></a>Observer 响应信号</h3><p>使用<code>subscribe</code>来响应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">json.subscribe(onNext: &#123; json in</span><br><span class="line">    print(&quot; json success &quot;)</span><br><span class="line">&#125;, onError: &#123;error in</span><br><span class="line">    print(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    print(&quot; completed &quot;)</span><br><span class="line">&#125;).disposed(by: disposeBage)</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h4 id="创建一个无限滚动的-ListView"><a href="#创建一个无限滚动的-ListView" class="headerlink" title="创建一个无限滚动的 ListView"></a>创建一个无限滚动的 <code>ListView</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class RandomWordsState extens State &lt;RandomWords&gt; &#123;</span><br><span class="line">    // _开始的变量会强制变成私有的</span><br><span class="line">    final _suggestions = &lt;WordPair&gt;[];</span><br><span class="line">    final _biggerFont = const TextStyle(fontSize: 18.0);</span><br><span class="line"></span><br><span class="line">    // 此方法构建显示建议单词对的ListView</span><br><span class="line">    Widget _buildSuggestions() &#123;</span><br><span class="line">        return new ListView.buider(</span><br><span class="line">            padding: const EdgeInsets.all(16.0),</span><br><span class="line"></span><br><span class="line">            itemBuilder:(context, i) &#123;</span><br><span class="line">                // 在每一列之前，添加一个1像素高的分割线 widget</span><br><span class="line">                if (i.isOdd) return new Divider();</span><br><span class="line"></span><br><span class="line">                final index = i ~/ 2; // 除法</span><br><span class="line">                if (index &gt;= _suggestions.length) &#123;</span><br><span class="line">                    _suggestions.allAll(generateWordPairs().take(10));</span><br><span class="line">                &#125;</span><br><span class="line">                return _buildRow(_sugestions[index]);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 对于每一个单词对，_buildSuggestions函数都会调用一次_buildRow</span><br><span class="line">    Widget _buildRow(WordPair pair) &#123;</span><br><span class="line">        return new ListTitle(</span><br><span class="line">            title: new Text(</span><br><span class="line">                pair.asPascalCase,</span><br><span class="line">                style: _biggerFont,</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Event-事件"><a href="#Event-事件" class="headerlink" title="Event 事件"></a>Event 事件</h3><p>onNext onError onCompleted 被称为事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public enum Event&lt;Element&gt; &#123;</span><br><span class="line">    case next(Element)</span><br><span class="line">    case error(Swift.Error)</span><br><span class="line">    case completed</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>有些事物即使信号发送者也可以是接收者<br></p>
+<p>一般用户可以通过UI控制的信号是发送者，UI显示是信号接受者。像<code>UITextField.text</code>即是用户控制又是界面展示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 信号发送者 作为可被监听的序列 </span><br><span class="line">let observable = textField.rx.text</span><br><span class="line">observable.subscribe(onNext: &#123; text in show(text: text) &#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 信号接收者 作为观察者</span><br><span class="line">let observer = textField.rx.text</span><br><span class="line">let text: Observable&lt;String?&gt; = ...</span><br><span class="line">text.bind(to: observer)</span><br></pre></td></tr></table></figure>
+<h3 id="AsyncSubject"><a href="#AsyncSubject" class="headerlink" title="AsyncSubject"></a>AsyncSubject</h3><p><code>AsyncSubject</code> 将在源 <code>Observable</code> 产生完成事件后，发出最后一个元素（仅仅只有最后一个元素），如果源 <code>Observable</code> 没有发出任何元素，只有一个完成事件。</p>
+<h3 id="PublishSubject"><a href="#PublishSubject" class="headerlink" title="PublishSubject"></a>PublishSubject</h3><p><code>PublishSubject</code> 将对观察者发送订阅后产生的元素，而在订阅前发出的元素将不会发送给观察者。</p>
+<h3 id="BehaviorSubject"><a href="#BehaviorSubject" class="headerlink" title="BehaviorSubject"></a>BehaviorSubject</h3><p>当观察者对 <code>BehaviorSubject</code> 进行订阅时，它会将源 <code>Observable</code> 中最新的元素发送出来（如果不存在最新的元素，就发出默认元素）。然后将随后产生的元素发送出来。</p>
+<p>对比<code>PublishSubject</code>,多了一个当前元素信号</p>
+<h3 id="ControlProperty"><a href="#ControlProperty" class="headerlink" title="ControlProperty"></a>ControlProperty</h3><p><code>ControlProperty</code> 专门用于描述 <code>UI</code> 控件属性的，不会产生 <code>error</code> 事件,一定在<code>MainScheduler</code> 订阅（主线程订阅）</p>
+<hr>
+<h3 id="Schedulers-线程调度器"><a href="#Schedulers-线程调度器" class="headerlink" title="Schedulers - 线程调度器"></a>Schedulers - 线程调度器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let rxData: Observable&lt;Data&gt; = ...</span><br><span class="line"></span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))</span><br><span class="line">    .observeOn(MainScheduler.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [weak self] data in</span><br><span class="line">        self?.data = data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<p>使用 <code>subscribeOn</code>在子线程发送信号,使用 <code>observeOn</code>在主线程监听信号</p>
+<hr>
+<h3 id="combineLatest-合并信号"><a href="#combineLatest-合并信号" class="headerlink" title="combineLatest 合并信号"></a>combineLatest 合并信号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Observable.combineLatest( // 合并信号</span><br><span class="line">    number1.rx.text.orEmpty, // 信号源为三个label的text</span><br><span class="line">    number2.rx.text.orEmpty, </span><br><span class="line">    number3.rx.text.orEmpty) </span><br><span class="line">    &#123; textValue1, textValue2, textValue3 -&gt; Int in</span><br><span class="line">        // 三个输入源作为参数，将其转换成Int信号</span><br><span class="line">        return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)</span><br><span class="line">            &#125;</span><br><span class="line">    .map &#123; $0.description &#125; // 将Int信号转变为 text信号</span><br><span class="line">    .bind(to: result.rx.text) // text信号和label的text绑定</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<p><code>orEmpty</code>会把<code>String?</code>过滤<code>nil</code>帮我们变为<code>String</code>类型。</p>
+<hr>
+<h3 id="disposed-声明周期"><a href="#disposed-声明周期" class="headerlink" title="disposed 声明周期"></a>disposed 声明周期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 声明 disposeBag 属性，其生命周期同此VC</span><br><span class="line">var disposeBag = DisposeBag()</span><br><span class="line"></span><br><span class="line">// 最后调用下面方法，VC释放时会释放disposeBag，从而释放绑定</span><br><span class="line">.disposed(by: self.disposeBag)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 方法里面不能直接使用self，会造成内存泄漏，添加[weak self]，相当于使用weakSelf</span><br><span class="line">.subscribe &#123; [weak self] (text) in</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="just-产生特定的一个元素"><a href="#just-产生特定的一个元素" class="headerlink" title="just 产生特定的一个元素"></a>just 产生特定的一个元素</h3><p>一个序列只有唯一的元素 0：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let id = Observable.just(0)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="from-将其他类型或者数据结构转换为-Observable"><a href="#from-将其他类型或者数据结构转换为-Observable" class="headerlink" title="from 将其他类型或者数据结构转换为 Observable"></a>from 将其他类型或者数据结构转换为 Observable</h3><p>将一个数组转换为 Observable：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let numbers = Observable.from([0, 1, 2])</span><br></pre></td></tr></table></figure></p>
+<p>将一个可选值转换为 Observable：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let optional: Int? = 1</span><br><span class="line">let value = Observable.from(optional: optional)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="merge-任意一个-Observable-产生了元素，就发出这个元素"><a href="#merge-任意一个-Observable-产生了元素，就发出这个元素" class="headerlink" title="merge 任意一个 Observable 产生了元素，就发出这个元素"></a>merge 任意一个 Observable 产生了元素，就发出这个元素</h3><img src="/2019/01/13/RxSwift/1.png" title="图片说明">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let subject1 = PublishSubject&lt;String&gt;()</span><br><span class="line">let subject2 = PublishSubject&lt;String&gt;()</span><br><span class="line"></span><br><span class="line">Observable.of(subject1, subject2)</span><br><span class="line">    .merge()</span><br><span class="line">    .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="combineLatest-当任意一个-Observable-发出一个新的元素"><a href="#combineLatest-当任意一个-Observable-发出一个新的元素" class="headerlink" title="combineLatest 当任意一个 Observable 发出一个新的元素"></a>combineLatest 当任意一个 Observable 发出一个新的元素</h3><img src="/2019/01/13/RxSwift/2.png" title="图片说明">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let first = PublishSubject&lt;String&gt;()</span><br><span class="line">let second = PublishSubject&lt;String&gt;()</span><br><span class="line"></span><br><span class="line">Observable.combineLatest(first, second) &#123; $0 + $1 &#125;</span><br><span class="line">          .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">          .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="map-对每个元素直接转换"><a href="#map-对每个元素直接转换" class="headerlink" title="map 对每个元素直接转换"></a>map 对每个元素直接转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Observable.of(1, 2, 3)</span><br><span class="line">    .map &#123; $0 * 10 &#125;</span><br><span class="line">    .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="filter-通过判定条件过滤出一些元素"><a href="#filter-通过判定条件过滤出一些元素" class="headerlink" title="filter 通过判定条件过滤出一些元素"></a>filter 通过判定条件过滤出一些元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Observable.of(2, 30, 22, 5, 60, 1)</span><br><span class="line">          .filter &#123; $0 &gt; 10 &#125;</span><br><span class="line">          .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">          .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
       
 
       
@@ -474,10 +348,21 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/08/flutter/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/13/RxSwift/">展开全文 >></a>
         </p>
       
 
@@ -507,169 +392,27 @@
 
 
   
-    <article id="post-深入理解计算机系统" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-swift-extention" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/07/深入理解计算机系统/">深入理解计算机系统</a>
+      <a class="article-title" href="/2019/01/12/swift-extention/">swift_extention</a>
     </h1>
   
 
         
-        <a href="/2019/01/07/深入理解计算机系统/" class="archive-article-date">
-  	<time datetime="2019-01-07T08:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-07</time>
+        <a href="/2019/01/12/swift-extention/" class="archive-article-date">
+  	<time datetime="2019-01-12T02:57:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h5><ul>
-<li>符号解析。目标文件定义和引用符号，每个符号对应于一个函数、一个全局变量或一个静态变量。符号解析的目的是将每个符号引用正好和一个符号定义关联起来</li>
-<li>重定位。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使得它们指向这个内存位置。</li>
-</ul>
-<h5 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h5><ul>
-<li>可重定位目标文件</li>
-<li>可执行目标文件</li>
-<li>共享目标文件<br>编译器和汇编器生成可重定位目标文件包括共享目标文件<br>连接器生成可执行目标文件</li>
-</ul>
-<h5 id="动态链接共享库"><a href="#动态链接共享库" class="headerlink" title="动态链接共享库"></a>动态链接共享库</h5><p>共享库是一个目标模块，在运行或加载时，可以加载到任意的内存地址，并和一个在内存中的程序链接起来。在<code>Linux</code>系统中通常用<code>.so</code>后缀来表示。</p>
-<ul>
-<li>共享方式<br>对于一个库只有一个<code>.so</code>文件。所有引用该库的可执行目标文件共享这个<code>.so</code>文件中的代码和数据，而不是像静态库的内容那样被复制和嵌入到引用它们的可执行文件中。<br>在内存中，一个共享库的<code>.text</code>节的一个副本可以被不同的正在运行的进程共享。</li>
-</ul>
-<p>当加载器加载和运行可执行文件<code>A</code>时，注意到其中包含一个<code>.interp</code>节，这一节包含动态连接器的路径名，动态连接器本身就是一个共享目标（Linux系统上是ld-linux.xo）。加载器不会像它通常所做地那样将控制传递给应用，而是加载和运行这个动态连接器。然后动态连接器通过执行重定位完成连接任务，最后将控制传递给应用程序。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/07/深入理解计算机系统/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-shell函数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/shell函数/">shell函数</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/shell函数/" class="archive-article-date">
-  	<time datetime="2019-01-06T15:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h5><p>$0 为执行的文件名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;执行的文件名：$0&quot;;</span><br><span class="line">echo &quot;第一个参数为：$1&quot;;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x test.sh </span><br><span class="line">$ ./test.sh 1</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">执行的文件名：./test.sh</span><br><span class="line">第一个参数为：1</span><br></pre></td></tr></table></figure>
-<h5 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">demoFun()</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;这是我的第一个 shell 函数!&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">echo &quot;-----函数开始执行-----&quot;</span><br><span class="line">demoFun</span><br><span class="line">echo &quot;-----函数执行完毕-----&quot;</span><br><span class="line"></span><br><span class="line">#-----函数开始执行-----</span><br><span class="line">#这是我的第一个 shell 函数!</span><br><span class="line">#-----函数执行完毕-----</span><br></pre></td></tr></table></figure>
-<p>返回值通过 $？ 获取<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">funWithReturn()&#123;</span><br><span class="line">    echo &quot;这个函数会对输入的两个数字进行相加运算...&quot;</span><br><span class="line">    echo &quot;输入第一个数字: &quot;</span><br><span class="line">    read aNum</span><br><span class="line">    echo &quot;输入第二个数字: &quot;</span><br><span class="line">    read anotherNum</span><br><span class="line">    echo &quot;两个数字分别为 $aNum 和 $anotherNum !&quot;</span><br><span class="line">    return $(($aNum+$anotherNum))</span><br><span class="line">&#125;</span><br><span class="line">funWithReturn</span><br><span class="line">echo &quot;输入的两个数字之和为 $? !&quot;</span><br><span class="line"></span><br><span class="line">// 输出</span><br><span class="line">这个函数会对输入的两个数字进行相加运算...</span><br><span class="line">输入第一个数字: </span><br><span class="line">1</span><br><span class="line">输入第二个数字: </span><br><span class="line">2</span><br><span class="line">两个数字分别为 1 和 2 !</span><br><span class="line">输入的两个数字之和为 3 !</span><br></pre></td></tr></table></figure></p>
-<p>注意，10不能获取第十个参数，获取第十个参数需要{10}。当n&gt;=10时，需要使用${n}来获取参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">funWithParam()&#123;</span><br><span class="line">    echo &quot;第一个参数为 $1 !&quot;</span><br><span class="line">    echo &quot;第二个参数为 $2 !&quot;</span><br><span class="line">    echo &quot;第十个参数为 $10 !&quot;</span><br><span class="line">    echo &quot;第十个参数为 $&#123;10&#125; !&quot;</span><br><span class="line">    echo &quot;第十一个参数为 $&#123;11&#125; !&quot;</span><br><span class="line">    echo &quot;参数总数有 $# 个!&quot;</span><br><span class="line">    echo &quot;作为一个字符串输出所有参数 $* !&quot;</span><br><span class="line">&#125;</span><br><span class="line">funWithParam 1 2 3 4 5 6 7 8 9 34 73// 输出</span><br><span class="line">第一个参数为 1 !</span><br><span class="line">第二个参数为 2 !</span><br><span class="line">第十个参数为 10 !</span><br><span class="line">第十个参数为 34 !</span><br><span class="line">第十一个参数为 73 !</span><br><span class="line">参数总数有 11 个!</span><br><span class="line">作为一个字符串输出所有参数 1 2 3 4 5 6 7 8 9 34 73 !</span><br></pre></td></tr></table></figure></p>
-<h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><p>单引号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str=&apos;this is a string&apos;</span><br></pre></td></tr></table></figure></p>
-<p>单引号字符串的限制：</p>
-<ul>
-<li>单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的</li>
-<li><p>单引号字串中不能出现单引号（对单引号使用转义符后也不行）<br>双引号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">your_name=&apos;qinjx&apos;</span><br><span class="line">str=&quot;Hello, I know your are \&quot;$your_name\&quot;! \n&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>双引号里可以有变量</p>
-</li>
-<li>双引号里可以出现转义字符</li>
-</ul>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><ul>
-<li><p>创建数组 用空格分开</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr=(A B &quot;C&quot; D)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>读取数组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;$&#123;arr[0]&#125;&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取数组中的所有元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;$&#123;arr[*]&#125;&quot; // A B C D</span><br><span class="line">echo &quot;$&#123;arr[@]&#125;&quot; // A B C D</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取数组长度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;$&#123;#arr[*]&#125;&quot; // 4</span><br><span class="line">echo &quot;$&#123;#arr[@]&#125;&quot; // 4</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h5><p>sh的流程控制不可为空，如果else分支没有语句执行，就不要写这个else<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if condition1</span><br><span class="line">then</span><br><span class="line">    command1</span><br><span class="line">elif condition2 </span><br><span class="line">then </span><br><span class="line">    command2</span><br><span class="line">else</span><br><span class="line">    commandN</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
-<p>以下实例判断两个变量是否相等：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">a=10</span><br><span class="line">b=20</span><br><span class="line">if [ $a == $b ]</span><br><span class="line">then</span><br><span class="line">    echo &quot;a 等于 b&quot;</span><br><span class="line">elif [ $a -gt $b ]</span><br><span class="line">then</span><br><span class="line">    echo &quot;a 大于 b&quot;</span><br><span class="line">elif [ $a -lt $b ]</span><br><span class="line">then</span><br><span class="line">    echo &quot;a 小于 b&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;没有符合的条件&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>for 循环<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for loop in 1 2 3 4 5</span><br><span class="line">do</span><br><span class="line">    echo &quot;The value is: $loop&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The value is: 1</span><br><span class="line">The value is: 2</span><br><span class="line">The value is: 3</span><br><span class="line">The value is: 4</span><br><span class="line">The value is: 5</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>while 语句</li>
-</ul>
-<p>while循环用于不断执行一系列命令，也用于从输入文件中读取数据；命令通常为测试条件。其格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while condition</span><br><span class="line">do</span><br><span class="line">command</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>跳出循环</li>
-</ul>
-<p>在循环过程中，有时候需要在未达到循环结束条件时强制跳出循环，Shell使用两个命令来实现该功能：break和continue。</p>
-<p>break命令</p>
-<p>break命令允许跳出所有循环（终止执行后面的所有循环）</p>
-<p>continue</p>
-<p>continue仅仅跳出当前循环。</p>
-<h5 id="点滴记录"><a href="#点滴记录" class="headerlink" title="点滴记录"></a>点滴记录</h5><ul>
-<li>当前文件目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">outPath=`dirname $0`/OUT/</span><br><span class="line">echo $outPath</span><br><span class="line"></span><br><span class="line">#/Users/megvii/Desktop/test/OUT/</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>#dirname用于取给定路径的目录部分,$0是Shell本身的文件名。</p>
-<ul>
-<li><p>16进制内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxd  /Users/megvii/Downloads/MegviiFaceppv2_iOS_0.4.7/facepp_iOS/model/megviifacep</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示文件哈希值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shasum  /Users/megvii/model/megviifacepp_0_4_7_model</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示文件 MD5</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl md5 /Users/megvii/model/megviifacepp_0_4_7_model</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>安装过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">./configure // 生成 Makefile</span><br><span class="line">make  // 编译</span><br><span class="line">make install // 安装</span><br><span class="line"></span><br><span class="line">$ cat ~/.ssh/id_rsa.pub</span><br><span class="line"></span><br><span class="line">// 显示文件内容 </span><br><span class="line">// 看是否有自己写的注释</span><br><span class="line">strings  /../../file</span><br><span class="line"></span><br><span class="line">file // 确定文件类型</span><br><span class="line"></span><br><span class="line">// arm64 armv7</span><br><span class="line">lipo -info   xx.a</span><br></pre></td></tr></table></figure></p>
+        <p><code>protocol</code>声明的方法是必须要实现的，但是可以通过使用<code>extension</code>来实现默认实现，这样子类就可以不用实现而调用默认实现，但是子类要是想自己实现就要添加<code>override</code>标识，并且不能在<code>extension</code>中实现。<code>extension</code>不能覆盖父类的方法</p>
 
       
 
@@ -684,7 +427,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/SHELL命令//" class="article-tag-list-link color3">SHELL命令</a>
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
         		</li>
       		
 		</ul>
@@ -693,7 +436,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/shell函数/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/12/swift-extention/">展开全文 >></a>
         </p>
       
 
@@ -723,246 +466,49 @@
 
 
   
-    <article id="post-SHELL命令" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-swift-权限" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/SHELL命令/">SHELL命令</a>
+      <a class="article-title" href="/2019/01/11/swift-权限/">swift_权限</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/SHELL命令/" class="archive-article-date">
-  	<time datetime="2019-01-06T15:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+        <a href="/2019/01/11/swift-权限/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:06:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h5><p>选项与参数：</p>
+        <p>模块：独立的代码单元 独立的框架 独立的应用程序 不同模块间使用 <code>import</code> 引入另一个模块<br>源文件：同一个框架或应用程序中不需要使用 <code>import</code></p>
+<h4 id="private-真正私有"><a href="#private-真正私有" class="headerlink" title="private 真正私有"></a>private 真正私有</h4><hr>
+<p>加了<code>private</code>就不要想在其他类中修改其值了，不论是<code>private(set)</code>还是不存在的<code>private(get)</code>，因为这样<code>private</code>就没有意义了，还不如直接去掉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 只有在 MyClass 中可以读写</span><br><span class="line">class MyClass &#123;</span><br><span class="line">    private var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在类型之外也能够读取到这个类型</span><br><span class="line">// 只能在类型内部对其进行更新</span><br><span class="line">class MyClass &#123;</span><br><span class="line">    private(set) var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种写法没有对”读”做限制,相当于使用了默认的 <code>internal</code> 权限。如果我们希望在别的 <code>module</code> 中也能访问这个属性,同时又保持只在当前类可以设置的话,我们需要将 <code>get</code> 的访问权限提高为 <code>public</code>。属性的访问控制可以通过两次的访问权限指定来实现, 具体来说,将刚才的声明变为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class MyClass &#123;</span><br><span class="line">    public private(set) var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时我们就可以在 <code>module</code> 之外也访问到 <code>MyClass</code> 的 <code>name</code> 了。<br>我们在 <code>MyClass</code> 前面也添加的 <code>public</code>,这是编译器所要求的。因为如果只为 <code>name</code> 的 <code>get</code> 添加 <code>public</code> 而不管 <code>MyClass</code> 的话,<code>module</code> 外就连 <code>MyClass</code> 都访问不到了,属性的 访问控制级别也就没有任何意义了。</p>
+<h4 id="fileprivate-文件内私有"><a href="#fileprivate-文件内私有" class="headerlink" title="fileprivate 文件内私有"></a>fileprivate 文件内私有</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class User &#123;</span><br><span class="line">    private var name1 = &quot;private&quot;</span><br><span class="line">    fileprivate var name2 = &quot;fileprivate&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension User &#123;</span><br><span class="line">    var accessPrivate: String &#123;</span><br><span class="line">        return name2</span><br><span class="line">//        return name1 // error</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Internal"><a href="#Internal" class="headerlink" title="Internal"></a>Internal</h4><hr>
+<p>可以访问自己模块或应用中源文件里的任何实体，但是别人不能访问该模块中源文件里的实体。通常情况下，某个接口或Framework作为内部结构使用时，你可以将其设置为internal级别。</p>
+<h2 id="Public"><a href="#Public" class="headerlink" title="####Public "></a>####Public </h2><ul>
+<li>public 修饰的 class 在 Module 内部可以访问和继承，在外部只能访问</li>
+<li>public 修饰的 func 在 Module 内部可以被访问和重载（override）,在外部只能访问</li>
+</ul>
+<h4 id="open"><a href="#open" class="headerlink" title="open"></a>open</h4><hr>
 <ul>
-<li>-m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～</li>
-<li>-p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！</li>
+<li>open 修饰的 class 在 Module 内部和外部都可以被访问和继承</li>
+<li>open 修饰的 func 在 Module 内部和外部都可以被访问和重载（override）</li>
 </ul>
-<p>在目录/usr/meng下建立子目录test，并且只有文件主有读、写和执行权限，其他人无权访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -m 700 /usr/meng/test</span><br></pre></td></tr></table></figure></p>
-<p>在当前目录中建立bin和bin下的os_1目录，权限设置为文件主可读、写、执行，同组用户可读和执行，其他用户无权访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p-m 750 bin/os_1</span><br></pre></td></tr></table></figure></p>
-<h5 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 删除 models文件夹 和里面所有内容</span><br><span class="line">rm -rf models</span><br></pre></td></tr></table></figure>
-<p>选项与参数：</p>
+<h4 id="Final"><a href="#Final" class="headerlink" title="Final"></a>Final</h4><hr>
 <ul>
-<li>-f ：就是 force 的意思，忽略不存在的文件，不会出现警告信息；</li>
-<li>-i ：互动模式，在删除前会询问使用者是否动作</li>
-<li>-r ：递归删除啊！最常用在目录的删除了！这是非常危险的选项！！！</li>
-</ul>
-<p>将刚刚在 cp 的范例中创建的 bashrc 删除掉！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -i bashrc</span><br><span class="line">rm: remove regular file `bashrc&apos;? y</span><br></pre></td></tr></table></figure></p>
-<p>如果加上 -i 的选项就会主动询问喔，避免你删除到错误的档名！</p>
-<h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h5><p>删除空文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rmdir -p aa/bb // 如果删除bb后aa为空目录，则将aa一并删除</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -d &quot;MGFacepp/build&quot; ]; then</span><br><span class="line">    rm -rf MGFacepp/build</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h5 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 调到当前目录的上上两层</span><br><span class="line">cd ../..</span><br></pre></td></tr></table></figure>
-<p><code>cd</code> (切换目录)</p>
-<p><code>cd</code>是<code>Change Directory</code>的缩写，这是用来变换工作目录的命令。</p>
-<h5 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h5><p>文件夹重名要先删除已经存在的文件夹  jenkins 和 终端 有区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp -r test/ newTest</span><br><span class="line">YES|cp -r test/ newTest 有重名文件则覆盖</span><br></pre></td></tr></table></figure></p>
-<p>选项与参数：</p>
-<ul>
-<li><strong>-i：</strong>若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</li>
-<li><strong>-p：</strong>连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</li>
-<li><strong>-r：</strong>递归持续复制，用於目录的复制行为；(常用)</li>
-</ul>
-<h5 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a // 显示所有档案及目录</span><br></pre></td></tr></table></figure>
-<p>选项与参数：</p>
-<ul>
-<li>-a ：全部的文件，连同隐藏档</li>
-<li>-l ：长数据串列出，包含文件的属性与权限等等数据；</li>
-</ul>
-<h5 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h5><ul>
-<li><p>显示普通字符串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;name&quot; // name</span><br><span class="line">echo name   // name</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示转义字符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;\&quot;name\&quot;&quot; // &quot;name&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read name // 从命令行读取用户输入</span><br><span class="line">echo &quot;your name is $name&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示换行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo -e &quot;OK! \n&quot; # -e 开启转义</span><br><span class="line">echo hello</span><br><span class="line"></span><br><span class="line">OK!</span><br><span class="line"></span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>显示时间</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo `date`</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><ul>
-<li>-H或–with-filename 在显示符合范本样式的那一列之前，表示该列所属的文件名称。</li>
-<li>-l或–file-with-matches 列出文件内容符合指定的范本样式的文件名称。</li>
-<li>-L或–files-without-match 列出文件内容不符合指定的范本样式的文件名称。</li>
-<li>-n或–line-number 在显示符合范本样式的那一列之前，标示出该列的列数编号。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">grep -Hn  &apos;print&apos;  pack_all.py</span><br><span class="line"></span><br><span class="line">pack_all.py:36:    print (&quot;########### read modle info ############&quot;)</span><br><span class="line">pack_all.py:38:        print(line)</span><br><span class="line">pack_all.py:60:    print (&quot;model info = %s&quot; % model_info)</span><br><span class="line">pack_all.py:78:    print (confsList)</span><br><span class="line">pack_all.py:80:    print (&quot;confsList = %s&quot; % (confsList))</span><br><span class="line">pack_all.py:82:    print (&quot;confs_real = %s&quot; % confs_real)</span><br><span class="line">pack_all.py:88:    print (config_offsets)</span><br><span class="line">pack_all.py:94:        print (&quot;confs_real.len = %s&quot; % len(confs_real))</span><br><span class="line">pack_all.py:102:        print (&quot;json_str length = %s&quot; % len(json_str))</span><br><span class="line">pack_all.py:111:        print (&quot;config_size_map = %s&quot; % config_size_map)</span><br><span class="line">pack_all.py:113:#            print(x, config_size_map[x], model_dict[real2fake[x]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="lipo"><a href="#lipo" class="headerlink" title="lipo"></a>lipo</h5><ul>
-<li><p>查看静态库支持的CPU架构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info file.a</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>合并静态度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lipo -create 静态库路径1  静态库路径2   -output 整合后的静态库路径</span><br><span class="line"></span><br><span class="line">lipo -create file1.a file2.a  -output  newFile.a</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>静态库拆分</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo file.a  -thin  armv7  -output armv7.a</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="ln-软链接"><a href="#ln-软链接" class="headerlink" title="ln 软链接"></a>ln 软链接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd 到要软链接到的目录</span><br><span class="line">ln -s ../../../要链接的文件</span><br><span class="line">// 按两下 tab 键可以显示../../ 目录下文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -s // symbolic link</span><br><span class="line">ln  // hard link</span><br></pre></td></tr></table></figure>
-<p>文件分为用户数据 (user data) 与元数据 (metadata)。<br>用户数据，即文件数据块 (data block)，数据块是记录文件真实内容的地方；<br>而元数据则是文件的附加属性，如文件大小、创建时间、所有者等信息。在 Linux 中，元数据中的 inode 号（inode 是文件元数据的一部分但其并不包含文件名，inode 号即索引节点号）才是文件的唯一标识而非文件名。文件名仅是为了方便人们的记忆和使用，系统或程序通过 inode 号寻找正确的文件数据块</p>
-<p>硬链接或软链接都不会将原始文档复制一份<br>软连接以路径的形式存在，可以对目录进行链接，<br>硬链接以文件副本的形式存在，但不占用实际空间，删除原始文件后，硬链接不受影响<br>硬链接、软链接有不同的元数据。 软链接有不同的inode号，硬链接有相同的inode号，所以硬链接限制更多，不能跨操作系统。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 拖拽多个文件</span><br><span class="line">ln -s 拖拽的多个文件 目标文件夹</span><br></pre></td></tr></table></figure>
-<h5 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h5><p>print working directory 打印当前工作目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br><span class="line">/Users/megvii/....</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 将当前目录压入堆栈</span><br><span class="line">pushd `pwd`</span><br></pre></td></tr></table></figure>
-<ul>
-<li>pushd：</li>
-</ul>
-<ul>
-<li><p>切换到作为参数的目录，并把原目录和当前目录压入到一个虚拟的堆栈中</p>
-</li>
-<li><p>如果不指定参数，则会回到前一个目录，并把堆栈中最近的两个目录作交换</p>
-</li>
-</ul>
-<ul>
-<li>popd： </li>
-</ul>
-<ul>
-<li>切换到堆栈中第二目录中，并将堆栈中最近的目录弹出</li>
-</ul>
-<ul>
-<li>dirs: </li>
-</ul>
-<ul>
-<li>列出当前堆栈中保存的目录列表</li>
-</ul>
-<p>-v参数可以在目录前加上编号<br>我们可以看到:最近压入堆栈的目录位于最上面<br>在最近的两个目录之间切换:用pushd不加参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">pushd /boot/grub/</span><br><span class="line">/boot/grub /usr/share/kde4/apps/kget /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /boot/grub</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">pushd</span><br><span class="line">/usr/share/kde4/apps/kget /boot/grub /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /usr/share/kde4/apps/kget</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">pushd</span><br><span class="line">/boot/grub /usr/share/kde4/apps/kget /usr/local/sbin ~</span><br><span class="line">dirs -v</span><br><span class="line">0  /boot/grub</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br><span class="line">2  /usr/local/sbin</span><br><span class="line">3  ~</span><br><span class="line"></span><br><span class="line">如何把目录从堆栈中删除?用popd即可</span><br><span class="line"></span><br><span class="line">dirs -v</span><br><span class="line">0  /usr/local/sbin</span><br><span class="line">1  ~</span><br><span class="line">2  /boot/grub</span><br><span class="line">3  /usr/share/kde4/apps/kget</span><br><span class="line"></span><br><span class="line">popd</span><br><span class="line">~ /boot/grub /usr/share/kde4/apps/kget</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/share/kde4/apps/kget</span><br><span class="line"></span><br><span class="line">popd +1</span><br><span class="line">~ /usr/share/kde4/apps/kget</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /usr/share/kde4/apps/kget</span><br></pre></td></tr></table></figure></p>
-<p>说明：可以看到popd不加参数的运行情况:popd把堆栈顶端的目录从堆栈中删除，并切换于位于新的顶端的目录<br>说明之二: popd 加有参数 +n时，n是堆栈中的第n个目录，表示把堆栈中第n个目录从堆栈中删除<br>dirs可以清空目录堆栈 用 -c参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dirs -v</span><br><span class="line">0  ~</span><br><span class="line">1  /boot/grub</span><br><span class="line">2  /usr/share/kde4/apps/kget</span><br><span class="line">dirs -c</span><br><span class="line">dirs -v</span><br><span class="line">0  ~</span><br></pre></td></tr></table></figure></p>
-<h5 id="strings"><a href="#strings" class="headerlink" title="strings"></a>strings</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 是否包含 aaa 不区分大小写</span><br><span class="line">strings file | grep -i aaa</span><br></pre></td></tr></table></figure>
-<h5 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h5><p>以系统管理者的身份执行命令</p>
-<h5 id="tree"><a href="#tree" class="headerlink" title="tree"></a>tree</h5><p>以树状图列出目录内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -C // 在文件和目录清单上加上色彩，便于区分各种类型</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree -L 2</span><br></pre></td></tr></table></figure>
-<h5 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h5><ul>
-<li>插入模式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i 进入</span><br><span class="line">esc 退出</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 终端进入vim</span><br><span class="line">vim  进入</span><br><span class="line">1. esc  </span><br><span class="line">2. :wq(保存退出) / :q!(不保存退出)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 终端下</span><br><span class="line">vim test.txt</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./test.sh  #使脚本具有执行权限</span><br><span class="line">./test.sh  #执行脚本</span><br></pre></td></tr></table></figure>
-<h5 id="zip-tar"><a href="#zip-tar" class="headerlink" title="zip  tar"></a>zip  tar</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 将 /home/html/目录下的所有文件夹和文件打包为当前目录下的 html.zip</span><br><span class="line">zip -q -r html.zip /home/html</span><br><span class="line">// -q 不显示指令执行过程</span><br><span class="line">// -r 递归处理</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 压缩 a.c 为 test.tar</span><br><span class="line">tar -czvf test.tar a.c</span><br><span class="line">// -c (--create)建立新的备份文件</span><br><span class="line">// -z (--gzip)(--ungzip)通过gzip指令处理备份文件</span><br><span class="line">// -v (--verbose)显示指令执行过程</span><br><span class="line">// -f (--file)指定备份文件</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 解压文件</span><br><span class="line">tar -xzvf test.tar a.c</span><br><span class="line">// -x (--extract)(-get)从备份文件中还原文件</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SHELL命令//" class="article-tag-list-link color3">SHELL命令</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/SHELL命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-定时器" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/定时器/">定时器</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/定时器/" class="archive-article-date">
-  	<time datetime="2019-01-06T14:57:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="创建方法比较"><a href="#创建方法比较" class="headerlink" title="创建方法比较"></a>创建方法比较</h5><img src="/2019/01/06/定时器/1.png" title="图片说明">
-<p>如果你想使用<code>timerWithTimeInterval</code>或<code>initWithFireDate</code>的话, 需要使用<code>NSRunloop</code>的以下方法将NSTimer加入到runloop中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)addTimer:(NSTimer *)aTimer forMode:(NSString *)mode</span><br></pre></td></tr></table></figure></p>
-<img src="/2019/01/06/定时器/2.png" title="图片说明">
-<h5 id="invalide"><a href="#invalide" class="headerlink" title="invalide"></a>invalide</h5><img src="/2019/01/06/定时器/3.png" title="图片说明">
-<h5 id="runloop"><a href="#runloop" class="headerlink" title="runloop"></a>runloop</h5><p>是创建NSTimer, 加入到runloop后, 除了ViewController之外iOS系统也会强引用NSTimer对象<br><img src="/2019/01/06/定时器/4.png" title="图片说明"><br>当调用invalidate方法时, 移除runloop后, iOS系统会解除对NSTimer对象的强引用, 当ViewController销毁时, ViewController和NSTimer就都可以释放了<br><img src="/2019/01/06/定时器/5.png" title="图片说明"></p>
-<h5 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h5><p>// 在 ViewWillDisappear<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[_timer invalidate];// 真正销毁NSTimer对象的地方</span><br><span class="line">_timer=nil;// 对象置nil是一种规范和习惯</span><br></pre></td></tr></table></figure></p>
-<h5 id="循环引用的解决方法"><a href="#循环引用的解决方法" class="headerlink" title="循环引用的解决方法"></a>循环引用的解决方法</h5><ul>
-<li><p>将target设置为 weakSelf // 不行<br>同样是<code>target-action</code>方式<code>button</code>就不会出现循环引用的问题，这是因为<code>UIControl</code>的内部做了<code>weak</code>操作，即真正持有的时候是<code>weak</code>的并没有导致应用计数器加1，而<code>NSTimer</code>由于<code>runloop</code>的原因并没有做<code>weak</code>操作。</p>
-</li>
-<li><p>block<br>使用block的形式替换掉原先的“target-selector”方式，打断_timer对于其他对象的引用。<br>官方已经在iOS10之后加入了新的api，从而支持了block形式创建timer：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MSWeakTimer<br>使用GCD来实现，没有引用循环的问题并且线程安全。</p>
-</li>
-<li>category<br>1.为NSTimer添加一个Category方法<br>NSTimer+WeakTimer.h<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)wx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>NSTimer+WeakTimer.m<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)wx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">repeats:(BOOL)repeats</span><br><span class="line">handlerBlock:(void(^)())handler</span><br><span class="line">&#123;</span><br><span class="line">return [self scheduledTimerWithTimeInterval:timeInterval</span><br><span class="line">target:self</span><br><span class="line">selector:@selector(handlerBlockInvoke:)</span><br><span class="line">userInfo:[handler copy]</span><br><span class="line">repeats:repeats];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)handlerBlockInvoke:(NSTimer *)timer</span><br><span class="line">&#123;</span><br><span class="line">void (^block)() = timer.userInfo;</span><br><span class="line">if (block) &#123;</span><br><span class="line">block();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.如何使用这个Category方法<br>创建一个NSTimer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)startPolling</span><br><span class="line">&#123;</span><br><span class="line">__weak typeof(self)weakSelf = self;</span><br><span class="line">self.timer = [NSTimer zx_scheduledTimerWithTimeInterval:5.0 repeats:YES handlerBlock:^void(void)&#123;</span><br><span class="line">__strong typeof(weakSelf)strongSelf = weakSelf;</span><br><span class="line">[strongSelf doPolling];</span><br><span class="line">&#125;];</span><br><span class="line">&#125;</span><br><span class="line">执行轮询任务slector</span><br><span class="line"></span><br><span class="line">- (void)doPolling</span><br><span class="line">&#123;</span><br><span class="line">//Todo...;</span><br><span class="line">&#125;</span><br><span class="line">销毁NSTimer对象</span><br><span class="line"></span><br><span class="line">- (void)stopPolling</span><br><span class="line">&#123;</span><br><span class="line">[self.timer invalidate];</span><br><span class="line">self.timer = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc</span><br><span class="line">&#123;</span><br><span class="line">[self.timer invalidate];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>计时器现在的targer是NSTimer类对象。这段代码先是定义了个弱引用，令其指向self,然后block捕获这个引用，而不直接去捕获普通的self变量，也就是说self不会为计时器所保留。当block开始执行时，立刻生成strong强引用，以保证实例在执行期间持续存活，不被释放。</p>
-<p>采用这种写法后，外界指向NSTimer的实例最后一个引用被释放后，则创建NSTimer的实例也随之被系统回收。</p>
-<h5 id="不准原因分析："><a href="#不准原因分析：" class="headerlink" title="不准原因分析："></a>不准原因分析：</h5><p>定时器被添加在主线程中，由于定时器在一个RunLoop中被检测一次，所以如果在这一次的RunLoop中做了耗时的操作，当前RunLoop持续的时间超过了定时器的间隔时间，那么下一次定时就被延后了。<br>解决方法：<br>1、在子线程中创建timer，在主线程进行定时任务的操作<br>2、在子线程中创建timer，在子线程中进行定时任务的操作，需要UI操作时切换回主线程进行操作</p>
-<ul>
-<li>CADisplayLink<br>CADisplayLink是一个频率能达到屏幕刷新率的定时器类。iPhone屏幕刷新频率为60帧/秒，也就是说最小间隔可以达到1/60s。</li>
-<li>GCD定时器<br>我们知道，RunLoop是dispatch_source_t实现的timer，所以理论上来说，GCD定时器的精度比NSTimer只高不低。</li>
-</ul>
-<h5 id="CADisplayLink"><a href="#CADisplayLink" class="headerlink" title="CADisplayLink"></a>CADisplayLink</h5><p>CADisplayLink是基于屏幕刷新的周期，所以其一般很准时，每秒刷新60次。其本质也是通过RunLoop，所以不难看出，当RunLoop选择其他模式或被耗时操作过多时，仍旧会造成延迟。<br>其使用步骤为 创建CADisplayLink-&gt;添加至RunLoop中-&gt;终止-&gt;销毁。代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建CADisplayLink</span><br><span class="line">CADisplayLink *disLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(linkMethod)];</span><br><span class="line">// 添加至RunLoop中</span><br><span class="line">[disLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];</span><br><span class="line">// 终止定时器</span><br><span class="line">[disLink invalidate];</span><br><span class="line">// 销毁对象</span><br><span class="line">disLink = nil;</span><br></pre></td></tr></table></figure></p>
-<p>在日常开发中，适当使用CADisplayLink甚至有优化作用。比如对于需要动态计算进度的进度条，由于起进度反馈主要是为了UI更新，那么当计算进度的频率超过帧数时，就造成了很多无谓的计算。如果将计算进度的方法绑定到CADisplayLink上来调用，则只在每次屏幕刷新时计算进度，优化了性能。MBProcessHUB则是利用了这一特性。</p>
-<h5 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h5><p>GCD定时器是<code>dispatch_source_t</code>类型的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/** 创建定时器对象</span><br><span class="line">* para1: DISPATCH_SOURCE_TYPE_TIMER 为定时器类型</span><br><span class="line">* para2-3: 中间两个参数对定时器无用</span><br><span class="line">* para4: 最后为在什么调度队列中使用</span><br><span class="line">*/</span><br><span class="line">_gcdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));</span><br><span class="line">/** 设置定时器</span><br><span class="line">* para2: 任务开始时间</span><br><span class="line">* para3: 任务的间隔</span><br><span class="line">* para4: 可接受的误差时间，设置0即不允许出现误差</span><br><span class="line">* Tips: 单位均为纳秒</span><br><span class="line">*/</span><br><span class="line">dispatch_source_set_timer(_gcdTimer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);</span><br><span class="line">/** 设置定时器任务</span><br><span class="line">* 可以通过block方式</span><br><span class="line">* 也可以通过C函数方式</span><br><span class="line">*/</span><br><span class="line">dispatch_source_set_event_handler(_gcdTimer, ^&#123;</span><br><span class="line">static int gcdIdx = 0;</span><br><span class="line">NSLog(@&quot;GCD Method: %d&quot;, gcdIdx++);</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">if(gcdIdx == 5) &#123;</span><br><span class="line">// 终止定时器</span><br><span class="line">dispatch_suspend(_gcdTimer);</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line">// 启动任务，GCD计时器创建后需要手动启动</span><br><span class="line">dispatch_resume(_gcdTimer);</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>GCD更准时的原因<br>通过观察代码，我们可以发现GCD定时器实际上是使用了dispatch源(dispatch source)，dispatch源监听系统内核对象并处理。<code>dispatch</code>类似生产者消费者模式，通过监听系统内核对象，在生产者生产数据后自动通知相应的<code>dispatch</code>队列执行，后者充当消费者。通过系统级调用，更加精准。</li>
+<li>final 修饰的 class 任何地方都不能不能被继承</li>
+<li>final 修饰的 func 任何地方都不能被 Override</li>
 </ul>
 
       
@@ -978,7 +524,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
         		</li>
       		
 		</ul>
@@ -987,7 +533,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/定时器/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/11/swift-权限/">展开全文 >></a>
         </p>
       
 
@@ -1017,99 +563,134 @@
 
 
   
-    <article id="post-生命周期" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-swift-where" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/生命周期/">生命周期</a>
+      <a class="article-title" href="/2019/01/11/swift-where/">swift_where</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/生命周期/" class="archive-article-date">
-  	<time datetime="2019-01-06T13:38:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+        <a href="/2019/01/11/swift-where/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:04:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="ios程序启动"><a href="#ios程序启动" class="headerlink" title="ios程序启动"></a>ios程序启动</h5><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0ukwf3ulij30ri0jxacw.jpg" alt=""></p>
-<h5 id="UIViewController-的-生命周期"><a href="#UIViewController-的-生命周期" class="headerlink" title="UIViewController 的 生命周期"></a>UIViewController 的 生命周期</h5><p>#pragma mark — life circle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 第一步都走这个方法，不要在这里做View相关操作，View在loadView方法中才初始化</span><br><span class="line">- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil &#123;</span><br><span class="line">	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 如果连接了串联图storyBoard 走这个方法</span><br><span class="line">- (instancetype)initWithCoder:(NSCoder *)aDecoder &#123;</span><br><span class="line">	if (self = [super initWithCoder:aDecoder]) &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// xib 加载 完成</span><br><span class="line">// 所有视图的outlet和action已经连接，但还没有被确定</span><br><span class="line">- (void)awakeFromNib &#123;</span><br><span class="line">	[super awakeFromNib];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 加载视图(默认从nib)</span><br><span class="line">/*</span><br><span class="line">当执行到loadView方法时，如果视图控制器是通过nib创建，那么视图控制器已经从nib文件中被解档并创建好了，接下来任务就是对view进行初始化。</span><br><span class="line"></span><br><span class="line">loadView方法在UIViewController对象的view被访问且为空的时候调用。这是它与awakeFromNib方法的一个区别。</span><br><span class="line">假设我们在处理内存警告时释放view属性:self.view = nil。因此loadView方法在视图控制器的生命周期内可能被调用多次。</span><br><span class="line">loadView方法不应该直接被调用，而是由系统调用。它会加载或创建一个view并把它赋值给UIViewController的view属性。</span><br><span class="line"></span><br><span class="line">在创建view的过程中，首先会根据nibName去找对应的nib文件然后加载。如果nibName为空或找不到对应的nib文件，则会创建一个空视图(这种情况一般是纯代码)</span><br><span class="line"></span><br><span class="line">注意:在重写loadView方法的时候，不要调用父类的方法。</span><br><span class="line">*/</span><br><span class="line">- (void)loadView &#123;</span><br><span class="line">	self.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];</span><br><span class="line">	self.view.backgroundColor = [UIColor redColor];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 视图控制器中的视图加载完成，viewController自带的view加载完成</span><br><span class="line">// 当loadView将view载入内存中，会进一步调用viewDidLoad方法来进行进一步设置。此时，视图层次已经放到内存中，通常，我们对于各种初始化数据的载入，初始设定、修改约束、移除视图等很多操作都可以这个方法中实现。</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">	[super viewDidLoad];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewWillAppear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">// view 即将布局其Subviews。 比如view的bounds改变了</span><br><span class="line">- (void)viewWillLayoutSubviews &#123;&#125;</span><br><span class="line"></span><br><span class="line">// view 已经布局其 Subviews</span><br><span class="line">- (void)viewDidLayoutSubviews &#123;&#125;</span><br><span class="line"></span><br><span class="line">//视图已经出现</span><br><span class="line">- (void)viewDidAppear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">//视图将要消失</span><br><span class="line">- (void)viewWillDisappear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">//视图已经消失</span><br><span class="line">- (void)viewDidDisappear:(BOOL)animated &#123;&#125;</span><br><span class="line"></span><br><span class="line">//出现内存警告  </span><br><span class="line">//模拟内存警告:点击模拟器-&gt;hardware-&gt; Simulate Memory Warning</span><br><span class="line">- (void)didReceiveMemoryWarning &#123;</span><br><span class="line">	[super didReceiveMemoryWarning];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 视图被销毁</span><br><span class="line">- (void)dealloc &#123;&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="main-之前"><a href="#main-之前" class="headerlink" title="main()之前"></a>main()之前</h5><ol>
-<li>二进制文件初始化</li>
-<li>交由ImageLoader 读取image，其中包含了我们的类，方法等各种符号（Class、Protocol 、Selector、 IMP）</li>
-<li>接下来load_images 中调用call_load_methods方法，遍历所有加载进来的Class，按继承层次依次调用Class的+load和其他Category的+load方法<h5 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h5><h5 id="main-之后"><a href="#main-之后" class="headerlink" title="main() 之后"></a>main() 之后</h5></li>
-<li>UIApplicationMain</li>
+        <ul>
+<li><p>do catch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">enum ExceptionError: Error &#123;</span><br><span class="line">    case httpCode(Int)</span><br><span class="line">&#125;</span><br><span class="line">func throwError() throws &#123;</span><br><span class="line">    thtow ExceptionError.httpCode(500)</span><br><span class="line">&#125;</span><br><span class="line">do &#123;</span><br><span class="line">    try throwError()</span><br><span class="line">&#125; catch ExceptionError.httpCode(let httpCode) where httpCode &gt;= 500 &#123;</span><br><span class="line">    print(&quot;server error&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>switch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var value:(Int, String) = (1, &quot;小明&quot;)</span><br><span class="line">switch value &#123;</span><br><span class="line">    case let (x, y) where x &lt; 60;</span><br><span class="line">        print(&quot;不及格&quot;)</span><br><span class="line">    default:</span><br><span class="line">        print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for score in scores where score &gt;= 60 &#123;</span><br><span class="line">    print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for in</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arrayOne = [1, 2, 3, 4, 5];</span><br><span class="line">let dictionary = [1:&quot;a&quot;, 2:&quot;b&quot;]</span><br><span class="line">for i in arrayOne where dictionary[i] != nil &#123;</span><br><span class="line">    print (i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol aProtocol()</span><br><span class="line">extension aProtocol where Self: UIView &#123;</span><br><span class="line">    // 只给遵守aProtocol协议的UIView添加拓展</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>if let   guard中的where使用 , 替代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var optionName: String? = &quot;hang&quot;</span><br><span class="line">if let name = optionName , name.hasprefix(&quot;H&quot;) &#123;</span><br><span class="line">    print(name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Swift4 中的改进</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">可以在 associatedtype 后面声明的类型后追加 where 约束语句</span><br><span class="line"></span><br><span class="line">protocol aProtocol &#123;</span><br><span class="line">    associatedtype Element</span><br><span class="line">    associatedtype SubSequence: Sequence where </span><br><span class="line">        SubSequence.Iterator.Element == Iterator.Element</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">由于 associatedtype 支持追加 where ，swift4标准库中的 Sequence 中的 Element 声明如下</span><br><span class="line">它限定了 Sequence 中 Element 这个类型必须和 Iterator.Element 的类型一致，省去了拓展中的不必要判断</span><br><span class="line"></span><br><span class="line">protocol Sequence &#123;</span><br><span class="line">    associatedtype Element where Self.Element = Self.Iterator.Element</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift-where/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-throws" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift-throws/">throws VS rethrows</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift-throws/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对错误的处理方式</p>
+<ol>
+<li>throw 将错误提交到上一层调用去处理</li>
+<li>try</li>
+<li>do-catch</li>
 </ol>
-<ul>
-<li><p>创建UIApplication对象</p>
-</li>
-<li><p>创建UIApplication的delegate对象</p>
-</li>
-</ul>
-<ol start="2">
-<li>delegate对象开始处理(监听)系统事件(没有storyboard)</li>
-</ol>
-<ul>
-<li><p>程序启动完毕的时候, 就会调用代理的application:didFinishLaunchingWithOptions:方法</p>
-</li>
-<li><p>在application:didFinishLaunchingWithOptions:中创建UIWindow</p>
-</li>
-<li><p>创建和设置UIWindow的rootViewController</p>
-</li>
-<li><p>显示窗口</p>
-</li>
-</ul>
-<p>3.根据Info.plist获得最主要storyboard的文件名,加载最主要的storyboard(有storyboard)</p>
-<ul>
-<li><p>创建UIWindow</p>
-</li>
-<li><p>创建和设置UIWindow的rootViewController</p>
-</li>
-<li><p>显示窗口</p>
-</li>
-</ul>
-<h5 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h5><ul>
-<li>预编译<br>预编译主要用来处理那些源文件中以 #开头的预编译命令，比如#include等</li>
-<li>语义分析<br>语义分析主要做的事情就是类型检查、以及符号表管理</li>
-<li>生成中间代码<br>编译器前端负责产生机器无关的中间代码，编译器后端负责对中间代码进行优化并转化为目标机器代码</li>
-<li>目标代码的生成与优化<br>编译器后端主要包括代码生成器、代码优化器。代码生成器将中间代码转换为目标代码，代码优化器主要是进行一些优化，比如删除多余指令，选择合适寻址方式等</li>
-<li>汇编<br>目标代码需要经过汇编器处理，才能变成机器上可以执行的指令。生成对应的.o文件</li>
-<li>链接<br>链接器（这里指的是静态链接器）将多个目标文件合并为一个可执行文件，</li>
-<li>代码签名</li>
-<li>启动<br>加载所依赖的dylibs</li>
-</ul>
-<h5 id="view"><a href="#view" class="headerlink" title="view"></a>view</h5><p>1.UIView生命周期加载阶段。在loadView阶段（内存加载阶段），先是把自己本身都加到superView上面，再去寻找自己的subView并依次添加。到此为止，只和addSubview操作有关，和是否显示无关。等到所有的subView都在内存层面加载完成了，会调用一次viewWillAppear，然后会把加载好的一层层view，分别绘制到window上面。然后layoutSubview，DrawRect，加载即完成。</p>
-<p>2.UIView生命周期移除阶段。会先依次移除本view的moveToWindow，然后依次移除所有子视图，掉他们的moveToWindow，view就在window上消失不见了，然后在removeFromSuperView，然后dealloc，dealloc之后再removeSubview。（但不理解为什么dealloc之后再removeSubview）</p>
-<p>3.如果没有子视图，则不会接收到didAddSubview和willRemoveSubview消息。</p>
-<p>4.和superView，window相关的方法，可以通过参数（superView/window）或者self.superView/self.window,判断是创建还是销毁，如果指针不为空，是创建，如果为空，就是销毁。这四个方法，在整个view的生命周期中，都会被调用2次，一共是8次。</p>
-<p>5.removeFromSuperview和dealloc在view的生命周期中，调且只调用一次，可以用来removeObserver，移除计时器等操作。（layoutSubview可能会因为子视图的调整，多次调用)</p>
-<p>6.UIView是在被加到自己的父视图上之后，才开始会寻找添加自己的子视图（数据层面的添加，并不是加到window上面）。UIView是在调用dealloc中，移除自己的子视图，所有子视图移除并销毁内存之后，才会销毁自己的内存，dealloc完成。</p>
-<ul>
-<li>使用init方法初始化View<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIView *view = [UIView alloc] init];</span><br><span class="line">[self.view addSubView:view];</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>依次输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initWithFrame:  </span><br><span class="line">init  </span><br><span class="line">setNeedsLayout  </span><br><span class="line">layoutSubviews</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>使用initWithFrame:初始化view</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initWithFrame:</span><br><span class="line">setNeedsLayout</span><br><span class="line">layoutSubviews</span><br><span class="line">drawRect:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用xib或Storyboard方式添加<br>在Storyboard或Xib中添加view</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">initWithCoder:</span><br><span class="line">awakeFromNib</span><br><span class="line">layoutSubviews</span><br><span class="line">drawRect:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用xib代码初始化View</p>
-</li>
-</ul>
-<p>[[NSBundle mainBundle] loadNibNamed:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">initWithCoder:</span><br><span class="line">awakeFromNib</span><br><span class="line">setNeedsLayout</span><br><span class="line">layoutSubviews</span><br><span class="line">drawRect:</span><br></pre></td></tr></table></figure></p>
+<h4 id="do-catch"><a href="#do-catch" class="headerlink" title="do-catch"></a>do-catch</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">    try expression</span><br><span class="line">    statements</span><br><span class="line">&#125; catch pattern 1 &#123;</span><br><span class="line">    statements</span><br><span class="line">&#125; catch pattern 2 where condition &#123;</span><br><span class="line">    statements</span><br><span class="line">&#125; catch &#123;</span><br><span class="line">    // the clause matches any error </span><br><span class="line">    // and binds the error to a local constant named error</span><br><span class="line">    print(error)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">enum MyError : Error &#123;</span><br><span class="line">    case ErrorOne</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func willThrow(_ type:NSInteger)throws -&gt; NSString &#123;</span><br><span class="line">    if type == 1 &#123;</span><br><span class="line">        throw MyError.ErrorTwo</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &quot;一切都很好&quot;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">//调用</span><br><span class="line"> do &#123;</span><br><span class="line">    let str = try self.willThrow(1)</span><br><span class="line">    //以下是非错误时的代码</span><br><span class="line">    //如果有错误出现，这里将不会执行</span><br><span class="line">    print(str) </span><br><span class="line">&#125; catch &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="try"><a href="#try" class="headerlink" title="try"></a>try</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Converting Errors to Optional Values</span><br><span class="line"></span><br><span class="line">func someThrowingFunction() throws -&gt; Int &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let x = try? someThrowingFunction()</span><br><span class="line"></span><br><span class="line">let y: Int?</span><br><span class="line">do &#123;</span><br><span class="line">    y = try someThrowingFunction()</span><br><span class="line">&#125; catch &#123;</span><br><span class="line">    y = nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="rethrows"><a href="#rethrows" class="headerlink" title="rethrows"></a>rethrows</h4><hr>
+<p>针对的不是函数或者方法本身，而是他携带的闭包类型的参数，当他的闭包类型的参数throws的时候，我们要使用rethrows将这个异常向上传递</p>
 
       
 
@@ -1124,7 +705,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
         		</li>
       		
 		</ul>
@@ -1133,7 +714,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/生命周期/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/11/swift-throws/">展开全文 >></a>
         </p>
       
 
@@ -1163,48 +744,42 @@
 
 
   
-    <article id="post-知识点" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-swift-static-class" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/知识点/">知识点</a>
+      <a class="article-title" href="/2019/01/11/swift-static-class/">static VS class</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/知识点/" class="archive-article-date">
-  	<time datetime="2019-01-06T13:33:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
+        <a href="/2019/01/11/swift-static-class/" class="archive-article-date">
+  	<time datetime="2019-01-11T13:56:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="p"><a href="#p" class="headerlink" title="%p"></a>%p</h5><p>作用：输出内存地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString *name = @&quot;xxxx&quot;;</span><br><span class="line">NSLog(@&quot;%p&quot;,name);</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name);</span><br></pre></td></tr></table></figure>
-<p>结果：<br><img src="evernotecid://64489C59-7A21-458E-B0CD-2862AC4F0EA8/appyinxiangcom/1367710/ENResource/p1025" alt="5cd5b2014b6097215634f329d9386d13.png"></p>
-<p>解释：</p>
-<p>1、前者是字符串 “xxxx” 内存首地址<br>2、后者是指针name 内存首地址</p>
-<h5 id="NSSet"><a href="#NSSet" class="headerlink" title="NSSet"></a>NSSet</h5><p>NSSet到底什么类型，其实它和NSArray功能性质一样，用于存储对象，属于集合；NSSet  ， NSMutableSet类声明编程接口对象，无序的集合，在内存中存储方式是不连续的，不像NSArray（是有序的集合）类声明编程接口对象是有序集合，在内存中存储位置是连续的；</p>
-<p>NSSet和我们常用NSArry区别是：在搜索一个一个元素时NSSet比NSArray效率高，主要是它用到了一个算法hash(散列，也可直译为哈希)；<br>比如你要存储元素A，一个hash算法直接就能直接找到A应该存储的位置；同样，当你要访问A时，一个hash过程就能找到A存储的位置。而对于NSArray，若想知道A到底在不在数组中，则需要便利整个数组，显然效率较低了；</p>
-<h5 id="分辨率"><a href="#分辨率" class="headerlink" title="分辨率"></a>分辨率</h5><p>分辨率就是屏幕上横、纵的总象素点数</p>
-<ul>
-<li>物理分辨率是硬件所支持的，如果我们设计的时候用单位px，可以说是物理分辨率尺寸。</li>
-<li>逻辑分辨率是软件可以达到的，如果我们设计的时候用单位pt，可以说是逻辑分辨率尺寸。</li>
+        <h4 id="static"><a href="#static" class="headerlink" title="static"></a>static</h4><ul>
+<li><p>类方法</p>
+</li>
+<li><p>单例</p>
+</li>
 </ul>
-<h5 id="NSClassFromString"><a href="#NSClassFromString" class="headerlink" title="NSClassFromString"></a>NSClassFromString</h5><p>正常来说，使用如下方法来对不确定的类进行初始化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id myObj = [[NSClassFromString(@&quot;MySpecialClass&quot;) alloc] init];</span><br><span class="line">和</span><br><span class="line">id myObj = [[MySpecialClass alloc] init];</span><br></pre></td></tr></table></figure></p>
-<p>是一样的。</p>
-<p>但是，如果你的程序中并不存在MySpecialClass这个类，下面的写法会出错，而上面的写法只是返回一个空对象而已。<br>因此，在某些情况下，可以使用NSClassFromString来进行你不确定的类的初始化。<br>NSClassFromString的好处是：<br>1 弱化连接，因此并不会把没有的Framework也link到程序中。<br>2 不需要使用import，因为类是动态加载的，只要存在就可以加载。因此如果你的toolchain中没有某个类的头文件定义，而你确信这个类是可以用的，那么也可以用这种方法。</p>
-<h5 id="layoutIfNeeded"><a href="#layoutIfNeeded" class="headerlink" title="layoutIfNeeded"></a>layoutIfNeeded</h5><p>先调用<code>setNeedsLayout</code>,标记为需要重新布局,在下个UI刷新循环中系统自动调用<code>layoutSubviews</code>进行刷新<br>调用<code>layoutIfNeeded</code>，判断是否被标记为需要重新布局，如果有，则立即调用<code>layoutSubviews</code>进行刷新</p>
-<p>14）我们能将 int 强制转换为 byte 类型的变量吗？如果该值大于 byte 类型的范围，将会出现什么现象？<br>是的，我们可以做强制转换，但是 Java 中 int 是 32 位的，而 byte 是 8 位的，所以，如果强制转化是，int 类型的高 24 位将会被丢弃，byte 类型的范围是从 -128 到 128。 </p>
-<p>15）Java 中 ++ 操作符是线程安全的吗？<br>不是线程安全的操作。它涉及到多个指令，如读取变量值，增加，然后存储回内存，这个过程可能会出现多个线程交差。 </p>
-<p>16）a = a + b 与 a += b 的区别？<br>+= 隐式的将加操作的结果类型强制转换为持有结果的类型。如果两这个整型相加，如 byte、short 或者 int，首先会将它们提升到 int 类型，然后在执行加法操作。如果加法操作的结果比 a 的最大值要大，则 a+b 会出现编译错误，但是 a += b 没问题，如下：<br>byte a = 127;<br>byte b = 127;<br>b = a + b; // error : cannot convert from int to byte<br>b += a; // ok </p>
-<p>注：其实无论 a+b 的值为多少，编译器都会报错，因为 a+b 操作会将 a、b 提升为 int 类型，所以将 int 类型赋值给 byte 就会编译出错 </p>
-<p>17）我能在不进行强制转换的情况下将一个 double 值赋值给 long 类型的变量吗？<br>不行，你不能在没有强制类型转换的前提下将一个 double 值赋值给 long 类型的变量，因为 double 类型的范围比 long 类型更广，所以必须要进行强制转换。 </p>
-<p>18）3*0.1 == 0.3 将会返回什么？true 还是 false？<br>false，因为有些浮点数不能完全精确的表示出来。 </p>
+<p>类方法</p>
+<p>函数一般指类方法，方法一般指实例方法</p>
+<ul>
+<li>enum struct     // static</li>
+<li>class                  // class</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct Point &#123;</span><br><span class="line">    let x: Double</span><br><span class="line">    let y: Double</span><br><span class="line"></span><br><span class="line">    // 存储属性</span><br><span class="line">    static let zero = Point(x: 0, y: 0)</span><br><span class="line"></span><br><span class="line">    // 计算属性</span><br><span class="line">    static var pArr: [Point] &#123;</span><br><span class="line">        return [Point(x: 1, y: 1)]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 类方法</span><br><span class="line">    static func add(p1: Point, p2: Point) -&gt; Point &#123;</span><br><span class="line">        return Point(x: p1.x+p2.x, y: p1.y+p2.y)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在 class中不能用class来修饰计算属性，但可以像下面这样</span><br><span class="line">class MyManager &#123;</span><br><span class="line">    static let sharedInstance = MyManger()</span><br><span class="line">    private init() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有一个比较特殊的是 protocol。在 Swift 中 class，struct 和 enum 都是可以实现某个 protocol 的。那么如果我们想在 protocol 里定义一个类型域上的方法或者计算属性的话，应该用哪个关键字呢？答案是使用 static 进行定义。在使用的时候，struct 或 enum 中仍然使用 static，而在 class 里我们既可以使用 class 关键字，也可以用 static<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">protocol MyProtocol &#123;</span><br><span class="line">    static func foo() -&gt; String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct MyStruct: MyProtocol &#123;</span><br><span class="line">    static func foo() -&gt; String &#123;</span><br><span class="line">        return &quot;MyStruct&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">enum MyEnum: MyProtocol &#123;</span><br><span class="line">    static func foo() -&gt; String &#123;</span><br><span class="line">        return &quot;MyEnum&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyClass: MyProtocol &#123;</span><br><span class="line">    // 在 class 中可以使用 class</span><br><span class="line">    class func foo() -&gt; String &#123;</span><br><span class="line">        return &quot;MyClass.foo()&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 也可以使用 static</span><br><span class="line">    static func bar() -&gt; String &#123;</span><br><span class="line">        return &quot;MyClass.bar()&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 静态方法和类方法还是有区别的</span><br><span class="line">// 静态方法默认带了final特性</span><br><span class="line">class A &#123;</span><br><span class="line">    class func test()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    static func test1()&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class AA:A &#123;</span><br><span class="line">    override class func test()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    static func test1()&#123;&#125;  // error Cannot override static method</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -1219,7 +794,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
         		</li>
       		
 		</ul>
@@ -1228,7 +803,300 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/知识点/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/11/swift-static-class/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift修饰符" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift修饰符/">swift修饰符</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift修饰符/" class="archive-article-date">
+  	<time datetime="2019-01-11T13:30:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Self"><a href="#Self" class="headerlink" title="Self"></a>Self</h4><ul>
+<li><p>protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protocol Copyavle &#123;</span><br><span class="line">    func copy() -&gt; Self</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class引用类型，可以使用Self作为函数的返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ClassA &#123;</span><br><span class="line">    func action() -&gt; Self &#123;</span><br><span class="line">        return self</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>struct值类型，不能使用Self作为函数返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct StructA &#123;</span><br><span class="line">    func action() -&gt; StructA &#123;</span><br><span class="line">        return self</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h4 id="precedencegroup"><a href="#precedencegroup" class="headerlink" title="precedencegroup"></a>precedencegroup</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 优先运算符</span><br><span class="line"></span><br><span class="line">infix operator +* : InnerProductPrecedence // 定义一个中位操作符，即前后都是输入</span><br><span class="line"></span><br><span class="line">precedencegroup InnerProducePrecedence &#123;</span><br><span class="line">    // 结合律：内积的结果是一个 Double，不再会和其他内积结合使用，所以这里写成 none</span><br><span class="line">    associativity: none</span><br><span class="line">    // 优先级设置：高于普通运算。</span><br><span class="line">    // MultiplicationPrecedence（代表乘法和除法）</span><br><span class="line">    // AdditionPrecedence（代表加法和减法）</span><br><span class="line">    higherThan: MultiplicationPrecedence, AdditionPrecedence</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func +*(left: Vector2D, right: Vector2D) -&gt; Double &#123;</span><br><span class="line">    return left.x * right.x + left.y * right.y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let result = v1 +* v2 // 14</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/// The return type of functions that do not return normally, that is, a type</span><br><span class="line">/// with no values.</span><br><span class="line">///</span><br><span class="line">/// Use `Never` as the return type when declaring a closure, function, or</span><br><span class="line">/// method that unconditionally throws an error, traps, or otherwise does</span><br><span class="line">/// not terminate.</span><br><span class="line">///</span><br><span class="line">///     func crashAndBurn() -&gt; Never &#123;</span><br><span class="line">///         fatalError(&quot;Something very, very bad happened&quot;)</span><br><span class="line">///     &#125;</span><br><span class="line">public enum Never &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h4><p>可改变 <code>struct enumeration</code> 的实参</p>
+<p><code>swift</code> 包含三种类型</p>
+<ul>
+<li>struct // value type</li>
+<li>enum // value type</li>
+<li>class  // reference type  默认可以修改属性值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct Point &#123;</span><br><span class="line">    var x = 0, y = 0</span><br><span class="line">    mutating func moveBy(x: Int, y: Int) &#123;</span><br><span class="line">        self.x += x</span><br><span class="line">        self.y += y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">enum TriStateSwitch &#123;</span><br><span class="line">    case Off, Low, High</span><br><span class="line">    mutating func next() &#123;</span><br><span class="line">        switch self &#123;</span><br><span class="line">            case .Off:</span><br><span class="line">                self = .Low</span><br><span class="line">            case .Low:</span><br><span class="line">                self = .High</span><br><span class="line">            case . High:</span><br><span class="line">                self = .Off</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a>lazy</h4><p><code>swift</code> 懒加载相当于静态空间，只运行一次。<br>只有第一次访问时才加载，如果永远不访问，它就不创建</p>
+<p>// 两种写法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lazy var name = &quot;Dog&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lazy var a: Int = &#123;</span><br><span class="line">    pring(&quot;a = 1&quot;)</span><br><span class="line">    return 1</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 只打印一次</span><br><span class="line">classA.a</span><br><span class="line">classA.a</span><br></pre></td></tr></table></figure>
+<p>如果在<code>closure</code>里面使用了<code>self</code>，也不会造成循环引用的问题，我们可以放心使用。注意：如果这个属性没有被<code>lazy</code>修饰，在<code>closure</code>里面是不能使用<code>self</code>的，因为这时<code>self</code>还没有初始化完成。</p>
+<hr>
+<h4 id="if-if-let"><a href="#if-if-let" class="headerlink" title="if    if let"></a>if    if let</h4><p>如果常量是可选项<code>Optional</code>，<code>if</code>判断后仍然需要解包<code>!</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let name: String? = &quot;老王&quot;</span><br><span class="line">let age: Int? = 10</span><br><span class="line">if name != nil &amp;&amp; age != nil &#123;</span><br><span class="line">    print(name! + String(age!))     </span><br><span class="line">&#125;</span><br><span class="line">// 输出:老王10</span><br></pre></td></tr></table></figure></p>
+<p>如果常量是可选项<code>Optional</code>，<code>if let</code>判断后不需要解包<code>!</code>，<code>{}</code>内一定有值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let name: String? = &quot;老王&quot;</span><br><span class="line">let age: Int? = 10// if let 连用,判断对象的值是否为&apos;nil&apos;</span><br><span class="line">if let nameNew = name,let ageNew = age &#123;</span><br><span class="line">    // 进入分支后,nameNew 和 ageNew 一定有值</span><br><span class="line">    print(nameNew + String(ageNew)) </span><br><span class="line">&#125;</span><br><span class="line">// 输出:老王10</span><br></pre></td></tr></table></figure></p>
+<p><code>if var</code>的用法，和<code>if let</code>的区别就是可以在<code>{}</code>内修改变量的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let name: String? = &quot;老王&quot;</span><br><span class="line">let age: Int? = 10</span><br><span class="line">if var nameNew = name,let ageNew = age &#123;</span><br><span class="line">    // &apos;var&apos;修饰,可以修改&apos;nameNew&apos;的值,&apos;let&apos;修改的不可以修改</span><br><span class="line">    nameNew = &quot;老李&quot;</span><br><span class="line">    print(nameNew + String(ageNew))     </span><br><span class="line">&#125;</span><br><span class="line">// 输出:老李10</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="guard"><a href="#guard" class="headerlink" title="guard"></a>guard</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let age = 5</span><br><span class="line">    </span><br><span class="line">guard age &gt;= 10 else &#123;</span><br><span class="line">    print(&quot;error&quot;)</span><br><span class="line">    return // 不加return，编译器会提示错误</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="final"><a href="#final" class="headerlink" title="final"></a>final</h5><p>可以防止类<code>class</code>被继承，还可以防止子类重写父类的属性、方法以及下标。需要注意的是，<code>final</code>修饰符只能用于类，不能修饰结构体<code>struct</code>和枚举<code>enum</code>，<br> 因为结构体和枚举只能遵循协议<code>protocol</code>。虽然协议也可以遵循其他协议，但是它并不能重写遵循的协议的任何成员，这就是结构体和枚举不需要final修饰的原因</p>
+<hr>
+<h4 id="Defer"><a href="#Defer" class="headerlink" title="Defer"></a>Defer</h4><p>代码压入栈，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func lookforSomething(name:String) &#123;</span><br><span class="line">    print(&quot;begin&quot;)</span><br><span class="line">    if name == &quot;&quot;&#123;</span><br><span class="line">        print(&quot;1-1&quot;)</span><br><span class="line">        defer&#123;</span><br><span class="line">            print(&quot;2-1&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        print(&quot;1-2&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    print(&quot;1-3&quot;)</span><br><span class="line">    defer&#123;</span><br><span class="line">        print(&quot;3-1&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    print(&quot;eng&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>begin</strong></p>
+<p><strong>1-1</strong></p>
+<p><strong>1-2</strong></p>
+<p><strong>2-1</strong></p>
+<p><strong>1-3</strong></p>
+<p><strong>eng</strong></p>
+<p><strong>3-1</strong></p>
+<hr>
+<h4 id="associatedtype"><a href="#associatedtype" class="headerlink" title="associatedtype"></a>associatedtype</h4><p><code>associatedtype</code>类型是在<code>protocol中</code> 代指一个确定类型并要求该类型实现指定方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">protocol Container &#123;   </span><br><span class="line">  associatedtype ItemType    </span><br><span class="line">  mutating func append(_ item:ItemType)   </span><br><span class="line">  var count:Int &#123; </span><br><span class="line">    get</span><br><span class="line">   &#125;    </span><br><span class="line">  subscript(i:Int) -&gt; ItemType &#123; </span><br><span class="line">    get</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义一个协议时，有的时候声明一个或多个关联类型作为协议定义的一部分将会非常有用。关联类型为协议中的某个类型提供了一个占位名（或者说别名），其代表的实际类型在协议被采纳时才会被指定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public protocol Sequence &#123;</span><br><span class="line"></span><br><span class="line">    /// A type representing the sequence&apos;s elements.</span><br><span class="line">    associatedtype Element where Self.Element == Self.Iterator.Element</span><br><span class="line"></span><br><span class="line">    /// A type that provides the sequence&apos;s iteration interface and</span><br><span class="line">    /// encapsulates its iteration state.</span><br><span class="line">    associatedtype Iterator : IteratorProtocol</span><br><span class="line"></span><br><span class="line">    /// A type that represents a subsequence of some of the sequence&apos;s elements.</span><br><span class="line">    associatedtype SubSequence</span><br><span class="line"></span><br><span class="line">    /// Returns an iterator over the elements of this sequence.</span><br><span class="line">    public func makeIterator() -&gt; Self.Iterator</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="discardableResult"><a href="#discardableResult" class="headerlink" title="@discardableResult"></a>@discardableResult</h4><p>取消如果不使用返回值的警告</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift修饰符/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MVVM" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/MVVM/">MVVM</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/MVVM/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:08:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="mvc"><a href="#mvc" class="headerlink" title="mvc"></a>mvc</h5><img src="/2019/01/09/MVVM/1.png" title="图片说明">
+<p>典型的 <code>MVC</code> 设置。<code>Model</code> 呈现数据，<code>View</code> 呈现用户界面，而 <code>View Controller</code> 调节它两者之间的交互</p>
+<p>现实中<br><img src="/2019/01/09/MVVM/2.png" title="图片说明"></p>
+<p>在典型的 <code>MVC</code> 应用里，许多逻辑被放在 <code>View Controller</code> 里。它们中的一些确实属于 <code>View Controller</code>，但更多的是所谓的“表示逻辑（presentation logic）”，以 <code>MVVM</code> 属术语来说，就是那些将 <code>Model</code> 数据转换为<code>View</code> 可以呈现的东西的事情，例如将一个 <code>NSDate</code> 转换为一个格式化过的 <code>NSString</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    SUGoodsCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;Goods&quot;];</span><br><span class="line">    cell.goods = self.dataSource[indexPath.row];</span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SUGoodsCell.m</span><br><span class="line">@implementation SUGoodsCell</span><br><span class="line">- (void)setGoods:(SUGoods *)goods</span><br><span class="line">&#123;</span><br><span class="line">    _goods = goods</span><br><span class="line">    /// config data ....</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>这个<code>SUGoodsCell</code>，正是由<code>View</code>直接来调用<code>Model</code>，所以事实上典型的<code>MV</code>C的原则已经违背了，但是这种情况是一直发生的甚至于人们不觉得这里有哪些不对。如果严格遵守<code>MVC</code>的话，你会把对<code>cell</code>的设置放在<code>Controller</code>中，不向<code>View</code>传递一个<code>Model</code>对象，这样就会大大增加<code>Controller</code>的体积。</p>
+<h5 id="厚重的View-Controller"><a href="#厚重的View-Controller" class="headerlink" title="厚重的View Controller"></a>厚重的View Controller</h5><p>M：模型model的对象通常非常的简单。根据Apple的文档，model应包括数据和操作数据的业务逻辑。而在实践中，model层往往非常薄，不管怎样，model层的业务逻辑不应被拖入到controller。</p>
+<p>V：视图view通常是UIKit控件。View的如何构建何必让Controller知晓，同时View不应该直接引用model（PS：现实中，你懂的！），并且仅仅通过IBAction事件引用controller。业务逻辑很明显不归入view，视图本身没有任何业务。</p>
+<p>C：控制器controller。Controller是app的“胶水代码”：协调模型和视图之间的所有交互。控制器负责管理他们所拥有的视图的视图层次结构，还要响应视图的loading、appearing、disappearing等等，同时往往也会充满我们不愿暴露的model的模型逻辑以及不愿暴露给视图的业务逻辑。</p>
+<p>网络数据的请求及后续处理，本地数据库操作，以及一些带有工具性质辅助方法都加大了Massive View Controller的产生。</p>
+<h5 id="无处安放的网络逻辑"><a href="#无处安放的网络逻辑" class="headerlink" title="无处安放的网络逻辑"></a>无处安放的网络逻辑</h5><p>苹果使用的MVC的定义是这么说的：所有的对象都可以被归类为一个model，一个view，或是一个controller。</p>
+<p>你可能试着把它放在Model对象里，但是也会很棘手，因为网络调用应该使用异步，这样如果一个网络请求比持有它的model生命周期更长，事情将变的复杂。显然View里面做网络请求那就更格格不入了，因此只剩下Controller了。若这样，这又加剧了Massive View Controller的问题。若不这样，何处才是网络逻辑的家呢？</p>
+<h5 id="较差的可测试性"><a href="#较差的可测试性" class="headerlink" title="较差的可测试性"></a>较差的可测试性</h5><p>由于View Controller混合了视图处理逻辑和业务逻辑，分离这些成分的单元测试成了一个艰巨的任务。若一个Massive View Controller有上万行代码，要你编写个单元测试，我敢保证，你不是想写，你是想死，分分钟填表走人。</p>
+<h5 id="MVVM（Model-View-View-Mode）"><a href="#MVVM（Model-View-View-Mode）" class="headerlink" title="MVVM（Model View View-Mode）"></a>MVVM（Model View View-Mode）</h5><p>MVVM：一个 MVC 的增强版，我们正式连接了视图和控制器，并将表示逻辑从 Controller 移出放到一个新的对象里，即 View Model<br>促进了 UI 代码与业务逻辑的分离。它正式规范了视图和控制器紧耦合的性质<br><img src="/2019/01/09/MVVM/3.png" title="图片说明"></p>
+<p>view 和 view controller 都不能直接引用model，而是引用视图模型（viewModel）</p>
+<p>viewModel 是一个放置用户输入验证逻辑，视图显示逻辑，发起网络请求和其他代码的地方</p>
+<p>使用MVVM会轻微的增加代码量，但总体上减少了代码的复杂性</p>
+<p>MVVM 配合一个绑定机制效果最好</p>
+<p><a href="https://objccn.io/issue-13-1/" target="_blank" rel="noopener">https://objccn.io/issue-13-1/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/MVVM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-组合模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/组合模式/">组合模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/组合模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:07:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用于把一组相似的对象当作一个单一的对象。组合模式依据树形结构来组合对象，用来表示部分以及整体层次<br>例子：<br>公司的员工表<br>创建CEO和创建主管、普通员工一样，只是CEO下有下属列表，里面包括各个主管，主管的下属列表里包含相对应的员工。当打印所有员工时，只打印CEO和他的下属（循环打印）即可，CEO代表了这个树形结构的顶点</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/组合模式/">展开全文 >></a>
         </p>
       
 
@@ -1260,7 +1128,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 

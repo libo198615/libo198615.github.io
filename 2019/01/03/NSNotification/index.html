@@ -8,17 +8,19 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>NSNotification | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 对于删除监听器这一步骤在iOS9以后似乎变得不那么重要，iOS9开始不再对已经销毁的监听器发送通知，当监听器对象销毁后发送通知也不会造成野指针错误，这一点比K">
+  <meta name="description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 注册监听1234- (void)addObserver:(id)observer   				 selector:(SEL)aSelector">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NSNotification">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/03/NSNotification/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 对于删除监听器这一步骤在iOS9以后似乎变得不那么重要，iOS9开始不再对已经销毁的监听器发送通知，当监听器对象销毁后发送通知也不会造成野指针错误，这一点比K">
+<meta property="og:description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 注册监听1234- (void)addObserver:(id)observer   				 selector:(SEL)aSelector">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-11T05:52:48.313Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g1pr2mfw2jj30ly0ezgm5.jpg">
+<meta property="og:updated_time" content="2019-04-08T09:27:01.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSNotification">
-<meta name="twitter:description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 对于删除监听器这一步骤在iOS9以后似乎变得不那么重要，iOS9开始不再对已经销毁的监听器发送通知，当监听器对象销毁后发送通知也不会造成野指针错误，这一点比K">
+<meta name="twitter:description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 注册监听1234- (void)addObserver:(id)observer   				 selector:(SEL)aSelector">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g1pr2mfw2jj30ly0ezgm5.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -203,17 +205,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><code>NSNotification</code>在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。<br>想要异步，可在接受消息时使用<code>dispatch_async</code>进行异步处理</p>
-<p>对于删除监听器这一步骤在iOS9以后似乎变得不那么重要，iOS9开始不再对已经销毁的监听器发送通知，当监听器对象销毁后发送通知也不会造成野指针错误，这一点比KVO更加安全，KVO在监听器对象销毁后仍会触发回调函数就可能造成野指针错误</p>
-<h5 id="注册监听"><a href="#注册监听" class="headerlink" title="注册监听"></a>注册监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObserver:(id)observer selector:(SEL)aSelector name:(nullable NSString *)aName object:(nullable id)anObject;</span><br><span class="line">- (id &lt;NSObject&gt;)addObserverForName:(nullable NSString *)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (^)(NSNotification *note))block;</span><br></pre></td></tr></table></figure>
+<h5 id="注册监听"><a href="#注册监听" class="headerlink" title="注册监听"></a>注册监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObserver:(id)observer </span><br><span class="line">  				 selector:(SEL)aSelector </span><br><span class="line">               name:(nullable NSString *)aName </span><br><span class="line">             object:(nullable id)anObject;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>object</li>
 </ul>
 <p>在发送通知的时候也会传递一个<code>object</code>参数，一般情况下发送通知的<code>object</code>参数传递的是发送方自己，那么在注册监听者这里，<code>object</code>参数指代的也是发送方的这个<code>object</code>参数，意思就是接收<code>object</code>对象发出的名为<code>name</code>的通知，如果有其它发送方发出同样<code>name</code>的通知，是不会接收到通知的。如果把<code>name</code>和<code>object</code>这两个参数同时置为nil，则会接收所有的通知</p>
-<p>第二种方式对于大家来说比较陌生，这里多了一个参数queue和一个block，block即受到通知时执行的回调，参数queue指定了这个block在哪个线程中执行，如果queue传的是nil,则表示这个回调block在发送通知的线程中执行，也即同步执行。</p>
-<ul>
-<li>NSNotificationQueue(通知队列)</li>
-</ul>
-<p>如果我们使用普通的<code>- (void)postNotification:(NSNotification *)notification</code>这种方法来发送通知，那么这个通知就会直接发送到<code>notification Center</code>，<code>notificationCenter</code>则会直接将其发送给注册了该通知的观察者。<br>但是如果我们使用<code>NSNotificationQueue</code>就不一样了，通知不是直接发送给<code>notificationCenter</code>，而是先发送给<code>NSNotificationQueue</code>，然后由<code>NSNotificationQueue</code>决定在当前<code>runloop</code>结束或者空闲的时候转发给<code>notification Center</code>，再由<code>notification</code>转发给注册的观察者。通过<code>NSNotificationQueue</code>，可以<br>合并重复的通知，以便只发送一个通知。</p>
+<p>NSNotification 应该是采用单例模式设计。使用<strong>观察者模式</strong>来实现跨层传递消息。</p>
+<p>主体应该是一个dictionary，key就是注册通知时的name。value应该是一个数组，里面是所有注册了该通知的数据模型(observer, SEL)</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g1pr2mfw2jj30ly0ezgm5.jpg" alt=""></p>
+<p>value中的observe要使用week，避免强引用；每次发送通知时，如果observe为nil，主动移除</p>
 
       
 

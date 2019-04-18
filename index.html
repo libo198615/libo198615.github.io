@@ -180,33 +180,154 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-NSInvocation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-字典-数组" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: ios-字典-数组<br>date: 2019-04-09 08:55:52<br>categories:</p>
+<ul>
+<li>iOS<br>tags:</li>
+</ul>
+<p>数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典</p>
+<p>选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过<code>key</code>直接计算出<code>value</code>的位置所在，所以在查找时效率更高。而数组一般需要遍历，遍历过程中还需注意以下情况</p>
+<ul>
+<li>for in 循环中改变可变数组会崩溃</li>
+</ul>
+<p>由于改变了for循环的次数，导致了数组越界，如果是增加项则会少遍历，不会导致崩溃</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = @[@1, @2, @3];</span><br><span class="line">NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];</span><br><span class="line"></span><br><span class="line">for (NSNumber *num in muArr) &#123;</span><br><span class="line">     if (num.integerValue == 2) &#123;</span><br><span class="line">         [muArr removeObject:num];</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果for循环中 muArr.count 也在随着数据的更新而更新，就不会导致数组越界</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt; muArr.count - 1; i ++) &#123; </span><br><span class="line">	NSNumber *num = muArr[i];</span><br><span class="line">	if (num.integerValue == 2) &#123;</span><br><span class="line">		[muArr removeObject:num];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>apple的block遍历，内部可以修改可变数组的元素，而不用__blok</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[muArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">  // 内部有自动释放池</span><br><span class="line">	if ([obj integerValue] == 2) &#123;</span><br><span class="line">		[muArr removeObject:obj];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h3><p>动态数组并不是真正意义上的动态的内存，而是一块连续的内存，当添加新的元素时，容量已经等于当前的大小的时候，执行下面3步：</p>
+<ol>
+<li>重新开辟一块大小为当前容量两倍的数组</li>
+<li>把原数据拷贝过去</li>
+<li>释放掉旧的数组</li>
+</ol>
+<ul>
+<li>古老的C数组:<br>优点:查询速度很快，直接通过下表找到对应的值<br>缺点:修改、删除数据很慢，需要移动基于所有的其他的元素</li>
+</ul>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1w4mur2zoj30he0aggo1.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1g1w4mundklj30ft0aiq51.jpg" alt=""></p>
+<ul>
+<li>NSMutableArray<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g1w4pj49rxj30hn08qgmt.jpg" alt=""><br>offset: 有效数据起始位置偏移量<br>size: 实际占用的内存大小<br>used: 数组的实际的有效数据个数<br>*list: 实际内存的起始地址<br><img src="https://ws4.sinaimg.cn/large/006tNc79ly1g1w4pvh8pkj30hs08k75u.jpg" alt=""><br><strong>删除元素</strong><br>[arr removeObjecAtIndex:0];<br>仅仅修改 offset即可，内存完全不需要移动。<br><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g1w4q82mx0j30ha0eptcm.jpg" alt=""><br><strong>插入元素</strong><br>[arr insertObjec:@”test”atIndex:0];<br>如果buff的size还够用，不需要扩展buff，数据会在buff的末端添加进去，此时offset由0变成size-1,used+1.over<br>循环buff的牛逼之处就在于此，无需移动内存，实现插入元素。<br><img src="https://ws2.sinaimg.cn/large/006tNc79ly1g1w4qj2vntj30fn0bgach.jpg" alt=""><br><strong>删除元素</strong><br>[arr removeObjecAtIndex:3];<br>删除头尾元素直接修改offset或者used即可<br>但是如果删除中间元素，就避免不了移动其他元素，不过NSArray会选择更少移动的那一边移动数据。<br>所以我们在实际使用过程中应该尽量避免这么做。<br><img src="https://ws3.sinaimg.cn/large/006tNc79ly1g1w4qwrsyqj30h60a7779.jpg" alt=""></li>
+</ul>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p><code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。<br>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0vcqwnsyfj30e40ca0t3.jpg" alt=""></p>
+<ul>
+<li><p>字典中的key会被复制</p>
+<p>The key for value. The key is copied (using copyWithZone:; keys must conform to the NSCopying protocol). If aKey already exists in the dictionary, anObject takes its place.</p>
+<p>所以只能使用实现了NSCopying协议的对象来作为key</p>
+<p>原因：由于对象存储在特定位置，<code>NSDictionary</code>中要求<code>key</code> 的值不能改变（否则 object 的位置会错误）。为了保证这一点，<code>NSDictionary</code> 会始终复制 <code>key</code> 到自己的私有空间。<code>key</code> 应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。</p>
+</li>
+</ul>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>NSMutableArray是线程不安全的，当有多个线程同时对数组进行操作的时候可能导致崩溃或数据错误。</p>
+<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><p>数组常见的崩溃是越界，apple没有给出具体哪个数组越界导致的崩溃。我们可以利用<code>runtime</code>的方法交换来处理。方法交换时需要注意交换真正的方法：NSArray其实在Runtime中对应着<strong>NSArrayI，NSMutableArray对应着</strong>NSArrayM，NSDictionary对应着<strong>NSDictionaryI，NSMutableDictionary对应着</strong>NSDictionaryM。</p>
+<h3 id="类族"><a href="#类族" class="headerlink" title="类族"></a>类族</h3><p>数组和字典属于类族，最好不要继承</p>
+<p> Cocoa 中的 Class Clusters 虽然平时表现的像普通类一样，但子类却没法继承父类的方法。要继承这样的类需要必须实现其primitive methods方法，实现了这些方法，其它方法便都能通过这些方法组合而成。比如</p>
+<p>需要继承NSMutableArray就需要实现它的以下primitive methods：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObject:(id)anObject;</span><br><span class="line">- (void)insertObject:(id)anObject atIndex:(NSUInteger)index;</span><br><span class="line">- (void)removeLastObject;</span><br><span class="line">- (void)removeObjectAtIndex:(NSUInteger)index;</span><br><span class="line">- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;</span><br></pre></td></tr></table></figure>
+<p>NSArray的primitive methods：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)count;</span><br><span class="line">- (id)objectAtIndex:(NSUInteger)index;</span><br></pre></td></tr></table></figure>
+<h3 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h3><p>字典和数组会强引用他们内部存储的元素，要存储若引用的对象，或者说自己创建一个若引用表，可以考虑</p>
+<p><code>NSPointerArray</code>、<code>NSHashTable</code>、<code>NSMapTable</code>这三个新类。另外还有<code>NSProxy</code>，使用 <a href="https://link.jianshu.com/?t=https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSProxy_Class/index.html" target="_blank" rel="noopener">NSProxy</a> 的消息转发机制让它来调用其他类的方法。 前面三个类都要存取对象，要把对象从容器中取出来才能用；NSProxy利用了消息转发机制就不需要这样做了。</p>
+<h3 id="NSProxy"><a href="#NSProxy" class="headerlink" title="NSProxy"></a>NSProxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface NSProxy &lt;NSObject&gt;&#123;</span><br><span class="line">    Class   isa;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>NSProxy是一个实现了NSObject协议的根类</p>
+<p>文档：</p>
+<p>An abstract superclass defining an API for objects that act as stand-ins for other objects or for objects that don’t exist yet</p>
+<p>Typically, a message to a proxy is forwarded to the real object or causes the proxy to load (or transform itself into) the real object. Subclasses of <code>NSProxy</code> can be used to implement transparent distributed messaging (for example, <a href="apple-reference-documentation://hcjbKo5Y4O" target="_blank" rel="noopener"><code>NSDistantObject</code></a>) or for lazy instantiation of objects that are expensive to create.</p>
+<p><code>NSProxy</code> implements the basic methods required of a root class, including those defined in the <a href="apple-reference-documentation://hcG_DhA_-L" target="_blank" rel="noopener"><code>NSObject</code></a> protocol. However, as an abstract class it doesn’t provide an initialization method, and it raises an exception upon receiving any message it doesn’t respond to. A concrete subclass must therefore provide an initialization or creation method and override the <a href="apple-reference-documentation://hcINGMrSPT" target="_blank" rel="noopener"><code>forwardInvocation:</code></a> and <a href="apple-reference-documentation://hcI0I_Bfhp" target="_blank" rel="noopener"><code>methodSignatureForSelector:</code></a> methods to handle messages that it doesn’t implement itself. A subclass’s implementation of <a href="apple-reference-documentation://hcINGMrSPT" target="_blank" rel="noopener"><code>forwardInvocation:</code></a> should do whatever is needed to process the invocation, such as forwarding the invocation over the network or loading the real object and passing it the invocation. <a href="apple-reference-documentation://hcI0I_Bfhp" target="_blank" rel="noopener"><code>methodSignatureForSelector:</code></a> is required to provide argument type information for a given message; a subclass’s implementation should be able to determine the argument types for the messages it needs to forward and should construct an <a href="apple-reference-documentation://hcLJKSpwpo" target="_blank" rel="noopener"><code>NSMethodSignature</code></a>object accordingly. See the <a href="apple-reference-documentation://hcjbKo5Y4O" target="_blank" rel="noopener"><code>NSDistantObject</code></a>, <a href="apple-reference-documentation://hcjVj4h-wP" target="_blank" rel="noopener"><code>NSInvocation</code></a>, and <a href="apple-reference-documentation://hcLJKSpwpo" target="_blank" rel="noopener"><code>NSMethodSignature</code></a> class specifications for more information.</p>
+<p><code>YYKit</code>中的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> A proxy used to hold a weak object.</span><br><span class="line"> It can be used to avoid retain cycles, such as the target in NSTimer or CADisplayLink.</span><br><span class="line"> </span><br><span class="line"> sample code:</span><br><span class="line"> </span><br><span class="line">     @implementation MyView &#123;</span><br><span class="line">        NSTimer *_timer;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     - (void)initTimer &#123;</span><br><span class="line">        YYWeakProxy *proxy = [YYWeakProxy proxyWithTarget:self];</span><br><span class="line">        _timer = [NSTimer timerWithTimeInterval:0.1 target:proxy selector:@selector(tick:) userInfo:nil repeats:YES];</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     - (void)tick:(NSTimer *)timer &#123;...&#125;</span><br><span class="line">     @end</span><br><span class="line"> */</span><br><span class="line">@interface YYWeakProxy : NSProxy</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The proxy target.</span><br><span class="line"> */</span><br><span class="line">@property (nullable, nonatomic, weak, readonly) id target;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Creates a new weak proxy for target.</span><br><span class="line"> </span><br><span class="line"> @param target Target object.</span><br><span class="line"> </span><br><span class="line"> @return A new proxy object.</span><br><span class="line"> */</span><br><span class="line">- (instancetype)initWithTarget:(id)target;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Creates a new weak proxy for target.</span><br><span class="line"> </span><br><span class="line"> @param target Target object.</span><br><span class="line"> </span><br><span class="line"> @return A new proxy object.</span><br><span class="line"> */</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;YYWeakProxy.h&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation YYWeakProxy</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithTarget:(id)target &#123;</span><br><span class="line">    _target = target;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">    return [[YYWeakProxy alloc] initWithTarget:target];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</span><br><span class="line">    return _target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">    void *null = NULL;</span><br><span class="line">    [invocation setReturnValue:&amp;null];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</span><br><span class="line">    return [NSObject instanceMethodSignatureForSelector:@selector(init)];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)respondsToSelector:(SEL)aSelector &#123;</span><br><span class="line">    return [_target respondsToSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isEqual:(id)object &#123;</span><br><span class="line">    return [_target isEqual:object];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSUInteger)hash &#123;</span><br><span class="line">    return [_target hash];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (Class)superclass &#123;</span><br><span class="line">    return [_target superclass];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (Class)class &#123;</span><br><span class="line">    return [_target class];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isKindOfClass:(Class)aClass &#123;</span><br><span class="line">    return [_target isKindOfClass:aClass];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isMemberOfClass:(Class)aClass &#123;</span><br><span class="line">    return [_target isMemberOfClass:aClass];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)conformsToProtocol:(Protocol *)aProtocol &#123;</span><br><span class="line">    return [_target conformsToProtocol:aProtocol];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isProxy &#123;</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)description &#123;</span><br><span class="line">    return [_target description];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)debugDescription &#123;</span><br><span class="line">    return [_target debugDescription];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/09/ios-字典-数组/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ios-核心动画" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/05/NSInvocation/">NSInvocation</a>
+      <a class="article-title" href="/2019/04/08/ios-核心动画/">ios-核心动画</a>
     </h1>
   
 
         
-        <a href="/2019/03/05/NSInvocation/" class="archive-article-date">
-  	<time datetime="2019-03-05T00:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
+        <a href="/2019/04/08/ios-核心动画/" class="archive-article-date">
+  	<time datetime="2019-04-08T03:26:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>NSInvocation</code>是调用函数的另一种方式，它将调用者，函数名，参数封装到一个对象，然后通过一个<code>invoke</code>函数来执行被调用的函数，其思想就是命令者模式，将请求封装成对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation Test</span><br><span class="line"></span><br><span class="line">- (int)AddA:(int)a andB:(int)b &#123;   </span><br><span class="line"> 	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p>一般调用函数的方式是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Test *t = [Test new];</span><br><span class="line"></span><br><span class="line">int result = [t AddA:2 andB:3];</span><br></pre></td></tr></table></figure>
-<p>也可以用<code>performSelector</code>，但是只能有一个参数</p>
-<p>所以对于有多个参数的情况，就可以用·NSInvocation·来调用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Test *t = [Test new];</span><br><span class="line"> //根据selector得到一个签名对象</span><br><span class="line">NSMethodSignature *sig= [[Test class] instanceMethodSignatureForSelector:@selector(AddA:andB:)]; </span><br><span class="line"> //根据该签名对象创建一个NSInvocation对象</span><br><span class="line">NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:sig];</span><br><span class="line"> //指定调用函数的对象</span><br><span class="line">invocation.target = t;</span><br><span class="line"> //指定要调用的函数名</span><br><span class="line">invocation.selector = @selector(AddA:andB:);</span><br><span class="line"> </span><br><span class="line">int a = 20;</span><br><span class="line">int b = 30;</span><br><span class="line">//指定参数，以指针方式，并且第一个参数的起始index是2，</span><br><span class="line">// 因为index为1，2的分别是self和selector</span><br><span class="line">[invocation setArgument:&amp;a atIndex:2];</span><br><span class="line">[invocation setArgument:&amp;b atIndex:3];</span><br><span class="line">//因为NSInvocation不会自己去retain参数，因此需要用户去retain，当然本例中其实没必要</span><br><span class="line">[invocation retainArguments];</span><br><span class="line">[invocation invoke];</span><br><span class="line"> </span><br><span class="line"> //获取返回值的过程略有点复杂,需要根据起类型长度分配空间，然后转为对象</span><br><span class="line"> //如果是int，BOOL等简单类型，返回的对象是NSNumber</span><br><span class="line"> //如果是其他类型的对象，返回的对象是NSValue</span><br><span class="line"> //判断返回值类型，用strcmp(returnType, @encode(NSInteger))</span><br><span class="line"> </span><br><span class="line">const char *returnType = sig.methodReturnType;</span><br><span class="line">id returnValue;</span><br><span class="line">NSUInteger length = [sig methodReturnLength];</span><br><span class="line">void *buffer = (void *)malloc(length);</span><br><span class="line">[invocation getReturnValue:buffer];</span><br><span class="line">//int的情况</span><br><span class="line">returnValue = [NSNumber numberWithInteger:*((NSInteger*)buffer)];</span><br><span class="line">//returnValue = [NSNumber numberWithBool:*((BOOL*)buffer)]; //bool 的情况</span><br><span class="line">//returnValue = [NSValue valueWithBytes:buffer objCType:returnType];</span><br><span class="line">// 其他类型的情况</span><br><span class="line">int result = [returnValue intValue];</span><br><span class="line">NSLog(@&quot;result=%d&quot;,result);</span><br></pre></td></tr></table></figure>
+        <h3 id="为什么iOS要基于UIView和CALayer提供两个平行的层级关系呢？"><a href="#为什么iOS要基于UIView和CALayer提供两个平行的层级关系呢？" class="headerlink" title="为什么iOS要基于UIView和CALayer提供两个平行的层级关系呢？"></a>为什么iOS要基于<code>UIView</code>和<code>CALayer</code>提供两个平行的层级关系呢？</h3><p>原因在于要做职责分离，这样也能避免很多重复代码。在iOS和Mac OS两个平台上，事件和用户交互有很多地方的不同，基于多点触控的用户界面和基于鼠标键盘有着本质的区别，这就是为什么iOS有UIKit和<code>UIView</code>，但是Mac OS有AppKit和<code>NSView</code>的原因。他们功能上很相似，但是在实现上有着显著的区别。</p>
+<p><code>UIView</code>没有暴露出来的CALayer的功能：</p>
+<ul>
+<li>阴影，圆角，带颜色的边框</li>
+<li>3D变换</li>
+<li>非矩形范围</li>
+<li>透明遮罩</li>
+<li>多级非线性动画</li>
+</ul>
+<h3 id="宿主图"><a href="#宿主图" class="headerlink" title="宿主图"></a>宿主图</h3><h4 id="contents属性"><a href="#contents属性" class="headerlink" title="contents属性"></a>contents属性</h4><p><code>CALayer</code> 有一个属性叫做<code>contents</code>，这个属性的类型被定义为id，意味着它可以是任何类型的对象。但在实践中，如果你给<code>contents</code>赋的不是CGImage，那么你得到的图层将是空白的。</p>
+<p><code>contents</code>这个奇怪的表现是由Mac OS的历史原因造成的。它之所以被定义为id类型，是因为在Mac OS系统上，这个属性对CGImage和NSImage类型的值都起作用。如果你试图在iOS平台上将UIImage的值赋给它，只能得到一个空白的图层。</p>
+<p>事实上，你真正要赋值的类型应该是CGImageRef，它是一个指向CGImage结构的指针。UIImage有一个CGImage属性，它返回一个”CGImageRef”,如果你想把这个值直接赋值给CALayer的<code>contents</code>，那你将会得到一个编译错误。因为CGImageRef并不是一个真正的Cocoa对象，而是一个Core Foundation类型。</p>
+<p>尽管Core Foundation类型跟Cocoa对象在运行时貌似很像，他们并不是类型兼容的，不过你可以通过bridged关键字转换。如果要给图层的寄宿图赋值，你可以按照以下这个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">layer.contents = (__bridge id)image.CGImage;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UIImage *image = [UIImage imageNamed:@&quot;Snowman.png&quot;];</span><br><span class="line">UIView *layerView = [[UIView alloc] initWithFrame:..];</span><br><span class="line">//add it directly to our view&apos;s layer</span><br><span class="line">layerView.layer.contents = (__bridge id)image.CGImage;</span><br></pre></td></tr></table></figure>
+<h3 id="Custom-Drawing"><a href="#Custom-Drawing" class="headerlink" title="Custom Drawing"></a>Custom Drawing</h3><p>给<code>contents</code>赋CGImage的值不是唯一的设置寄宿图的方法。我们也可以直接用Core Graphics直接绘制寄宿图。能够通过继承UIView并实现<code>-drawRect:</code>方法来自定义绘制。</p>
+<p>​    <code>-drawRect:</code> 方法没有默认的实现，因为对UIView来说，寄宿图并不是必须的，它不在意那到底是单调的颜色还是有一个图片的实例。如果UIView检测到<code>-drawRect:</code> 方法被调用了，它就会为视图分配一个寄宿图，这个寄宿图的像素尺寸等于视图大小乘以 <code>contentsScale</code>的值。</p>
+<p>​    如果你不需要寄宿图，那就不要创建这个方法了，这会造成CPU资源和内存的浪费，这也是为什么苹果建议：如果没有自定义绘制的任务就不要在子类中写一个空的-drawRect:方法。</p>
+<p>​    当视图在屏幕上出现的时候 <code>-drawRect:</code>方法就会被自动调用。<code>-drawRect:</code>方法里面的代码利用Core Graphics去绘制一个寄宿图，然后内容就会被缓存起来直到它需要被更新（通常是因为开发者调用了<code>-setNeedsDisplay</code>方法，尽管影响到表现效果的属性值被更改时，一些视图类型会被自动重绘，如<code>bounds</code>属性）。虽然<code>-drawRect:</code>方法是一个UIView方法，事实上都是底层的CALayer安排了重绘工作和保存了因此产生的图片。</p>
+<h3 id="视觉效果"><a href="#视觉效果" class="headerlink" title="视觉效果"></a>视觉效果</h3><h4 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h4><p>CALayer有一个叫做<code>conrnerRadius</code>的属性控制着图层角的曲率。它是一个浮点数，默认为0（为0的时候就是直角），但是你可以把它设置成任意值。默认情况下，这个曲率值只影响背景颜色而不影响背景图片或是子图层。不过，如果把<code>masksToBounds</code>设置成YES的话，图层里面的所有东西都会被截取。</p>
 
       
 
@@ -230,7 +351,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/05/NSInvocation/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/08/ios-核心动画/">展开全文 >></a>
         </p>
       
 
@@ -260,28 +381,50 @@
 
 
   
-    <article id="post-swift-知识点" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-MDM" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/20/swift-知识点/">swift_知识点</a>
+      <a class="article-title" href="/2019/04/04/ios-MDM/">ios-MDM</a>
     </h1>
   
 
         
-        <a href="/2019/02/20/swift-知识点/" class="archive-article-date">
-  	<time datetime="2019-02-20T06:32:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-20</time>
+        <a href="/2019/04/04/ios-MDM/" class="archive-article-date">
+  	<time datetime="2019-04-04T00:53:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="导航栏下划线"><a href="#导航栏下划线" class="headerlink" title="导航栏下划线"></a>导航栏下划线</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">navigationController?.navigationBar.setShadow(hidden: true)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">extension UINavigationBar &#123;</span><br><span class="line"></span><br><span class="line">    func setShadow(hidden: Bool) &#123;</span><br><span class="line">        setValue(hidden, forKey: &quot;hidesShadow&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g1qbfp0bj3j30en055q31.jpg" alt=""></p>
+<p>从上图可以看出要实现MDM服务须涉及到</p>
+<ol>
+<li>苹果推送服务器APNs</li>
+<li>自己的或者第三方提供的MDM服务器</li>
+<li>受管理的设备。</li>
+</ol>
+<p>三者之间通过HTTPS相互通信，所以推送和普通APP推送一样必须要有推送证书。</p>
+<ul>
+<li><p>MDM服务器：发送指令对设备进行管理，获取相关信息及操作，回应响应设备操作。向APNs发送一个命令，目的来唤醒设备去主动连接MDM服务器，报告其当前状态是否处于空闲（若设备空闲，MDM服务器会继续下一步操作比如开始发送指令）。</p>
+</li>
+<li><p>APNs：可看作其他两者之间的信使，主要就是转发MDM服务器指令给设备，意思告诉设备开始去连接服务器</p>
+</li>
+<li><p>设备：首先通过Safari访问服务器安装一个配置描述文件并登记注册使其成为受管理的设备，当收到APNs指令后，根据已安装的配置文件的url 连接MDM服务器并报告其状态，然后接受下一步命令，设备收到XML格式的指令后再向服务器传送其相关查询的信息，如果不需要继续发送指令，服务器关闭连接。</p>
+</li>
+</ul>
+<p>所以完成一次指令推送经历以下过程：</p>
+<ul>
+<li>1、server 与APNs建立连接，发送数据。</li>
+<li>2、当设备收到APNs推送消息时，主动连接server报告本身的状态空闲</li>
+<li>3、server收到设备发来的状态信息，发出操作命令</li>
+<li>4、设备收到命令执行，并返回数据</li>
+<li>5、server响应，此次查询完成，连接关闭。</li>
+</ul>
 
       
 
@@ -296,7 +439,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/MyHome//" class="article-tag-list-link color2">MyHome</a>
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
@@ -305,7 +448,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/20/swift-知识点/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/04/ios-MDM/">展开全文 >></a>
         </p>
       
 
@@ -335,55 +478,34 @@
 
 
   
-    <article id="post-swift-tips" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-离屏渲染" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/19/swift-tips/">swift_tips</a>
+      <a class="article-title" href="/2019/04/03/ios-离屏渲染/">ios-离屏渲染</a>
     </h1>
   
 
         
-        <a href="/2019/02/19/swift-tips/" class="archive-article-date">
-  	<time datetime="2019-02-19T01:27:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-19</time>
+        <a href="/2019/04/03/ios-离屏渲染/" class="archive-article-date">
+  	<time datetime="2019-04-03T14:29:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h4><p>在<code>class</code>中使用 <code>weak</code> 修饰<code>delegate</code>，在这个<code>delegate</code>实际的对象被释放时，会被重置回<code>nil</code>。<br>但是<code>swift</code>中的<code>protoco</code>l除了被<code>class</code>遵守外，还可以被<code>struct</code>和<code>enum</code>遵守，而对于像 <code>struct</code> 或是<code>enum</code> 这样的类型，本身就不通过引用计数来管理内存，所以也不可能用 <code>weak</code> 这样的 <code>ARC</code> 的概念来进行修饰。<br>想要在 <code>Swift</code> 中使用 <code>weak delegate</code>，我们就需要将 <code>protocol</code> 限制在<code>class</code> 内。</p>
-<ul>
-<li><p>将 <code>protocol</code> 声明为 <code>Objective-C</code> 的，这可以通过在 <code>protocol</code> 前面加上 <code>@objc</code> 关键字来达到，<code>Objective-C</code> 的 <code>protocol</code>都只有类能实现，因此使用<code>weak</code> 来修饰就合理了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@objc protocol MyClassDelegate &#123;</span><br><span class="line">    func method()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在<code>protocol</code> 声明的名字后面加上<code>class</code>，这可以为编译器显式地指明这个 <code>protocol</code> 只能由 <code>class</code>来实现。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protocol MyClassDelegate: class &#123;</span><br><span class="line">    func method()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>问题：如果<code>struct</code>遵守了<code>delegate</code>，怎么办，可能我们需要自己去释放</p>
-<hr>
-<h4 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a>溢出</h4><p>Swift 在溢出的时候选择了让程序直接崩溃而不是截掉超出的部分，这也是一种安全性的表现。</p>
-<p>另外，编译器其实已经足够智能，可以帮助我们在编译的时候就发现某些必然的错误。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func method() &#123;</span><br><span class="line">    var max = Int.max</span><br><span class="line">    max = max + 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这种常量运算在编译时就进行了，发现计算溢出后编译无法通过。</p>
-<p>最后，如果我们想要其他编程语言那样的对溢出处理温柔一些，不是让程序崩溃，而是简单地从高位截断的话，可以使用溢出处理的运算符，在 Swift 中，我们可以使用以下这五个带有 &amp; 的操作符，这样 Swift 就会忽略掉溢出的错误：</p>
-<p>溢出加法 (&amp;+)<br>溢出减法 (&amp;-)<br>溢出乘法 (&amp;*)<br>溢出除法 (&amp;/)<br>溢出求模 (&amp;%)<br>这样处理的结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var max = Int.max</span><br><span class="line">max = max &amp;+ 1</span><br><span class="line"></span><br><span class="line">// 64 位系统下</span><br><span class="line">// max = -9,223,372,036,854,775,808</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h4><p>与 Objective-C 不同，Swift 的初始化方法需要保证类型的所有属性都被初始化。所以初始化方法的调用顺序就很有讲究。在某个类的子类中，初始化方法里语句的顺序并不是随意的，我们需要保证在当前子类实例的成员初始化完成后才能调用父类的初始化方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Cat &#123;</span><br><span class="line">    var name: String</span><br><span class="line">    init() &#123;</span><br><span class="line">        name = &quot;cat&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Tiger: Cat &#123;</span><br><span class="line">    let power: Int</span><br><span class="line">    override init() &#123;</span><br><span class="line">        power = 10</span><br><span class="line">        super.init()</span><br><span class="line">        name = &quot;tiger&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>一般来说，子类的初始化顺序是：</p>
-<ol>
-<li>设置子类自己需要初始化的参数，power = 10</li>
-<li>调用父类的相应的初始化方法，super.init()</li>
-<li>对父类中的需要改变的成员进行设定，name = “tiger”<br>其中第三步是根据具体情况决定的，如果我们在子类中不需要对父类的成员做出改变的话，就不存在第 3 步。而在这种情况下，Swift 会自动地对父类的对应 init 方法进行调用，也就是说，第 2 步的 super.init() 也是可以不用写的 (但是实际上还是调用的，只不过是为了简便 Swift 帮我们完成了)。这种情况下的初始化方法看起来就很简单：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Cat &#123;</span><br><span class="line">    var name: String</span><br><span class="line">    init() &#123;</span><br><span class="line">        name = &quot;cat&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Tiger: Cat &#123;</span><br><span class="line">    let power: Int</span><br><span class="line">    override init() &#123;</span><br><span class="line">        power = 10</span><br><span class="line">        // 如果我们不需要打改变 name 的话，</span><br><span class="line">        // 虽然我们没有显式地对 super.init() 进行调用</span><br><span class="line">        // 不过由于这是初始化的最后了，Swift 替我们自动完成了</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<hr>
-<h4 id="编译标记"><a href="#编译标记" class="headerlink" title="编译标记"></a>编译标记</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// MARK: </span><br><span class="line">// TODO: </span><br><span class="line">// FIXME:</span><br></pre></td></tr></table></figure>
-<hr>
-<p>####</p>
+        <p>OpenGL的中，GPU屏幕渲染有两种方式。<br>屏幕渲染（当前屏幕渲染）</p>
+<p>指的是GPU的渲染操作是在当前用于显示的屏幕缓冲区进行。</p>
+<p>离屏渲染（离屏渲染）</p>
+<p>指的是在GPU在当前屏幕缓冲区以外开辟一个缓冲区进行渲染操作。</p>
+<p>显示器显示出来的图像是经过CRT电子枪一行一行的扫描。（可以是横向的也可以是纵向，具体CRT电子枪又是什么，百度文库介绍的很详细。），扫描出来就呈现了一帧画面，随后电子枪又会回到初始位置循环扫描，为了让显示器的显示跟视频控制器同步，当电子枪新扫描一行的时候。准备扫描的时候，会发送一个水平同步信号（HSync信号），显示器一般是固定刷新频率的，这个刷新的频率其实就是行同步信号产生的频率。然后CPU计算好帧等属性，就将计算好的内容提交给GPU去渲染，GPU渲染完成之后就会放入帧缓冲区，然后视频控制器会按照行同步信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器。就显示出来了。<br>原理图就不放了，过一遍概念。</p>
+<p>离屏渲染的代价很高，想要进行离屏渲染，首选要创建一个新的缓冲区，屏幕渲染会有一个上下文环境的一个概念，离屏渲染的整个过程需要切换上下文环境，先从当前显示幕切换到离屏，等结束后，又要将上下文环境切换回来。这也是为什么会消耗性能的原因了。<br>。由于垂直同步的机制，如果在一个HSync时间内，CPU或GPU没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
+<p>那有个问题：为什么离屏渲染这么耗性能，为什么有这套机制呢？</p>
+<p>当使用圆角，阴影，遮罩的时候，图层属性的混合体被指定为在未预合成之前（下一个HSync信号开始前）不能直接在屏幕中绘制，所以就需要屏幕外渲染</p>
 
       
 
@@ -398,7 +520,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
@@ -407,7 +529,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/19/swift-tips/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/03/ios-离屏渲染/">展开全文 >></a>
         </p>
       
 
@@ -437,464 +559,89 @@
 
 
   
-    <article id="post-HTTP" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-layer" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/20/HTTP/">HTTP</a>
+      <a class="article-title" href="/2019/04/03/ios-layer/">ios-layer</a>
     </h1>
   
 
         
-        <a href="/2019/01/20/HTTP/" class="archive-article-date">
-  	<time datetime="2019-01-20T02:35:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
+        <a href="/2019/04/03/ios-layer/" class="archive-article-date">
+  	<time datetime="2019-04-03T13:38:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="TCP-IP协议族分层"><a href="#TCP-IP协议族分层" class="headerlink" title="TCP/IP协议族分层"></a>TCP/IP协议族分层</h3><ol>
-<li>应用层</li>
-</ol>
-<p>HTTP</p>
-<ol start="2">
-<li>传输层</li>
-</ol>
-<p>TCP UDP</p>
-<p>不同的程序通过不同的端口获取数据 </p>
-<p>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。 </p>
-<ol start="3">
-<li>网络层</li>
-<li>链路层</li>
-</ol>
-<hr>
-<h3 id="一条HTTP请求的流程"><a href="#一条HTTP请求的流程" class="headerlink" title="一条HTTP请求的流程"></a>一条HTTP请求的流程</h3><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0youh4c3kj30r60nsgzu.jpg" alt=""></p>
-<ol>
-<li>客户端发送请求</li>
-<li>传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。</li>
-<li>在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。</li>
-</ol>
-<hr>
-<h3 id="请求报文格式"><a href="#请求报文格式" class="headerlink" title="请求报文格式"></a>请求报文格式</h3><ul>
-<li>请求行<br>分为三个部分：请求方法、请求地址 和 协议及版本</li>
-<li>请求头</li>
-<li>空行</li>
-<li>请求体</li>
-</ul>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yopeq49mj313e0m21kx.jpg" alt=""></p>
-<h3 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control</span><br><span class="line">Connection:  Keep-Alive // 默认持久连接  </span><br><span class="line">Date: 报文创建时间</span><br><span class="line">Transfer-Encoding: 编码格式</span><br></pre></td></tr></table></figure>
-<h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Accept // 首部字段可通知服务器，用户代理能够处理的媒体类型及媒体类型的相对优先级</span><br><span class="line">Accept-Language // 用来告知服务器用户代理能够处理的自然语言集</span><br><span class="line">Authorization //  是用来告知服务器，用户代理的认证信息（证书值）。通常，想要通过服务器认证的用户代理会在接收到返回的 401 状态码响应后</span><br><span class="line">Host // 会告知服务器，请求的资源所处的互联网主机名和端口号</span><br><span class="line">If-Modified-Since //  字段指定的日期时间后，资源发生了更新，服务器会接受请求</span><br><span class="line">Range</span><br></pre></td></tr></table></figure>
-<h3 id="响应报文格式"><a href="#响应报文格式" class="headerlink" title="响应报文格式"></a>响应报文格式</h3><ul>
-<li><p>状态行<br>由HTTP协议版本号， 状态码， 状态消息</p>
-</li>
-<li><p>消息报头<br>用来说明客户端要使用的一些附加信息</p>
-</li>
-<li><p>空行</p>
-</li>
-<li><p>响应正文</p>
-</li>
-</ul>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0yoqin8pfj31180ig7cp.jpg" alt=""></p>
-<h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ETag</span><br><span class="line">Server 告知客户端当前服务器上安装的 HTTP 服务器应用程序的信息</span><br><span class="line">Content-Type 说明了实体主体内对象的媒体类型</span><br><span class="line">Last-Modified 指明资源最终修改的时间</span><br><span class="line">Set-Cookie</span><br></pre></td></tr></table></figure>
-<p>### </p>
-<h3 id="URL-格式"><a href="#URL-格式" class="headerlink" title="URL 格式"></a>URL 格式</h3><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yorlnc7ej30k503sglm.jpg" alt=""></p>
-<h3 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h3><p>在传输层（<code>TCP</code>协议）把从应用层处收到的数据（<code>HTTP</code>请求报文）进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。在网络层（<code>IP</code>协议），增加作为通信目的地的<code>MAC</code>地址后转发给链路层。</p>
-<hr>
-<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>提供的是面向连接、可靠的字节流服务。</p>
-<p>三次握手</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yont8qs0g311w0lcju4.gif" alt=""></p>
-<ol>
-<li>服务器进入监听状态，客户进程向服务器发出连接请求报文。</li>
-<li>服务器收到请求报文后，如果同意连接，则发出确认报文。</li>
-<li>客户进程收到确认后，还要向服务器给出确认。此时，TCP连接建立，客户端进入已建立连接状态。当服务器收到客户端的确认后也进入已建立连接状态，此后双方就可以开始通信了。</li>
-</ol>
-<p><strong><em>为什么TCP客户端最后还要发送一次确认呢？</em></strong><br>一句话，主要防止已经失效的连接请求报文突然又传送到了服务器，从而产生错误。</p>
-<p>如果使用的是两次握手建立连接，假设有这样一种场景，客户端发送了第一个请求连接，只是因为在网络结点中滞留的时间太长了，由于TCP的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。此时此前滞留的那一次请求连接到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费。</p>
-<h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0you727yng30iy0aoq5k.gif" alt=""></p>
-<ol>
-<li>客户端进程发出连接释放报文，并且停止发送数据。</li>
-<li>服务器收到连接释放报文，发出确认报文。这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。</li>
-<li>服务器将最后的数据发送完毕后，就向客户端发送连接释放报文。</li>
-<li>客户端收到服务器的连接释放报文后，必须发出确认。注意此时TCP连接还没有释放，必须经过2∗∗MSL（最长报文段寿命）的时间后。服务器只要收到了客户端发出的确认，立即进入CLOSED状态。。可以看到，服务器结束TCP连接的时间要比客户端早一些。</li>
-</ol>
-<p><strong><em>为什么客户端最后还要等待2MSL？</em></strong><br>第一，保证客户端发送的最后一个ACK报文能够到达服务器，因为这个ACK报文可能丢失，站在服务器的角度看来，我已经发送了FIN+ACK报文请求断开了，客户端还没有给我回应，应该是我发送的请求断开报文它没有收到，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。</p>
-<p>第二，防止类似与“三次握手”中提到了的“已经失效的连接请求报文段”出现在本连接中。客户端发送完最后一个确认报文后，在这个2MSL时间中，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样新的连接中不会出现旧连接的请求报文。</p>
-<p>为什么建立连接是三次握手，关闭连接确是四次挥手呢？</p>
-<p>建立连接的时候， 服务器在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。<br>而关闭连接时，服务器收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，而自己也未必全部数据都发送给对方了，所以己方可以立即关闭，也可以发送一些数据给对方后，再发送FIN报文给对方来表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送，从而导致多了一次。</p>
-<p><strong><em>如果已经建立了连接，但是客户端突然出现故障了怎么办？</em></strong><br>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75分钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
-<h4 id="ACK"><a href="#ACK" class="headerlink" title="ACK"></a>ACK</h4><p>默认情况下，接收方每收到两个 TCP 数据包，就要发送一个确认消息。”确认”的英语是 acknowledgement，所以这个确认消息就简称 ACK。</p>
-<p>ACK 携带两个信息。</p>
+        <p>UIView之所以可以显示是因为他内部的layer图层，在创建UIView对象时，UIView内部会自动创建一个图层，即CALayer。可以通过UIView的layer属性访问。UIView并不具有显示功能，需要依赖于layer，所以设置圆角时我们都用view.layer。<code>CALayer</code>并不清楚具体的<em>响应链</em>（iOS通过视图层级关系用来传送触摸事件的机制），于是它并不能够响应事件，即使它提供了一些方法来判断是否一个触点在图层的范围之内</p>
 <ul>
-<li>期待要收到下一个数据包的编号</li>
-<li>接收方的接收窗口的剩余容量<br>发送方有了这两个信息，再加上自己已经发出的数据包的最新编号，就会推测出接收方大概的接收速度，从而降低或增加发送速率。</li>
+<li><em>UIView</em> 继承于 <em>UIResponder</em> 和 <em>NSObject</em></li>
+<li><em>CALayer</em> 继承与 <em>NSObject</em></li>
+<li><em>UIView</em> 响应事件</li>
+<li><em>CALayer</em> 显示内容</li>
 </ul>
-<h5 id="数据包的遗失处理"><a href="#数据包的遗失处理" class="headerlink" title="数据包的遗失处理"></a>数据包的遗失处理</h5><p>TCP 协议可以保证数据通信的完整性，这是怎么做到的？</p>
-<p>前面说过，每一个数据包都带有下一个数据包的编号。如果下一个数据包没有收到，那么 ACK 的编号就不会发生变化。</p>
-<p>举例来说，现在收到了4号包，但是没有收到5号包。ACK 就会记录，期待收到5号包。过了一段时间，5号包收到了，那么下一轮 ACK 会更新编号。如果5号包还是没收到，但是收到了6号包或7号包，那么 ACK 里面的编号不会变化，总是显示5号包。这会导致大量重复内容的 ACK。</p>
-<p>如果发送方发现收到三个连续的重复 ACK，或者超时了还没有收到任何 ACK，就会确认丢包，即5号包遗失了，从而再次发送这个包。通过这种机制，TCP 保证了不会有数据包丢失。</p>
-<hr>
-<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><p>Socket接口是TCP/IP网络的API接口函数</p>
-<ol>
-<li>客户端调用 socket(…) 创建socket；</li>
-<li>客户端调用 connect(…) 向服务器发起连接请求以建立连接；</li>
-<li>客户端与服务器建立连接之后，就可以通过send(…)/receive(…)向客户端发送或从客户端接收数据；</li>
-<li>客户端调用 close 关闭 socket；</li>
-</ol>
-<hr>
-<h3 id="负责传输的IP协议"><a href="#负责传输的IP协议" class="headerlink" title="负责传输的IP协议"></a>负责传输的<code>IP</code>协议</h3><p>IP（Internet Protocol）网际协议位于网络层。<code>IP</code>其实是一种协议的名称。不要和<code>IP地址</code>搞混</p>
-<p><code>IP</code> 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <code>IP 地址</code>和 <code>MAC 地址</code></p>
-<p><code>IP 地址</code>指明了节点被分配到的地址，<code>MAC 地址</code>是指网卡所属的固定地址。<code>IP 地址</code>可变换，但 <code>MAC 地址</code>基本上不会更改。</p>
-<p>规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。 </p>
-<p>联网上的每一台计算机，都会分配到一个IP地址。这个地址分成两个部分，前一部分代表网络，后一部分代表主机。比如，IP地址172.16.254.1，这是一个32位的地址，假定它的网络部分是前24位（172.16.254），那么主机部分就是后8位（最后的那个1）。处于同一个子网络的电脑，它们IP地址的网络部分必定是相同的，也就是说172.16.254.2应该与172.16.254.1处在同一个子网络。 </p>
-<p>所谓”子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。 </p>
-<p>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。 </p>
-<hr>
-<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。</p>
-<h3 id="各协议和HTTP的关系"><a href="#各协议和HTTP的关系" class="headerlink" title="各协议和HTTP的关系"></a>各协议和HTTP的关系</h3><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0yslr03acj30u017tajf.jpg" alt=""></p>
-<h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><ul>
-<li><p>200 OK</p>
-</li>
-<li><p>301 重定向</p>
-</li>
-<li><p>302 临时重定向</p>
-</li>
-<li><p>401 需要认证</p>
-</li>
-<li><p>403 不允许访问</p>
-</li>
-<li><p>404 服务器上没有请求的资源</p>
-</li>
-</ul>
-<hr>
-<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0ysto4to0j30x90a0wfn.jpg" alt="">代理服务器的基本行为就是接收客户端发送的请求后转发给其他服务器。每次通过代理服务器转发请求或响应时，会追加写入 Via 首部信息.使用代理服务器的理由有：利用缓存技术减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
-<hr>
-<h3 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h3><p>同一个端口不会同时出现，传输层通过辨认端口号来确认应用。但是只靠端口号识别通信是不够的。需要采取五个信息来识别一个通信，分别是源 IP 地址，目标 IP 地址，协议号，源端口号，目标端口号。两个包中只要任何一个信息不同就不是同一个通信。</p>
-<hr>
-<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0ysut3z8zj30pr0633yu.jpg" alt=""></p>
-<p>利用网关可以由 HTTP 请求转化为其他协议通信</p>
-<hr>
-<h3 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h3><p>网卡的固定地址，独一无二 </p>
-<hr>
-<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><ul>
-<li>Last-Modified/If-Modified-Since</li>
-</ul>
-<p>Last-Modified标注的最后修改只能精确到秒级, 如果某些文件在1秒钟以内被修改多次的话, 它将不能准确标注文件的修改时间(无法及时更新文件).<br>如果某些文件会被定期生成, 而内容其实并没有发生任何变化, 但Last-Modified却改变了, 这种情况其实应该返回304而不是200加上资源文件.</p>
-<p>ETag便是为解决以上问题而生的. ETag描述了一个资源文件内容的唯一标识符, 如果两个文件具有相同的ETag, 那么表示这两个文件的内容完全一样, 即使它们各自的更新/创建时间不同.</p>
-<p>通过页码分页初始化</p>
-<p>这个问题很容易出现, 比如一个用户有400+好友, 一个网络请求把400+都拉下来肯定不现实, 客户端势必是要做个分页拉取的. 直觉上, 我们可以像普通的分页请求一样, APP直接传页码让后台分页返回数据似乎就能搞定这个问题. 然而实际情况是: 最好不要这样做.<br>考虑以下情况, 总共200+左右的好友数据, 每次分页拉取50个.<br>第一次拉取时本地页码为1, 拉取0~49个好友成功后, 本地页码更新为2.<br>第二次拉取50~99个好友时失败了, 本地页码不更新依然为2.<br>如果此时用户刚好在网页端/Android端又添加了50个新好友, 于是后台页码后移, 本来处在第一页的0~49现在变成了50~99, 而第二页的50~99现在变成了100~149. 所以, 当我们通过本地页码2去拉取数据时拉取到的数据其实是早就获取过的数据, 本次拉取只是在浪费时间, 浪费流量而已, 而新增的那些好友显然这次是拉取不到了.<br>上面只是小问题, 反过来, 如果用户当时不是在添加好友而是在删除好友(假设删除的就是0~49), 那么后台页码前移, 第二页的50~99现在变成了第一页, 而我们的本地页码还是2, 那么原来的第二页数据肯定就拿不到了, 同时第一页本来该删除的数据却被缓存下来了, 这便是数据错乱, 大问题!</p>
-<p>通过URL数组分页初始化</p>
-<p>普通的页码拉取的方式行不通, 那么分页拉取应该如何搞? 回答这个问题, 我们可以看看浏览器是如何初始化一个网页的, 模仿到底嘛.<br>当浏览器首次向服务器请求网页数据时, 服务器的首次返回数据其实是一个HTML文件, 这个HTML文件只包含一些基本的页面展示, 而页面内嵌的Image/JS/CSS等等都是作为一个个HTML标签而不是直接一次性返回的. 浏览器在拿到这个HTML后一边渲染一边解析, 一旦解析到一个Image/JS/CSS它就会通过标签引用的URL向服务器获取相应的Image/JS/CSS, 获取到相应资源以后填充到合适的位置以提供展示/操作.<br>如果我们把一个TableView当成一个HTML页面看的话, 那么列表内部展示的一个个Cell其实就相当于HTML中的一个个Image标签, Cell展示的数据源其实就是这些标签引用的URL对应的图片.<br>不过和HTML请求标签元素的情况不同, Cell的数据源不像图片那样动辄上百KB甚至几MB, 所以我们没必要针对每个标签都分别发起一次请求, 一次性拉取几十上百个数据源完全没有问题.<br>那么按照这个思路, 针对初始化的处理会分成两步:</p>
-<p>拉取待初始化列表元素的的URL数组(也就是各个Model的主键)<br>根据上面的URL数组分页拉取列表元素</p>
-<p>仍然以上面的情况举例, 我们看看这种思路能不能解决上面的问题:<br>初始化一个200人的好友列表, 首先我们会拉取这200个好友的用户Id, 假设是[0…199]. 拉取第一页时我们传入[0…49]个Id从服务器拉取50个好友, 拉取成功后从初始化Id列表删除这50个Id, 初始化Id列表变成[50…199], 此时有50个新好友被添加到服务器, 服务器数据变动, 但是本地的初始化列表没变, 所以我们可以继续拉取到[50…99]部分的数据, 以此类推. 显然, 我们不会有任何冗余的数据请求.<br>反过来, 如果[0…49]部分的好友被删除, 服务器数据变动, 但是本地列表因为没有变动, 后续的[50…199]自然也是能准确拉取到的, 不会发生数据丢失.<br>但是这样的做法依然存在弊端, 因为本地的初始化列表不做变更, 那么服务器在初始化过程中新增的数据我们是不知道的, 自然也就不会去拉取, 初始化的数据就少了. 反过来, 初始化过程已拉取的数据如果被删除了, 客户端依然不知情, 缓存中就会有无效数据. 那么, 如何解决这两个问题呢?<br>一个简单的解决方法是: 在某次分页拉取的返回数据中, 服务器不仅返回对应的数据, 同时也返回一下此时最新的Id数组. 本地根据这个最新的Id数组进行比对, 多出来的部分显然就是新增的, 我们将这部分更新到初始化列表继续拉取. 而少掉的部分显然就是被删除的, 我们从数据库中删除这部分无效数据.<br>这样会多一部分Id数组的开销, 但是相比它解决的问题而言, 这点开销微不足道.</p>
-<hr>
-<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0ysvun8wxj30mq0ke75o.jpg" alt=""></p>
-<ol>
-<li>客户端发起HTTPS请求 </li>
-</ol>
-<p>用户在浏览器里输入一个https网址，然后连接到server的443端口。 </p>
-<ol start="2">
-<li>服务端的配置 </li>
-</ol>
-<p>采用HTTPS协议的服务器必须要有一套数字证书，可以自己制作，也可以向组织申请。区别就是自己颁发的证书需要客户端验证通过，才可以继续访问，而使用受信任的公司申请的证书则不会弹出提示页面。这套证书其实就是一对公钥和私钥。如果对公钥和私钥不太理解，可以想象成一把钥匙和一个锁头，只是全世界只有你一个人有这把钥匙，你可以把锁头给别人，别人可以用这个锁把重要的东西锁起来，然后发给你，因为只有你一个人有这把钥匙，所以只有你才能看到被这把锁锁起来的东西。 </p>
-<ol start="3">
-<li>传送证书 </li>
-</ol>
-<p>这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。 </p>
-<ol start="4">
-<li>客户端解析证书 </li>
-</ol>
-<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。如果证书没有问题，那么就生成一个随即值。然后用证书对该随机值进行加密。就好像上面说的，把随机值用锁头锁起来，这样除非有钥匙，不然看不到被锁住的内容。 </p>
-<ol start="5">
-<li>传送加密信息 </li>
-</ol>
-<p>这部分传送的是用证书加密后的随机值，目的就是让服务端得到这个随机值，以后客户端和服务端的通信就可以通过这个随机值来进行加密解密了。 </p>
-<ol start="6">
-<li>服务端解密信息 </li>
-</ol>
-<p>服务端用私钥解密后，得到了客户端传过来的随机值(私钥)，然后把内容通过该值进行对称加密。所谓对称加密就是，将信息和私钥通过某种算法混合在一起，这样除非知道私钥，不然无法获取内容，而正好客户端和服务端都知道这个私钥，所以只要加密算法够彪悍，私钥够复杂，数据就够安全。 </p>
-<ol start="7">
-<li>传输加密后的信息 </li>
-</ol>
-<p>这部分信息是服务段用私钥加密后的信息，可以在客户端被还原 </p>
-<ol start="8">
-<li>客户端解密信息 </li>
-</ol>
-<p>客户端用之前生成的私钥解密服务端传过来的信息，于是获取了解密后的内容。整个过程第三方即使监听到了数据，也束手无策。对称加密：需要对加密和解密使用相同密钥的加密算法。由于其速度快，对称性加密通常在消息发送方需要加密大量数据时使用。 </p>
-<p>每一个使用 HTTPS 的服务器都必须去专门的证书机构注册一个证书，证书中存储了用权威机构私钥加密的公钥。这样客户端用权威机构的公钥解密就可以了。</p>
-<p>这个公钥不用传输，会直接内置在各大操作系统(或者浏览器)的出厂设置里。</p>
-<p>为了确保原始证书没有被篡改，我们可以在传递证书的同时传递证书的哈希值。那么修改后的数据在解密后，就不可能通过哈希。</p>
-<hr>
-<h3 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h3><p>抓取https包的时候,青花瓷会要求使用者对抓包的设备(手机或其他设备),安装一个证书,安装这个证书的时候,其实是安装了一个根证书(允许颁发CA的一个证书机构的根证书),当你安装了该根证书之后,该证书机构颁发的其他证书,默认都会被你的系统所信任,这个就是青花瓷完成https抓包的一个重要前提!! </p>
-<ol>
-<li><p>客户端对服务器发送请求,由于青花瓷做了代理,请求被青花瓷拦截,处理,青花瓷将客户端带的随机数和加密算法处理,然后返回自己的证书通过客户端校验,获取到客户端提交的请求参数等数据, </p>
-</li>
-<li><p>青花瓷作为客户端去请求刚刚Client想要请求的Server,然后,Server会和青花瓷完成上面讲的那个完整的校验,并且读取青花瓷带来的具体请求,返回正常的数据结果. </p>
-</li>
-<li><p>青花瓷得到服务器数据的返回结果之后,开始继续和过程1中的Client以服务器的身份,去做处理,首先收到客户端的随机数和加密算法,自己生成一个随机数和选择一个客户端的加密算法,然后青花瓷会返回一个伪造的CA证书,然后Client在这个伪造的证书的基础上,和青花瓷通信,然后青花瓷再和Server通信,成了一个中间人的角色,这样,整个过程的数据传输,都被青花瓷给监听到了 </p>
-</li>
-</ol>
-<p>在此,中间人攻击的过程就完成了 </p>
-<h5 id="防止抓包"><a href="#防止抓包" class="headerlink" title="防止抓包"></a>防止抓包</h5><p>1.当进行网络请求的时候,客户端判断当前是否设置了代理,如果设置了代理,不允许进行访问 </p>
-<hr>
-<p>`<code></code>mermaid </p>
-<p>graph TD </p>
-<p>A(<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>) –&gt;|通过URL查找IP| B(Hosts文件缓存/DNS服务器缓存) </p>
-<p>B –&gt; C(DNS服务器) </p>
-<p>C –&gt; D(对IP结果建立TCP连接) </p>
-<p>D –&gt; E(向服务器发送数据) </p>
-<p>E –&gt; F(服务器解析,并返回) </p>
-<p>`<code></code> </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础知识//" class="article-tag-list-link color3">计算机基础知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/20/HTTP/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-程序员的自我修养" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/17/程序员的自我修养/">程序员的自我修养</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/17/程序员的自我修养/" class="archive-article-date">
-  	<time datetime="2019-01-17T05:52:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="隔离"><a href="#隔离" class="headerlink" title="隔离"></a>隔离</h3><p>虚拟地址空间是指虚拟的、人们想象出来的地址空间，其实它并不存在，每个进程都有自己独立的虚拟空间，而且每个进程只能访问自己的地址空间，这样就有效地做到了进程的隔离。</p>
-<h3 id="i-实现过程"><a href="#i-实现过程" class="headerlink" title="++i 实现过程"></a>++i 实现过程</h3><ol>
-<li>读取i到某个寄存器X。</li>
-<li>X++。</li>
-<li>将X的内容存储回i。</li>
-</ol>
-<p>自增（++）操作在多线程环境下会出现错误是因为这个操作被编译为汇编代码之后不止一条指令，因此在执行的时候可能执行了一半就被调度系统打断，去执行别的代码。我们把单指令的操作称为原子的（Atomic），因为无论如何，单条指令的执行是不会被打断的</p>
-<h3 id="同步锁"><a href="#同步锁" class="headerlink" title="同步锁"></a>同步锁</h3><p>在一个线程访问数据未结束的时候，其他线程不得对同一个数据进行访问。如此，对数据的访问被原子化了。</p>
-<p>同步的最常见方法是使用锁<code>Lock</code>。每一个线程在访问数据或资源之前首先试图获取（Acquire）锁，并在访问结束之后释放（Release）锁。在锁已经被占用的时候试图获取锁时，线程会等待，直到锁重新可用。</p>
-<p>二元信号量（Binary Semaphore）是最简单的一种锁，它只有两种状态：占用与非占用。它适合只能被唯一一个线程独占访问的资源。当二元信号量处于非占用状态时，第一个试图获取该二元信号量的线程会获得该锁，并将二元信号量置为占用状态，此后其他的所有试图获取该二元信号量的线程将会等待，直到该锁被释放。</p>
-<p>对于允许多个线程并发访问的资源，多元信号量简称信号量（Semaphore），它是一个很好的选择。一个初始值为N的信号量允许N个线程并发访问。</p>
-<h3 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h3><p>互斥量<code>Mutex</code>和二元信号量很类似，资源仅同时允许一个线程访问，但和信号量不同的是，信号量在整个系统可以被任意线程获取并释放，也就是说，同一个信号量可以被系统中的一个线程获取之后由另一个线程释放。而互斥量则要求哪个线程获取了互斥量，哪个线程就要负责释放这个锁，其他线程越俎代庖去释放互斥量是无效的。</p>
-<h3 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h3><p>临界区是比互斥量更加严格的同步手段。在术语中，把临界区的锁的获取称为进入临界区，而把锁的释放称为离开临界区。临界区和互斥量与信号量的区别在于，互斥量和信号量在系统的任何进程里都是可见的，也就是说，一个进程创建了一个互斥量或信号量，另一个进程试图去获取该锁是合法的。然而，临界区的作用范围仅限于本进程，其他的进程无法获取该锁。</p>
-<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>读写锁有两种获取方式：</p>
-<ol>
-<li>共享的（Shared）</li>
-<li>独占的（Exclusive）</li>
-</ol>
-<p>当锁处于自由的状态时，试图以任何一种方式获取锁都能成功，并将锁置于对应的状态。如果锁处于共享状态，其他线程以共享的方式获取锁仍然会成功，此时这个锁分配给了多个线程。然而，如果其他线程试图以独占的方式获取已经处于共享状态的锁，那么它将必须等待锁被所有的线程释放。</p>
-<h3 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h3><ul>
-<li>预编译</li>
-</ul>
-<p>展开宏定义</p>
-<ul>
-<li>编译</li>
-</ul>
-<p>编译过程就是把预处理完的文件进行一系列词法分析、语法分析、语义分析及优化后生产相应的汇编代码文件</p>
-<ul>
-<li><p>汇编</p>
-</li>
-<li><p>链接</p>
-</li>
-</ul>
-<hr>
-<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><ul>
-<li>栈<br>“栈：栈用于维护函数调用的上下文，离开了栈函数调用就没法实现”<br>“栈在程序运行中具有举足轻重的地位。最重要的，栈保存了一个函数调用所需要的维护信息，这常常被称为堆栈帧（Stack Frame）或活动记录（Activate Record）。堆栈帧一般包括如下几方面内容：</li>
-</ul>
-<p>函数的返回地址和参数。</p>
-<p>临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量。”<br>“保存的上下文：包括在函数调用前后需要保持不变的寄存器。”</p>
-<ul>
-<li>堆<br>“堆：堆是用来容纳应用程序动态分配的内存区域，当程序使用malloc或new分配内存时，得到的内存来自堆里”</li>
-</ul>
-<p>“光有栈对于面向过程的程序设计还远远不够，因为栈上的数据在函数返回的时候就会被释放掉，所以无法将数据传递至函数外部。而全局变量没有办法动态地产生，只能在编译的时候定义，有很多情况下缺乏表现力。在这种情况下，堆（Heap）是唯一的选择。”</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/书籍//" class="article-tag-list-link color3">书籍</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/17/程序员的自我修养/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-构造过程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-构造过程/">swift_构造过程</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/15/swift-构造过程/" class="archive-article-date">
-  	<time datetime="2019-01-15T14:10:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值</p>
-<p>与<code>OC</code>不同，<code>swift</code>的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化</p>
-<h4 id="存储属型属性"><a href="#存储属型属性" class="headerlink" title="存储属型属性"></a>存储属型属性</h4><ol>
-<li><p>初始化为默认值</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"defaultName"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化为可选值</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name : <span class="type">String</span>?</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在构造函数中初始化</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span> <span class="comment">// 也可以是常量 let name: String</span></span><br><span class="line"><span class="comment">// 可以通过传入参数来初始化</span></span><br><span class="line"><span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 也可以不用参数</span></span><br><span class="line"><span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="keyword">self</span>.name = <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="默认构造器"><a href="#默认构造器" class="headerlink" title="默认构造器"></a>默认构造器</h4><p>如果<code>结构体</code>或<code>类</code>的所有属性都有默认值，同时没有自定义的构造器，它将获得一个默认构造器</p>
-<h5 id="结构体的逐一成员构造器"><a href="#结构体的逐一成员构造器" class="headerlink" title="结构体的逐一成员构造器"></a>结构体的逐一成员构造器</h5><p>如果结构体没有提供自定义的构造器，它们将自动获得一个逐一成员构造器<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 即有逐一成员构造器，又有默认构造器（参数都有默认值）</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> width: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> twoByTwo = <span class="type">Size</span>(width: <span class="number">2.0</span>, height: <span class="number">2.0</span>)</span><br></pre></td></tr></table></figure></p>
-<p>我们可以认为添加了默认构造器的代码为<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> width: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">init</span>(width: <span class="type">Double</span>, height: <span class="type">Double</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.width = width</span><br><span class="line">        <span class="keyword">self</span>.height = height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="值类型的构造器代理"><a href="#值类型的构造器代理" class="headerlink" title="值类型的构造器代理"></a>值类型的构造器代理</h4><p>构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为构造器代理，它能避免多个构造器间的代码重复。</p>
-<ul>
-<li><p>值类型<br>（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给自己的其它构造器。</p>
-</li>
-<li><p>类<br>可以继承自其它类，这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。</p>
-</li>
-</ul>
-<p>对于值类型，你可以使用 self.init 在自定义的构造器中引用相同类型中的其它构造器。并且你只能在构造器内部调用 self.init。</p>
-<p>如果你为某个值类型定义了一个自定义的构造器，你将无法访问到默认构造器（如果是结构体，还将无法访问逐一成员构造器）。这种限制可以防止你为值类型增加了一个额外的且十分复杂的构造器之后，仍然有人错误的使用自动生成的构造器</p>
+<p>wwdc：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1psd34gowj30eg03paam.jpg" alt=""></p>
 <blockquote>
-<p>注意<br>假如你希望默认构造器、逐一成员构造器以及你自己的自定义构造器都能用来创建实例，可以将自定义的构造器写到扩展（extension）中，而不是写在值类型的原始定义中。</p>
+<p>Layers provide infrastructure for your views. Specifically, layers make it easier and more efficient to draw and animate the contents of views and maintain high frame rates while doing so. However, there are many things that layers do not do. Layers do not handle events, draw content, participate in the responder chain, or do many other things</p>
 </blockquote>
-<h4 id="类的指定构造器和便利构造器"><a href="#类的指定构造器和便利构造器" class="headerlink" title="类的指定构造器和便利构造器"></a>类的指定构造器和便利构造器</h4><p>一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类合适的构造器来实现父类的初始化。</p>
-<p>每一个类都必须至少拥有一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。</p>
-<p>便利构造器<code>convenience</code>。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。你也可以定义便利构造器来创建一个特殊用途或特定输入值的实例。</p>
 <blockquote>
-<p>便利构造器必须调用指定构造器</p>
+<p>Layers are often used to provide the backing store for views but can also be used without a view to display content. A layer’s main job is to manage the visual content that you provide but the layer itself has visual attributes that can be set, such as a background color, border, and shadow. In addition to managing visual content, the layer also maintains information about the geometry of its content (such as its position, size, and transform) that is used to present that content onscreen. Modifying the properties of the layer is how you initiate animations on the layer’s content or geometry. A layer object encapsulates the duration and pacing of a layer and its animations by adopting the <a href="apple-reference-documentation://hs8_lzhB0N" target="_blank" rel="noopener"><code>CAMediaTiming</code></a> protocol, which defines the layer’s timing information.</p>
+<p>If the layer object was created by a view, the view typically assigns itself as the layer’s delegate automatically, and you should not change that relationship. For layers you create yourself, you can assign a <a href="apple-reference-documentation://hsVE9DGmQl" target="_blank" rel="noopener"><code>delegate</code></a> object and use that object to provide the contents of the layer dynamically and perform other tasks. A layer may also have a layout manager object (assigned to the <a href="apple-reference-documentation://hsqsBalAZn" target="_blank" rel="noopener"><code>layoutManager</code></a> property) to manage the layout of subviews separately.</p>
 </blockquote>
-<h4 id="两段式构造过程"><a href="#两段式构造过程" class="headerlink" title="两段式构造过程"></a>两段式构造过程</h4><ol>
-<li>为类中的每个存储属性赋一个初始值</li>
-<li>给每个类一次机会，在新实例准备使用之前进一步定制他们的存储属性</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Animal &#123;</span><br><span class="line">    var age: Int = 0 //3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Dog: Animal &#123;</span><br><span class="line">    var name = &quot;dog&quot;</span><br><span class="line">    </span><br><span class="line">    override init() &#123;</span><br><span class="line">        super.init() //2</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    convenience init(name: String) &#123;</span><br><span class="line">        self.init() // 1</span><br><span class="line">        self.name = name // 4</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行顺序：</p>
-<ol>
-<li>某个指定构造器或便利构造器被调用。</li>
-<li>完成新实例内存的分配，但此时内存还没有被初始化。</li>
-<li>指定构造器确保其所在类引入的所有存储型属性都已赋初值。存储型属性所属的内存完成初始化。 name = dog</li>
-<li>指定构造器将调用父类的构造器，完成父类属性的初始化。 age = 0</li>
-<li>阶段二，可以访问self self.name = name</li>
-</ol>
-<h4 id="构造器的继承和重写"><a href="#构造器的继承和重写" class="headerlink" title="构造器的继承和重写"></a>构造器的继承和重写</h4><p>Swift 中的子类默认情况下不会继承父类的构造器<br>自定义构造器默认会调用父类的构造器，如果自定义的构造器和父类的构造器相匹配则相当于重写，必须加上<code>override</code>，并调用父类的初始化方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Dog: Animal &#123;</span><br><span class="line">    var name = &quot;dog&quot;</span><br><span class="line">    </span><br><span class="line">    init(name: String) &#123;</span><br><span class="line">        self.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override init() &#123;</span><br><span class="line">        super.init()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 由于提供了自定义构造器，所以没有默认构造器</span><br><span class="line">class Animal &#123;</span><br><span class="line">    var age: Int = 0</span><br><span class="line">    init(age: Int) &#123;&#125; </span><br><span class="line">&#125;</span><br><span class="line">// 所有的子类构造器都要显示的调用父类的构造器来初始化父类</span><br><span class="line">class Dog: Animal &#123;</span><br><span class="line">    var name = &quot;dog&quot;</span><br><span class="line">    </span><br><span class="line">    init(name: String) &#123;</span><br><span class="line">        super.init(age: 2)</span><br><span class="line">        self.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init() &#123;</span><br><span class="line">        super.init(age: 2)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override init(age: Int) &#123;</span><br><span class="line">        super.init(age: 2)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="构造器的自动继承"><a href="#构造器的自动继承" class="headerlink" title="构造器的自动继承"></a>构造器的自动继承</h4><p>如果子类没有定义任何指定构造器，它将自动继承父类所有的指定构造器。</p>
-<p>如果子类提供了所有父类指定构造器的实现——它将自动继承父类所有的便利构造器。</p>
-<img src="/2019/01/15/swift-构造过程/1.png" title="图片说明">
-<img src="/2019/01/15/swift-构造过程/2.png" title="图片说明">
-<h4 id="必要构造器"><a href="#必要构造器" class="headerlink" title="必要构造器"></a>必要构造器</h4><p>在类的构造器前添加 required 修饰符表明所有该类的子类都必须实现该构造器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class SomeClass &#123;</span><br><span class="line">    required init() &#123;</span><br><span class="line">        // 构造器的实现代码</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在子类重写父类的必要构造器时，必须在子类的构造器前也添加 required 修饰符，表明该构造器要求也应用于继承链后面的子类。在重写父类中必要的指定构造器时，不需要添加 override 修饰符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class SomeSubclass: SomeClass &#123;</span><br><span class="line">    required init() &#123;</span><br><span class="line">        // 构造器的实现代码</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>注意<br>如果子类继承的构造器能满足必要构造器的要求，则无须在子类中显式提供必要构造器的实现。</p>
+<p>layer给view提供了基础设施，使得绘制内容和呈现<strong>更高效动画</strong>更容易、更低耗</p>
+<p>layer不参与view的事件处理、不参与响应链</p>
 </blockquote>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g1ptb3khufj314r0coabn.jpg" alt=""></p>
+<p>层是基于绘画模型实现的，层并不会在我们的<code>app</code>中做什么事，实际上是层只是捕获<code>app</code>所提供的内容，并缓存成<code>bitmap</code>，当任何与层关联的属性值发生变化时，<code>Core Animation</code>就会将新的<code>bitmap</code>传给绘图硬件，并根据新的位图更新显示。</p>
+<p><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自<code>UIView</code>。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame</code>、<code>bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</p>
+<blockquote>
+<p>提示：<code>layer-based drawing</code>不同于<code>view-based drawing</code>，后者的性能消耗是很高的，它是在主线程上直接通过<code>CPU</code>完成的，而且通常是在<code>-drawRect:</code>中绘制动画。</p>
+</blockquote>
+<p>layer的更新并不会立马导致屏幕的刷新，而是通过setNeedsDisplay，做一个标记，在系统的刷新周期到来时统一展现。</p>
+<p>UIView将layer的delegate指定为自身，使得大多数时候我们直接修改view的属性(颜色位置透明度等等)，layer的呈现就自动发生变化了。</p>
+<p>当 layer 中的绘制内容超过其 frame 的边界时, 可以通过 <code>masksToBounds</code> 属性来决定是否绘制边界以外的内容. 而 view 的 <code>clipsToBounds</code> 属性实际就是在设置 layer 的 <code>maskToBounds</code> 属性</p>
+<ul>
+<li>animation</li>
+</ul>
+<blockquote>
+<p>Instead, a layer captures the content your app provides and caches it in a bitmap, which is sometimes referred to as the backing store. … When a change triggers an animation, Core Animation passes the layer’s bitmap and state information to the graphics hardware, which does the work of rendering the bitmap using the new information. Manipulating the bitmap in hardware yields much faster animations than could be done in software.</p>
+</blockquote>
+<blockquote>
+<p> layer的内容生成一个位图(bitmap),触发动画的时候，是把这个动画和状态信息传递给图形硬件，图形硬件使用这两个数据就可以构造动画了。处理位图对于图形硬件更快。</p>
+</blockquote>
+<p>使用layer做动画的好处</p>
+<p>view的移动，依靠的是不断的更新view的位置，每次更新完，把数据提供给图形系统，重新绘制。对于有复杂子视图的view，要把整个子视图树都全部重绘。</p>
+<p>使用layer的话</p>
+<ul>
+<li>不用不断的更新view的数据</li>
+<li>不用不断的和图形硬件交互数据</li>
+<li>对于复杂的view，不用重绘整个图层树</li>
+<li>处理这些图形硬件更擅长</li>
+</ul>
+<h5 id="图层树"><a href="#图层树" class="headerlink" title="图层树"></a>图层树</h5><p>由于此动画系统，催生了layer3种不同的图层树：</p>
+<ul>
+<li>模型树(model layer tree)，存储了动画的结束值</li>
+<li>表现树(presentation tree),包含了动画正在进行中的值</li>
+<li>渲染层(render tree),用来表现实际动画的数据</li>
+</ul>
+<p>如果要拿到动画过程中view的数据，可以通过表现树来获取。</p>
+<h4 id="图层的定位"><a href="#图层的定位" class="headerlink" title="图层的定位"></a>图层的定位</h4><p>图层在其对应的 view 坐标系中, 或是在对应的父 layer 的坐标系中的大小是通过 bounds 定义的. 但位置是通过如下两个属性共同定义:</p>
+<ul>
+<li>position: 描述的是在父layer坐标系下的一个点.</li>
+<li>anchorPoint: 描述 position 点在 layer 上的位置, 这个位置是相对于 layer 自身的坐标系而言的, 且值为 0 到 1.</li>
+</ul>
+<p>这样的定位方式实际就是: 先在 layer 上确定锚点, 然后将锚点挂接到 position 指定的位置上, 就定位了该<br> layer 在父 layer 中的位置.</p>
+<p>anchorPoint 的默认值是 (0.5, 0.5), 即 layer 的中央位置. 这时 position 的作用就和 view 的 center 一样.</p>
+<p>而 layer 的 frame 实际是通过当前的 bounds 和 position 以及 anchorPoint 共同计算出来的. 当设置 layer 的 frame 时, 相当于同时修改了 layer 的 bounds 和 position.</p>
+<p>- </p>
 
       
 
@@ -909,7 +656,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
@@ -918,7 +665,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-构造过程/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/03/ios-layer/">展开全文 >></a>
         </p>
       
 
@@ -948,30 +695,30 @@
 
 
   
-    <article id="post-swift-protocol" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-属性" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-protocol/">swift_protocol</a>
+      <a class="article-title" href="/2019/04/03/ios-属性/">ios-属性</a>
     </h1>
   
 
         
-        <a href="/2019/01/15/swift-protocol/" class="archive-article-date">
-  	<time datetime="2019-01-15T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+        <a href="/2019/04/03/ios-属性/" class="archive-article-date">
+  	<time datetime="2019-04-03T13:25:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol SomeProtocol &#123;</span><br><span class="line">    var mustBeSettable: Int &#123;get set&#125;</span><br><span class="line">    var doesNotNeedToBeSettable: Int &#123;get&#125; //只读</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>属性必须声明为 {get set} 或{get}</p>
-<h4 id="使用-extension-来达到-可选"><a href="#使用-extension-来达到-可选" class="headerlink" title="使用 extension 来达到 可选"></a>使用 extension 来达到 可选</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">protocol OptionalProtocol &#123;</span><br><span class="line">    func optionalMethod()        // 可选</span><br><span class="line">    func necessaryMethod()       // 必须</span><br><span class="line">    func anotherOptionalMethod() // 可选</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension OptionalProtocol &#123;</span><br><span class="line">    func optionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in extension&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func anotherOptionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in extension&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyClass: OptionalProtocol &#123;</span><br><span class="line">    func necessaryMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in Class3&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func optionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in Class3&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let obj = MyClass()</span><br><span class="line">obj.necessaryMethod() // Implemented in Class3</span><br><span class="line">obj.optionalMethod()  // Implemented in Class3</span><br><span class="line">obj.anotherOptionalMethod() // Implemented in extension</span><br></pre></td></tr></table></figure>
-<h4 id="question-1"><a href="#question-1" class="headerlink" title="question 1"></a>question 1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">protocol A : class &#123;&#125; // 只能被 class 实现</span><br><span class="line">protocol B &#123;&#125;</span><br><span class="line"></span><br><span class="line">class aa : A</span><br><span class="line">struct bb : A // error</span><br></pre></td></tr></table></figure>
+        <h3 id="set-get-方法"><a href="#set-get-方法" class="headerlink" title="set get 方法"></a>set get 方法</h3><p>对于成员变量age，set方法的格式是setAge，get方法的格式只是直接使用属性名age</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic,copy) NSString *name;</span><br><span class="line"></span><br><span class="line">// 可自己实现 set  或 get 方法，两个都实现就必须实现下面这行，否则报错</span><br><span class="line">// 因为你重写了set 或 get 方法后，系统就不会实现synthesize</span><br><span class="line">@synthesize name = _name;</span><br><span class="line"></span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    if (!_name) &#123;</span><br><span class="line">        _name = @&quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    return _name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    if (_name != name) &#123;</span><br><span class="line">        [_name release];</span><br><span class="line">        _name = [name copy]; // 这是面试时优化的点 [name retain]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="原子"><a href="#原子" class="headerlink" title="原子"></a>原子</h3><p>atomic：原子属性，为setter方法加自旋锁（即为单写多读）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)setObj2:(NSObject *)obj2&#123; </span><br><span class="line">    //加锁</span><br><span class="line">    @synchronized(self) &#123;</span><br><span class="line">        _obj2 = obj2;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -986,7 +733,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
@@ -995,7 +742,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-protocol/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/03/ios-属性/">展开全文 >></a>
         </p>
       
 
@@ -1025,30 +772,27 @@
 
 
   
-    <article id="post-swift-func参数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-react-native-error" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-func参数/">swift_func参数</a>
+      <a class="article-title" href="/2019/04/01/react-native-error/">react-native-error</a>
     </h1>
   
 
         
-        <a href="/2019/01/15/swift-func参数/" class="archive-article-date">
-  	<time datetime="2019-01-15T07:28:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+        <a href="/2019/04/01/react-native-error/" class="archive-article-date">
+  	<time datetime="2019-04-01T08:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(name1: &quot;a&quot;, age1: 1)</span><br><span class="line">func test(name1 name2: String, age1 age2: Int) &#123;</span><br><span class="line">    print(name2)</span><br><span class="line">    print(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2(&quot;b&quot;)</span><br><span class="line">func test2(_ name2: String, age1 age2: Int = 0) &#123;</span><br><span class="line">    print(name2)</span><br><span class="line">    print(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func test(_ name1: String, _ name2: String) &#123;&#125;</span><br><span class="line">test(&quot;&quot;, &quot;&quot;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func test(_ age1: Int, age2 : Int) &#123;&#125;</span><br><span class="line">test(1, age2: 2)</span><br></pre></td></tr></table></figure>
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mac listen EADDRINUSE: address already <span class="keyword">in</span> use :::<span class="number">8081</span></span><br><span class="line">端口被占用</span><br><span class="line"></span><br><span class="line">第一步：sudo lsof -i:<span class="number">8081</span></span><br><span class="line"></span><br><span class="line">➜  Bill sudo lsof -i:<span class="number">8081</span></span><br><span class="line">COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</span><br><span class="line">node    <span class="number">13654</span> libo   <span class="number">23</span>u  IPv6 <span class="number">0xc9988e691127882f</span>      <span class="number">0</span>t0  TCP *:sunproxyadmin (LISTEN)</span><br><span class="line">node    <span class="number">13654</span> libo   <span class="number">36</span>u  IPv6 <span class="number">0xc9988e6911f0efef</span>      <span class="number">0</span>t0  TCP localhost:sunproxyadmin-&gt;localhost:<span class="number">58843</span> (ESTABLISHED)</span><br><span class="line">Bill    <span class="number">23847</span> libo   <span class="number">10</span>u  IPv6 <span class="number">0xc9988e6911f0fb6f</span>      <span class="number">0</span>t0  TCP localhost:<span class="number">58843</span>-&gt;localhost:sunproxyadmin (ESTABLISHED)</span><br><span class="line">Bill    <span class="number">23847</span> libo   <span class="number">11</span>u  IPv6 <span class="number">0xc9988e6911f0fb6f</span>      <span class="number">0</span>t0  TCP localhost:<span class="number">58843</span>-&gt;localhost:sunproxyadmin (ESTABLISHED)</span><br><span class="line"></span><br><span class="line">第二步：sudo kill <span class="number">13654</span></span><br></pre></td></tr></table></figure>
 
       
 
@@ -1058,21 +802,10 @@
       
       
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-func参数/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/04/01/react-native-error/">展开全文 >></a>
         </p>
       
 
@@ -1102,35 +835,57 @@
 
 
   
-    <article id="post-swift-enum" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-react-native-基础" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-enum/">swift_enum</a>
+      <a class="article-title" href="/2019/03/21/react-native-基础/">react_native_基础</a>
     </h1>
   
 
         
-        <a href="/2019/01/15/swift-enum/" class="archive-article-date">
-  	<time datetime="2019-01-15T07:25:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+        <a href="/2019/03/21/react-native-基础/" class="archive-article-date">
+  	<time datetime="2019-03-21T09:05:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">enum CompassPoint &#123;</span><br><span class="line">    case north</span><br><span class="line">    case south</span><br><span class="line">    case east</span><br><span class="line">    case west</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = CompassPoint.west</span><br><span class="line">var a = .west</span><br><span class="line">switch west &#123;</span><br><span class="line">    case .west:</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">enum Barcode &#123;</span><br><span class="line">    case upc(Int, Int, Int, Int)</span><br><span class="line">    case qrCode(String)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var productBarcode = Barcode.upc(1, 2, 3, 4)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">enum Planet: Int &#123;</span><br><span class="line">    case mercury = 1</span><br><span class="line">    case venus = 2</span><br><span class="line">    case earth = 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let earthOrder = Planet.earth.rawValue // 3</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">enum CompassPoint: String &#123;</span><br><span class="line">    case north, south, east, west</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let sunsetDirection = CompassPoint.west.rawValue // &quot;west&quot;</span><br></pre></td></tr></table></figure>
-<h4 id="where"><a href="#where" class="headerlink" title="where"></a>where</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let yetAnotherPoint = (1, -1)</span><br><span class="line">switch yetAnotherPoint&#123;</span><br><span class="line">    case let (x,y) where x == y:&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    case let (x,y) where x == -y:&#123;</span><br><span class="line">        // 当where为true时执行</span><br><span class="line">    &#125;</span><br><span class="line">    case let (x,y:)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匹配范围<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">let age = 36</span><br><span class="line">switch age &#123;</span><br><span class="line">case 0 ..&lt; 18:</span><br><span class="line">   print(&quot;You have the energy and time, but not the money&quot;)</span><br><span class="line">case 18 ..&lt; 70:</span><br><span class="line">   print(&quot;You have the energy and money, but not the time&quot;)</span><br><span class="line">default:</span><br><span class="line">   print(&quot;You have the time and money, but not the energy&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if case 0 ..&lt; 18 = age &#123;</span><br><span class="line">   print(&quot;You have the energy and time, but not the money&quot;)</span><br><span class="line">&#125; else if case 18 ..&lt; 70 = age &#123;</span><br><span class="line">   print(&quot;You have the energy and money, but not the time&quot;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">   print(&quot;You have the time and money, but not the energy&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (0 ..&lt; 18).contains(age) &#123;</span><br><span class="line">   print(&quot;You have the energy and time, but not the money&quot;)</span><br><span class="line">&#125; else if (18 ..&lt; 70).contains(age) &#123;</span><br><span class="line">   print(&quot;You have the energy and money, but not the time&quot;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">   print(&quot;You have the time and money, but not the energy&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="is"><a href="#is" class="headerlink" title="is"></a>is</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let view: AnyObject = UIButton()</span><br><span class="line">switch view &#123;</span><br><span class="line">case is UIButton:</span><br><span class="line">   print(&quot;Found a button&quot;)</span><br><span class="line">case is UILabel:</span><br><span class="line">   print(&quot;Found a label&quot;)</span><br><span class="line">case is UISwitch:</span><br><span class="line">   print(&quot;Found a switch&quot;)</span><br><span class="line">case is UIView:</span><br><span class="line">   print(&quot;Found a view&quot;)</span><br><span class="line">default:</span><br><span class="line">   print(&quot;Found something else&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for label in view.subviews where label is UILabel &#123;</span><br><span class="line">   print(&quot;Found a label with frame \(label.frame)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">for case let label as UILabel in view.subviews &#123;</span><br><span class="line">   print(&quot;Found a label with text \(label.text)&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">enum Media &#123;</span><br><span class="line">    case Book(title: String)</span><br><span class="line">    case Movie(title: String)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let m = Media.Book // 不报错，但会影响之后的枚举判断</span><br><span class="line">let m = Media.Book(title: &quot;a&quot;)</span><br><span class="line"></span><br><span class="line">var mediaTitle: String &#123;</span><br><span class="line">    switch m &#123;</span><br><span class="line">    case .Book(title: let aTitle):</span><br><span class="line">        return aTitle</span><br><span class="line">    case let .Movie(aTitle): // .Movie(title: let aTitle):</span><br><span class="line">        return aTitle</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import a from A 导入 A中的默认导出组件，并命名为a</span><br><span class="line">import &#123;a&#125; from A 导入A中的非默认组件</span><br></pre></td></tr></table></figure>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>render() 方法依赖于 this.props 和 this.state ，框架会确保渲染出来的 UI 界面总是与输入（ this.props 和 this.state ）保持一致。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 state</span></span><br><span class="line">state = &#123;</span><br><span class="line">    name: <span class="string">''</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新 state</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使 this 不失效</span></span><br><span class="line">&lt;button onClick=&#123;<span class="keyword">this</span>.handleAdd&#125;&gt;<span class="string">"xx"</span>&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;button onClick=&#123;this.handleClick.bind(this)&#125;&gt;"xx"&lt;/</span>button&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//此时this指向是当前实例对象</span></span><br><span class="line">handleAdd = <span class="function"><span class="params">()</span>=&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        count:<span class="number">5</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">handleClick()&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        count:<span class="number">6</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>—save 安装模块的时候，同时把它写到package.json 文件中, dependencies。</p>
+<p> –save-dev 安装依模块的时候，把它写到package.json中，devDependencies中</p>
+<p>“express”: “4.15.2” 版本号前面什么符号都没有，它表示固定版本</p>
+<p>“express”: “~4.15.2”，版本号前面有符号~，它表示安装4.15.x 的版本</p>
+<p>“express”: “^4.15.2” , 版本号前面有符号^, 它表示可以安装4.x.x 的版本，只要中间的x  大于15就可以</p>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// css</span></span><br><span class="line">margin <span class="comment">// 自己距离外边框的距离</span></span><br><span class="line">border <span class="comment">// 边框</span></span><br><span class="line">padding <span class="comment">// 内边框 自己的子元素距离自己边框的距离</span></span><br><span class="line"></span><br><span class="line">width: <span class="string">'95%'</span>, <span class="comment">// 除了vc的第一view会默认为是屏幕尺寸，其他subview都要指定宽度</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// flex</span></span><br><span class="line">flexDirection: row | row-reverse | column | column-reverse</span><br><span class="line">flexWrap: wrap <span class="comment">// 换行</span></span><br><span class="line">justifyContent: <span class="comment">// 水平轴上的对其方式</span></span><br><span class="line">alignItems: <span class="comment">// 交叉轴上如何对齐</span></span><br><span class="line">alignContent <span class="comment">// 多轴对齐方式</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g1igyjyi3fj30hp0l70sn.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alignItems: 交叉轴上如何对齐</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1ih0q0tt8j30h50lu3yg.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alignContent // 多轴对齐方式</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g1ih352f8tj30h80lu0so.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// flex 项目属性</span><br><span class="line">flexGrow: 0 // 项目的放大比例，如果所有项目的flex-grow属性都为1，则它们将等分剩余空间</span><br><span class="line">flexShrink: 1 // 项目缩小比例，</span><br><span class="line">alignSelf: // 允许单个项目有与其他项目不一样的对齐方式</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g1ihimznq1j30kn0aua9w.jpg" alt=""></p>
+<h3 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="react-navigation"><a href="#react-navigation" class="headerlink" title="react navigation"></a>react navigation</h3><p>安装</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn add react-navigation</span><br><span class="line">yarn add react-native-gesture-handler</span><br><span class="line">react-native link react-native-gesture-handler</span><br></pre></td></tr></table></figure>
+<p>导航器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createStackNavigator</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; View, Text &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStackNavigator, createAppContainer &#125; <span class="keyword">from</span> <span class="string">'react-navigation'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> navigationOptions = &#123;</span><br><span class="line">    title: <span class="string">'Home'</span>,</span><br><span class="line">    headerStyle: &#123; <span class="comment">// 一个应用于 header 的最外层 View 的 样式对象</span></span><br><span class="line">      backgroundColor: <span class="string">'#f4511e'</span>, </span><br><span class="line">    &#125;,</span><br><span class="line">    headerTintColor: <span class="string">'#fff'</span>, <span class="comment">// 返回按钮和标题的颜色</span></span><br><span class="line">    headerTitleStyle: &#123;</span><br><span class="line">      fontWeight: <span class="string">'bold'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View style=&#123;&#123; <span class="attr">flex</span>: <span class="number">1</span>, <span class="attr">alignItems</span>: <span class="string">'center'</span>, <span class="attr">justifyContent</span>: <span class="string">'center'</span> &#125;&#125;&gt;</span><br><span class="line">        &lt;Text&gt;Home Screen&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>View&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailsScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View style=&#123;&#123; <span class="attr">flex</span>: <span class="number">1</span>, <span class="attr">alignItems</span>: <span class="string">'center'</span>, <span class="attr">justifyContent</span>: <span class="string">'center'</span> &#125;&#125;&gt;</span><br><span class="line">        &lt;Text&gt;Details Screen&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>View&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RootStack = createStackNavigator(</span><br><span class="line">  &#123;</span><br><span class="line">    Home: HomeScreen,</span><br><span class="line">    Details: DetailsScreen,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    initialRouteName: <span class="string">'Home'</span>, <span class="comment">// 堆栈的初始路由是Home路由</span></span><br><span class="line">    defaultNavigationOptions: &#123; <span class="comment">// 共享导航栏，具体页面可直接覆盖</span></span><br><span class="line">			headerStyle: &#123;</span><br><span class="line">				backgroundColor: <span class="string">'#f4511e'</span>,</span><br><span class="line">			&#125;,</span><br><span class="line">			headerTintColor: <span class="string">'#fff'</span>,</span><br><span class="line">			headerTitleStyle: &#123;</span><br><span class="line">				fontWeight: <span class="string">'bold'</span>,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppContainer = createAppContainer(RootStack);</span><br><span class="line"><span class="comment">// 导出根组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;AppContainer /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">  title=<span class="string">"Go to Details... again"</span></span><br><span class="line">  onPress=&#123;() =&gt; <span class="keyword">this</span>.props.navigation.push(<span class="string">'Details'</span>)&#125; <span class="comment">// 直接 push 到新页面</span></span><br><span class="line">/&gt;</span><br><span class="line">&lt;Button</span><br><span class="line">  title=<span class="string">"Go to Home"</span></span><br><span class="line">  onPress=&#123;() =&gt; <span class="keyword">this</span>.props.navigation.navigate(<span class="string">'Home'</span>)&#125; <span class="comment">// 路由中有此页面才会生效，如果当前就在此页面，将不起作用</span></span><br><span class="line">/&gt;</span><br><span class="line">&lt;Button</span><br><span class="line">  title=<span class="string">"Go back"</span></span><br><span class="line">  onPress=&#123;() =&gt; <span class="keyword">this</span>.props.navigation.goBack()&#125; <span class="comment">// 手动触发返回</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 返回根页面</span><br><span class="line">navigate(&apos;Home&apos;)</span><br><span class="line">navigation.popToTop()</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传递参数给路由</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.props.navigation.navigate(<span class="string">'RouteName'</span>, &#123;<span class="attr">itemId</span>: <span class="number">86</span>,</span><br><span class="line">              otherParam: <span class="string">'anything you want here'</span>,&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取</span></span><br><span class="line"><span class="keyword">this</span>.props.navigation.state.params </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; navigation &#125; = <span class="keyword">this</span>.props;</span><br><span class="line"><span class="keyword">const</span> itemId = navigation.getParam(<span class="string">'itemId'</span>, <span class="string">'NO-ID'</span>);</span><br></pre></td></tr></table></figure>
+<p>使用自定义组件替换标题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LogoTitle</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Image</span><br><span class="line">        source=&#123;<span class="built_in">require</span>(<span class="string">'./spiro.png'</span>)&#125;</span><br><span class="line">        style=&#123;&#123; <span class="attr">width</span>: <span class="number">30</span>, <span class="attr">height</span>: <span class="number">30</span> &#125;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> navigationOptions = &#123;</span><br><span class="line">    <span class="comment">// headerTitle instead of title</span></span><br><span class="line">    headerTitle: &lt;LogoTitle /&gt;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  /* render function, etc */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>标题栏按钮</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> navigationOptions = <span class="function">(<span class="params">&#123; navigation &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      headerTitle: &lt;LogoTitle /&gt;,</span><br><span class="line">      headerRight: (</span><br><span class="line">        &lt;Button</span><br><span class="line">          onPress=&#123;navigation.getParam('increaseCount')&#125;</span><br><span class="line">          title="+1"</span><br><span class="line">          color="#fff"</span><br><span class="line">        /&gt;</span><br><span class="line">      ),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    this.props.navigation.setParams(&#123; increaseCount: this._increaseCount &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  state = &#123;</span><br><span class="line">    count: 0,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  _increaseCount = () =&gt; &#123;</span><br><span class="line">    this.setState(&#123; count: this.state.count + 1 &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  /* later in the render function we display the count */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AsyncStorage.setItem(&quot;userToken&quot;, &quot;token&quot;);</span><br><span class="line">    </span><br><span class="line">const userToken = await AsyncStorage.getItem(&apos;userToken&apos;);</span><br></pre></td></tr></table></figure>
 
       
 
@@ -1140,21 +895,10 @@
       
       
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-enum/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/03/21/react-native-基础/">展开全文 >></a>
         </p>
       
 
@@ -1184,85 +928,91 @@
 
 
   
-    <article id="post-swift-base" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-react-native-redux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-base/">swift_base</a>
+      <a class="article-title" href="/2019/03/21/react-native-redux/">react_native_redux</a>
     </h1>
   
 
         
-        <a href="/2019/01/15/swift-base/" class="archive-article-date">
-  	<time datetime="2019-01-15T07:14:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+        <a href="/2019/03/21/react-native-redux/" class="archive-article-date">
+  	<time datetime="2019-03-21T09:03:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="整形"><a href="#整形" class="headerlink" title="整形"></a>整形</h4><p>有符号整形 singed  无符号整形 unsigned</p>
-<p>16位系统中的int   </p>
-<p>有符号 [-2^15, 2^15-1] = (-32768 ~ 32767)<br>无符号 [0, 2^16] = (0 ~ 65535)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let minValue = UInt8.min   // 0</span><br><span class="line">let maxValue = UInt8.max // 255</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>On a 32-bit platform, Int is the same size as Int32  4字节 每字节8位 2的32次方 </li>
-<li>On a 64-bit platform, Int is the same size as Int64</li>
-</ul>
-<p>Floating-Point Numbers</p>
-<ul>
-<li>Double represents a 64-bit floating-poing number</li>
-<li>Float represents a 32-bit floating-point number</li>
-</ul>
-<p>Double 精确度 15位<br>Float 最少只有6位</p>
-<ul>
-<li>类型别名 typealias  ( type  alias )</li>
-</ul>
-<p>使阅读代码更简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typealias AudioSample = UInt16</span><br><span class="line">var maxAmplitudeFound = AudioSample.min</span><br><span class="line">// maxAmplitudeFound 现在是 0</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>Constants and Variables</strong></li>
-</ul>
-<p><code>let</code> 声明常量 </p>
-<p><code>var</code> 声明变量</p>
-<ul>
-<li><strong>Type Annotations</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><strong>Printing Constans and Variables</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br><span class="line">name = &quot;a&quot; //swift 自我检查，没有赋值无法打印</span><br><span class="line">print(name)</span><br><span class="line">print(&quot;Your name is \(name)&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Booleans</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let orangesAreOrange = true</span><br><span class="line">let turnipsAreDelicious = false</span><br><span class="line"></span><br><span class="line">if (1)&#123;&#125;   // 错误， ‘Int’is not convertible to &apos;BooleanType&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>类型转换</p>
-</li>
-</ul>
-<p>结合数字类常量或变量需要显示的将两个参数转换为同一数字类型。转换相当于生成一个新的数字类型，并没有改变原来常量的类型（常量不可以被改变）。字面量 3 和 字面量 0.1 可以直接相加，因为数字字面量本身没有明确的类型，它们的类型只在编译器需要求值的时候被推断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let five = 2 + 3.0</span><br><span class="line">var ten = five + 5.0</span><br><span class="line">let two = 2</span><br><span class="line">var seven = Int(five) + two</span><br><span class="line">print(&quot;\(five)   \(ten)  \(seven)&quot;)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>Tuples</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let http404Error = (404, &quot;Not Found&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>You can decompose a tuple’s contents into separate constant or variables, which you then  as usual:<br>let   ( statusCode,  statusMessage )  = http404Error</p>
-<p>If you only need some of the tuple’s values, ignore parts of the tuple with an underscore ( _ ) when you decompose the tuple:<br>let   (  statusCode, _  ) = http404Error<br>print( “The status code is ( statusCode )” )      //404</p>
-<p>Access the individual element values in a tuple using index numbers starting at zero:<br>print (“ The status code is ( http404Error.0 ) ”)     //404<br>let http200Status = ( statusCode:200, description:”ok” )<br>print (“ The status code is ( http200Status.statusCode ) ”)</p>
-<ul>
-<li><strong>Optionals</strong></li>
-</ul>
-<p>If you define an variable without providing a default value, the variable is automatically set to nil for you<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">var surveyAnser: String?</span><br><span class="line"></span><br><span class="line">// 隐式解析</span><br><span class="line">var name : String? = &quot;lee&quot;</span><br><span class="line">var age : Int? = 5</span><br><span class="line"></span><br><span class="line">if let people0 = age &#123;</span><br><span class="line">    println(people0) // 5</span><br><span class="line">&#125;</span><br><span class="line">if let people1 = name &#123;</span><br><span class="line">    println(people1) // lee</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func closure(name: String)&#123;</span><br><span class="line">    println(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var completion : (() -&gt; ())?</span><br><span class="line">completion = &#123;</span><br><span class="line">    println(&quot;completion&quot;)</span><br><span class="line">&#125;</span><br><span class="line">if let success = completion &#123;</span><br><span class="line">    success()   // completion</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var failure : ((name: String) -&gt; ())?</span><br><span class="line">failure = &#123; title in</span><br><span class="line">    println(&quot;\(title) failure&quot;)</span><br><span class="line">&#125;</span><br><span class="line">if let success = failure &#123;</span><br><span class="line">    success(name: &quot;lee&quot;) // lee failure</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>nil 不能用于非可选类型的变量或常量<br>oc：nil是一个指向一个不存在的对象的指针<br>swift：nil不是指针，它是一个确定的值，任何类型的可选状态都可以被设为nil，不只是对象类型</p>
-<ul>
-<li><strong>Assertions</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let age = -3</span><br><span class="line">assert(age &gt;= 0, &quot;A person&apos;s age cannot be less than zero&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>… 和 ..&lt;</li>
-</ul>
-<p><code>0...3</code> 就表示从 0 开始到 3 为止并包含 3 这个数字的范围，全闭合的范围操作；</p>
-<p><code>0..&lt;3</code> 不包含最后的 3<br>对于这样得到的数字的范围，我们可以对它进行 for…in 的访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i in 0...3 &#123;</span><br><span class="line">    print(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>//输出 0123</p>
+        <h3 id="sotre"><a href="#sotre" class="headerlink" title="sotre"></a>sotre</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/21/react-native-redux/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-react-特定平台" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/14/react-特定平台/">react-特定平台</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/14/react-特定平台/" class="archive-article-date">
+  	<time datetime="2019-03-14T03:18:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Platform-模块"><a href="#Platform-模块" class="headerlink" title="Platform 模块"></a>Platform 模块</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Platform, StyleSheet &#125; <span class="keyword">from</span> <span class="string">"react-native"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> styles = StyleSheet.create(&#123;</span><br><span class="line">    height: Platform.OS === <span class="string">"ios"</span> ? <span class="number">200</span> : <span class="number">100</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Platform.select()</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">        flex: <span class="number">1</span>,</span><br><span class="line">        ...Platform.select(&#123;</span><br><span class="line">            ios: &#123;</span><br><span class="line">                backgroundColor: <span class="string">"red"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            android: &#123;</span><br><span class="line">                backgroundColor: <span class="string">"blue"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Component = Platform.select(&#123;</span><br><span class="line">    ios: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">require</span>(<span class="string">"ComponentIOS"</span>),</span><br><span class="line">    android: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">require</span>(<span class="string">"ComponentAndroid"</span>)</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 
       
 
@@ -1277,7 +1027,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        			<a href="/categories/react//" class="article-tag-list-link color1">react</a>
         		</li>
       		
 		</ul>
@@ -1286,7 +1036,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-base/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/03/14/react-特定平台/">展开全文 >></a>
         </p>
       
 
@@ -1318,7 +1068,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 

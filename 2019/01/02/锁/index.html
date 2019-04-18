@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>锁 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或是进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。">
+  <meta name="description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="锁">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/02/锁/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或是进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。">
+<meta property="og:description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。 1">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg">
-<meta property="og:updated_time" content="2019-03-08T06:59:21.445Z">
+<meta property="og:updated_time" content="2019-04-04T00:43:48.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="锁">
-<meta name="twitter:description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或是进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。">
+<meta name="twitter:description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。 1">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -207,7 +207,7 @@
         <h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><ul>
 <li>临界区</li>
 </ul>
-<p>指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或是进程必须等待</p>
+<p>指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待</p>
 <ul>
 <li>自旋锁</li>
 </ul>
@@ -238,10 +238,14 @@
 <p>实际项目中：AFNetworking中 isNetworkActivityOccurring属性的getter方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isNetworkActivityOccurring &#123;</span><br><span class="line">    @synchronized(self) &#123;</span><br><span class="line">        return self.activityCount &gt; 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>锁是如何与你传入 <code>@synchronized</code> 的对象关联上的？<code>@synchronized</code>会保持（retain，增加引用计数）被锁住的对象么？假如你传入 <code>@synchronized</code> 的对象在 <code>@synchronized</code> 的 block 里面被释放或者被赋值为 <code>nil</code> 将会怎么样？</p>
 <ol>
-<li>你调用 <code>sychronized</code> 的每个对象，Objective-C runtime 都会为其分配一个递归锁并存储在哈希表中。</li>
-<li>如果在 <code>sychronized</code> 内部对象被释放或被设为 <code>nil</code> 看起来都 OK。不过这没在文档中说明</li>
-<li>注意不要向你的 <code>sychronized</code> block 传入 <code>nil</code>！这将会从代码中移走线程安全。你可以通过在 <code>objc_sync_nil</code> 上加断点来查看是否发生了这样的事情。</li>
+<li><p>你调用 <code>sychronized</code> 的每个对象，Objective-C runtime 都会为其分配一个递归锁并存储在哈希表中。</p>
+</li>
+<li><p>如果在 <code>sychronized</code> 内部对象被释放或被设为 <code>nil</code> 看起来都 OK。不过这没在文档中说明</p>
+</li>
+<li><p>注意不要向你的 <code>sychronized</code> block 传入 <code>nil</code>！这将会从代码中移走线程安全。你可以通过在 <code>objc_sync_nil</code> 上加断点来查看是否发生了这样的事情。</p>
+</li>
 </ol>
+<p>@synchronized()需要一个参数。该参数可以使任何的Objective-C对象，包括self。这个对象就是互斥信号量。他能够让一个线程对一段代码进行保护</p>
 <h5 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h5><ul>
 <li>OSSpinLock 自旋锁</li>
 </ul>
