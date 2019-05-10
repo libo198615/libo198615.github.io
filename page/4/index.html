@@ -69,6 +69,8 @@
 	        
 				<li><a href="/categories/ git">Git</a></li>
 	        
+				<li><a href="/categories/ react-native">react-native</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,21 +153,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -179,6 +185,594 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-HTTP" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/20/HTTP/">HTTP</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/20/HTTP/" class="archive-article-date">
+  	<time datetime="2019-01-20T02:35:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="TCP-IP协议族分层"><a href="#TCP-IP协议族分层" class="headerlink" title="TCP/IP协议族分层"></a>TCP/IP协议族分层</h3><ol>
+<li>应用层</li>
+</ol>
+<p>HTTP</p>
+<ol start="2">
+<li>传输层</li>
+</ol>
+<p>TCP UDP</p>
+<p>不同的程序通过不同的端口获取数据 </p>
+<p>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。 </p>
+<ol start="3">
+<li>网络层</li>
+<li>链路层</li>
+</ol>
+<hr>
+<h3 id="一条HTTP请求的流程"><a href="#一条HTTP请求的流程" class="headerlink" title="一条HTTP请求的流程"></a>一条HTTP请求的流程</h3><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0youh4c3kj30r60nsgzu.jpg" alt=""></p>
+<ol>
+<li>客户端发送请求</li>
+<li>传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。</li>
+<li>在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。</li>
+</ol>
+<hr>
+<h3 id="请求报文格式"><a href="#请求报文格式" class="headerlink" title="请求报文格式"></a>请求报文格式</h3><ul>
+<li>请求行<br>分为三个部分：请求方法、请求地址 和 协议及版本</li>
+<li>请求头</li>
+<li>空行</li>
+<li>请求体</li>
+</ul>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yopeq49mj313e0m21kx.jpg" alt=""></p>
+<h3 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control</span><br><span class="line">Connection:  Keep-Alive // 默认持久连接  </span><br><span class="line">Date: 报文创建时间</span><br><span class="line">Transfer-Encoding: 编码格式</span><br></pre></td></tr></table></figure>
+<h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Accept // 首部字段可通知服务器，用户代理能够处理的媒体类型及媒体类型的相对优先级</span><br><span class="line">Accept-Language // 用来告知服务器用户代理能够处理的自然语言集</span><br><span class="line">Authorization //  是用来告知服务器，用户代理的认证信息（证书值）。通常，想要通过服务器认证的用户代理会在接收到返回的 401 状态码响应后</span><br><span class="line">Host // 会告知服务器，请求的资源所处的互联网主机名和端口号</span><br><span class="line">If-Modified-Since //  字段指定的日期时间后，资源发生了更新，服务器会接受请求</span><br><span class="line">Range</span><br></pre></td></tr></table></figure>
+<h3 id="响应报文格式"><a href="#响应报文格式" class="headerlink" title="响应报文格式"></a>响应报文格式</h3><ul>
+<li><p>状态行<br>由HTTP协议版本号， 状态码， 状态消息</p>
+</li>
+<li><p>消息报头<br>用来说明客户端要使用的一些附加信息</p>
+</li>
+<li><p>空行</p>
+</li>
+<li><p>响应正文</p>
+</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0yoqin8pfj31180ig7cp.jpg" alt=""></p>
+<h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ETag</span><br><span class="line">Server 告知客户端当前服务器上安装的 HTTP 服务器应用程序的信息</span><br><span class="line">Content-Type 说明了实体主体内对象的媒体类型</span><br><span class="line">Last-Modified 指明资源最终修改的时间</span><br><span class="line">Set-Cookie</span><br></pre></td></tr></table></figure>
+<p>### </p>
+<h3 id="URL-格式"><a href="#URL-格式" class="headerlink" title="URL 格式"></a>URL 格式</h3><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yorlnc7ej30k503sglm.jpg" alt=""></p>
+<h3 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h3><p>在传输层（<code>TCP</code>协议）把从应用层处收到的数据（<code>HTTP</code>请求报文）进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。在网络层（<code>IP</code>协议），增加作为通信目的地的<code>MAC</code>地址后转发给链路层。</p>
+<hr>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>提供的是面向连接、可靠的字节流服务。</p>
+<p>三次握手</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yont8qs0g311w0lcju4.gif" alt=""></p>
+<ol>
+<li>服务器进入监听状态，客户进程向服务器发出连接请求报文。</li>
+<li>服务器收到请求报文后，如果同意连接，则发出确认报文。</li>
+<li>客户进程收到确认后，还要向服务器给出确认。此时，TCP连接建立，客户端进入已建立连接状态。当服务器收到客户端的确认后也进入已建立连接状态，此后双方就可以开始通信了。</li>
+</ol>
+<p><strong><em>为什么TCP客户端最后还要发送一次确认呢？</em></strong><br>一句话，主要防止已经失效的连接请求报文突然又传送到了服务器，从而产生错误。</p>
+<p>如果使用的是两次握手建立连接，假设有这样一种场景，客户端发送了第一个请求连接，只是因为在网络结点中滞留的时间太长了，由于TCP的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。此时此前滞留的那一次请求连接到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费。</p>
+<h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0you727yng30iy0aoq5k.gif" alt=""></p>
+<ol>
+<li>客户端进程发出连接释放报文，并且停止发送数据。</li>
+<li>服务器收到连接释放报文，发出确认报文。这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。</li>
+<li>服务器将最后的数据发送完毕后，就向客户端发送连接释放报文。</li>
+<li>客户端收到服务器的连接释放报文后，必须发出确认。注意此时TCP连接还没有释放，必须经过2∗∗MSL（最长报文段寿命）的时间后。服务器只要收到了客户端发出的确认，立即进入CLOSED状态。。可以看到，服务器结束TCP连接的时间要比客户端早一些。</li>
+</ol>
+<p><strong><em>为什么客户端最后还要等待2MSL？</em></strong><br>第一，保证客户端发送的最后一个ACK报文能够到达服务器，因为这个ACK报文可能丢失，站在服务器的角度看来，我已经发送了FIN+ACK报文请求断开了，客户端还没有给我回应，应该是我发送的请求断开报文它没有收到，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。</p>
+<p>第二，防止类似与“三次握手”中提到了的“已经失效的连接请求报文段”出现在本连接中。客户端发送完最后一个确认报文后，在这个2MSL时间中，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样新的连接中不会出现旧连接的请求报文。</p>
+<p>为什么建立连接是三次握手，关闭连接确是四次挥手呢？</p>
+<p>建立连接的时候， 服务器在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。<br>而关闭连接时，服务器收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，而自己也未必全部数据都发送给对方了，所以己方可以立即关闭，也可以发送一些数据给对方后，再发送FIN报文给对方来表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送，从而导致多了一次。</p>
+<p><strong><em>如果已经建立了连接，但是客户端突然出现故障了怎么办？</em></strong><br>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75分钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
+<h4 id="ACK"><a href="#ACK" class="headerlink" title="ACK"></a>ACK</h4><p>默认情况下，接收方每收到两个 TCP 数据包，就要发送一个确认消息。”确认”的英语是 acknowledgement，所以这个确认消息就简称 ACK。</p>
+<p>ACK 携带两个信息。</p>
+<ul>
+<li>期待要收到下一个数据包的编号</li>
+<li>接收方的接收窗口的剩余容量<br>发送方有了这两个信息，再加上自己已经发出的数据包的最新编号，就会推测出接收方大概的接收速度，从而降低或增加发送速率。</li>
+</ul>
+<h5 id="数据包的遗失处理"><a href="#数据包的遗失处理" class="headerlink" title="数据包的遗失处理"></a>数据包的遗失处理</h5><p>TCP 协议可以保证数据通信的完整性，这是怎么做到的？</p>
+<p>前面说过，每一个数据包都带有下一个数据包的编号。如果下一个数据包没有收到，那么 ACK 的编号就不会发生变化。</p>
+<p>举例来说，现在收到了4号包，但是没有收到5号包。ACK 就会记录，期待收到5号包。过了一段时间，5号包收到了，那么下一轮 ACK 会更新编号。如果5号包还是没收到，但是收到了6号包或7号包，那么 ACK 里面的编号不会变化，总是显示5号包。这会导致大量重复内容的 ACK。</p>
+<p>如果发送方发现收到三个连续的重复 ACK，或者超时了还没有收到任何 ACK，就会确认丢包，即5号包遗失了，从而再次发送这个包。通过这种机制，TCP 保证了不会有数据包丢失。</p>
+<hr>
+<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><p>Socket接口是TCP/IP网络的API接口函数</p>
+<ol>
+<li>客户端调用 socket(…) 创建socket；</li>
+<li>客户端调用 connect(…) 向服务器发起连接请求以建立连接；</li>
+<li>客户端与服务器建立连接之后，就可以通过send(…)/receive(…)向客户端发送或从客户端接收数据；</li>
+<li>客户端调用 close 关闭 socket；</li>
+</ol>
+<hr>
+<h3 id="负责传输的IP协议"><a href="#负责传输的IP协议" class="headerlink" title="负责传输的IP协议"></a>负责传输的<code>IP</code>协议</h3><p>IP（Internet Protocol）网际协议位于网络层。<code>IP</code>其实是一种协议的名称。不要和<code>IP地址</code>搞混</p>
+<p><code>IP</code> 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <code>IP 地址</code>和 <code>MAC 地址</code></p>
+<p><code>IP 地址</code>指明了节点被分配到的地址，<code>MAC 地址</code>是指网卡所属的固定地址。<code>IP 地址</code>可变换，但 <code>MAC 地址</code>基本上不会更改。</p>
+<p>规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。 </p>
+<p>联网上的每一台计算机，都会分配到一个IP地址。这个地址分成两个部分，前一部分代表网络，后一部分代表主机。比如，IP地址172.16.254.1，这是一个32位的地址，假定它的网络部分是前24位（172.16.254），那么主机部分就是后8位（最后的那个1）。处于同一个子网络的电脑，它们IP地址的网络部分必定是相同的，也就是说172.16.254.2应该与172.16.254.1处在同一个子网络。 </p>
+<p>所谓”子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。 </p>
+<p>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。 </p>
+<hr>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。</p>
+<h3 id="各协议和HTTP的关系"><a href="#各协议和HTTP的关系" class="headerlink" title="各协议和HTTP的关系"></a>各协议和HTTP的关系</h3><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0yslr03acj30u017tajf.jpg" alt=""></p>
+<h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><ul>
+<li><p>200 OK</p>
+</li>
+<li><p>301 重定向</p>
+</li>
+<li><p>302 临时重定向</p>
+</li>
+<li><p>401 需要认证</p>
+</li>
+<li><p>403 不允许访问</p>
+</li>
+<li><p>404 服务器上没有请求的资源</p>
+</li>
+</ul>
+<hr>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0ysto4to0j30x90a0wfn.jpg" alt="">代理服务器的基本行为就是接收客户端发送的请求后转发给其他服务器。每次通过代理服务器转发请求或响应时，会追加写入 Via 首部信息.使用代理服务器的理由有：利用缓存技术减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
+<hr>
+<h3 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h3><p>同一个端口不会同时出现，传输层通过辨认端口号来确认应用。但是只靠端口号识别通信是不够的。需要采取五个信息来识别一个通信，分别是源 IP 地址，目标 IP 地址，协议号，源端口号，目标端口号。两个包中只要任何一个信息不同就不是同一个通信。</p>
+<hr>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0ysut3z8zj30pr0633yu.jpg" alt=""></p>
+<p>利用网关可以由 HTTP 请求转化为其他协议通信</p>
+<hr>
+<h3 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h3><p>网卡的固定地址，独一无二 </p>
+<hr>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><ul>
+<li>Last-Modified/If-Modified-Since</li>
+</ul>
+<p>Last-Modified标注的最后修改只能精确到秒级, 如果某些文件在1秒钟以内被修改多次的话, 它将不能准确标注文件的修改时间(无法及时更新文件).<br>如果某些文件会被定期生成, 而内容其实并没有发生任何变化, 但Last-Modified却改变了, 这种情况其实应该返回304而不是200加上资源文件.</p>
+<p>ETag便是为解决以上问题而生的. ETag描述了一个资源文件内容的唯一标识符, 如果两个文件具有相同的ETag, 那么表示这两个文件的内容完全一样, 即使它们各自的更新/创建时间不同.</p>
+<p>通过页码分页初始化</p>
+<p>这个问题很容易出现, 比如一个用户有400+好友, 一个网络请求把400+都拉下来肯定不现实, 客户端势必是要做个分页拉取的. 直觉上, 我们可以像普通的分页请求一样, APP直接传页码让后台分页返回数据似乎就能搞定这个问题. 然而实际情况是: 最好不要这样做.<br>考虑以下情况, 总共200+左右的好友数据, 每次分页拉取50个.<br>第一次拉取时本地页码为1, 拉取0~49个好友成功后, 本地页码更新为2.<br>第二次拉取50~99个好友时失败了, 本地页码不更新依然为2.<br>如果此时用户刚好在网页端/Android端又添加了50个新好友, 于是后台页码后移, 本来处在第一页的0~49现在变成了50~99, 而第二页的50~99现在变成了100~149. 所以, 当我们通过本地页码2去拉取数据时拉取到的数据其实是早就获取过的数据, 本次拉取只是在浪费时间, 浪费流量而已, 而新增的那些好友显然这次是拉取不到了.<br>上面只是小问题, 反过来, 如果用户当时不是在添加好友而是在删除好友(假设删除的就是0~49), 那么后台页码前移, 第二页的50~99现在变成了第一页, 而我们的本地页码还是2, 那么原来的第二页数据肯定就拿不到了, 同时第一页本来该删除的数据却被缓存下来了, 这便是数据错乱, 大问题!</p>
+<p>通过URL数组分页初始化</p>
+<p>普通的页码拉取的方式行不通, 那么分页拉取应该如何搞? 回答这个问题, 我们可以看看浏览器是如何初始化一个网页的, 模仿到底嘛.<br>当浏览器首次向服务器请求网页数据时, 服务器的首次返回数据其实是一个HTML文件, 这个HTML文件只包含一些基本的页面展示, 而页面内嵌的Image/JS/CSS等等都是作为一个个HTML标签而不是直接一次性返回的. 浏览器在拿到这个HTML后一边渲染一边解析, 一旦解析到一个Image/JS/CSS它就会通过标签引用的URL向服务器获取相应的Image/JS/CSS, 获取到相应资源以后填充到合适的位置以提供展示/操作.<br>如果我们把一个TableView当成一个HTML页面看的话, 那么列表内部展示的一个个Cell其实就相当于HTML中的一个个Image标签, Cell展示的数据源其实就是这些标签引用的URL对应的图片.<br>不过和HTML请求标签元素的情况不同, Cell的数据源不像图片那样动辄上百KB甚至几MB, 所以我们没必要针对每个标签都分别发起一次请求, 一次性拉取几十上百个数据源完全没有问题.<br>那么按照这个思路, 针对初始化的处理会分成两步:</p>
+<p>拉取待初始化列表元素的的URL数组(也就是各个Model的主键)<br>根据上面的URL数组分页拉取列表元素</p>
+<p>仍然以上面的情况举例, 我们看看这种思路能不能解决上面的问题:<br>初始化一个200人的好友列表, 首先我们会拉取这200个好友的用户Id, 假设是[0…199]. 拉取第一页时我们传入[0…49]个Id从服务器拉取50个好友, 拉取成功后从初始化Id列表删除这50个Id, 初始化Id列表变成[50…199], 此时有50个新好友被添加到服务器, 服务器数据变动, 但是本地的初始化列表没变, 所以我们可以继续拉取到[50…99]部分的数据, 以此类推. 显然, 我们不会有任何冗余的数据请求.<br>反过来, 如果[0…49]部分的好友被删除, 服务器数据变动, 但是本地列表因为没有变动, 后续的[50…199]自然也是能准确拉取到的, 不会发生数据丢失.<br>但是这样的做法依然存在弊端, 因为本地的初始化列表不做变更, 那么服务器在初始化过程中新增的数据我们是不知道的, 自然也就不会去拉取, 初始化的数据就少了. 反过来, 初始化过程已拉取的数据如果被删除了, 客户端依然不知情, 缓存中就会有无效数据. 那么, 如何解决这两个问题呢?<br>一个简单的解决方法是: 在某次分页拉取的返回数据中, 服务器不仅返回对应的数据, 同时也返回一下此时最新的Id数组. 本地根据这个最新的Id数组进行比对, 多出来的部分显然就是新增的, 我们将这部分更新到初始化列表继续拉取. 而少掉的部分显然就是被删除的, 我们从数据库中删除这部分无效数据.<br>这样会多一部分Id数组的开销, 但是相比它解决的问题而言, 这点开销微不足道.</p>
+<hr>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0ysvun8wxj30mq0ke75o.jpg" alt=""></p>
+<ol>
+<li>客户端发起HTTPS请求 </li>
+</ol>
+<p>用户在浏览器里输入一个https网址，然后连接到server的443端口。 </p>
+<ol start="2">
+<li>服务端的配置 </li>
+</ol>
+<p>采用HTTPS协议的服务器必须要有一套数字证书，可以自己制作，也可以向组织申请。区别就是自己颁发的证书需要客户端验证通过，才可以继续访问，而使用受信任的公司申请的证书则不会弹出提示页面。这套证书其实就是一对公钥和私钥。如果对公钥和私钥不太理解，可以想象成一把钥匙和一个锁头，只是全世界只有你一个人有这把钥匙，你可以把锁头给别人，别人可以用这个锁把重要的东西锁起来，然后发给你，因为只有你一个人有这把钥匙，所以只有你才能看到被这把锁锁起来的东西。 </p>
+<ol start="3">
+<li>传送证书 </li>
+</ol>
+<p>这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。 </p>
+<ol start="4">
+<li>客户端解析证书 </li>
+</ol>
+<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。如果证书没有问题，那么就生成一个随即值。然后用证书对该随机值进行加密。就好像上面说的，把随机值用锁头锁起来，这样除非有钥匙，不然看不到被锁住的内容。 </p>
+<ol start="5">
+<li>传送加密信息 </li>
+</ol>
+<p>这部分传送的是用证书加密后的随机值，目的就是让服务端得到这个随机值，以后客户端和服务端的通信就可以通过这个随机值来进行加密解密了。 </p>
+<ol start="6">
+<li>服务端解密信息 </li>
+</ol>
+<p>服务端用私钥解密后，得到了客户端传过来的随机值(私钥)，然后把内容通过该值进行对称加密。所谓对称加密就是，将信息和私钥通过某种算法混合在一起，这样除非知道私钥，不然无法获取内容，而正好客户端和服务端都知道这个私钥，所以只要加密算法够彪悍，私钥够复杂，数据就够安全。 </p>
+<ol start="7">
+<li>传输加密后的信息 </li>
+</ol>
+<p>这部分信息是服务段用私钥加密后的信息，可以在客户端被还原 </p>
+<ol start="8">
+<li>客户端解密信息 </li>
+</ol>
+<p>客户端用之前生成的私钥解密服务端传过来的信息，于是获取了解密后的内容。整个过程第三方即使监听到了数据，也束手无策。对称加密：需要对加密和解密使用相同密钥的加密算法。由于其速度快，对称性加密通常在消息发送方需要加密大量数据时使用。 </p>
+<p>每一个使用 HTTPS 的服务器都必须去专门的证书机构注册一个证书，证书中存储了用权威机构私钥加密的公钥。这样客户端用权威机构的公钥解密就可以了。</p>
+<p>这个公钥不用传输，会直接内置在各大操作系统(或者浏览器)的出厂设置里。</p>
+<p>为了确保原始证书没有被篡改，我们可以在传递证书的同时传递证书的哈希值。那么修改后的数据在解密后，就不可能通过哈希。</p>
+<hr>
+<h3 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h3><p>抓取https包的时候,青花瓷会要求使用者对抓包的设备(手机或其他设备),安装一个证书,安装这个证书的时候,其实是安装了一个根证书(允许颁发CA的一个证书机构的根证书),当你安装了该根证书之后,该证书机构颁发的其他证书,默认都会被你的系统所信任,这个就是青花瓷完成https抓包的一个重要前提!! </p>
+<ol>
+<li><p>客户端对服务器发送请求,由于青花瓷做了代理,请求被青花瓷拦截,处理,青花瓷将客户端带的随机数和加密算法处理,然后返回自己的证书通过客户端校验,获取到客户端提交的请求参数等数据, </p>
+</li>
+<li><p>青花瓷作为客户端去请求刚刚Client想要请求的Server,然后,Server会和青花瓷完成上面讲的那个完整的校验,并且读取青花瓷带来的具体请求,返回正常的数据结果. </p>
+</li>
+<li><p>青花瓷得到服务器数据的返回结果之后,开始继续和过程1中的Client以服务器的身份,去做处理,首先收到客户端的随机数和加密算法,自己生成一个随机数和选择一个客户端的加密算法,然后青花瓷会返回一个伪造的CA证书,然后Client在这个伪造的证书的基础上,和青花瓷通信,然后青花瓷再和Server通信,成了一个中间人的角色,这样,整个过程的数据传输,都被青花瓷给监听到了 </p>
+</li>
+</ol>
+<p>在此,中间人攻击的过程就完成了 </p>
+<h5 id="防止抓包"><a href="#防止抓包" class="headerlink" title="防止抓包"></a>防止抓包</h5><p>1.当进行网络请求的时候,客户端判断当前是否设置了代理,如果设置了代理,不允许进行访问 </p>
+<hr>
+<p>`<code></code>mermaid </p>
+<p>graph TD </p>
+<p>A(<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>) –&gt;|通过URL查找IP| B(Hosts文件缓存/DNS服务器缓存) </p>
+<p>B –&gt; C(DNS服务器) </p>
+<p>C –&gt; D(对IP结果建立TCP连接) </p>
+<p>D –&gt; E(向服务器发送数据) </p>
+<p>E –&gt; F(服务器解析,并返回) </p>
+<p>`<code></code> </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/计算机基础知识//" class="article-tag-list-link color3">计算机基础知识</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/20/HTTP/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-程序员的自我修养" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/17/程序员的自我修养/">程序员的自我修养</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/17/程序员的自我修养/" class="archive-article-date">
+  	<time datetime="2019-01-17T05:52:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="隔离"><a href="#隔离" class="headerlink" title="隔离"></a>隔离</h3><p>虚拟地址空间是指虚拟的、人们想象出来的地址空间，其实它并不存在，每个进程都有自己独立的虚拟空间，而且每个进程只能访问自己的地址空间，这样就有效地做到了进程的隔离。</p>
+<h3 id="i-实现过程"><a href="#i-实现过程" class="headerlink" title="++i 实现过程"></a>++i 实现过程</h3><ol>
+<li>读取i到某个寄存器X。</li>
+<li>X++。</li>
+<li>将X的内容存储回i。</li>
+</ol>
+<p>自增（++）操作在多线程环境下会出现错误是因为这个操作被编译为汇编代码之后不止一条指令，因此在执行的时候可能执行了一半就被调度系统打断，去执行别的代码。我们把单指令的操作称为原子的（Atomic），因为无论如何，单条指令的执行是不会被打断的</p>
+<h3 id="同步锁"><a href="#同步锁" class="headerlink" title="同步锁"></a>同步锁</h3><p>在一个线程访问数据未结束的时候，其他线程不得对同一个数据进行访问。如此，对数据的访问被原子化了。</p>
+<p>同步的最常见方法是使用锁<code>Lock</code>。每一个线程在访问数据或资源之前首先试图获取（Acquire）锁，并在访问结束之后释放（Release）锁。在锁已经被占用的时候试图获取锁时，线程会等待，直到锁重新可用。</p>
+<p>二元信号量（Binary Semaphore）是最简单的一种锁，它只有两种状态：占用与非占用。它适合只能被唯一一个线程独占访问的资源。当二元信号量处于非占用状态时，第一个试图获取该二元信号量的线程会获得该锁，并将二元信号量置为占用状态，此后其他的所有试图获取该二元信号量的线程将会等待，直到该锁被释放。</p>
+<p>对于允许多个线程并发访问的资源，多元信号量简称信号量（Semaphore），它是一个很好的选择。一个初始值为N的信号量允许N个线程并发访问。</p>
+<h3 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h3><p>互斥量<code>Mutex</code>和二元信号量很类似，资源仅同时允许一个线程访问，但和信号量不同的是，信号量在整个系统可以被任意线程获取并释放，也就是说，同一个信号量可以被系统中的一个线程获取之后由另一个线程释放。而互斥量则要求哪个线程获取了互斥量，哪个线程就要负责释放这个锁，其他线程越俎代庖去释放互斥量是无效的。</p>
+<h3 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h3><p>临界区是比互斥量更加严格的同步手段。在术语中，把临界区的锁的获取称为进入临界区，而把锁的释放称为离开临界区。临界区和互斥量与信号量的区别在于，互斥量和信号量在系统的任何进程里都是可见的，也就是说，一个进程创建了一个互斥量或信号量，另一个进程试图去获取该锁是合法的。然而，临界区的作用范围仅限于本进程，其他的进程无法获取该锁。</p>
+<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>读写锁有两种获取方式：</p>
+<ol>
+<li>共享的（Shared）</li>
+<li>独占的（Exclusive）</li>
+</ol>
+<p>当锁处于自由的状态时，试图以任何一种方式获取锁都能成功，并将锁置于对应的状态。如果锁处于共享状态，其他线程以共享的方式获取锁仍然会成功，此时这个锁分配给了多个线程。然而，如果其他线程试图以独占的方式获取已经处于共享状态的锁，那么它将必须等待锁被所有的线程释放。</p>
+<h3 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h3><ul>
+<li>预编译</li>
+</ul>
+<p>展开宏定义</p>
+<ul>
+<li>编译</li>
+</ul>
+<p>编译过程就是把预处理完的文件进行一系列词法分析、语法分析、语义分析及优化后生产相应的汇编代码文件</p>
+<ul>
+<li><p>汇编</p>
+</li>
+<li><p>链接</p>
+</li>
+</ul>
+<hr>
+<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><ul>
+<li>栈<br>“栈：栈用于维护函数调用的上下文，离开了栈函数调用就没法实现”<br>“栈在程序运行中具有举足轻重的地位。最重要的，栈保存了一个函数调用所需要的维护信息，这常常被称为堆栈帧（Stack Frame）或活动记录（Activate Record）。堆栈帧一般包括如下几方面内容：</li>
+</ul>
+<p>函数的返回地址和参数。</p>
+<p>临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量。”<br>“保存的上下文：包括在函数调用前后需要保持不变的寄存器。”</p>
+<ul>
+<li>堆<br>“堆：堆是用来容纳应用程序动态分配的内存区域，当程序使用malloc或new分配内存时，得到的内存来自堆里”</li>
+</ul>
+<p>“光有栈对于面向过程的程序设计还远远不够，因为栈上的数据在函数返回的时候就会被释放掉，所以无法将数据传递至函数外部。而全局变量没有办法动态地产生，只能在编译的时候定义，有很多情况下缺乏表现力。在这种情况下，堆（Heap）是唯一的选择。”</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/书籍//" class="article-tag-list-link color3">书籍</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/17/程序员的自我修养/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-构造过程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/15/swift-构造过程/">swift_构造过程</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/15/swift-构造过程/" class="archive-article-date">
+  	<time datetime="2019-01-15T14:10:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>构造过程是使用类、结构体、枚举类型的实例之前的准备工作，需要设置实例中的每个存储属型属性的初始值</p>
+<p>与<code>OC</code>不同，<code>swift</code>的构造器无返回值，它们的主要任务是保证新实例在第一次使用前完成正确的初始化</p>
+<h4 id="存储属型属性"><a href="#存储属型属性" class="headerlink" title="存储属型属性"></a>存储属型属性</h4><ol>
+<li><p>初始化为默认值</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">"defaultName"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化为可选值</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name : <span class="type">String</span>?</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在构造函数中初始化</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span> <span class="comment">// 也可以是常量 let name: String</span></span><br><span class="line"><span class="comment">// 可以通过传入参数来初始化</span></span><br><span class="line"><span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 也可以不用参数</span></span><br><span class="line"><span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="keyword">self</span>.name = <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="默认构造器"><a href="#默认构造器" class="headerlink" title="默认构造器"></a>默认构造器</h4><p>如果<code>结构体</code>或<code>类</code>的所有属性都有默认值，同时没有自定义的构造器，它将获得一个默认构造器</p>
+<h5 id="结构体的逐一成员构造器"><a href="#结构体的逐一成员构造器" class="headerlink" title="结构体的逐一成员构造器"></a>结构体的逐一成员构造器</h5><p>如果结构体没有提供自定义的构造器，它们将自动获得一个逐一成员构造器<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 即有逐一成员构造器，又有默认构造器（参数都有默认值）</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> width: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> twoByTwo = <span class="type">Size</span>(width: <span class="number">2.0</span>, height: <span class="number">2.0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>我们可以认为添加了默认构造器的代码为<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> width: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">    <span class="keyword">init</span>(width: <span class="type">Double</span>, height: <span class="type">Double</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.width = width</span><br><span class="line">        <span class="keyword">self</span>.height = height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="值类型的构造器代理"><a href="#值类型的构造器代理" class="headerlink" title="值类型的构造器代理"></a>值类型的构造器代理</h4><p>构造器可以通过调用其它构造器来完成实例的部分构造过程。这一过程称为构造器代理，它能避免多个构造器间的代码重复。</p>
+<ul>
+<li><p>值类型<br>（结构体和枚举类型）不支持继承，所以构造器代理的过程相对简单，因为它们只能代理给自己的其它构造器。</p>
+</li>
+<li><p>类<br>可以继承自其它类，这意味着类有责任保证其所有继承的存储型属性在构造时也能正确的初始化。</p>
+</li>
+</ul>
+<p>对于值类型，你可以使用 self.init 在自定义的构造器中引用相同类型中的其它构造器。并且你只能在构造器内部调用 self.init。</p>
+<p>如果你为某个值类型定义了一个自定义的构造器，你将无法访问到默认构造器（如果是结构体，还将无法访问逐一成员构造器）。这种限制可以防止你为值类型增加了一个额外的且十分复杂的构造器之后，仍然有人错误的使用自动生成的构造器</p>
+<blockquote>
+<p>注意<br>假如你希望默认构造器、逐一成员构造器以及你自己的自定义构造器都能用来创建实例，可以将自定义的构造器写到扩展（extension）中，而不是写在值类型的原始定义中。</p>
+</blockquote>
+<h4 id="类的指定构造器和便利构造器"><a href="#类的指定构造器和便利构造器" class="headerlink" title="类的指定构造器和便利构造器"></a>类的指定构造器和便利构造器</h4><p>一个指定构造器将初始化类中提供的所有属性，并根据父类链往上调用父类合适的构造器来实现父类的初始化。</p>
+<p>每一个类都必须至少拥有一个指定构造器。在某些情况下，许多类通过继承了父类中的指定构造器而满足了这个条件。</p>
+<p>便利构造器<code>convenience</code>。你可以定义便利构造器来调用同一个类中的指定构造器，并为其参数提供默认值。你也可以定义便利构造器来创建一个特殊用途或特定输入值的实例。</p>
+<blockquote>
+<p>便利构造器必须调用指定构造器</p>
+</blockquote>
+<h4 id="两段式构造过程"><a href="#两段式构造过程" class="headerlink" title="两段式构造过程"></a>两段式构造过程</h4><ol>
+<li>为类中的每个存储属性赋一个初始值</li>
+<li>给每个类一次机会，在新实例准备使用之前进一步定制他们的存储属性</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Animal &#123;</span><br><span class="line">    var age: Int = 0 //3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Dog: Animal &#123;</span><br><span class="line">    var name = &quot;dog&quot;</span><br><span class="line">    </span><br><span class="line">    override init() &#123;</span><br><span class="line">        super.init() //2</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    convenience init(name: String) &#123;</span><br><span class="line">        self.init() // 1</span><br><span class="line">        self.name = name // 4</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行顺序：</p>
+<ol>
+<li>某个指定构造器或便利构造器被调用。</li>
+<li>完成新实例内存的分配，但此时内存还没有被初始化。</li>
+<li>指定构造器确保其所在类引入的所有存储型属性都已赋初值。存储型属性所属的内存完成初始化。 name = dog</li>
+<li>指定构造器将调用父类的构造器，完成父类属性的初始化。 age = 0</li>
+<li>阶段二，可以访问self self.name = name</li>
+</ol>
+<h4 id="构造器的继承和重写"><a href="#构造器的继承和重写" class="headerlink" title="构造器的继承和重写"></a>构造器的继承和重写</h4><p>Swift 中的子类默认情况下不会继承父类的构造器<br>自定义构造器默认会调用父类的构造器，如果自定义的构造器和父类的构造器相匹配则相当于重写，必须加上<code>override</code>，并调用父类的初始化方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Dog: Animal &#123;</span><br><span class="line">    var name = &quot;dog&quot;</span><br><span class="line">    </span><br><span class="line">    init(name: String) &#123;</span><br><span class="line">        self.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override init() &#123;</span><br><span class="line">        super.init()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 由于提供了自定义构造器，所以没有默认构造器</span><br><span class="line">class Animal &#123;</span><br><span class="line">    var age: Int = 0</span><br><span class="line">    init(age: Int) &#123;&#125; </span><br><span class="line">&#125;</span><br><span class="line">// 所有的子类构造器都要显示的调用父类的构造器来初始化父类</span><br><span class="line">class Dog: Animal &#123;</span><br><span class="line">    var name = &quot;dog&quot;</span><br><span class="line">    </span><br><span class="line">    init(name: String) &#123;</span><br><span class="line">        super.init(age: 2)</span><br><span class="line">        self.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init() &#123;</span><br><span class="line">        super.init(age: 2)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override init(age: Int) &#123;</span><br><span class="line">        super.init(age: 2)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构造器的自动继承"><a href="#构造器的自动继承" class="headerlink" title="构造器的自动继承"></a>构造器的自动继承</h4><p>如果子类没有定义任何指定构造器，它将自动继承父类所有的指定构造器。</p>
+<p>如果子类提供了所有父类指定构造器的实现——它将自动继承父类所有的便利构造器。</p>
+<img src="/2019/01/15/swift-构造过程/1.png" title="图片说明">
+<img src="/2019/01/15/swift-构造过程/2.png" title="图片说明">
+<h4 id="必要构造器"><a href="#必要构造器" class="headerlink" title="必要构造器"></a>必要构造器</h4><p>在类的构造器前添加 required 修饰符表明所有该类的子类都必须实现该构造器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class SomeClass &#123;</span><br><span class="line">    required init() &#123;</span><br><span class="line">        // 构造器的实现代码</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在子类重写父类的必要构造器时，必须在子类的构造器前也添加 required 修饰符，表明该构造器要求也应用于继承链后面的子类。在重写父类中必要的指定构造器时，不需要添加 override 修饰符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class SomeSubclass: SomeClass &#123;</span><br><span class="line">    required init() &#123;</span><br><span class="line">        // 构造器的实现代码</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意<br>如果子类继承的构造器能满足必要构造器的要求，则无须在子类中显式提供必要构造器的实现。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/15/swift-构造过程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-protocol" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/15/swift-protocol/">swift_protocol</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/15/swift-protocol/" class="archive-article-date">
+  	<time datetime="2019-01-15T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol SomeProtocol &#123;</span><br><span class="line">    var mustBeSettable: Int &#123;get set&#125;</span><br><span class="line">    var doesNotNeedToBeSettable: Int &#123;get&#125; //只读</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>属性必须声明为 {get set} 或{get}</p>
+<h4 id="使用-extension-来达到-可选"><a href="#使用-extension-来达到-可选" class="headerlink" title="使用 extension 来达到 可选"></a>使用 extension 来达到 可选</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">protocol OptionalProtocol &#123;</span><br><span class="line">    func optionalMethod()        // 可选</span><br><span class="line">    func necessaryMethod()       // 必须</span><br><span class="line">    func anotherOptionalMethod() // 可选</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension OptionalProtocol &#123;</span><br><span class="line">    func optionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in extension&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func anotherOptionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in extension&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyClass: OptionalProtocol &#123;</span><br><span class="line">    func necessaryMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in Class3&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func optionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in Class3&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let obj = MyClass()</span><br><span class="line">obj.necessaryMethod() // Implemented in Class3</span><br><span class="line">obj.optionalMethod()  // Implemented in Class3</span><br><span class="line">obj.anotherOptionalMethod() // Implemented in extension</span><br></pre></td></tr></table></figure>
+<h4 id="question-1"><a href="#question-1" class="headerlink" title="question 1"></a>question 1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">protocol A : class &#123;&#125; // 只能被 class 实现</span><br><span class="line">protocol B &#123;&#125;</span><br><span class="line"></span><br><span class="line">class aa : A</span><br><span class="line">struct bb : A // error</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/15/swift-protocol/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-swift-func参数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -681,412 +1275,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/14/swift-type/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-RxSwift" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/13/RxSwift/">RxSwift</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/13/RxSwift/" class="archive-article-date">
-  	<time datetime="2019-01-13T05:58:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>以下是本人的笔记，如果有幸被你看到，最好看一下<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/" target="_blank" rel="noopener">官网</a></p>
-<img src="/2019/01/13/RxSwift/3.jpg" title="图片说明">
-<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol>
-<li><code>Observable</code>发送信号<code>String</code>,<code>Int</code></li>
-<li><code>map</code>信号变换<code>Bool</code></li>
-<li><code>Observer</code>接收信号<h3 id="Observable-可被监听的序列"><a href="#Observable-可被监听的序列" class="headerlink" title="Observable 可被监听的序列"></a>Observable 可被监听的序列</h3>可以发送信号的序列，信号类型为<code>String</code>,<code>Bool</code>,<code>Int</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let stringObservable: Observable&lt;String&gt; = textField.rx.text.orEmpty.asObservable()</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>主要使用<code>Observable</code>下面的是其变种</p>
-<ul>
-<li>Single 要么只能发出一个元素，要么产生一个 error 事件</li>
-<li>Completable 要么只能产生一个 completed 事件，要么产生一个 error 事件。</li>
-<li>Driver</li>
-<li>ControlEvent 专门用于描述 UI 控件所产生的事件， 不会产生 error 事件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let numbers: Observable&lt;Int&gt; = Observable.create &#123; observer -&gt; Disposable in</span><br><span class="line">            </span><br><span class="line">    observer.onNext(0)</span><br><span class="line">    observer.onNext(1)</span><br><span class="line">    observer.onNext(2)</span><br><span class="line">    observer.onCompleted()</span><br><span class="line">            </span><br><span class="line">    return Disposables.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h3><p>观察者 响应Observable发出的信号</p>
-<ul>
-<li>AnyObserver</li>
-<li>Binder 不会处理错误事件 确保在主线程</li>
-</ul>
-<p>// create AnyObserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let observer: AnyObserver&lt;Data&gt; = AnyObserver &#123; (event) in</span><br><span class="line">    switch event &#123;</span><br><span class="line">        case .next(let data):</span><br><span class="line">            print(&quot;Data Task Success with count: \(data.count)&quot;)</span><br><span class="line">        case .error(let error):</span><br><span class="line">            print(&quot;Data Task Error: \(error)&quot;)</span><br><span class="line">        default:</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    URLSession.shared.rx.data(request: URLRequest(url: URL.init(string: &quot;a&quot;)!))</span><br><span class="line">        .subscribe(observer)</span><br><span class="line">        .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
-<p>// create Binder<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let usernameValidOutlet = UIView()</span><br><span class="line">let observer: Binder&lt;Bool&gt; = Binder(usernameValidOutlet) &#123; (view, isHidden) in</span><br><span class="line">    view.isHidden = isHidden</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usernameValid</span><br><span class="line">    .bind(to: observer)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
-<p>让所有<code>view</code>都实现这种观察,来响应信号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">extension Reactive where Base: UIView &#123;</span><br><span class="line">    public var isHidden: Binder&lt;Bool&gt; &#123;</span><br><span class="line">        return Binder(self.base) &#123; view, hidden in</span><br><span class="line">            view.isHidden = hidden</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usernameValid</span><br><span class="line">.bind(to: usernameValidOutlet.rx.isHidden)</span><br><span class="line">.disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">textField.rx.text.asObservable().bind(to: label.rx.text)</span><br></pre></td></tr></table></figure>
-<h3 id="Observable-发送信号"><a href="#Observable-发送信号" class="headerlink" title="Observable 发送信号"></a>Observable 发送信号</h3><p>// 创建 信号</p>
-<ol>
-<li>调用 Observable.create</li>
-<li>在构建函数里面描述元素的产生过程</li>
-<li>调用 observer.onCompleted() 表示完成</li>
-</ol>
-<h3 id="Observer-响应信号"><a href="#Observer-响应信号" class="headerlink" title="Observer 响应信号"></a>Observer 响应信号</h3><p>使用<code>subscribe</code>来响应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">json.subscribe(onNext: &#123; json in</span><br><span class="line">    print(&quot; json success &quot;)</span><br><span class="line">&#125;, onError: &#123;error in</span><br><span class="line">    print(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    print(&quot; completed &quot;)</span><br><span class="line">&#125;).disposed(by: disposeBage)</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="Event-事件"><a href="#Event-事件" class="headerlink" title="Event 事件"></a>Event 事件</h3><p>onNext onError onCompleted 被称为事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public enum Event&lt;Element&gt; &#123;</span><br><span class="line">    case next(Element)</span><br><span class="line">    case error(Swift.Error)</span><br><span class="line">    case completed</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>有些事物即使信号发送者也可以是接收者<br></p>
-<p>一般用户可以通过UI控制的信号是发送者，UI显示是信号接受者。像<code>UITextField.text</code>即是用户控制又是界面展示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 信号发送者 作为可被监听的序列 </span><br><span class="line">let observable = textField.rx.text</span><br><span class="line">observable.subscribe(onNext: &#123; text in show(text: text) &#125;)</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 信号接收者 作为观察者</span><br><span class="line">let observer = textField.rx.text</span><br><span class="line">let text: Observable&lt;String?&gt; = ...</span><br><span class="line">text.bind(to: observer)</span><br></pre></td></tr></table></figure>
-<h3 id="AsyncSubject"><a href="#AsyncSubject" class="headerlink" title="AsyncSubject"></a>AsyncSubject</h3><p><code>AsyncSubject</code> 将在源 <code>Observable</code> 产生完成事件后，发出最后一个元素（仅仅只有最后一个元素），如果源 <code>Observable</code> 没有发出任何元素，只有一个完成事件。</p>
-<h3 id="PublishSubject"><a href="#PublishSubject" class="headerlink" title="PublishSubject"></a>PublishSubject</h3><p><code>PublishSubject</code> 将对观察者发送订阅后产生的元素，而在订阅前发出的元素将不会发送给观察者。</p>
-<h3 id="BehaviorSubject"><a href="#BehaviorSubject" class="headerlink" title="BehaviorSubject"></a>BehaviorSubject</h3><p>当观察者对 <code>BehaviorSubject</code> 进行订阅时，它会将源 <code>Observable</code> 中最新的元素发送出来（如果不存在最新的元素，就发出默认元素）。然后将随后产生的元素发送出来。</p>
-<p>对比<code>PublishSubject</code>,多了一个当前元素信号</p>
-<h3 id="ControlProperty"><a href="#ControlProperty" class="headerlink" title="ControlProperty"></a>ControlProperty</h3><p><code>ControlProperty</code> 专门用于描述 <code>UI</code> 控件属性的，不会产生 <code>error</code> 事件,一定在<code>MainScheduler</code> 订阅（主线程订阅）</p>
-<hr>
-<h3 id="Schedulers-线程调度器"><a href="#Schedulers-线程调度器" class="headerlink" title="Schedulers - 线程调度器"></a>Schedulers - 线程调度器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let rxData: Observable&lt;Data&gt; = ...</span><br><span class="line"></span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))</span><br><span class="line">    .observeOn(MainScheduler.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [weak self] data in</span><br><span class="line">        self?.data = data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-<p>使用 <code>subscribeOn</code>在子线程发送信号,使用 <code>observeOn</code>在主线程监听信号</p>
-<hr>
-<h3 id="combineLatest-合并信号"><a href="#combineLatest-合并信号" class="headerlink" title="combineLatest 合并信号"></a>combineLatest 合并信号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Observable.combineLatest( // 合并信号</span><br><span class="line">    number1.rx.text.orEmpty, // 信号源为三个label的text</span><br><span class="line">    number2.rx.text.orEmpty, </span><br><span class="line">    number3.rx.text.orEmpty) </span><br><span class="line">    &#123; textValue1, textValue2, textValue3 -&gt; Int in</span><br><span class="line">        // 三个输入源作为参数，将其转换成Int信号</span><br><span class="line">        return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)</span><br><span class="line">            &#125;</span><br><span class="line">    .map &#123; $0.description &#125; // 将Int信号转变为 text信号</span><br><span class="line">    .bind(to: result.rx.text) // text信号和label的text绑定</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-<p><code>orEmpty</code>会把<code>String?</code>过滤<code>nil</code>帮我们变为<code>String</code>类型。</p>
-<hr>
-<h3 id="disposed-声明周期"><a href="#disposed-声明周期" class="headerlink" title="disposed 声明周期"></a>disposed 声明周期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 声明 disposeBag 属性，其生命周期同此VC</span><br><span class="line">var disposeBag = DisposeBag()</span><br><span class="line"></span><br><span class="line">// 最后调用下面方法，VC释放时会释放disposeBag，从而释放绑定</span><br><span class="line">.disposed(by: self.disposeBag)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 方法里面不能直接使用self，会造成内存泄漏，添加[weak self]，相当于使用weakSelf</span><br><span class="line">.subscribe &#123; [weak self] (text) in</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="just-产生特定的一个元素"><a href="#just-产生特定的一个元素" class="headerlink" title="just 产生特定的一个元素"></a>just 产生特定的一个元素</h3><p>一个序列只有唯一的元素 0：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let id = Observable.just(0)</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="from-将其他类型或者数据结构转换为-Observable"><a href="#from-将其他类型或者数据结构转换为-Observable" class="headerlink" title="from 将其他类型或者数据结构转换为 Observable"></a>from 将其他类型或者数据结构转换为 Observable</h3><p>将一个数组转换为 Observable：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let numbers = Observable.from([0, 1, 2])</span><br></pre></td></tr></table></figure></p>
-<p>将一个可选值转换为 Observable：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let optional: Int? = 1</span><br><span class="line">let value = Observable.from(optional: optional)</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="merge-任意一个-Observable-产生了元素，就发出这个元素"><a href="#merge-任意一个-Observable-产生了元素，就发出这个元素" class="headerlink" title="merge 任意一个 Observable 产生了元素，就发出这个元素"></a>merge 任意一个 Observable 产生了元素，就发出这个元素</h3><img src="/2019/01/13/RxSwift/1.png" title="图片说明">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let subject1 = PublishSubject&lt;String&gt;()</span><br><span class="line">let subject2 = PublishSubject&lt;String&gt;()</span><br><span class="line"></span><br><span class="line">Observable.of(subject1, subject2)</span><br><span class="line">    .merge()</span><br><span class="line">    .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="combineLatest-当任意一个-Observable-发出一个新的元素"><a href="#combineLatest-当任意一个-Observable-发出一个新的元素" class="headerlink" title="combineLatest 当任意一个 Observable 发出一个新的元素"></a>combineLatest 当任意一个 Observable 发出一个新的元素</h3><img src="/2019/01/13/RxSwift/2.png" title="图片说明">
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let first = PublishSubject&lt;String&gt;()</span><br><span class="line">let second = PublishSubject&lt;String&gt;()</span><br><span class="line"></span><br><span class="line">Observable.combineLatest(first, second) &#123; $0 + $1 &#125;</span><br><span class="line">          .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">          .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="map-对每个元素直接转换"><a href="#map-对每个元素直接转换" class="headerlink" title="map 对每个元素直接转换"></a>map 对每个元素直接转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Observable.of(1, 2, 3)</span><br><span class="line">    .map &#123; $0 * 10 &#125;</span><br><span class="line">    .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="filter-通过判定条件过滤出一些元素"><a href="#filter-通过判定条件过滤出一些元素" class="headerlink" title="filter 通过判定条件过滤出一些元素"></a>filter 通过判定条件过滤出一些元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Observable.of(2, 30, 22, 5, 60, 1)</span><br><span class="line">          .filter &#123; $0 &gt; 10 &#125;</span><br><span class="line">          .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">          .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/13/RxSwift/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-extention" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/12/swift-extention/">swift_extention</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/12/swift-extention/" class="archive-article-date">
-  	<time datetime="2019-01-12T02:57:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>protocol</code>声明的方法是必须要实现的，但是可以通过使用<code>extension</code>来实现默认实现，这样子类就可以不用实现而调用默认实现，但是子类要是想自己实现就要添加<code>override</code>标识，并且不能在<code>extension</code>中实现。<code>extension</code>不能覆盖父类的方法</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/12/swift-extention/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-权限" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/11/swift-权限/">swift_权限</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/11/swift-权限/" class="archive-article-date">
-  	<time datetime="2019-01-11T14:06:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>模块：独立的代码单元 独立的框架 独立的应用程序 不同模块间使用 <code>import</code> 引入另一个模块<br>源文件：同一个框架或应用程序中不需要使用 <code>import</code></p>
-<h4 id="private-真正私有"><a href="#private-真正私有" class="headerlink" title="private 真正私有"></a>private 真正私有</h4><hr>
-<p>加了<code>private</code>就不要想在其他类中修改其值了，不论是<code>private(set)</code>还是不存在的<code>private(get)</code>，因为这样<code>private</code>就没有意义了，还不如直接去掉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 只有在 MyClass 中可以读写</span><br><span class="line">class MyClass &#123;</span><br><span class="line">    private var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在类型之外也能够读取到这个类型</span><br><span class="line">// 只能在类型内部对其进行更新</span><br><span class="line">class MyClass &#123;</span><br><span class="line">    private(set) var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这种写法没有对”读”做限制,相当于使用了默认的 <code>internal</code> 权限。如果我们希望在别的 <code>module</code> 中也能访问这个属性,同时又保持只在当前类可以设置的话,我们需要将 <code>get</code> 的访问权限提高为 <code>public</code>。属性的访问控制可以通过两次的访问权限指定来实现, 具体来说,将刚才的声明变为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class MyClass &#123;</span><br><span class="line">    public private(set) var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这时我们就可以在 <code>module</code> 之外也访问到 <code>MyClass</code> 的 <code>name</code> 了。<br>我们在 <code>MyClass</code> 前面也添加的 <code>public</code>,这是编译器所要求的。因为如果只为 <code>name</code> 的 <code>get</code> 添加 <code>public</code> 而不管 <code>MyClass</code> 的话,<code>module</code> 外就连 <code>MyClass</code> 都访问不到了,属性的 访问控制级别也就没有任何意义了。</p>
-<h4 id="fileprivate-文件内私有"><a href="#fileprivate-文件内私有" class="headerlink" title="fileprivate 文件内私有"></a>fileprivate 文件内私有</h4><hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class User &#123;</span><br><span class="line">    private var name1 = &quot;private&quot;</span><br><span class="line">    fileprivate var name2 = &quot;fileprivate&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension User &#123;</span><br><span class="line">    var accessPrivate: String &#123;</span><br><span class="line">        return name2</span><br><span class="line">//        return name1 // error</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Internal"><a href="#Internal" class="headerlink" title="Internal"></a>Internal</h4><hr>
-<p>可以访问自己模块或应用中源文件里的任何实体，但是别人不能访问该模块中源文件里的实体。通常情况下，某个接口或Framework作为内部结构使用时，你可以将其设置为internal级别。</p>
-<h2 id="Public"><a href="#Public" class="headerlink" title="####Public "></a>####Public </h2><ul>
-<li>public 修饰的 class 在 Module 内部可以访问和继承，在外部只能访问</li>
-<li>public 修饰的 func 在 Module 内部可以被访问和重载（override）,在外部只能访问</li>
-</ul>
-<h4 id="open"><a href="#open" class="headerlink" title="open"></a>open</h4><hr>
-<ul>
-<li>open 修饰的 class 在 Module 内部和外部都可以被访问和继承</li>
-<li>open 修饰的 func 在 Module 内部和外部都可以被访问和重载（override）</li>
-</ul>
-<h4 id="Final"><a href="#Final" class="headerlink" title="Final"></a>Final</h4><hr>
-<ul>
-<li>final 修饰的 class 任何地方都不能不能被继承</li>
-<li>final 修饰的 func 任何地方都不能被 Override</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/11/swift-权限/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-where" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/11/swift-where/">swift_where</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/11/swift-where/" class="archive-article-date">
-  	<time datetime="2019-01-11T14:04:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p>do catch</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">enum ExceptionError: Error &#123;</span><br><span class="line">    case httpCode(Int)</span><br><span class="line">&#125;</span><br><span class="line">func throwError() throws &#123;</span><br><span class="line">    thtow ExceptionError.httpCode(500)</span><br><span class="line">&#125;</span><br><span class="line">do &#123;</span><br><span class="line">    try throwError()</span><br><span class="line">&#125; catch ExceptionError.httpCode(let httpCode) where httpCode &gt;= 500 &#123;</span><br><span class="line">    print(&quot;server error&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>switch</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var value:(Int, String) = (1, &quot;小明&quot;)</span><br><span class="line">switch value &#123;</span><br><span class="line">    case let (x, y) where x &lt; 60;</span><br><span class="line">        print(&quot;不及格&quot;)</span><br><span class="line">    default:</span><br><span class="line">        print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>for</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for score in scores where score &gt;= 60 &#123;</span><br><span class="line">    print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>for in</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arrayOne = [1, 2, 3, 4, 5];</span><br><span class="line">let dictionary = [1:&quot;a&quot;, 2:&quot;b&quot;]</span><br><span class="line">for i in arrayOne where dictionary[i] != nil &#123;</span><br><span class="line">    print (i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>protocol</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol aProtocol()</span><br><span class="line">extension aProtocol where Self: UIView &#123;</span><br><span class="line">    // 只给遵守aProtocol协议的UIView添加拓展</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>if let   guard中的where使用 , 替代</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var optionName: String? = &quot;hang&quot;</span><br><span class="line">if let name = optionName , name.hasprefix(&quot;H&quot;) &#123;</span><br><span class="line">    print(name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Swift4 中的改进</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">可以在 associatedtype 后面声明的类型后追加 where 约束语句</span><br><span class="line"></span><br><span class="line">protocol aProtocol &#123;</span><br><span class="line">    associatedtype Element</span><br><span class="line">    associatedtype SubSequence: Sequence where </span><br><span class="line">        SubSequence.Iterator.Element == Iterator.Element</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">由于 associatedtype 支持追加 where ，swift4标准库中的 Sequence 中的 Element 声明如下</span><br><span class="line">它限定了 Sequence 中 Element 这个类型必须和 Iterator.Element 的类型一致，省去了拓展中的不必要判断</span><br><span class="line"></span><br><span class="line">protocol Sequence &#123;</span><br><span class="line">    associatedtype Element where Self.Element = Self.Iterator.Element</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/11/swift-where/">展开全文 >></a>
         </p>
       
 

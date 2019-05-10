@@ -6,14 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Hexo</title>
+  <title>ios-字典-数组 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: ios-字典-数组date: 2019-04-09 08:55:52categories:  iOStags:  数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典 选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过key直接计算出value的位置所在，所以在查找时效率更高。而数组一">
+  <meta name="description" content="数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典 选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过key直接计算出value的位置所在，所以在查找时效率更高。而数组一般需要遍历，遍历过程中还需注意以下情况  for in 循环中改变可变数组会崩溃  由于改变了for循环的次数，导致了数组越界，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="ios-字典-数组">
 <meta property="og:url" content="https://libo198615.github.io/2019/04/09/ios-字典-数组/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title: ios-字典-数组date: 2019-04-09 08:55:52categories:  iOStags:  数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典 选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过key直接计算出value的位置所在，所以在查找时效率更高。而数组一">
+<meta property="og:description" content="数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典 选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过key直接计算出value的位置所在，所以在查找时效率更高。而数组一般需要遍历，遍历过程中还需注意以下情况  for in 循环中改变可变数组会崩溃  由于改变了for循环的次数，导致了数组越界，">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g1w4mur2zoj30he0aggo1.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g1w4mundklj30ft0aiq51.jpg">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79ly1g1w4qj2vntj30fn0bgach.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79ly1g1w4qwrsyqj30h60a7779.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g0vcqwnsyfj30e40ca0t3.jpg">
-<meta property="og:updated_time" content="2019-04-09T02:23:14.924Z">
+<meta property="og:updated_time" content="2019-04-19T00:43:09.840Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="title: ios-字典-数组date: 2019-04-09 08:55:52categories:  iOStags:  数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典 选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过key直接计算出value的位置所在，所以在查找时效率更高。而数组一">
+<meta name="twitter:title" content="ios-字典-数组">
+<meta name="twitter:description" content="数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典 选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过key直接计算出value的位置所在，所以在查找时效率更高。而数组一般需要遍历，遍历过程中还需注意以下情况  for in 循环中改变可变数组会崩溃  由于改变了for循环的次数，导致了数组越界，">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79ly1g1w4mur2zoj30he0aggo1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -81,6 +81,8 @@
 				<li><a href="/categories/ 设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/ git">Git</a></li>
+	        
+				<li><a href="/categories/ react-native">react-native</a></li>
 	        
 			</ul>
 		</nav>
@@ -142,6 +144,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -162,21 +166,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -194,13 +200,24 @@
             <article id="post-ios-字典-数组" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ios-字典-数组
+    </h1>
+  
+
+        
+        <a href="/2019/04/09/ios-字典-数组/" class="archive-article-date">
+  	<time datetime="2019-04-09T00:55:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-09</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>title: ios-字典-数组<br>date: 2019-04-09 08:55:52<br>categories:</p>
-<ul>
-<li>iOS<br>tags:</li>
-</ul>
-<p>数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典</p>
+        <p>数组，字典是开发中常用的数据集合方式。我们在设计数据的存取时，或者你被问及如何设计一个通知中心时，要考虑选取数组还是字典</p>
 <p>选取数组还是字典，其中的一个衡量标准就是是否考虑性能的因素，由于字典是哈希的，通过<code>key</code>直接计算出<code>value</code>的位置所在，所以在查找时效率更高。而数组一般需要遍历，遍历过程中还需注意以下情况</p>
 <ul>
 <li>for in 循环中改变可变数组会崩溃</li>
@@ -287,6 +304,17 @@
       
       
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 

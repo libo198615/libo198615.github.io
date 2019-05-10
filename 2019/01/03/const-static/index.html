@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="const const用来修饰右边的基本变量或指针变量 被修饰的变量只读，不能被修改  static 修饰局部变量  保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存, 生命周期类似全局变量了，但是作用域不变。123456-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event&amp;#123;    //声明一个局部">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-03T09:25:57.812Z">
+<meta property="og:updated_time" content="2019-04-28T03:13:47.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="const static">
 <meta name="twitter:description" content="const const用来修饰右边的基本变量或指针变量 被修饰的变量只读，不能被修改  static 修饰局部变量  保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存, 生命周期类似全局变量了，但是作用域不变。123456-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event&amp;#123;    //声明一个局部">
@@ -72,6 +72,8 @@
 				<li><a href="/categories/ 设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/ git">Git</a></li>
+	        
+				<li><a href="/categories/ react-native">react-native</a></li>
 	        
 			</ul>
 		</nav>
@@ -133,6 +135,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -153,21 +157,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -213,6 +219,11 @@
 <p>输出日志如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=1</span><br><span class="line">i=1</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event</span><br><span class="line">&#123;    //声明一个局部变量i</span><br><span class="line">    static  int i = 0;    //每次点击view来到这个方法时让i自增</span><br><span class="line">    i ++;    //打印结果</span><br><span class="line">    NSLog(@&quot;i=%d&quot;,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出日志如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=2</span><br><span class="line">i=3</span><br><span class="line">i=4</span><br><span class="line">i=5</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
+<p>再看一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    [self a]; // 2</span><br><span class="line">    [self a]; // 3</span><br><span class="line">    [self a]; // 4</span><br><span class="line">    [self b]; // 2</span><br><span class="line">    [self b]; // 3</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)a &#123;</span><br><span class="line">    static int a = 1;</span><br><span class="line">    a ++;</span><br><span class="line">    NSLog(@&quot;%d&quot;,a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)b &#123;</span><br><span class="line">    static int a = 1;</span><br><span class="line">    a ++;</span><br><span class="line">    NSLog(@&quot;%d&quot;,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于限定了作用域，a 和 b 中的static变量可以重名。相当于两个变量，它们的值互不影响。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Test *test1 = [[Test alloc] init];</span><br><span class="line">[test1 logStaticA]; // 2</span><br><span class="line">Test *test2 = [[Test alloc] init];</span><br><span class="line">[test2 logStaticA]; // 3</span><br></pre></td></tr></table></figure>
+<p>同时，在局部变量内定义的static变量，自动称为了静态变量，生命周期同APP，所以当某个对象释放后再重新生成并调用上面的方法，a的值还是从上次的值开始，而不是从1开始。可以理解为，某个对象内部的静态变量的值，一直跟随这个类，无论这个对象被声明几次，或成名成几个不同名称的对象.</p>
 <ul>
 <li>修饰全局变量</li>
 </ul>
@@ -330,7 +341,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/01/03/消息转发/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/01/03/ios-消息转发/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         

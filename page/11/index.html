@@ -69,6 +69,8 @@
 	        
 				<li><a href="/categories/ git">Git</a></li>
 	        
+				<li><a href="/categories/ react-native">react-native</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,21 +153,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -180,19 +186,334 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Block" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-内存" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/29/Block/">Block</a>
+      <a class="article-title" href="/2018/12/29/内存/">内存</a>
     </h1>
   
 
         
-        <a href="/2018/12/29/Block/" class="archive-article-date">
+        <a href="/2018/12/29/内存/" class="archive-article-date">
+  	<time datetime="2018-12-29T14:40:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="内存分类"><a href="#内存分类" class="headerlink" title="内存分类"></a>内存分类</h5><p> <strong>栈区（stack）</strong></p>
+<p>由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 </p>
+<p><strong>堆区（heap）</strong></p>
+<p>一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收</p>
+<p><strong>全局区（静态区）</strong></p>
+<p>全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。 </p>
+<p><strong>文字常量区</strong> </p>
+<p>常量字符串就是放在这里的。 程序结束后由系统释放 </p>
+<p><strong>程序代码区</strong></p>
+<p>存放函数体的二进制代码。</p>
+<h5 id="iOS-引用计数器存放位置"><a href="#iOS-引用计数器存放位置" class="headerlink" title="iOS 引用计数器存放位置"></a>iOS 引用计数器存放位置</h5><ul>
+<li>TaggedPointer</li>
+</ul>
+<p>64位系统下，对于值小的对象指针本身已经存了值的内容了，而不用去指向一个地址再去取这个地址所存对象的值<br>1:   Tagged Pointer专门用来存储小的对象，例如NSNumber和NSDate<br>2：Tagged Pointer指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已。所以，它的内存并不存储在堆中，也不需要malloc和free。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0u9w1u9eej314q0fi0x0.jpg" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0u9w67zrnj314q0kon44.jpg" alt=""></p>
+<p>什么时候NSNumber对象Tagged Pointer失效呢？那就是当值和tag加起来占用的字节数要超过地址长度(8字节64位)时会失效</p>
+<p>// retain<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id objc_object::rootRetain(bool tryRetain, bool handleOverflow) &#123;</span><br><span class="line">    if (isTaggedPointer()) return (id)this;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>// release<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bool  objc_object::rootRelease(bool performDealloc, bool handleUnderflow) &#123;</span><br><span class="line">    if (isTaggedPointer()) return false;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>// retainCount<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uintptr_t objc_object::rootRetainCount() &#123;</span><br><span class="line">    if (isTaggedPointer()) return (uintptr_t)this;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由此可见对于Tagged Pointer对象，并没有任何的引用计数操作，引用计数数量也只是单纯的返回自己地址罢了。</p>
+<ul>
+<li>isa指针</li>
+</ul>
+<p>在一个64位的指针内存中，第0位存储的是<code>indexed</code>标识符，它代表一个指针是否为<code>NONPOINTER</code>型，0代表不是，1代表是。<br>第1位<code>has_assoc</code>，1代表其指向的实例变量含有关联对象。<br>第2位为<code>has_cxx_dtor</code>，表明该对象是否使用了ARC来管理对象.<br>第3-35位<code>shiftcls</code>存储的就是这个指针的地址。<br>第42位为<code>weakly_referenced</code>，表明该指针对象是否有弱引用的指针指向。<br>第43位为<code>deallocing</code>，表明该对象是否正在被回收。<br>第44位为<code>has_sidetable_rc</code>，该指针是否引用了sidetable散列表。<br>第45-63位<code>extra_rc</code>装的就是这个实例变量的引用计数，当对象被引用时，其引用计数+1，但少量的引用计数是不会直接存放在sideTables表中的，对象的引用计数会先存在<code>NONPOINTER_ISA</code>的指针中的45-63位，当其被存满后，才会相应存入sideTables散列表中。</p>
+<p>// retain<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">id objc_object::rootRetain(bool tryRetain, bool handleOverflow) &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是对isa的extra_rc变量进行+1，前面说到isa会存很多东西</span><br><span class="line">    addc(newisa.bits, 1, 0, &amp;carry);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>// release<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bool  objc_object::rootRelease(bool performDealloc, bool handleUnderflow) &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是对isa的extra_rc变量进行-1</span><br><span class="line">    subc(newisa.bits, 1, 0, &amp;carry);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>// retainCount<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uintptr_t objc_object::rootRetainCount() &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是获取isa的extra_rc值再+1，alloc新建一个对象时bits.extra_rc为0并不是1，这个要注意。</span><br><span class="line">    uintptr_t rc = 1 + bits.extra_rc;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果对象开启了Non-pointer，那么引用计数是存在isa中的，extra_rc是有存储限制,引用计数超过255将附加SideTable辅助存储。</p>
+<ul>
+<li>SideTable</li>
+</ul>
+<p>散列表在系统中的提现是一个<code>sideTables</code>的哈希映射表，而一个散列表中又包含众多<code>sideTable</code>提高多线程的访问效率。每个<code>SideTable</code>中又包含了三个元素，<code>spinlock_t</code>自旋锁，<code>RefcountMap</code>引用计数表，<code>weak_table_t</code>弱引用表。</p>
+<p>对于每张<code>SideTable</code>表中的弱引用表<code>weak_table_t</code>，其也是一张哈希表的结构，其内部包含了每个对象对应的弱引用表<code>weak_entry_t</code>，而<code>weak_entry_t</code>是一个结构体数组，其中包含的则是每一个对象弱引用的对象所对应的弱引用指针。</p>
+<h5 id="ARC-自动管理内存的原理"><a href="#ARC-自动管理内存的原理" class="headerlink" title="ARC 自动管理内存的原理"></a>ARC 自动管理内存的原理</h5><p>对象在被回收时，就会调用<code>dealloc</code>方法，其内部实现流程首先要调用一个<code>_objc_rootDealloc()</code>方法，判断该对象的isa指针，依次判断指针内的内容：<code>nonpointer_isa</code>，<code>weakly_referenced</code>,<code>has_assoc</code>,<code>has_cxx_dtor</code>,<code>has_sidetable_rc</code>，如果判断结果为：该<code>isa</code>指针不是非指针型的<code>isa</code>指针，没有弱引用的指针指向，没有相应的关联对象，没有c++相关的内容，没有使用ARC模式，没有关联到散列表中，即判断的内容都为否，则可以直接调用c语言中的<code>free()</code>函数进行相应的内存释放，否则就会调用<code>objc_dispose()</code>这个函数。</p>
+<p><code>objc_destructInstence()</code>函数就是一个销毁对象的函数.</p>
+<p>首先，<code>destructInstence()</code>函数内部会来判断该对象是否有C++相关内容以及ARC相关的内容，如果有的话就会调用<code>object_cxxDestruct</code>函数来销毁相应的内容，随后会判断改对象是否有关联对象相关的内容，如果有的话就会调用<code>_object_remove_associations()</code>这个方法来清楚相关的关联对象内容，在这两个判断步骤完成之后，调用<code>clearDeallocating()</code>方法。</p>
+<p>在<code>clearDeallocating()</code>方法中，会调用一个<code>sidetable_clearDeallocating()</code>的方法，在方法内部会调用两个方法，1.<code>weak_clear_no_lock()</code>这个方法会将每个弱引用表中的指向该对象的弱引用指针，置为nil。2.<code>table.refcnts.erase()</code>方法，这个方法会从引用计数表中，擦除该对象的引用计数。最后再调用c函数的<code>free()</code>方法，完成一次对象的回收。</p>
+<h5 id="创建一个对象后，内存的布局"><a href="#创建一个对象后，内存的布局" class="headerlink" title="创建一个对象后，内存的布局"></a>创建一个对象后，内存的布局</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">MyClassA *A_1 = [[MyClassA alloc] init];</span><br><span class="line">MyClassA *A_2 = [[MyClassA alloc] init];</span><br><span class="line"></span><br><span class="line">Class classA1 = object_getClass(A_1);</span><br><span class="line">Class classA2 = object_getClass(A_2);</span><br><span class="line"></span><br><span class="line">Class metaClass = object_getClass([MyClassA class]);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;A_1 的内存地址：%p&quot;,A_1);</span><br><span class="line">NSLog(@&quot;A_1 指针的内存地址：%p&quot;,&amp;A_1);</span><br><span class="line">NSLog(@&quot;A_2 的内存地址：%p&quot;,A_2);</span><br><span class="line">NSLog(@&quot;A_2 指针的内存地址：%p&quot;,&amp;A_2);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;A_1 的 isa 的内存地址：%p&quot;,&amp;classA1);</span><br><span class="line">NSLog(@&quot;A_1类的内存地址：%p&quot;,classA1);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;A_2 的 isa 的内存地址：%p&quot;,&amp;classA2);</span><br><span class="line">NSLog(@&quot;A_2类的内存地址：%p&quot;,classA2);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;MyClassA 的元类的地址：%p&quot;,metaClass);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A_1 的内存地址：0x1c00058e0</span><br><span class="line">A_1 指针的内存地址：0x16b00d378</span><br><span class="line">A_2 的内存地址：0x1c00058a0</span><br><span class="line">A_2 指针的内存地址：0x16b00d370</span><br><span class="line">A_1 的 isa 的内存地址：0x16b00d368</span><br><span class="line">A_1类的内存地址：0x104df95d0</span><br><span class="line">A_2 的 isa 的内存地址：0x16b00d360</span><br><span class="line">A_2类的内存地址：0x104df95d0</span><br><span class="line">MyClassA 的元类的地址：0x104df95a8</span><br></pre></td></tr></table></figure>
+<p>每生成一个对象，都有一个实例，所有实例的<code>isa</code>指向同一个类，类的<code>isa</code>指向元类</p>
+<h5 id="对象所占空间"><a href="#对象所占空间" class="headerlink" title="对象所占空间"></a>对象所占空间</h5><ul>
+<li>一个NSObject对象占用多少内存<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">struct NSObject_IMPL &#123;</span><br><span class="line">    Class isa; //一个指向struct objc_class结构体类型的指针</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>// 查看Class本质<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br></pre></td></tr></table></figure></p>
+<p><code>NSObject</code>结构体中只有一个isa指针变量。按理来说NSObject对象需要的内存大小只要能够满足存放一个指针大小就可以了，一个指针变量在64位的机器上大小是8个字节，也就是说只要有8个字节的内存空间就能满足存放一个NSObject对象了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSObject *objc = [[NSObject alloc] init];</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;objc对象实际需要的内存大小: %zd&quot;, class_getInstanceSize([objc class]));</span><br><span class="line">        NSLog(@&quot;objc对象实际分配的内存大小: %zd&quot;, malloc_size((__bridge const void *)(objc)));</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>//输出的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">objc对象实际利用的内存大小: 8</span><br><span class="line">objc对象实际占用的内存大小: 16</span><br></pre></td></tr></table></figure></p>
+<p>一个对象实际利用的内存大小，就是对象的实例变量占用的内存大小，可以通过调用<code>runtime</code>中的<code>class_getInstanceSize</code>函数得到。对象实际占用的内存大小，就是系统实际分配给对象的内存大小，OC对象是通过<code>alloc</code>方法得到的对象大小，我们可以通过<code>malloc</code>中库函数<code>malloc_size</code>来得到结果。<br>系统给一个对象分配内存的大小。当对象的实际大小小于16时，系统就返回16个字节的大小。也就是说16个字节大小是系统的最低消费。</p>
+<p>定义一个Animal的类，其中只有一个int成员变量weight。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//interface</span><br><span class="line">@interface Animal: NSObject</span><br><span class="line">&#123;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line">//implementation</span><br><span class="line">@implementation Animal</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>把OC文件转化为C++文件的方式来查看Animal类对应的结构体实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">    struct NSObject_IMPL NSObject_IVARS; //实际上就是一个isa指针</span><br><span class="line">    int weight;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct NSObject_IMPL &#123;</span><br><span class="line">    Class isa; //一个指向struct objc_class结构体类型的指针</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//简化版本</span><br><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">    Class isa;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>通过struct Animal_IMPL结构体，我们不难看出结构体中有两个成员变量：一个isa指针和一个int型成员变量。Animal结构体对象实际需要的内存大小应该是16字节（指针8个字节，int型变量4个字节）。Animal结构体对象实际需要的内存大小是12字节，那系统给Animal对象实际分配的内存大小是多少呢？我们还是通过调用class_getInstanceSize和malloc_size这两个函数来看一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">//interface</span><br><span class="line">@interface Animal: NSObject</span><br><span class="line">&#123;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//implementation</span><br><span class="line">@implementation Animal</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSObject *objc = [[NSObject alloc] init];</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        NSLog(@&quot;animal对象实际需要的内存大小: %zd&quot;, class_getInstanceSize([animal class]));</span><br><span class="line">        NSLog(@&quot;animal对象实际分配的内存大小: %zd&quot;, malloc_size((__bridge const void *)(animal)));</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>//输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animal对象实际利用的内存大小: 16</span><br><span class="line">animal对象实际占用的内存大小: 16</span><br></pre></td></tr></table></figure></p>
+<p>我们发现Animal对象实际需要的内存大小是16字节，而不是我们之前推算出来的12字节，原因是字节对其，已16的整数倍分配</p>
+<h5 id="weak"><a href="#weak" class="headerlink" title="__weak"></a>__weak</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __week obj1 = obj;</span><br></pre></td></tr></table></figure>
+<p>编译器的模拟代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id obj1;</span><br><span class="line">obj1 = 0;</span><br><span class="line">objc_storeWeak(&amp;obj1, obj);</span><br><span class="line">objc_storeWeak(&amp;obj1, 0);</span><br></pre></td></tr></table></figure></p>
+<p><code>objc_storeWeak</code>函数把第二参数的赋值对象的地址作为键值，将第一参数的附有<code>__weak</code>修饰的变量的地址注册到<code>weak</code>表中。如果第二参数为0，则把变量的地址从<code>weak</code>表中删除。</p>
+<h5 id="操作引用计数器"><a href="#操作引用计数器" class="headerlink" title="操作引用计数器"></a>操作引用计数器</h5><p>当使用<code>alloc</code>、<code>new</code>、<code>copy</code>、<code>mutableCopy</code>创建一个新对象时,该新对象的引用计数器为1<br>当给对象发送一条retain消息时,对象的引用计数器+1(方法返回对象本身)<br>当给对象发送一条release消息时对象的引用计数器-1(方法无返回值)</p>
+<ul>
+<li>僵尸对象: 所占用的内存已经被回收的对象,僵尸对象不能再使用</li>
+<li>野指针: 指向僵尸对象的指针,给野指针发送消息会报错EXC_BAD_ACCESS错误:访问了一块已经被回收的内存</li>
+<li>空指针: 没有指向任何对象的指针(存储的东西是nil,NULL,0),给空指针发送消息不会报错,系统什么也不会做,所以在对象被释放时将指针设置为nil可以避免野指针错误</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Person *p = [[Person alloc] init]; // 引用计数器 = 1</span><br><span class="line">[p release]; // 引用计数器 - 1 = 0,指针所指向的对象的内存被释放</span><br><span class="line">[p release]; // 这句给野指针发送消息,会报野指针错误,</span><br></pre></td></tr></table></figure>
+<h5 id="类工厂方法内存管理"><a href="#类工厂方法内存管理" class="headerlink" title="类工厂方法内存管理"></a>类工厂方法内存管理</h5><p>自己创建的对象要自己负责释放，而向下面这种需要返回的对象要使用<code>autorelease</code>，这样调用者就不用关心释放的问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)person</span><br><span class="line">&#123;</span><br><span class="line">    // 使用self而不是使用Person是因为这样可以在子类调用该方法时会返回子类的对象</span><br><span class="line">    return [[[self alloc] init] autorelease];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h5><p><code>nsnotification</code> <code>kvo</code> 不会是<code>viewController</code>的引用计数器加一，原因是取消通知和监听的方法放到了<code>dealloc</code>里，只要<code>dealloc</code>被调用，说明引用计数器为0，添加的通知和监听没有对引用计数器进行加一操作<br><code>NSTimer</code>会使<code>viewController</code>的引用计数器加一，因为放在<code>dealloc</code>里的<code>[timer interval];</code>不会执行，timer阻碍了<code>viewController</code>的释放。(还要考虑<code>runloop</code>)</p>
+<p><code>superView</code>先销毁，因为<code>superView</code>持有<code>subview</code>，<code>superView</code>不销毁<code>subView</code>的引用计数器不为0。也有可以<code>superView</code>已经释放，但是<code>subView</code>被其他对象引用而没有释放，此时可能造成内存泄漏</p>
+<p><a href="https://www.jianshu.com/p/17817e6efaf5" target="_blank" rel="noopener">https://www.jianshu.com/p/17817e6efaf5</a><br><a href="https://www.jianshu.com/p/9839c7306d17" target="_blank" rel="noopener">https://www.jianshu.com/p/9839c7306d17</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/29/内存/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NSCoding" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/29/NSCoding/">NSCoding</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/29/NSCoding/" class="archive-article-date">
+  	<time datetime="2018-12-29T14:29:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>序列化 (Serialization)将对象的状态信息转换为可以存储或传输的形式的过程。</p>
+<p>在序列化期间，对象将其当前状态写入到临时或持久性存储区。以后，可以通过从存储区中读取或反序列化对象的状态，重新创建该对象。<br>序列化使其他代码可以查看或修改，那些不序列化便无法访问的对象实例数据。确切地说，代码执行序列化需要特殊的权限：即指定了 SerializationFormatter 标志的 SecurityPermission。在默认策略下，通过 Internet 下载的代码或 Internet 代码不会授予该权限；只有本地计算机上的代码才被授予该权限。<br>通常，对象实例的所有字段都会被序列化，这意味着数据会被表示为实例的序列化数据。这样，能够解释该格式的代码有可能能够确定这些数据的值，而不依赖于该成员的可访问性。类似地，反序列化从序列化的表示形式中提取数据，并直接设置对象状态，这也与可访问性规则无关。<br>对于任何可能包含重要的安全性数据的对象，如果可能，应该使该对象不可序列化。如果它必须为可序列化的，请尝试生成特定字段来保存不可序列化的重要数据。如果无法实现这一点，则应注意该数据会被公开给任何拥有序列化权限的代码，并确保不让任何恶意代码获得该权限。</p>
+<p><code>NSCoder</code> 和 <code>NSCoding</code> 有将自己定义的类的对象写入磁盘的作用</p>
+<ul>
+<li>NSCoder 是一个抽象类，抽象类不能被实例话，只能提供一些想让子类继承的方法。</li>
+<li>NSCoding 是一个协议，主要有下面两个方法<br>// 反序列化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-(id)initWithCoder:(NSCoder *)coder &#123;</span><br><span class="line">    /* NSObject没有遵守NSCoding协议，因此调用父类的init构造方法</span><br><span class="line">     * 如果继承的父类遵守NSCoding协议需要调用父类的initWithCoder:方法</span><br><span class="line">     * [super initWithCoder:aDecoder]</span><br><span class="line">    */</span><br><span class="line">    </span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        self.accountNumber = [aDecoder decodeObjectForKey:@&quot;kaccountNumber&quot;];</span><br><span class="line">        self.balance = [aDecoder decodeDoubleForKey:@&quot;kbalance&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)encodeWithCoder:(NSCoder *)coder;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/29/NSCoding/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NSArray" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/29/NSArray/">NSArray</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/29/NSArray/" class="archive-article-date">
+  	<time datetime="2018-12-29T11:00:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = @[@1, @2, @3];</span><br><span class="line">NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];</span><br><span class="line"></span><br><span class="line">// for in 改变可变数据会崩溃</span><br><span class="line">//    for (NSNumber *num in muArr) &#123;</span><br><span class="line">//        if (num.integerValue == 2) &#123;</span><br><span class="line">//            [muArr removeObject:num];</span><br><span class="line">//        &#125;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; muArr.count - 1; i ++) &#123; // muArr.count 也在随时变</span><br><span class="line">	NSNumber *num = muArr[i];</span><br><span class="line">	if (num.integerValue == 2) &#123;</span><br><span class="line">		[muArr removeObject:num];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// block 内部可以修改可变数组的元素，而不用__blok</span><br><span class="line">[muArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">	if ([obj integerValue] == 2) &#123;</span><br><span class="line">		[muArr removeObject:obj];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">// 对于集合中对象数很多的情况下，for in 的遍历速度非常之快，但小规模的遍历并不明显（还没普通for循环快）</span><br><span class="line">// Value查询index的时候, 面对大量的数组推荐使用 enumerateObjectsWithOptions的并行方法.</span><br></pre></td></tr></table></figure>
+<h5 id="数组线程安全的思考"><a href="#数组线程安全的思考" class="headerlink" title="数组线程安全的思考"></a>数组线程安全的思考</h5><p>NSMutableArray是线程不安全的，当有多个线程同时对数组进行操作的时候可能导致崩溃或数据错误<br>用<code>dispatch_sync</code>读<br><code>dispatch_barrier_async</code>写</p>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>数组和字典属于类族，最好不要继承</p>
+<p>在 Cocoa 中有一种奇葩的类存在 Class Clusters。面向对象的编程告诉我们：“类可以继承，子类具有父类的方法”。而 Cocoa 中的 Class Clusters 虽然平时表现的像普通类一样，但子类却没法继承父类的方法。 NSMutableArray就是这样的存在。为什么会这样呢？因为 Class Clusters 内部其实是由多个私有的类和方法组成。虽然它有这样的弊端，但是好处还是不言而喻的。例如，NSNumber 其实也是这种类，这样一个类可以把各种不同的原始类型封装到一个类下面，提供统一的接口。这正设计模式中的抽象工厂模式。</p>
+<p>查看Apple的文档，要继承这样的类需要必须实现其primitive methods方法，实现了这些方法，其它方法便都能通过这些方法组合而成。比如</p>
+<p>需要继承NSMutableArray就需要实现它的以下primitive methods：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObject:(id)anObject;</span><br><span class="line">- (void)insertObject:(id)anObject atIndex:(NSUInteger)index;</span><br><span class="line">- (void)removeLastObject;</span><br><span class="line">- (void)removeObjectAtIndex:(NSUInteger)index;</span><br><span class="line">- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;</span><br></pre></td></tr></table></figure></p>
+<p>NSArray的primitive methods：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)count;</span><br><span class="line">- (id)objectAtIndex:(NSUInteger)index;</span><br></pre></td></tr></table></figure></p>
+<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>动态数组并不是真正意义上的动态的内存，而是一块连续的内存，当添加新的元素时，容量已经等于当前的大小的时候(存不下了)，执行下面3步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[模块A] --&gt;|重新开辟一块大小为当前容量两倍的数组| B(模块B)</span><br><span class="line">B[模块A] --&gt;|把原数据拷贝过去| C(模块B)</span><br><span class="line">C[模块A] --&gt;|释放掉旧的数组| D(模块B)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>古老的C数组:<br>优点:查询速度很快，直接通过下表找到对应的值<br>缺点:修改、删除数据很慢，需要移动基于所有的其他的元素<img src="/2018/12/29/NSArray/11.png" title="图片说明">
+<img src="/2018/12/29/NSArray/12.png" title="图片说明"></li>
+<li>NSMutableArray<img src="/2018/12/29/NSArray/13.png" title="图片说明">
+offset: 有效数据起始位置偏移量<br>size: 实际占用的内存大小<br>used: 数组的实际的有效数据个数<br>*list: 实际内存的起始地址<img src="/2018/12/29/NSArray/14.png" title="图片说明">
+<strong>删除元素</strong><br>[arr removeObjecAtIndex:0];<br>仅仅修改 offset即可，内存完全不需要移动。<img src="/2018/12/29/NSArray/15.png" title="图片说明">
+<strong>插入元素</strong><br>[arr insertObjec:@”test”atIndex:0];<br>如果buff的size还够用，不需要扩展buff，数据会在buff的末端添加进去，此时offset由0变成size-1,used+1.over<br>循环buff的牛逼之处就在于此，无需移动内存，实现插入元素。<img src="/2018/12/29/NSArray/16.png" title="图片说明">
+<strong>删除元素</strong><br>[arr removeObjecAtIndex:3];<br>删除头尾元素直接修改offset或者used即可<br>但是如果删除中间元素，就避免不了移动其他元素，不过NSArray会选择更少移动的那一边移动数据。<br>所以我们在实际使用过程中应该尽量避免这么做。<img src="/2018/12/29/NSArray/17.png" title="图片说明">
+</li>
+</ul>
+<p><a href="https://www.jianshu.com/p/0b5a97720ebe" target="_blank" rel="noopener">https://www.jianshu.com/p/0b5a97720ebe</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/29/NSArray/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ios-Block" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/29/ios-Block/">Block</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/29/ios-Block/" class="archive-article-date">
   	<time datetime="2018-12-29T09:49:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
 </a>
         
@@ -200,8 +521,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>block：本质就是一个<code>object-c</code>对象。有<code>isa</code>指针</p>
-<h5 id="存储区"><a href="#存储区" class="headerlink" title="存储区"></a>存储区</h5><p>1.从捕获外部变量的角度上来看</p>
+        <p>block：本质就是一个<code>object-c</code>对象。内部有<code>isa</code>指针</p>
+<h5 id="三种存储区"><a href="#三种存储区" class="headerlink" title="三种存储区"></a>三种存储区</h5><p>1.从捕获外部变量的角度上来看</p>
 <ul>
 <li>栈区 _NSConcreteStackBlock：</li>
 </ul>
@@ -215,10 +536,10 @@
 </ul>
 <p>只用到全局变量、静态变量的<code>block</code>为<code>_NSConcreteGlobalBlock</code>，生命周期从创建到应用程序结束。</p>
 <p>由于<code>_NSConcreteStackBlock</code>所属的变量域一旦结束，那么该<code>Block</code>就会被销毁。在<code>ARC</code>环境下，编译器会自动的判断，把<code>Block</code>自动的从栈<code>copy</code>到堆。比如当<code>Block</code>作为函数返回值的时候，肯定会<code>copy</code>到堆上。<br>一般我们声明<code>block</code>使用<code>copy</code>，但在<code>ARC</code>下由于默认会<code>copy</code>。所以显示的使用<code>copy</code>只是个习惯，使用<code>strong</code>也是一样的</p>
-<p>但是当<code>Block</code>为函数参数的时候，就需要我们手动的<code>copy</code>一份到堆上了。这里除去系统的<code>API</code>我们不需要管，比如<code>GCD</code>等方法中本身带<code>usingBlock</code>的方法，其他我们自定义的方法传递<code>Block</code>为参数的时候都需要手动<code>copy</code>一份到堆上。</p>
+<p>但是当<code>Block</code>做为函数参数的时候，就需要我们手动的<code>copy</code>一份到堆上了。这里除去系统的<code>API</code>我们不需要管，比如<code>GCD</code>等方法中本身带<code>usingBlock</code>的方法，其他我们自定义的方法传递<code>Block</code>为参数的时候都需要手动<code>copy</code>一份到堆上。</p>
 <h5 id="block捕获外部变量"><a href="#block捕获外部变量" class="headerlink" title="block捕获外部变量"></a>block捕获外部变量</h5><p>自动变量被<code>block</code>捕获，使其成为自己内部的变量，且仅仅捕获自动变量的值（相当于内部创建了一个新的指针，指针指向的内容是自动变量的值）不会捕获外部自动变量的内存地址，所以改变<code>block</code>内部变量的值，相当于将block内部的指针指向了更新后的值，不会对外部自动变量的值造成影响。</p>
 <p>静态全局变量，全局变量由于作用域的原因，于是可以直接在Block里面被改变。他们也都存储在全局区。<br>静态变量传递给Block是内存地址值，所以能在Block里面直接改变值。</p>
-<h5 id="block"><a href="#block" class="headerlink" title="__block"></a>__block</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">__block NSString *name = @&quot;a&quot;;</span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 0x100ae80f0</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 0x16f31d378</span><br><span class="line"></span><br><span class="line">void (^foo)(void) = ^()&#123;</span><br><span class="line">    name = @&quot;b&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// __block 变量被 block结构体持有</span><br><span class="line">// 指针的地址变成了在block内部的地址</span><br><span class="line">// 此时指向的还是栈上的内容</span><br><span class="line">// 但是我们已经可以获得指针，来改变变量的值了</span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 0x100ae80f0</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 0x1c424a4f8</span><br><span class="line">foo();</span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 0x100ae8130</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 0x1c424a4f8</span><br><span class="line">NSLog(@&quot;%@&quot;,name); // b</span><br></pre></td></tr></table></figure>
+<h5 id="block"><a href="#block" class="headerlink" title="__block"></a>__block</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">__block NSString *name = @&quot;a&quot;; // __block 变量将被下面的 block结构体持有</span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 0x100ae80f0</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 0x16f31d378</span><br><span class="line"></span><br><span class="line">void (^foo)(void) = ^()&#123;</span><br><span class="line">    name = @&quot;b&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 0x100ae80f0 // name变量的的值“a”的地址不会变</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 0x1c424a4f8 // __block 变量被 block结构体持有 指针的地址变成了在block内部的地址</span><br><span class="line">foo();</span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 我们声明了新的“b“的地址，name的指针指向它 0x100ae8130</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 0x1c424a4f8</span><br><span class="line">NSLog(@&quot;%@&quot;,name); // b</span><br></pre></td></tr></table></figure>
 <p>在<code>Block</code>中改变变量值有2种方式，一是传递内存地址指针到<code>Block</code>中，二是改变存储区方式。<br>堆上的<code>Block</code>会持有对象。我们把<code>Block</code>通过<code>copy</code>到了堆上，堆上也会重新复制一份<code>Block</code>，并且该<code>Block</code>也会继续持有该<code>__block</code>。当<code>Block</code>释放的时候，<code>__block</code>没有被任何对象引用，也会被释放销毁。<br><code>__forwarding</code>指针这里的作用就是针对堆的<code>Block</code>，把原来<code>__forwarding</code>指针指向自己，换成指向<code>_NSConcreteMallocBlock</code>上复制之后的<code>__block</code>自己。然后堆上的变量的<code>__forwarding</code>再指向自己。这样不管<code>__block</code>在到堆上，还是在栈上，都可以通过(i-&gt;__forwarding-&gt;i)来访问到变量值。</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0vg7inj6zj30kq06tq4u.jpg" alt=""></p>
 <p><code>ARC</code>环境下，<code>Block</code>捕获外部对象变量，是都会<code>copy</code>一份的，地址都不同。只不过带有<code>__block</code>修饰符的变量会被捕获到<code>Block</code>内部持有。<br>在<code>MRC</code>环境下，<code>__block</code>根本不会对指针所指向的对象执行<code>copy</code>操作，而只是把指针进行的复制。<br>而在<code>ARC</code>环境下，对于声明为<code>__block</code>的外部对象，在<code>block</code>内部会进行<code>retain</code>，以至于在<code>block</code>环境内能安全的引用外部对象，所以才会产生循环引用的问题！</p>
@@ -241,9 +562,13 @@
 <h5 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h5><p>其一:当前对象强引用着blockTest,这句话很好理解,说白了也就是说当前的对象self在内存中不释放,那么blockTest作为self的属性也不会释放.</p>
 <p>其二:根据block捕捉上下文变量的原理,block内部使用了self,那么将对self强引用.</p>
 <p><code>block</code>结构体把<code>weakSelf</code>作为了自己的属性,或者说直接捕获的是<code>weakSelf</code>这个局部变量作为自己的属性,但是可以通俗直白的理解为结构体直接引用了<code>weakSelf</code>内存空间想使用<code>weakself</code>中保存的<code>self</code>指针,而这个<code>weakSelf</code>并没有增加<code>self</code>的引用计数,所以<code>self</code>依然可以释放.</p>
-<p>使用<code>strongSelf</code>后，代码会增加这么一句<code>WYTestObject * strongSelf =  weakSelf</code><br><code>strongSelf</code>赋值得到的是<code>self</code>(由weakSelf传过来的),这使得在<code>block</code>函数体运行期间<code>self</code>是不会被释放的,既然是函数,那么大括号走完其函数体重的局部变量就会被释放,也就是说函数执行完以后,<code>strongSelf</code>作为局部变量正常释放</p>
+<p>使用<code>strongSelf</code>后，代码会增加这么一句<code>WYTestObject * strongSelf =  weakSelf</code><br><code>strongSelf</code>赋值得到的是<code>self</code>(由weakSelf传过来的),这使得在<code>block</code>函数体运行期间<code>self</code>是不会被释放。而strongSelf仅仅是个局部变量，存在栈中，大括号走完其函数体重的局部变量就会被释放，也就是说函数执行完以后,<code>strongSelf</code>作为局部变量正常释放，没有内存泄漏。</p>
+<h4 id="strongSelf"><a href="#strongSelf" class="headerlink" title="strongSelf"></a>strongSelf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    __weak __typeof__(self) weakSelf = self;</span><br><span class="line">    NSLog(@&quot;%@&quot;,self);</span><br><span class="line"> </span><br><span class="line">    _block =  ^()&#123;</span><br><span class="line">        __strong __typeof__(self) strongSelf = weakSelf;</span><br><span class="line">        NSLog(@&quot;%@&quot;,strongSelf);</span><br><span class="line">        strongSelf.age = 1;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    _block();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">    NSLog(@&quot;dealloc&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-04-28 23:02:37.420174+0800 Test[6752:58054] &lt;BlockVC: 0x7f9e80704ca0&gt;</span><br><span class="line">2019-04-28 23:02:37.420602+0800 Test[6752:58054] &lt;BlockVC: 0x7f9e80704ca0&gt;</span><br><span class="line">2019-04-28 23:02:40.505877+0800 Test[6752:58054] dealloc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    [self performSelector:@selector(test) withObject:nil afterDelay:4];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)test &#123;</span><br><span class="line">    __weak __typeof__(self) weakSelf = self;</span><br><span class="line">    NSLog(@&quot;%@&quot;,self);</span><br><span class="line">    </span><br><span class="line">    _block =  ^()&#123;</span><br><span class="line">        BlockVC *test = weakSelf;</span><br><span class="line">        NSLog(@&quot;%@&quot;,test);</span><br><span class="line">        test.age = 2;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    _block();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">    NSLog(@&quot;dealloc&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019-04-28 23:06:08.934721+0800 Test[6789:59593] &lt;BlockVC: 0x7fe9264066d0&gt;</span><br><span class="line">2019-04-28 23:06:08.934942+0800 Test[6789:59593] &lt;BlockVC: 0x7fe9264066d0&gt;</span><br><span class="line">2019-04-28 23:06:11.814442+0800 Test[6789:59593] dealloc</span><br></pre></td></tr></table></figure>
 <h5 id="强引用赋值-weakSelf-仍为强引用"><a href="#强引用赋值-weakSelf-仍为强引用" class="headerlink" title="强引用赋值 weakSelf 仍为强引用"></a>强引用赋值 weakSelf 仍为强引用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) UIViewController *superViewControler;</span><br><span class="line"></span><br><span class="line">__weak __typeof__(self) weakSelf = self;</span><br><span class="line">_vc1.superViewControler = weakSelf; // 这里还是强引用</span><br></pre></td></tr></table></figure>
-<h5 id="block-为-nil-会崩溃"><a href="#block-为-nil-会崩溃" class="headerlink" title="block 为 nil 会崩溃"></a>block 为 nil 会崩溃</h5><img src="/2018/12/29/Block/block4.png" title="图片说明">
+<h5 id="block-为-nil-会崩溃"><a href="#block-为-nil-会崩溃" class="headerlink" title="block 为 nil 会崩溃"></a>block 为 nil 会崩溃</h5><img src="/2018/12/29/ios-Block/block4.png" title="图片说明">
 <p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0vg7i4vuej314q0agwpt.jpg" alt=""></p>
 <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0vg7hinl0j311h0u0kgs.jpg" alt=""></p>
 <p>延伸阅读：</p>
@@ -271,7 +596,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/29/Block/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/29/ios-Block/">展开全文 >></a>
         </p>
       
 
@@ -555,19 +880,19 @@
 
 
   
-    <article id="post-单例" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-单例" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/单例/">单例</a>
+      <a class="article-title" href="/2018/12/28/ios-单例/">单例</a>
     </h1>
   
 
         
-        <a href="/2018/12/28/单例/" class="archive-article-date">
+        <a href="/2018/12/28/ios-单例/" class="archive-article-date">
   	<time datetime="2018-12-28T14:57:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
 </a>
         
@@ -575,14 +900,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>只有调用<code>sharedInstance</code>才会是单例 <code>allock init</code>还是会生成不同的实例<br>这里的<code>statc</code>限定作用域，使得外部不能获得<code>_instance</code>，如果外部获得<code>_instance</code>，就可以改变它，从而违背了单例的初衷。</p>
-<p><code>GCD</code>单例的原理也是在<code>dispatch_once</code>中加锁，保证线程安全，只不过内部有更多优化，效率更高</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedInstance &#123;  </span><br><span class="line">    static MyClass *_instance = nil;  </span><br><span class="line">    static dispatch_once_t predicate;  </span><br><span class="line">    dispatch_once(&amp;predicate, ^&#123;  </span><br><span class="line">        _instance = [[MyClass alloc] init];   </span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return _instance;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>@synchronized</code>采用的是递归互斥锁来实现线程安全，而<code>dispatch_once</code>的内部则使用了很多原子操作来替代锁，以及通过信号量来实现线程同步，而且有很多针对处理器优化的地方.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">+ (MyClass *)sharedInstance &#123;  </span><br><span class="line">    static MyClass *_instance = nil; </span><br><span class="line">    @synchronized (self) &#123;</span><br><span class="line">        if (!_instance) &#123;</span><br><span class="line">            _instance = [[super allocWithZone:NULL] init];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return _instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)zone &#123; // 第三步：重写allocWithZone方法</span><br><span class="line">    if (!_instance) &#123;</span><br><span class="line">        _instance = [[MyClass alloc] init];</span><br><span class="line">        return_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)copyWithZone:(NSZone *)zone&#123; // 第四步</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 以下只在MRC下才需要写，因为在ARC下不让调用一下方法，所以不用担心引用计数的问题。</span><br><span class="line">- (id)retain &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSUInteger)retainCount &#123;</span><br><span class="line">    return NSUIntegerMAX;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)release &#123;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)autorelease &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h4 id="如何写单例"><a href="#如何写单例" class="headerlink" title="如何写单例"></a>如何写单例</h4><p>现在我们写单例一般都是用<code>dispatch_once</code>方法来完成，但这样并不能保证其他人正确使用我们的单例方法，只有调用<code>sharedInstance</code>才会是单例， 调用<code>[[MyClass alloc] init]</code>还是会生成全新的实例。由于这个方法最后调用的是<code>allocWithZone</code>，所以我们还要重写<code>allocWithZone</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">static MyClass *_instance = nil;  </span><br><span class="line"></span><br><span class="line">+ (instancetype)sharedInstance &#123;  </span><br><span class="line">    static dispatch_once_t predicate;  </span><br><span class="line">    dispatch_once(&amp;predicate, ^&#123;  </span><br><span class="line">        _instance = [[MyClass alloc] init];   </span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    return _instance;  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)zone &#123; // 第三步：重写allocWithZone方法</span><br><span class="line">    if (!_instance) &#123;</span><br><span class="line">        _instance = [[MyClass alloc] init];</span><br><span class="line">        return_instance;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)copyWithZone:(NSZone *)zone&#123; // 第四步</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 以下只在MRC下才需要写，因为在ARC下不让调用一下方法，所以不用担心引用计数的问题。</span><br><span class="line">- (id)retain &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSUInteger)retainCount &#123;</span><br><span class="line">    return NSUIntegerMAX;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)release &#123;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)autorelease &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="static"><a href="#static" class="headerlink" title="static"></a>static</h4><p><code>static MyClass *_instance = nil;</code>  这里的<code>statc</code>限定作用域，使得外部不能获得<code>_instance</code>，如果外部获得<code>_instance</code>，就可以改变它，从而违背了单例的初衷。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p><code>GCD</code>单例的原理也是在<code>dispatch_once</code>中加锁，保证线程安全，只不过内部有更多优化，效率更高</p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>什么时候会继承单例？暂不考虑，一般用不到。如果真的继承了会怎样？会初始化一个子类和一个父类吗？</p>
+<p>不会，继承后还是同一个实例，原因是子类调用的是父类的<code>sharedInstance</code>方法， 直接返回父类的实例了， 子类根本没有被 alloc！</p>
 <h5 id="单例销毁"><a href="#单例销毁" class="headerlink" title="单例销毁"></a>单例销毁</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">方法一:</span><br><span class="line">+(void)attemptDealloc&#123;</span><br><span class="line">    [_instance release]; //mrc 需要释放,当然你就不能重写release的方法了.</span><br><span class="line">    _instance = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方法二:</span><br><span class="line">1. 必须把static dispatch_once_t onceToken; 这个拿到函数体外,成为全局的.</span><br><span class="line">2.</span><br><span class="line">+(void)attempDealloc &#123;</span><br><span class="line">    onceToken = 0; // 只有置成0,GCD才会认为它从未执行过.它默认为0.这样才能保证下次再次调用shareInstance的时候,再次创建对象.</span><br><span class="line">    [_instance release];</span><br><span class="line">    _instance = nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h5><p>单例是懒加载，程序初始化后，在<code>viewcontroller</code>中不调用单例的初始化方法，不会初始化单例对象。如果在<code>viewcontrol</code>的<code>load</code>方法中调用了单例的初始化方法，就不是懒加载，是饿加载</p>
 <p>1、<code>static</code>修饰局部变量：<br>这个局部变量的生命周期就和不加<code>static</code>的全局变量一样了（也就是只有一块内存区域，无论这个方法执行多少次，都不会重新进行内存的分配），不同的在于作用域仍然没有改变<br>2、static修饰全局变量：<br>如果不使用<code>static</code>的全局变量，我们可以在其他的类中使用<code>extern</code>关键字直接获取到这个对象，从而可将对象置为<code>nil</code></p>
+<p>参考：</p>
 <p><a href="https://www.jianshu.com/p/c5a0875d3677" target="_blank" rel="noopener">https://www.jianshu.com/p/c5a0875d3677</a></p>
 
       
@@ -607,7 +934,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/单例/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/28/ios-单例/">展开全文 >></a>
         </p>
       
 
@@ -687,84 +1014,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/12/28/KVC/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关联" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/关联/">关联</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/28/关联/" class="archive-article-date">
-  	<time datetime="2018-12-28T14:42:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0ve49qxwhj30s80hwwis.jpg" alt=""></p>
-<p>一个实例对象就对应一个<code>ObjectAssociationMap</code>，而<code>ObjectAssociationMap</code>中存储着多个此实例对象的关联对象的<code>key</code>以及<code>ObjcAssociation</code>，为<code>ObjcAssociation</code>中存储着关联对象的<code>value</code>和<code>policy</code>策略。</p>
-<p>由此我们可以知道关联对象并不是放在了原来的对象里面，而是自己维护了一个全局的<code>map</code>用来存放每一个对象及其对应关联属性表格。</p>
-<p><code>AssociationsManager</code>里面是由一个静态<code>AssociationsHashMap</code>来存储所有的关联对象的。这相当于把所有对象的关联对象都存在一个全局<code>map</code>里面。而<code>map</code>的的<code>key</code>是这个对象的指针地址，而这个<code>map</code>的<code>value</code>又是另外一个<code>AssociationsHashMap</code>，里面保存了关联对象的<code>kv</code>对。</p>
-<p>对象<code>dealloc</code>时<code>runtime</code>会调用<code>objc_destructInstance</code>里面会判断这个对象有没有关联对象，如果有，会调用<code>_object_remove_assocations</code>做关联对象的清理工作。<br>同时会判断是否有<code>weak</code>对象，然后置为<code>nil</code><br>weak对象和关联对象不需要主动释放，<code>dealloc</code>会自动释放。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/关联/">展开全文 >></a>
         </p>
       
 
@@ -874,19 +1123,19 @@
 
 
   
-    <article id="post-多线程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-多线程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/28/多线程/">多线程</a>
+      <a class="article-title" href="/2018/12/28/ios-多线程/">多线程</a>
     </h1>
   
 
         
-        <a href="/2018/12/28/多线程/" class="archive-article-date">
+        <a href="/2018/12/28/ios-多线程/" class="archive-article-date">
   	<time datetime="2018-12-28T01:07:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
 </a>
         
@@ -894,21 +1143,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>GCD 公开有 5 个不同的队列：运行在主线程中的 <code>main queue</code>，3 个不同优先级的后台队列，以及一个优先级更低的后台队列（用于 I/O）。 另外，开发者可以创建自定义队列：串行或者并行队列。自定义队列非常强大，在自定义队列中被调度的所有 block 最终都将被放入到系统的全局队列中和线程池中。</p>
-<p>在 GCD 下，有时候你可能会看到这样的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 警告：不要使用这些代码。</span><br><span class="line">dispatch_async(backgroundQueue, ^&#123;</span><br><span class="line">    NSData* contents = [NSData dataWithContentsOfURL:url]</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        // 处理取到的日期</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>乍看起来没什么问题，但是这段代码却有致命缺陷。你没有办法去取消这个同步的网络请求。它将阻塞住线程直到它完成。如果请求一直没结果，那就只能干等到超时（比如 dataWithContentsOfURL: 的超时时间是 30 秒）。</p>
-<h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是一种资源，用于执行队列中的任务</p>
+        <h5 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h5><p>线程是一种资源，用于执行队列中的任务</p>
 <p>线程（thread）是组成进程的子单元，操作系统的调度器可以对线程进行单独的调度。<br>多线程可以在单核 CPU 上同时（或者至少看作同时）运行。操作系统将小的时间片分配给每一个线程，这样就能够让用户感觉到有多个任务在同时进行。如果 CPU 是多核的，那么线程就可以真正的以并发方式被执行</p>
-<h5 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h5><p>1、进程是资源分配的最小单位，线程是程序执行的最小单位<br>2、进程有自己的独立地址空间，每启动一个进程，系统就会为它分配地址空间，建立数据表来维护代码段、堆栈段和数据段，这种操作非常昂贵。<br>而线程是共享进程中的数据的，使用相同的地址空间，因此CPU切换一个线程的花费远比进程要小很多，同时创建一个线程的开销也比进程要小很多。<br>3、线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据，而进程之间的通信需要以通信的方式进行<br>4、但是多进程程序更健壮，多线程程序只要有一个线程死掉，整个进程也死掉了，而一个进程死掉并不会对另外一个进程造成影响，因为进程有自己独立的地址空间。</p>
-<p>二、进程与线程的资源：<br>1、堆与栈<br>堆：是大家共有的空间，分全局堆和局部堆。堆在操作系统对进程初始化的时候分配，运行过程中也可以向系统要额外的堆，但是记得用完了要还给操作系统，要不然就是内存泄漏。<br>栈：是个线程独有的，保存其运行状态和局部自动变量的。栈在线程开始的时候初始化，每个线程的栈互相独立，因此，栈是<code>thread safe</code>的。操作系统在切换线程的时候会自动的切换栈，就是切换<code>ＳＳ／ＥＳＰ</code>寄存器。栈空间不需要在高级语言里面显式的分配和释放。</p>
+<h5 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h5><p>1、进程是系统资源分配的最小单位，比如打开一个APP；线程是程序执行的最小单位，比如开启一个异步网络请求。<br>2、进程（APP）有自己的独立地址空间，每启动一个进程，系统就会为它分配地址空间，建立数据表来维护代码段、堆栈段和数据段，这种操作非常昂贵。<br>线程是共享进程中的数据的，使用相同的地址空间，因此CPU切换一个线程的花费远比进程要小很多，同时创建一个线程的开销也比进程要小很多。<br>3、线程之间的通信更方便，同一进程下的线程共享全局变量、静态变量等数据，而进程之间的通信需要以通信的方式进行<br>4、多进程的程序更健壮，多线程程序只要有一个线程死掉，整个进程也死掉了，而一个进程死掉并不会对另外一个进程造成影响，因为进程有自己独立的地址空间。</p>
+<p>二、进程与线程的资源：<br>1、堆与栈<br>堆：是大家共有的空间，分全局堆和局部堆。堆在操作系统对进程初始化的时候分配，运行过程中也可以向系统要额外的堆，但是记得用完了要还给操作系统，要不然就是内存泄漏。<br>栈：是各个线程独有的，保存其运行状态和局部自动变量的。栈在线程开始的时候初始化，每个线程的栈互相独立，因此，栈是<code>thread safe</code>的。操作系统在切换线程的时候会自动的切换栈，就是切换<code>ＳＳ／ＥＳＰ</code>寄存器。栈空间不需要在高级语言里面显式的分配和释放。</p>
 <h5 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h5><ul>
 <li>管道</li>
 <li>共享内存</li>
 <li>socket</li>
 <li>消息队列</li>
 </ul>
-<h5 id="队列："><a href="#队列：" class="headerlink" title="队列："></a>队列：</h5><p>队列用于管理任务，CPU队列中的任务分发给线程执行，每个队列（至少）对应一个线程</p>
+<h5 id="队列："><a href="#队列：" class="headerlink" title="队列："></a>队列：</h5><p>队列用于管理任务，CPU将队列中的任务分发给线程执行，每个队列（至少）对应一个线程</p>
 <ul>
 <li>串行队列：队列中的任务按顺序执行，对应一个线程</li>
 <li>并行队列：队列中的任务可以分发给不同的线程同时执行，可以对应多个线程</li>
@@ -916,8 +1161,8 @@
 <p>队列会默认创建新线程</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">dispatch_queue_t serialQueue = dispatch_queue_create(&quot;serial&quot;, NULL);</span><br><span class="line">dispatch_queue_t concurrentQueue = dispatch_queue_create(&quot;concurrent&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"></span><br><span class="line">dispatch_async(serialQueue, ^&#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(concurrentQueue, ^&#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;NSThread: 0x1c406a740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">&lt;NSThread: 0x1c0473b00&gt;&#123;number = 3, name = (null)&#125;</span><br><span class="line">&lt;NSThread: 0x1c40673c0&gt;&#123;number = 4, name = (null)&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="GCD-vs-NSOperation"><a href="#GCD-vs-NSOperation" class="headerlink" title="GCD vs NSOperation"></a>GCD vs NSOperation</h5><p><code>GCD</code>是将任务添加到队列中（串行/并发/主队列），并且制定任务执行的函数（同步/异步），其性能最好，底层是C语言的API。只能设置某一个队列的优先级，<br>常用的功能包括<br>一次性执行 <code>dispatch_once</code>，<br>延迟操作<code>dispatch_after</code>（这里是延迟推到线程中，而不是在线程中等待，因此比如设置延迟1秒执行，但是一秒后只是推到了线程中，不会立刻执行），调度组等，<br><code>dispatch_barrier_async</code>栅栏来控制异步操作的顺序<br><code>dispatch_apply</code>充分利用多核进行快速迭代遍历<br><code>dispatch_group_t</code>队列组，添加到队列组中的任务完成之后会调用<code>dispatch_group_notify</code> 函数，可以实现类似A、B两个耗时操作都完成之后，去主线程更新UI的操作</p>
-<p><code>NSOperation</code>把操作（异步）添加到队列中（全局的并发队列），是OC框架，更加面向对象，是对GCD的封装，可以随时取消已经设定准备要执行的任务，已经执行的除外，可以设置队列中每一个操作的优先级，其基本功能包括设置最大操作并发数<code>maxConcurrentOperationCount</code>，继续/暂停/全部取消，可以对队列设置操作的依赖关系，通过<code>KVO</code>监听<code>NSOperation</code> 对象的属性，如 <code>isCancelled</code>、<code>isFinished</code>；对象可重用。<br>操作依赖：<code>[operation2 addDependency:operation1]</code>;  (<code>operation2</code> 依赖于<code>operation1</code>的完成，但这两个任务要加入到同一个队列中)</p>
+<h5 id="GCD-vs-NSOperation"><a href="#GCD-vs-NSOperation" class="headerlink" title="GCD vs NSOperation"></a>GCD vs NSOperation</h5><p><code>GCD</code>是将任务添加到队列中（串行/并发/主队列），并且制定任务执行的函数（同步/异步），使用简单。不能对某一任务设置优先级，只能设置某一个队列的优先级。<br>常用的功能包括<br>一次性执行 <code>dispatch_once</code>，<br>延迟操作<code>dispatch_after</code>（这里是延迟推到线程中，而不是在线程中等待，因此比如设置延迟1秒执行，但是一秒后只是推到了线程中，不会立刻执行），调度组等，<br><code>dispatch_barrier_async</code>栅栏来控制异步操作的顺序<br><code>dispatch_apply</code>充分利用多核进行快速迭代遍历<br><code>dispatch_group_t</code>队列组，添加到队列组中的任务完成之后会调用<code>dispatch_group_notify</code> 函数，可以实现类似A、B两个耗时操作都完成之后，去主线程更新UI的操作</p>
+<p><code>NSOperation</code>把操作（异步）添加到队列中（全局的并发队列），是OC框架，更加面向对象，可以随时取消已经设定准备要执行的任务，已经执行的除外，可以设置队列中每一个操作的优先级，其基本功能包括设置最大操作并发数<code>maxConcurrentOperationCount</code>，继续/暂停/全部取消，可以对队列设置操作的依赖关系，通过<code>KVO</code>监听<code>NSOperation</code> 对象的属性，如 <code>isCancelled</code>、<code>isFinished</code>；对象可重用。<br>操作依赖：<code>[operation2 addDependency:operation1]</code>;  (<code>operation2</code> 依赖于<code>operation1</code>的完成，但这两个任务要加入到同一个队列中)</p>
 <h5 id="同步-amp-异步-串行-amp-并发"><a href="#同步-amp-异步-串行-amp-并发" class="headerlink" title="同步&amp;异步 串行&amp;并发"></a>同步&amp;异步 串行&amp;并发</h5><ul>
 <li>同步执行</li>
 </ul>
@@ -934,10 +1179,10 @@
 <li>并发队列</li>
 </ul>
 <p>比如使用<code>dispatch_get_global_queue</code>。这个队列中的任务也是按照先来后到的顺序开始执行，注意是开始，但是它们的执行结束时间是不确定的，取决于每个任务的耗时。对于n个并发队列，<code>GCD</code>不会创建对应的n个线程而是进行适当的优化</p>
-<h5 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h5><p>向另一个串行队列添加任务不一定导致死锁，因为队列是可以嵌套的，比如在A队列（串行）添加一个任务a，在a这个任务中向B队列（串行）添加任务b，在b这个任务中又向A队列添加任务，这就间接满足了:在某一个串行队列中，同步的向这个队列添加<code>block</code>。</p>
+<h5 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h5><p>向一个串行队列添加任务可能导致死锁，因为队列是可以嵌套的，比如在A队列（串行）添加一个任务a，在a这个任务中向B队列（串行）添加任务b，在b这个任务中又向A队列添加任务，这就间接满足了:在某一个串行队列中，同步的向这个队列添加任务。</p>
 <p>所以判断是否发生死锁的最好方法就是看有没有在串行队列（当然也包括主队列）中向这个队列添加任务。又因为我们知道每个串行队列对应一个线程，所以只要不在某个线程中调用会阻塞这个线程的方法即可。</p>
 <h5 id="串行队列"><a href="#串行队列" class="headerlink" title="串行队列"></a>串行队列</h5><p>串行队列 异步任务，会创建子线程，且只创建一个子线程，异步任务执行是有序的。<br>串行队列 同步任务，不创建新线程，同步任务执行是有序的。本例在主线程中执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;start--%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;end--%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;</span><br><span class="line">--------------------- </span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  4</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  5</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  6</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  7</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  8</span><br><span class="line">sync--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;  9</span><br><span class="line">end--&lt;NSThread: 0x280ce5a80&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x280cbe9c0&gt;&#123;number = 3, name = (null)&#125;  9</span><br></pre></td></tr></table></figure></p>
-<h5 id="并行队列"><a href="#并行队列" class="headerlink" title="并行队列"></a>并行队列</h5><p>并行队列 异步任务 创建子线程，且多个子线程(demo有时只打印一个)，异步任务打印结果无序。<br>并行队列 同步任务，不创建新线程，同步任务执行是有序的，会阻塞当前线程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;start--%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;end--%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;</span><br><span class="line">--------------------- </span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  4</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  6</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  5</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  9</span><br><span class="line">end--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x283d53d00&gt;&#123;number = 5, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x283d31d80&gt;&#123;number = 6, name = (null)&#125;  6</span><br></pre></td></tr></table></figure></p>
+<h5 id="并行队列"><a href="#并行队列" class="headerlink" title="并行队列"></a>并行队列</h5><p>并行队列 异步任务 创建子线程，且会创建多个子线程(demo有时只打印一个)，异步任务打印结果无序。<br>并行队列 同步任务，不创建新线程，同步任务执行是有序的，会阻塞当前线程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line"></span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;start--%@&quot;,[NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_sync(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;sync--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i=0; i&lt;10; i++) &#123;</span><br><span class="line">        dispatch_async(q, ^&#123;</span><br><span class="line">            NSLog(@&quot;async--%@  %d&quot;,[NSThread currentThread],i);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;end--%@&quot;,[NSThread currentThread]);</span><br><span class="line">&#125;</span><br><span class="line">--------------------- </span><br><span class="line"></span><br><span class="line">start--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  3</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  4</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  6</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  5</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">sync--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;  9</span><br><span class="line">end--&lt;NSThread: 0x283d6f740&gt;&#123;number = 1, name = main&#125;</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  0</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  1</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  2</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  3</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  4</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  7</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  8</span><br><span class="line">async--&lt;NSThread: 0x283d30080&gt;&#123;number = 3, name = (null)&#125;  9</span><br><span class="line">async--&lt;NSThread: 0x283d3a340&gt;&#123;number = 4, name = (null)&#125;  6</span><br><span class="line">async--&lt;NSThread: 0x283d53d00&gt;&#123;number = 5, name = (null)&#125;  5</span><br><span class="line">async--&lt;NSThread: 0x283d31d80&gt;&#123;number = 6, name = (null)&#125;  6</span><br></pre></td></tr></table></figure></p>
 <h5 id="dispatch-apply"><a href="#dispatch-apply" class="headerlink" title="dispatch_apply"></a>dispatch_apply</h5><p>dispatch_apply函数是dispatch_sync函数和Dispatch Group的关联API,该函数按指定的次数将指定的Block追加到指定的Dispatch Queue中,并等到全部的处理执行结束<br>是否有序执行取决于所添加到的 queue是串行还是并行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)test &#123;</span><br><span class="line">    dispatch_queue_t q = dispatch_queue_create(&quot;fs&quot;, DISPATCH_QUEUE_SERIAL);</span><br><span class="line"></span><br><span class="line">    dispatch_apply(100, q, ^(size_t index) &#123;</span><br><span class="line">        NSLog(@&quot;%zu&quot;, index);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;done&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
 <h5 id="atomic"><a href="#atomic" class="headerlink" title="atomic"></a>atomic</h5><p><code>atomic</code>的作用只是给<code>getter</code>和<code>setter</code>加了个锁，<code>atomic</code>只能保证代码进入<code>getter</code>或者<code>setter</code>函数内部时是安全的，一旦出了<code>getter</code>和<code>setter</code>，多线程安全只能靠程序员自己保障了。所以<code>atomic</code>属性和使用<code>property</code>的多线程安全并没什么直接的联系。另外，<code>atomic</code>由于加锁也会带来一些性能损耗，所以我们在编写iOS代码的时候，一般声明<code>property</code>为<code>nonatomic</code>，在需要做多线程安全的场景，自己去额外加锁做同步。</p>
 <h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><p>停车场剩余4个车位，那么即使同时来了四辆车也能停的下。如果此时来了五辆车，那么就有一辆需要等待。</p>
@@ -1008,190 +1253,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/28/多线程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-KVO" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/27/KVO/">KVO</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/27/KVO/" class="archive-article-date">
-  	<time datetime="2018-12-27T08:24:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h5><p>与<code>KVC</code>相同，OC在实现<code>KVO</code>时没有采用实现接口的方式，而是针对<code>NSObject</code>创建了一个类别,通过这样的方式使得<code>NSObject</code>的子类可以自行实现<code>NSKeyValueObserving</code>类别定义的相关方法，其他的如<code>NSArray</code>、<code>NSSet</code>这样的集合类也都定义了相关的类别，因此也可以对集合类型进行<code>KVO</code>的监听。但是不能直接对集合对象进行监听，只能借助集合运算符 <code>@Max</code>,<code>@Min</code></p>
-<p>观察者观察的是属性，只有遵循<code>KVO</code> 变更属性值的方式才会执行<code>KVO</code> 的回调方法，例如是否执行了 <code>setter</code> 方法、或者是否使用了 <code>KVC</code> 赋值(也会调用set方法)。<br>如果赋值没有通过 <code>setter</code> 方法或者 <code>KVC</code>，而是直接修改属性对应的成员变量，例如：仅调用<code>_name = @&quot;newName&quot;</code>，这时是不会触发<code>KVO</code> 机制。</p>
-<p>通过category和关联向类中添加属性，可以被KVO监听</p>
-<h5 id="正确使用"><a href="#正确使用" class="headerlink" title="正确使用"></a>正确使用</h5><ul>
-<li>需要主动移除</li>
-</ul>
-<p><code>A_VC</code> 持有 <code>model</code>的引用，<code>push</code>到<code>B_VC</code>，并将<code>model</code>赋值给<code>B_VC</code>的<code>model</code>。<code>B_VC</code>添加对<code>model.name</code>的监听，不移除，此时<code>pop</code>到<code>A_VC</code>,更改<code>model.name</code>，因为监听对象<code>B_VC</code>的指针为野指针，会崩溃。</p>
-<ul>
-<li>静态变量的地址可以保证<code>context</code>的独一无二</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static void * SubViewControllerBalanceObserverContext = &amp;SubViewControllerBalanceObserverContext;</span><br></pre></td></tr></table></figure>
-<p><code>superVC</code>和<code>subVC</code>都监听了<code>model.name</code>，当<code>model.name</code>改变时,子类会收到两次监听，一次是自己的，另一次因为<code>superVC</code>的监听，但<code>self</code>依然是<code>subVC</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    if (context == SubViewControllerBalanceObserverContext)</span><br><span class="line">&#123;</span><br><span class="line">        NSLog(@&quot;SubViewController NewBalance: %lf&quot;, self.model.balance);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.model removeObserver:self forKeyPath:@&quot;balance&quot; context:SubViewControllerBalanceObserverContext</span><br></pre></td></tr></table></figure>
-<p>正确做法是判断不是自己的，主动调用父类的监听方法。<br><code>object</code>是被监听的对象</p>
-<p><code>KVO</code>的<code>addObserver</code>和<code>removeObserver</code>需要是成对的，如果重复<code>remove</code>则会导致<code>NSRangeException</code>类型的<code>Crash</code>，如果忘记<code>remove</code>则会在观察者释放后再次接收到<code>KVO</code>回调时<code>Crash</code>。</p>
-<h5 id="手动调用KVO"><a href="#手动调用KVO" class="headerlink" title="手动调用KVO"></a>手动调用KVO</h5><p>KVO在属性发生改变时的调用是自动的，如果想要手动控制这个调用时机，或想自己实现KVO属性的调用，则可以通过KVO提供的方法进行调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)setBalance:(double)theBalance &#123;</span><br><span class="line">    if (theBalance != _balance) &#123;</span><br><span class="line">        [self willChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">        _balance = theBalance;</span><br><span class="line">        [self didChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//balance属性实现该方法</span><br><span class="line">+ (BOOL)automaticallyNotifiesObserversOfBalance</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h5><p>基于<code>runtime</code><br><code>Apple</code> 使用了 <code>isa</code> 混写（<code>isa-swizzling</code>）来实现 <code>KVO</code> 。当观察对象<code>A</code>时，<code>KVO</code>机制动态创建一个新的名为：<code>NSKVONotifying_A</code> 的新类，该类继承自对象<code>A</code>的本类，且 <code>KVO</code> 为 <code>NSKVONotifying_A</code> 重写观察属性的 <code>setter</code> 方法，<code>setter</code> 方法会负责在调用原 <code>setter</code> 方法之前和之后，通知所有观察对象属性值的更改情况。</p>
-<p><code>NSKVONotifying_A</code> 类剖析：在这个过程，被观察对象的 <code>isa</code> 指针从指向原来的 <code>A</code> 类，被 <code>KVO</code>机制修改为指向系统新创建的子类 <code>NSKVONotifying_A</code> 类，来实现当前类属性值改变的监听；<br>所以当我们从应用层面上看来，完全没有意识到有新的类出现，这是系统“隐瞒”了对 <code>KVO</code> 的底层实现过程，让我们误以为还是原来的类。但是此时如果我们创建一个新的名为<code>“NSKVONotifying_A”</code>的类，就会发现系统运行到注册 <code>KVO</code> 的那段代码时程序就崩溃，因为系统在注册监听的时候动态创建了名为 <code>NSKVONotifying_A</code> 的中间类，并指向这个中间类了。</p>
-<p>子类<code>setter</code>方法剖析：<code>KVO</code> 的键值观察通知依赖于 <code>NSObject</code> 的两个方法:<code>willChangeValueForKey:</code>和 <code>didChangevlueForKey:</code>，在存取数值的前后分别调用 2 个方法：<br>被观察属性发生改变之前，<code>willChangeValueForKey:</code>被调用，通知系统该 <code>keyPath</code> 的属性值即将变更；当改变发生后， <code>didChangeValueForKey:</code> 被调用，通知系统该 <code>keyPath</code> 的属性值已经变更；之后， <code>observeValueForKey:ofObject:change:context:</code> 也会被调用。且重写观察属性的 <code>setter</code> 方法这种继承方式的注入是在运行时而不是编译时实现的。<br><code>KVO</code> 为子类的观察者属性重写调用存取方法的工作原理在代码中相当于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-(void)setName:(NSString *)newName&#123;</span><br><span class="line">    [self willChangeValueForKey:@&quot;name&quot;];    //KVO 在调用存取方法之前总调用</span><br><span class="line">    [super setValue:newName forKey:@&quot;name&quot;]; //调用父类的存取方法</span><br><span class="line">    [self didChangeValueForKey:@&quot;name&quot;];     //KVO 在调用存取方法之后总调用</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="object-getClass"><a href="#object-getClass" class="headerlink" title="object_getClass"></a>object_getClass</h5><p>重写了<code>NSKVONotifying_A</code>的<code>class</code>方法，所以调用<code>class</code>方法返回的还是之前的A类，需要调用<code>object_getClass</code>来获取<code>isa</code>指向的class类<br>为什么上面调用<code>runtime</code>的<code>object_getClass</code>函数，就可以获取到真正的类呢？</p>
-<p>调用<code>object_getClass</code>函数后其返回的是一个<code>Class</code>类型，<code>Class</code>是<code>objc_class</code>定义的一个<code>typedef</code>别名，通过<code>objc_class</code>就可以获取到对象的isa指针指向的Class，也就是对象的类对象。</p>
-<p>由此可以推测，object_getClass函数内部返回的是对象的isa指针。</p>
-<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>苹果提供的<code>KVO</code>自身存在很多问题，首要问题在于，<code>KVO</code>如果使用不当很容易崩溃。例如重复<code>add</code>和<code>remove</code>导致的<code>Crash</code>，<code>Observer</code>被释放导致的崩溃，<code>keyPath</code>传错导致的崩溃等。</p>
-<h5 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h5><p><code>FBKVOViewController</code>是<code>facebook</code>团队开源的框架，提供简洁的接口帮我调用kvo的功能。其核心的设计是 ：利用单例对象（_FBKVOSharedController）来接受对象属性改变的回调。保证了回调的安全。当接受到观察对象的属性改变回调时 ，再根据<code>context</code>，向上转发回调到你定义的代码块中。</p>
-<img src="/2018/12/27/KVO/1.png" title="图片说明">
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0tiihijppj31aq0kadm4.jpg" alt=""></p>
-<p><a href="https://blog.csdn.net/u014205968/article/details/78224820" target="_blank" rel="noopener">https://blog.csdn.net/u014205968/article/details/78224820</a><br><a href="https://www.jianshu.com/p/e59bb8f59302" target="_blank" rel="noopener">https://www.jianshu.com/p/e59bb8f59302</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/27/KVO/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-溢出" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/26/溢出/">溢出</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/26/溢出/" class="archive-article-date">
-  	<time datetime="2018-12-26T14:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="无符号数和有符号数的区别"><a href="#无符号数和有符号数的区别" class="headerlink" title="无符号数和有符号数的区别"></a>无符号数和有符号数的区别</h5><p>无符号数：无符号数就是没有正负号之分，表示的是自然数<br>有符号数：有符号数有正负号之分，在计算机中0表示正数，1表示负数<br>int型 占32位， 则取值范围为[-2^31, 2^31-1] </p>
-<h5 id="原码，反码，补码"><a href="#原码，反码，补码" class="headerlink" title="原码，反码，补码"></a>原码，反码，补码</h5><p>对于无符号数来讲它是没有原码，反码，补码之分的。(原码，反码，补码相同）<br>有符号数才有原码，反码，补码编码方式<br>　　<br>正数的原码，反码，补码相同<br>负数:<br>    原码：10001100<br>    反码：11110011<br>    补码：11110100 (计算机存储的是补码，操作时都以补码操作)反码+1</p>
-<p>例：正数 12<br>    原码：00001100<br>    反码：00001100<br>    补码：00001100
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-　　　　　　　　　　</p>
-<h5 id="计算机为什么使用补码存储数据"><a href="#计算机为什么使用补码存储数据" class="headerlink" title="计算机为什么使用补码存储数据"></a>计算机为什么使用补码存储数据</h5><p>优点：<br>1.避免了0的编码有两个<br>2.符号位和有效值位可以一起处理，减法通过加法就可以实现，只有加法，没有减法
-　　　　　　　　　　　　　　　　　　</p>
-<p>[^_^]: 　　　　　　　　<img src="/2018/12/26/溢出/IMG_0146.BMP"></p>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0vfdjz5usj307h086mx6.jpg" alt=""></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/26/溢出/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/28/ios-多线程/">展开全文 >></a>
         </p>
       
 

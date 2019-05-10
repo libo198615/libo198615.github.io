@@ -69,6 +69,8 @@
 	        
 				<li><a href="/categories/ git">Git</a></li>
 	        
+				<li><a href="/categories/ react-native">react-native</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,21 +153,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -179,6 +185,296 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-Runtime" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/Runtime/">Runtime</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/Runtime/" class="archive-article-date">
+  	<time datetime="2019-01-03T08:59:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>object</code>结构体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">struct objc_object &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">    Class super_class  OBJC2_UNAVAILABLE;  //父类                              </span><br><span class="line">    long instance_size   OBJC2_UNAVAILABLE;  //实例变量大小</span><br><span class="line">    struct objc_ivar_list *ivars  OBJC2_UNAVAILABLE; //成员变量链表</span><br><span class="line">    struct objc_method_list **methodLists OBJC2_UNAVAILABLE; //方法链表</span><br><span class="line">    struct objc_cache *cache OBJC2_UNAVAILABLE;  //方法缓存（大幅提高方法调用效率）</span><br><span class="line">    struct objc_protocol_list *protocols  OBJC2_UNAVAILABLE; //协议链表</span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<p><code>object</code>在内存中的布局</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0vq6up6o3j30lf0e30u0.jpg" alt=""></p>
+<p>实例方法的查找顺序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">student -&gt; Student Class -&gt; Person Class -&gt; NSObject -&gt; nil</span><br></pre></td></tr></table></figure>
+<p>类方法的查找顺序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student Meta Class -&gt; Person Meta Class -&gt; NSObject Meta Class -&gt; NSObject Class -&gt; nil</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[NSObject foo];<br>[MySark foo];<br>当MySark NSObject 都没有实现<code>+(void)foo</code>时，如果<code>NSObject</code> 实现了<code>- (void)foo</code>那么这个实例方法会被调用。 原因是 <code>Meta NSObject</code>的super class 指向 <code>NSObject class</code></p>
+</blockquote>
+<h5 id="SEL-IMP"><a href="#SEL-IMP" class="headerlink" title="SEL IMP"></a>SEL IMP</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id objc_msgSend ( id self, SEL op, ... );</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_selector *SEL;</span><br></pre></td></tr></table></figure>
+<p><code>objc_selector</code>是一个映射到方法的C字符串。需要注意的是@selector()选择子只与函数名有关。不同类中相同名字的方法所对应的方法选择器是相同的，即使方法名字相同而变量类型不同也会导致它们具有相同的方法选择器。由于这点特性，也导致了OC不支持函数重载<br><code>objc_msgSend</code>会做以下几件事情：</p>
+<ol>
+<li>检测这个 <code>selector</code>是不是要忽略的。</li>
+<li>检查<code>target</code>是不是为<code>nil</code>。<br>如果这里有相应的<code>nil</code>的处理函数，就跳转到相应的函数中。<br>如果没有处理<code>nil</code>的函数，就自动清理现场并返回。这一点就是为何在<code>OC</code>中给<code>nil</code>发送消息不会崩溃的原因。</li>
+<li>确定不是给<code>nil</code>发消息之后，在该class的缓存中查找方法对应的<code>IMP</code>实现。<br>如果找到，就跳转进去执行。<br>如果没有找到，就在方法分发表里面继续查找，一直找到<code>NSObject</code>为止。</li>
+<li>如果还没有找到，那就需要开始消息转发阶段了。</li>
+</ol>
+<p>方法列表中的方法结构体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method &#123;</span><br><span class="line">    SEL method_name                                      </span><br><span class="line">    char *method_types                                    </span><br><span class="line">    IMP method_imp                                           </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在寻找IMP的地址时，runtime提供了两种方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IMP class_getMethodImplementation(Class cls, SEL name);</span><br><span class="line">IMP method_getImplementation(Method m)</span><br></pre></td></tr></table></figure></p>
+<p>第一种方法<br>对于第一种方法而言，类方法和实例方法实际上都是通过调用class_getMethodImplementation()来寻找IMP地址的，不同之处在于传入的第一个参数不同。<br>类方法(假设有一个类 A)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_getMethodImplementation(objc_getMetaClass(&quot;A&quot;),@selector(methodName));</span><br></pre></td></tr></table></figure></p>
+<p>实例方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_getMethodImplementation([A class],@selector(methodName));</span><br></pre></td></tr></table></figure></p>
+<p>如上图 <code>meta class</code>的<code>isa</code>指向了<code>root meta class</code>(绝大部分情况下root class就是NSObject)，<code>root meta class</code>的<code>isa</code>指向自身，isa的链路就是这样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;%p&quot;, [testObj class]); </span><br><span class="line">NSLog(@&quot;%p&quot;, [TestObject class]);</span><br><span class="line">NSLog(@&quot;%p&quot;, [NSObject class]); </span><br><span class="line"></span><br><span class="line">log输出：</span><br><span class="line">0x100001180</span><br><span class="line">0x100001180</span><br><span class="line">0x1004a0e98</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TestObject *testObj = [TestObject new];</span><br><span class="line">NSLog(@&quot;%d&quot;, [testObj class] == [TestObject class]);</span><br><span class="line"></span><br><span class="line">这个log会输出1</span><br></pre></td></tr></table></figure>
+<p>从源码看结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (Class)class &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (Class)class &#123;</span><br><span class="line">    return object_getClass(self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>object_getClass</code>方法最终返回的是<code>isa</code>。所以<code>TestObject</code>调用<code>class</code>方法，返回的是自身；<code>testObj</code>调用<code>class</code>方法，返回的是<code>isa</code>指向的类，也是<code>TestObject</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 只测试当前类</span><br><span class="line">+ (BOOL)isMemberOfClass:(Class)cls</span><br><span class="line"></span><br><span class="line">// 测试 superclass</span><br><span class="line">+ (BOOL)isKindOfClass:(Class)cls</span><br></pre></td></tr></table></figure>
+<h5 id="category"><a href="#category" class="headerlink" title="category"></a>category</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct category_t &#123; </span><br><span class="line">    const char *name; </span><br><span class="line">    classref_t cls; </span><br><span class="line">    struct method_list_t *instanceMethods; </span><br><span class="line">    struct method_list_t *classMethods;</span><br><span class="line">    struct protocol_list_t *protocols;</span><br><span class="line">    struct property_list_t *instanceProperties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>从上面的<code>category_t</code>的结构体中可以看出，分类中可以添加实例方法，类方法，甚至可以实现协议，添加属性，但不可以添加成员变量。<br>分类的实现原理是将<code>category</code>中的方法，属性，协议数据放在<code>category_t</code>结构体中，然后将结构体内的方法列表拷贝到类对象的方法列表中。<br><code>Category</code>可以添加属性，但是并不会自动生成成员变量及<code>set/get</code>方法。因为<code>category_t</code>体中并不存在成员变量。成员变量是存放在实例对象中的，并且编译的那一刻就已经决定好了。而分类是在运行时才去加载的。那么我们就无法在程序运行时将分类的成员变量中添加到实例对象的结构体中。因此分类中不可以添加成员变量。</p>
+<ul>
+<li><p>可以声明属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@interface TestVC (tt)</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>需要手动添加 get set，声明的属性也没有用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (NSString *)name &#123;</span><br><span class="line">    return @&quot;cc&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    self.name = name; // 会死循环，没有生成实例变量，不能使用_name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="方法添加-交换"><a href="#方法添加-交换" class="headerlink" title="方法添加 交换"></a>方法添加 交换</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+sw.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (sw)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line"></span><br><span class="line">    Class class = [self class];</span><br><span class="line"></span><br><span class="line">    // 原方法名和替换方法名</span><br><span class="line">    SEL originalSelector = @selector(viewWillAppear:);</span><br><span class="line">    SEL swizzledSelector = @selector(sw_viewWillAppear:);</span><br><span class="line"></span><br><span class="line">    // 原方法结构体和替换方法结构体</span><br><span class="line">    Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line"></span><br><span class="line">    // 如果当前类没有原方法的实现IMP，先调用class_addMethod来给原方法添加默认的方法实现IMP</span><br><span class="line">    BOOL didAddMethod = class_addMethod(class,</span><br><span class="line">    originalSelector,</span><br><span class="line">    method_getImplementation(swizzledMethod),</span><br><span class="line">    method_getTypeEncoding(swizzledMethod));</span><br><span class="line"></span><br><span class="line">    if (didAddMethod) &#123;// 添加方法实现IMP成功后，修改替换方法结构体内的方法实现IMP和方法类型编码TypeEncoding</span><br><span class="line">        class_replaceMethod(class,</span><br><span class="line">        swizzledSelector,</span><br><span class="line">        method_getImplementation(originalMethod),</span><br><span class="line">        method_getTypeEncoding(originalMethod));</span><br><span class="line">    &#125; else &#123; // 添加失败，调用交互两个方法的实现</span><br><span class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)sw_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;start&quot;);</span><br><span class="line">    [self sw_viewWillAppear:animated];</span><br><span class="line">    NSLog(@&quot;end&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>SubVC<br>对<code>SubVC</code>进行方法交换，无论SubVC是否实现<code>viewWillAppear</code>，默认也会调用，都将打印 <code>start</code></li>
+<li>UIViewController<br>对<code>UIViewController</code>进行方法交换，相当于对父类进行交换。<br>子类<code>SubVC</code>如果不实现<code>viewWillAppear</code>，会默认调用，打印<code>start</code><br>子类<code>SubVC</code>如果实现<code>viewWillAppear</code>，并调用父类的<code>viewWillAppear</code>，打印<code>start</code><br>子类<code>SubVC</code>如果实现<code>viewWillAppear</code>，但不调用父类的<code>viewWillAppear</code>，不打印<code>start</code><br>本质是：是否调用了交换后的方法</li>
+</ul>
+<p><code>swizzling</code>应该只在<code>+load</code>中完成。 在 <code>Objective-C</code> 的运行时中，每个类有两个方法都会自动调用。<code>+load</code>是在一个类被初始装载时调用，<code>+initialize</code> 是在应用第一次调用该类的类方法或实例方法前调用的。两个方法都是可选的，并且只有在方法被实现的情况下才会被调用。</p>
+<p>可以使用第三方库<code>JRSwizzle.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;&quot;</span><br><span class="line"></span><br><span class="line">@implementation UINavigationController (help)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    [[UINavigationController class] jr_swizzleMethod:@selector(pushViewController:animated:) withMethod:@selector(LB_pushViewController:animated:) error:nil];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)LB_pushViewController:(UIViewController *)viewController animated:(BOOL)animated &#123;</span><br><span class="line"></span><br><span class="line">    viewController.hidesBottomBarWhenPushed = YES;</span><br><span class="line"></span><br><span class="line">    [self LB_pushViewController:viewController animated:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="Method-Swizzling使用场景"><a href="#Method-Swizzling使用场景" class="headerlink" title="Method Swizzling使用场景"></a>Method Swizzling使用场景</h5><ul>
+<li>实现埋点统计<br>如果app有埋点需求，并且要自己实现一套埋点逻辑，那么这里用到Swizzling是很合适的选择。</li>
+<li>实现异常保护</li>
+</ul>
+<p>日常开发我们经常会遇到<code>NSArray</code>数组越界的情况，苹果的<code>API</code>也没有对异常保护，所以需要我们开发者开发时候多多留意。关于<code>Index</code>有好多方法，objectAtIndex，removeObjectAtIndex，replaceObjectAtIndex，exchangeObjectAtIndex等等，这些设计到Index都需要判断是否越界。</p>
+<p>常见做法是给NSArray，NSMutableArray增加分类，增加这些异常保护的方法，不过如果原有工程里面已经写了大量的AtIndex系列的方法，去替换成新的分类的方法，效率会比较低。这里可以考虑用Swizzling做。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;NSArray+ Swizzling.h&quot;</span><br><span class="line">#import &quot;objc/runtime.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation NSArray (Swizzling)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    Method fromMethod = class_getInstanceMethod(objc_getClass(&quot;__NSArrayI&quot;), @selector(objectAtIndex:));</span><br><span class="line">    Method toMethod = class_getInstanceMethod(objc_getClass(&quot;__NSArrayI&quot;), @selector(swizzling_objectAtIndex:));</span><br><span class="line">    method_exchangeImplementations(fromMethod, toMethod);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)swizzling_objectAtIndex:(NSUInteger)index &#123;</span><br><span class="line">    if (self.count-1 &lt; index) &#123;</span><br><span class="line">    // 异常处理</span><br><span class="line">    @try &#123;</span><br><span class="line">        return [self swizzling_objectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">    @catch (NSException *exception) &#123;</span><br><span class="line">        // 打印崩溃信息</span><br><span class="line">        NSLog(@&quot;---------- %s Crash Because Method %s  ----------\n&quot;, class_getName(self.class), __func__);</span><br><span class="line">        NSLog(@&quot;%@&quot;, [exception callStackSymbols]);</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    @finally &#123;&#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return [self swizzling_objectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意，调用这个objc_getClass方法的时候，要先知道类对应的真实的类名才行，NSArray其实在Runtime中对应着<strong>NSArrayI，NSMutableArray对应着</strong>NSArrayM，NSDictionary对应着<strong>NSDictionaryI，NSMutableDictionary对应着</strong>NSDictionaryM。</p>
+</blockquote>
+<h5 id="Isa-Swizzling"><a href="#Isa-Swizzling" class="headerlink" title="Isa Swizzling"></a>Isa Swizzling</h5><p><code>Method Swizzling</code>，本质上就是对<code>IMP</code>和<code>SEL</code>进行交换。也可以对<code>isa</code>指针进行交换<br>在苹果的官方库里面有一个很有名的技术就用到了这个<code>Isa Swizzling</code>，那就是<code>KVO</code><br><code>KVO</code>是为了监听一个对象的某个属性值是否发生变化。在属性值发生变化的时候，肯定会调用其<code>setter</code>方法。所以<code>KVO</code>的本质就是监听对象有没有调用被监听属性对应的<code>setter</code>方法。具体实现应该是重写其<code>setter</code>方法即可。</p>
+<h5 id="题一"><a href="#题一" class="headerlink" title="题一"></a>题一</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@implementation Son : Father</span><br><span class="line"></span><br><span class="line">- (id)init &#123;</span><br><span class="line">    self = [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        NSLog(@&quot;%@&quot;, NSStringFromClass([self class]));</span><br><span class="line">        NSLog(@&quot;%@&quot;, NSStringFromClass([super class]));</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>[super class] != [super_class class]<br><code>objc_msgSendSuper</code>的工作原理应该是这样的:<br>从<code>objc_super</code>结构体指向的<code>superClass</code>父类的方法列表开始查找<code>selector</code>，找到后以<code>objc-&gt;receiver</code>去调用父类的这个<code>selector</code>。注意，最后的调用者是<code>objc-&gt;receiver</code>.<br>由于找到了父类<code>NSObject</code>里面的<code>class</code>方法的<code>IMP</code>，又因为传入的入参<code>objc_super-&gt;receiver = self</code>。<code>self</code>就是<code>son</code>，调用<code>class</code>，所以父类的方法<code>class</code>执行<code>IMP</code>之后，输出还是<code>son</code></p>
+<h5 id="题二"><a href="#题二" class="headerlink" title="题二"></a>题二</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface Sark : NSObject</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Sark</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BOOL res1 = [[NSObject class] isKindOfClass:[NSObject class]];</span><br><span class="line">BOOL res2 = [[NSObject class] isMemberOfClass:[NSObject class]];</span><br><span class="line">BOOL res3 = [[Sark class] isKindOfClass:[Sark class]];</span><br><span class="line">BOOL res4 = [[Sark class] isMemberOfClass:[Sark class]];</span><br><span class="line">NSLog(@&quot;%d %d %d %d&quot;, res1, res2, res3, res4);</span><br><span class="line">// 1 0 0 0</span><br><span class="line">// 判断isa 指针是否指向本身</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">isKindOfClass:确定一个对象是否是一个类的成员,或者是派生自该类的成员.</span><br><span class="line"></span><br><span class="line">isMemberOfClass:确定一个对象是否是当前类的成员.</span><br></pre></td></tr></table></figure>
+<p><code>res1</code>: <code>isKindOfClass</code>比较的是A的isa指针是否指向A或其子类。<code>[NSObject class]</code>返回self，即<code>NSObject Class</code>,它的<code>isa</code>指针指向元类<code>NSObject Meta Class</code>。则题目为<code>NSObject</code>的元类<code>isa</code>指针是否指向<code>NSObject</code>类。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/03/Runtime/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-dealloc" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/02/dealloc/">dealloc</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/02/dealloc/" class="archive-article-date">
+  	<time datetime="2019-01-02T12:54:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>执行一个叫<code>object_cxxDestruct</code>的东西干了点什么事<br>执行<code>object_remove_assocations</code>去除和这个对象<code>assocate</code>的对象（常用于category中添加带变量的属性，这也是为什么ARC下没必要remove一遍的原因）<br>执行<code>objc_clear_deallocating</code>，清空引用计数表并清除弱引用表，将所有<code>weak</code>引用指<code>nil</code>（这也就是weak变量能安全置空的所在）</p>
+<p><code>viewController dealloc</code> 先调用，里面的子<code>view</code>的<code>dealloc</code>再调用，因为vc强引用子<code>view</code>,子view无法先释放。同时带来一个问题，vc可以释放，但是他的子View可能没有释放，造成内存泄漏</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/02/dealloc/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NSURLSession的优势" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/02/NSURLSession的优势/">NSURLSession的优势</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/02/NSURLSession的优势/" class="archive-article-date">
+  	<time datetime="2019-01-02T12:50:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>NSURLSession</code>最直接的改进就是可以配置每个<code>session</code>的缓存，协议，<code>cookie</code>，以及证书策略(credential policy),甚至跨程序共享这些信息。这将允许程序和网络基础框架之间相互独立，不会发生干扰。每个<code>NSURLSession</code>对象都由一个<code>NSURLSessionConfiguration</code>对象进行初始化，后者指定了刚才提到的那些策略以及一些用来增强移动设备上性能的新选项。</p>
+<p><code>NSURLSession</code>中另一大块就是<code>session task</code>。它负责处理数据的加载以及文件的数据在客户端与服务器之间的上传和下载。<code>NSURLSessionTask</code>和<code>NSURLConnection</code>最大的相似之处在于它也负责数据中的加载，最大的不同之处在于所有的<code>task</code>共享其创造者<code>NSURLSession</code></p>
+<p>所有的 <code>task</code> 都是可以取消，暂停或者恢复的。当一个 <code>download task</code> 取消时，可以通过选项来创建一个恢复数据（resume data），然后可以传递给下一次新创建的 <code>download task</code>，以便继续之前的下载。</p>
+<p>不同于直接使用<code>alloc-init</code>初始化方法，<code>task</code> 是由一个<code>NSURLSession</code>创建的。每个 <code>task</code> 的构造方法都对应有或者没有<code>completionHandler</code>这个<code>block</code> 的两个版本，例如：有这样两个构造方法<code>–dataTaskWithRequest:</code>和<code>–dataTaskWithRequest:completionHandler:</code>。这与<code>NSURLConnection</code>的<code>-sendAsynchronousRequest:queue:completionHandler:</code>方法类似，通过指定<code>completionHandler</code>这个<code>block</code> 将创建一个隐式的 <code>delegate</code>，来替代该 <code>task</code> 原来的 <code>delegate——session</code>。对于需要 <code>override</code> 原有 <code>session task</code> 的 <code>delegate</code> 的默认行为的情况，我们需要使用这种不带completionHandler的版本。</p>
+<p>NSURLSession既拥有 seesion 的 delegate 方法，又拥有 task 的 delegate 方法用来处理鉴权查询。session 的 delegate 方法处理连接层的问题，诸如服务器信任，客户端证书的评估，NTLM和Kerberos协议这类问题，而 task 的 delegate 则处理以网络请求为基础的问题，如 Basic，Digest，以及代理身份验证（Proxy authentication）等。</p>
+<p>NSURLSessionConfiguration<br>NSURLSessionConfiguration对象用于对NSURLSession对象进行初始化。NSURLSessionConfiguration对以前NSMutableURLRequest所提供的网络请求层的设置选项进行了扩充，提供给我们相当大的灵活性和控制权。从指定可用网络，到 cookie，安全性，缓存策略，再到使用自定义协议，启动事件的设置，以及用于移动设备优化的几个新属性，你会发现使用NSURLSessionConfiguration可以找到几乎任何你想要进行配置的选项。</p>
+<p>NSURLSession在初始化时会把配置它的NSURLSessionConfiguration对象进行一次 copy，并保存到自己的configuration属性中，而且这个属性是只读的。因此之后再修改最初配置 session 的那个 configuration 对象对于 session 是没有影响的。也就是说，configuration 只在初始化时被读取一次，之后都是不会变化的。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/02/NSURLSession的优势/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-信号量" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -256,19 +552,19 @@
 
 
   
-    <article id="post-加密" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-计算机基础-加密" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/加密/">加密</a>
+      <a class="article-title" href="/2019/01/02/计算机基础-加密/">加密</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/加密/" class="archive-article-date">
+        <a href="/2019/01/02/计算机基础-加密/" class="archive-article-date">
   	<time datetime="2019-01-02T12:45:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -284,7 +580,8 @@
 <li>非对称加密算法</li>
 </ul>
 <p>需要两个密钥来进行加密和解密，公钥 和 私钥<br>非对称加密与对称加密相比，其安全性更好：对称加密的通信双方使用相同的秘钥，如果一方的秘钥遭泄露，那么整个通信就会被破解。而非对称加密使用一对秘钥，一个用来加密，一个用来解密，而且公钥是公开的，秘钥是自己保存的，不需要像对称加密那样在通信之前要先同步秘钥。<br>非对称加密的缺点是加密和解密花费时间长、速度慢，只适合对少量数据进行加密。<br>在非对称加密中使用的主要算法有：RSA。</p>
-<h5 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h5><p>Base64加密特点：</p>
+<h5 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h5><p>Base64编码是从二进制到字符的过程，所以经常用在计算机的各个领域</p>
+<p>Base64加密特点：</p>
 <ul>
 <li>数据加密之后，数据量会变大，变大1/3左右。</li>
 <li>可进行反向解密。</li>
@@ -333,7 +630,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/加密/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/计算机基础-加密/">展开全文 >></a>
         </p>
       
 
@@ -363,19 +660,19 @@
 
 
   
-    <article id="post-Autorelease" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-Autorelease" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/Autorelease/">Autorelease</a>
+      <a class="article-title" href="/2019/01/02/ios-Autorelease/">Autorelease</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/Autorelease/" class="archive-article-date">
+        <a href="/2019/01/02/ios-Autorelease/" class="archive-article-date">
   	<time datetime="2019-01-02T12:37:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -390,6 +687,7 @@
 <h5 id="AutoreleasePool-何时释放"><a href="#AutoreleasePool-何时释放" class="headerlink" title="AutoreleasePool 何时释放"></a>AutoreleasePool 何时释放</h5><ol>
 <li><code>Autorelease</code>对象是在当前的<code>runloop</code>迭代结束时释放的，而它能够释放的原因是系统在每个<code>runloop</code>迭代中都加入了自动释放池<code>Push</code>和<code>Pop</code>。 </li>
 <li>是手动调用<code>AutoreleasePool</code>的释放方法（drain方法）来销毁<code>AutoreleasePool</code>。超出作用域时，<code>pool drain</code></li>
+<li>autoreleasePool的析构方法。下面延迟释放有解释</li>
 </ol>
 <h5 id="没有runloop"><a href="#没有runloop" class="headerlink" title="没有runloop"></a>没有runloop</h5><p>在子线程你创建了<code>Pool</code>的话，产生的 <code>Autorelease</code> 对象就会交给 <code>pool</code> 去管理。如果你没有创建 <code>Pool</code> ，但是产生了 <code>Autorelease</code> 对象，就会调用 <code>autoreleaseNoPage</code> 方法。在这个方法中，会自动帮你创建一个 <code>hotpage</code>（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage）并调用 <code>page-&gt;add(obj)</code>将对象添加到 <code>AutoreleasePoolPage</code> 的栈中</p>
 <h5 id="子线程是否要手动创建autoreleasepool"><a href="#子线程是否要手动创建autoreleasepool" class="headerlink" title="子线程是否要手动创建autoreleasepool"></a>子线程是否要手动创建autoreleasepool</h5><p><code>NSThread</code>和<code>NSOperationQueue</code>开辟子线程需要手动创建<code>autoreleasepool</code>，<code>GCD</code>开辟子线程不需要手动创建<code>autoreleasepool</code>，因为<code>GCD</code>的每个队列都会自行创建<code>autoreleasepool</code></p>
@@ -404,7 +702,9 @@
 <p>id的指针或对象的指针在没有显式指定时会被附加上<code>__autorealeasing</code>修饰符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (nullable instancetype)stringWithContentsOfURL:(NSURL *)url</span><br><span class="line">encoding:(NSStringEncoding)enc</span><br><span class="line">error:(NSError **)error;</span><br></pre></td></tr></table></figure></p>
 <p>等价于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString *str = [NSString stringWithContentsOfURL:</span><br><span class="line">encoding:</span><br><span class="line">error:&lt;#(NSError * _Nullable __autoreleasing * _Nullable)#&gt;]</span><br></pre></td></tr></table></figure></p>
 <h6 id="延迟释放"><a href="#延迟释放" class="headerlink" title="延迟释放"></a>延迟释放</h6><p>我们先来看一个经典的性能问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt;= 1000; i ++) &#123;</span><br><span class="line">    UIImage *image = [UIImage imageNamed:@&quot;test&quot;];</span><br><span class="line">    //Do something...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>按照C语言局部变量的定义，<code>image</code>超出了作用域就会被释放，可是在测试的时候发现这里内存一直在增加，这是为什么呢？<br>解析：<br><code>[UIImage imageNamed:]</code> 创建的对象是<code>Autorelease</code>的，<code>Autorelease</code>的对象会添加到最近的一个<code>AutoreleasePool</code>里面，等<code>AutoreleasePool</code>结束的时候统一释放。</p>
+<p>按照C语言局部变量的定义，<code>image</code>超出了作用域就会被释放，可是在测试的时候发现这里内存一直在增加，这是为什么呢？<br>解析：<br><code>[UIImage imageNamed:]</code> 创建的对象是<code>Autorelease</code>的，<code>Autorelease</code>的对象会添加到最近的一个<code>AutoreleasePool</code>里面，等<code>AutoreleasePool</code>结束的时候统一释放。此方法被一个较大的autoreleasePool管理着，变量会被一直持有，直到此autoreleasePoll销毁时才释放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt;= 1000; i ++) &#123;</span><br><span class="line">		@autoreleasePool&#123;</span><br><span class="line">				UIImage *image = [UIImage imageNamed:@&quot;test&quot;];</span><br><span class="line">    		//Do something...</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>像这样，当一次循环结束时，里面的autoreleasePool将会被析构从而销毁，释放内存。</p>
 <p><code>Autorelease</code>实际上只是把对<code>release</code>的调用延迟了，对于每一个<code>Autorelease</code>，系统只是把该<code>Object</code>放入了当前的<code>AutoreleasePool</code>中，当该<code>pool</code>被释放时，该<code>pool</code>中的所有<code>Object</code>会被调用<code>Release</code>。</p>
 <h5 id="方法名检查"><a href="#方法名检查" class="headerlink" title="方法名检查"></a>方法名检查</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@interface XSQObject : NSObject</span><br><span class="line"></span><br><span class="line">+ (NSString *)newHelloWorldString;</span><br><span class="line">+ (NSString *)helloWorldString;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation XSQObject</span><br><span class="line"></span><br><span class="line">+ (NSString *)newHelloWorldString &#123;</span><br><span class="line">    return [[NSString alloc] initWithCString:&quot;HelloWorld&quot; encoding:NSUTF8StringEncoding];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (NSString *)helloWorldString &#123;</span><br><span class="line">    return [[NSString alloc] initWithCString:&quot;HelloWorld&quot; encoding:NSUTF8StringEncoding];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        __weak NSString *helloWorldString = [XSQObject helloWorldString];</span><br><span class="line">        __weak NSString *newHelloWorldString = [XSQObject newHelloWorldString];</span><br><span class="line">        //此处有warning: </span><br><span class="line">        //assigning retained object to weak variable; </span><br><span class="line">        //object will be released after assignment </span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;%@&quot;, helloWorldString);//输出HelloWorld</span><br><span class="line">        NSLog(@&quot;%@&quot;, newHelloWorldString);//输出null</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>虽然<code>[XSQObject helloWorldString]</code>和<code>[XSQObject newHelloWorldString]</code>两个方法的实现完全一样，但是它们返回的对象被赋值给<code>__weak</code>指针后，前者仍然存在，而后者则被销毁了。如果再加入<code>@autorelease</code>块做点实验，可以发现<code>helloWorldString</code>指向的对象其实已被注册到<code>autorelease pool</code>中。而以new开头的方法不会自动被注册到<code>autoreleasepool</code>中</p>
@@ -443,7 +743,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/Autorelease/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/ios-Autorelease/">展开全文 >></a>
         </p>
       
 
@@ -763,19 +1063,19 @@
 
 
   
-    <article id="post-锁" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-ios-锁" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/锁/">锁</a>
+      <a class="article-title" href="/2019/01/02/ios-锁/">锁</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/锁/" class="archive-article-date">
+        <a href="/2019/01/02/ios-锁/" class="archive-article-date">
   	<time datetime="2019-01-02T11:37:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -859,322 +1159,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/锁/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-内存" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/29/内存/">内存</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/29/内存/" class="archive-article-date">
-  	<time datetime="2018-12-29T14:40:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="内存分类"><a href="#内存分类" class="headerlink" title="内存分类"></a>内存分类</h5><p> <strong>栈区（stack）</strong></p>
-<p>由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。 </p>
-<p><strong>堆区（heap）</strong></p>
-<p>一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收</p>
-<p><strong>全局区（静态区）</strong></p>
-<p>全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。 </p>
-<p><strong>文字常量区</strong> </p>
-<p>常量字符串就是放在这里的。 程序结束后由系统释放 </p>
-<p><strong>程序代码区</strong></p>
-<p>存放函数体的二进制代码。</p>
-<h5 id="iOS-引用计数器存放位置"><a href="#iOS-引用计数器存放位置" class="headerlink" title="iOS 引用计数器存放位置"></a>iOS 引用计数器存放位置</h5><ul>
-<li>TaggedPointer</li>
-</ul>
-<p>64位系统下，对于值小的对象指针本身已经存了值的内容了，而不用去指向一个地址再去取这个地址所存对象的值<br>1:   Tagged Pointer专门用来存储小的对象，例如NSNumber和NSDate<br>2：Tagged Pointer指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已。所以，它的内存并不存储在堆中，也不需要malloc和free。</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0u9w1u9eej314q0fi0x0.jpg" alt=""></p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0u9w67zrnj314q0kon44.jpg" alt=""></p>
-<p>什么时候NSNumber对象Tagged Pointer失效呢？那就是当值和tag加起来占用的字节数要超过地址长度(8字节64位)时会失效</p>
-<p>// retain<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id objc_object::rootRetain(bool tryRetain, bool handleOverflow) &#123;</span><br><span class="line">    if (isTaggedPointer()) return (id)this;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// release<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bool  objc_object::rootRelease(bool performDealloc, bool handleUnderflow) &#123;</span><br><span class="line">    if (isTaggedPointer()) return false;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// retainCount<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uintptr_t objc_object::rootRetainCount() &#123;</span><br><span class="line">    if (isTaggedPointer()) return (uintptr_t)this;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>由此可见对于Tagged Pointer对象，并没有任何的引用计数操作，引用计数数量也只是单纯的返回自己地址罢了。</p>
-<ul>
-<li>isa指针</li>
-</ul>
-<p>在一个64位的指针内存中，第0位存储的是<code>indexed</code>标识符，它代表一个指针是否为<code>NONPOINTER</code>型，0代表不是，1代表是。<br>第1位<code>has_assoc</code>，1代表其指向的实例变量含有关联对象。<br>第2位为<code>has_cxx_dtor</code>，表明该对象是否使用了ARC来管理对象.<br>第3-35位<code>shiftcls</code>存储的就是这个指针的地址。<br>第42位为<code>weakly_referenced</code>，表明该指针对象是否有弱引用的指针指向。<br>第43位为<code>deallocing</code>，表明该对象是否正在被回收。<br>第44位为<code>has_sidetable_rc</code>，该指针是否引用了sidetable散列表。<br>第45-63位<code>extra_rc</code>装的就是这个实例变量的引用计数，当对象被引用时，其引用计数+1，但少量的引用计数是不会直接存放在sideTables表中的，对象的引用计数会先存在<code>NONPOINTER_ISA</code>的指针中的45-63位，当其被存满后，才会相应存入sideTables散列表中。</p>
-<p>// retain<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">id objc_object::rootRetain(bool tryRetain, bool handleOverflow) &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是对isa的extra_rc变量进行+1，前面说到isa会存很多东西</span><br><span class="line">    addc(newisa.bits, 1, 0, &amp;carry);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// release<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bool  objc_object::rootRelease(bool performDealloc, bool handleUnderflow) &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是对isa的extra_rc变量进行-1</span><br><span class="line">    subc(newisa.bits, 1, 0, &amp;carry);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// retainCount<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uintptr_t objc_object::rootRetainCount() &#123;</span><br><span class="line">    ...</span><br><span class="line">    //其实就是获取isa的extra_rc值再+1，alloc新建一个对象时bits.extra_rc为0并不是1，这个要注意。</span><br><span class="line">    uintptr_t rc = 1 + bits.extra_rc;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果对象开启了Non-pointer，那么引用计数是存在isa中的，extra_rc是有存储限制,引用计数超过255将附加SideTable辅助存储。</p>
-<ul>
-<li>SideTable</li>
-</ul>
-<p>散列表在系统中的提现是一个<code>sideTables</code>的哈希映射表，而一个散列表中又包含众多<code>sideTable</code>提高多线程的访问效率。每个<code>SideTable</code>中又包含了三个元素，<code>spinlock_t</code>自旋锁，<code>RefcountMap</code>引用计数表，<code>weak_table_t</code>弱引用表。</p>
-<p>对于每张<code>SideTable</code>表中的弱引用表<code>weak_table_t</code>，其也是一张哈希表的结构，其内部包含了每个对象对应的弱引用表<code>weak_entry_t</code>，而<code>weak_entry_t</code>是一个结构体数组，其中包含的则是每一个对象弱引用的对象所对应的弱引用指针。</p>
-<h5 id="ARC-自动管理内存的原理"><a href="#ARC-自动管理内存的原理" class="headerlink" title="ARC 自动管理内存的原理"></a>ARC 自动管理内存的原理</h5><p>对象在被回收时，就会调用<code>dealloc</code>方法，其内部实现流程首先要调用一个<code>_objc_rootDealloc()</code>方法，判断该对象的isa指针，依次判断指针内的内容：<code>nonpointer_isa</code>，<code>weakly_referenced</code>,<code>has_assoc</code>,<code>has_cxx_dtor</code>,<code>has_sidetable_rc</code>，如果判断结果为：该<code>isa</code>指针不是非指针型的<code>isa</code>指针，没有弱引用的指针指向，没有相应的关联对象，没有c++相关的内容，没有使用ARC模式，没有关联到散列表中，即判断的内容都为否，则可以直接调用c语言中的<code>free()</code>函数进行相应的内存释放，否则就会调用<code>objc_dispose()</code>这个函数。</p>
-<p><code>objc_destructInstence()</code>函数就是一个销毁对象的函数.</p>
-<p>首先，<code>destructInstence()</code>函数内部会来判断该对象是否有C++相关内容以及ARC相关的内容，如果有的话就会调用<code>object_cxxDestruct</code>函数来销毁相应的内容，随后会判断改对象是否有关联对象相关的内容，如果有的话就会调用<code>_object_remove_associations()</code>这个方法来清楚相关的关联对象内容，在这两个判断步骤完成之后，调用<code>clearDeallocating()</code>方法。</p>
-<p>在<code>clearDeallocating()</code>方法中，会调用一个<code>sidetable_clearDeallocating()</code>的方法，在方法内部会调用两个方法，1.<code>weak_clear_no_lock()</code>这个方法会将每个弱引用表中的指向该对象的弱引用指针，置为nil。2.<code>table.refcnts.erase()</code>方法，这个方法会从引用计数表中，擦除该对象的引用计数。最后再调用c函数的<code>free()</code>方法，完成一次对象的回收。</p>
-<h5 id="创建一个对象后，内存的布局"><a href="#创建一个对象后，内存的布局" class="headerlink" title="创建一个对象后，内存的布局"></a>创建一个对象后，内存的布局</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">MyClassA *A_1 = [[MyClassA alloc] init];</span><br><span class="line">MyClassA *A_2 = [[MyClassA alloc] init];</span><br><span class="line"></span><br><span class="line">Class classA1 = object_getClass(A_1);</span><br><span class="line">Class classA2 = object_getClass(A_2);</span><br><span class="line"></span><br><span class="line">Class metaClass = object_getClass([MyClassA class]);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;A_1 的内存地址：%p&quot;,A_1);</span><br><span class="line">NSLog(@&quot;A_1 指针的内存地址：%p&quot;,&amp;A_1);</span><br><span class="line">NSLog(@&quot;A_2 的内存地址：%p&quot;,A_2);</span><br><span class="line">NSLog(@&quot;A_2 指针的内存地址：%p&quot;,&amp;A_2);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;A_1 的 isa 的内存地址：%p&quot;,&amp;classA1);</span><br><span class="line">NSLog(@&quot;A_1类的内存地址：%p&quot;,classA1);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;A_2 的 isa 的内存地址：%p&quot;,&amp;classA2);</span><br><span class="line">NSLog(@&quot;A_2类的内存地址：%p&quot;,classA2);</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;MyClassA 的元类的地址：%p&quot;,metaClass);</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A_1 的内存地址：0x1c00058e0</span><br><span class="line">A_1 指针的内存地址：0x16b00d378</span><br><span class="line">A_2 的内存地址：0x1c00058a0</span><br><span class="line">A_2 指针的内存地址：0x16b00d370</span><br><span class="line">A_1 的 isa 的内存地址：0x16b00d368</span><br><span class="line">A_1类的内存地址：0x104df95d0</span><br><span class="line">A_2 的 isa 的内存地址：0x16b00d360</span><br><span class="line">A_2类的内存地址：0x104df95d0</span><br><span class="line">MyClassA 的元类的地址：0x104df95a8</span><br></pre></td></tr></table></figure>
-<p>每生成一个对象，都有一个实例，所有实例的<code>isa</code>指向同一个类，类的<code>isa</code>指向元类</p>
-<h5 id="对象所占空间"><a href="#对象所占空间" class="headerlink" title="对象所占空间"></a>对象所占空间</h5><ul>
-<li>一个NSObject对象占用多少内存<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">struct NSObject_IMPL &#123;</span><br><span class="line">    Class isa; //一个指向struct objc_class结构体类型的指针</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>// 查看Class本质<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br></pre></td></tr></table></figure></p>
-<p><code>NSObject</code>结构体中只有一个isa指针变量。按理来说NSObject对象需要的内存大小只要能够满足存放一个指针大小就可以了，一个指针变量在64位的机器上大小是8个字节，也就是说只要有8个字节的内存空间就能满足存放一个NSObject对象了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSObject *objc = [[NSObject alloc] init];</span><br><span class="line"></span><br><span class="line">        NSLog(@&quot;objc对象实际需要的内存大小: %zd&quot;, class_getInstanceSize([objc class]));</span><br><span class="line">        NSLog(@&quot;objc对象实际分配的内存大小: %zd&quot;, malloc_size((__bridge const void *)(objc)));</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>//输出的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">objc对象实际利用的内存大小: 8</span><br><span class="line">objc对象实际占用的内存大小: 16</span><br></pre></td></tr></table></figure></p>
-<p>一个对象实际利用的内存大小，就是对象的实例变量占用的内存大小，可以通过调用<code>runtime</code>中的<code>class_getInstanceSize</code>函数得到。对象实际占用的内存大小，就是系统实际分配给对象的内存大小，OC对象是通过<code>alloc</code>方法得到的对象大小，我们可以通过<code>malloc</code>中库函数<code>malloc_size</code>来得到结果。<br>系统给一个对象分配内存的大小。当对象的实际大小小于16时，系统就返回16个字节的大小。也就是说16个字节大小是系统的最低消费。</p>
-<p>定义一个Animal的类，其中只有一个int成员变量weight。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//interface</span><br><span class="line">@interface Animal: NSObject</span><br><span class="line">&#123;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line">//implementation</span><br><span class="line">@implementation Animal</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>把OC文件转化为C++文件的方式来查看Animal类对应的结构体实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">    struct NSObject_IMPL NSObject_IVARS; //实际上就是一个isa指针</span><br><span class="line">    int weight;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct NSObject_IMPL &#123;</span><br><span class="line">    Class isa; //一个指向struct objc_class结构体类型的指针</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//简化版本</span><br><span class="line">struct Animal_IMPL &#123;</span><br><span class="line">    Class isa;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>通过struct Animal_IMPL结构体，我们不难看出结构体中有两个成员变量：一个isa指针和一个int型成员变量。Animal结构体对象实际需要的内存大小应该是16字节（指针8个字节，int型变量4个字节）。Animal结构体对象实际需要的内存大小是12字节，那系统给Animal对象实际分配的内存大小是多少呢？我们还是通过调用class_getInstanceSize和malloc_size这两个函数来看一下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &lt;malloc/malloc.h&gt;</span><br><span class="line"></span><br><span class="line">//interface</span><br><span class="line">@interface Animal: NSObject</span><br><span class="line">&#123;</span><br><span class="line">    int weight;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">//implementation</span><br><span class="line">@implementation Animal</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSObject *objc = [[NSObject alloc] init];</span><br><span class="line">        Animal *animal = [[Animal alloc] init];</span><br><span class="line">        NSLog(@&quot;animal对象实际需要的内存大小: %zd&quot;, class_getInstanceSize([animal class]));</span><br><span class="line">        NSLog(@&quot;animal对象实际分配的内存大小: %zd&quot;, malloc_size((__bridge const void *)(animal)));</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>//输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animal对象实际利用的内存大小: 16</span><br><span class="line">animal对象实际占用的内存大小: 16</span><br></pre></td></tr></table></figure></p>
-<p>我们发现Animal对象实际需要的内存大小是16字节，而不是我们之前推算出来的12字节，原因是字节对其，已16的整数倍分配</p>
-<h5 id="weak"><a href="#weak" class="headerlink" title="__weak"></a>__weak</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id __week obj1 = obj;</span><br></pre></td></tr></table></figure>
-<p>编译器的模拟代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id obj1;</span><br><span class="line">obj1 = 0;</span><br><span class="line">objc_storeWeak(&amp;obj1, obj);</span><br><span class="line">objc_storeWeak(&amp;obj1, 0);</span><br></pre></td></tr></table></figure></p>
-<p><code>objc_storeWeak</code>函数把第二参数的赋值对象的地址作为键值，将第一参数的附有<code>__weak</code>修饰的变量的地址注册到<code>weak</code>表中。如果第二参数为0，则把变量的地址从<code>weak</code>表中删除。</p>
-<h5 id="操作引用计数器"><a href="#操作引用计数器" class="headerlink" title="操作引用计数器"></a>操作引用计数器</h5><p>当使用<code>alloc</code>、<code>new</code>、<code>copy</code>、<code>mutableCopy</code>创建一个新对象时,该新对象的引用计数器为1<br>当给对象发送一条retain消息时,对象的引用计数器+1(方法返回对象本身)<br>当给对象发送一条release消息时对象的引用计数器-1(方法无返回值)</p>
-<ul>
-<li>僵尸对象: 所占用的内存已经被回收的对象,僵尸对象不能再使用</li>
-<li>野指针: 指向僵尸对象的指针,给野指针发送消息会报错EXC_BAD_ACCESS错误:访问了一块已经被回收的内存</li>
-<li>空指针: 没有指向任何对象的指针(存储的东西是nil,NULL,0),给空指针发送消息不会报错,系统什么也不会做,所以在对象被释放时将指针设置为nil可以避免野指针错误</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Person *p = [[Person alloc] init]; // 引用计数器 = 1</span><br><span class="line">[p release]; // 引用计数器 - 1 = 0,指针所指向的对象的内存被释放</span><br><span class="line">[p release]; // 这句给野指针发送消息,会报野指针错误,</span><br></pre></td></tr></table></figure>
-<h5 id="类工厂方法内存管理"><a href="#类工厂方法内存管理" class="headerlink" title="类工厂方法内存管理"></a>类工厂方法内存管理</h5><p>自己创建的对象要自己负责释放，而向下面这种需要返回的对象要使用<code>autorelease</code>，这样调用者就不用关心释放的问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)person</span><br><span class="line">&#123;</span><br><span class="line">    // 使用self而不是使用Person是因为这样可以在子类调用该方法时会返回子类的对象</span><br><span class="line">    return [[[self alloc] init] autorelease];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h5><p><code>nsnotification</code> <code>kvo</code> 不会是<code>viewController</code>的引用计数器加一，原因是取消通知和监听的方法放到了<code>dealloc</code>里，只要<code>dealloc</code>被调用，说明引用计数器为0，添加的通知和监听没有对引用计数器进行加一操作<br><code>NSTimer</code>会使<code>viewController</code>的引用计数器加一，因为放在<code>dealloc</code>里的<code>[timer interval];</code>不会执行，timer阻碍了<code>viewController</code>的释放。(还要考虑<code>runloop</code>)</p>
-<p><code>superView</code>先销毁，因为<code>superView</code>持有<code>subview</code>，<code>superView</code>不销毁<code>subView</code>的引用计数器不为0。也有可以<code>superView</code>已经释放，但是<code>subView</code>被其他对象引用而没有释放，此时可能造成内存泄漏</p>
-<p><a href="https://www.jianshu.com/p/17817e6efaf5" target="_blank" rel="noopener">https://www.jianshu.com/p/17817e6efaf5</a><br><a href="https://www.jianshu.com/p/9839c7306d17" target="_blank" rel="noopener">https://www.jianshu.com/p/9839c7306d17</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/29/内存/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSCoding" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/29/NSCoding/">NSCoding</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/29/NSCoding/" class="archive-article-date">
-  	<time datetime="2018-12-29T14:29:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>序列化 (Serialization)将对象的状态信息转换为可以存储或传输的形式的过程。</p>
-<p>在序列化期间，对象将其当前状态写入到临时或持久性存储区。以后，可以通过从存储区中读取或反序列化对象的状态，重新创建该对象。<br>序列化使其他代码可以查看或修改，那些不序列化便无法访问的对象实例数据。确切地说，代码执行序列化需要特殊的权限：即指定了 SerializationFormatter 标志的 SecurityPermission。在默认策略下，通过 Internet 下载的代码或 Internet 代码不会授予该权限；只有本地计算机上的代码才被授予该权限。<br>通常，对象实例的所有字段都会被序列化，这意味着数据会被表示为实例的序列化数据。这样，能够解释该格式的代码有可能能够确定这些数据的值，而不依赖于该成员的可访问性。类似地，反序列化从序列化的表示形式中提取数据，并直接设置对象状态，这也与可访问性规则无关。<br>对于任何可能包含重要的安全性数据的对象，如果可能，应该使该对象不可序列化。如果它必须为可序列化的，请尝试生成特定字段来保存不可序列化的重要数据。如果无法实现这一点，则应注意该数据会被公开给任何拥有序列化权限的代码，并确保不让任何恶意代码获得该权限。</p>
-<p><code>NSCoder</code> 和 <code>NSCoding</code> 有将自己定义的类的对象写入磁盘的作用</p>
-<ul>
-<li>NSCoder 是一个抽象类，抽象类不能被实例话，只能提供一些想让子类继承的方法。</li>
-<li>NSCoding 是一个协议，主要有下面两个方法<br>// 反序列化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-(id)initWithCoder:(NSCoder *)coder &#123;</span><br><span class="line">    /* NSObject没有遵守NSCoding协议，因此调用父类的init构造方法</span><br><span class="line">     * 如果继承的父类遵守NSCoding协议需要调用父类的initWithCoder:方法</span><br><span class="line">     * [super initWithCoder:aDecoder]</span><br><span class="line">    */</span><br><span class="line">    </span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        self.accountNumber = [aDecoder decodeObjectForKey:@&quot;kaccountNumber&quot;];</span><br><span class="line">        self.balance = [aDecoder decodeDoubleForKey:@&quot;kbalance&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)encodeWithCoder:(NSCoder *)coder;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/29/NSCoding/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NSArray" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/29/NSArray/">NSArray</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/29/NSArray/" class="archive-article-date">
-  	<time datetime="2018-12-29T11:00:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = @[@1, @2, @3];</span><br><span class="line">NSMutableArray *muArr = [NSMutableArray arrayWithArray:arr];</span><br><span class="line"></span><br><span class="line">// for in 改变可变数据会崩溃</span><br><span class="line">//    for (NSNumber *num in muArr) &#123;</span><br><span class="line">//        if (num.integerValue == 2) &#123;</span><br><span class="line">//            [muArr removeObject:num];</span><br><span class="line">//        &#125;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; muArr.count - 1; i ++) &#123; // muArr.count 也在随时变</span><br><span class="line">	NSNumber *num = muArr[i];</span><br><span class="line">	if (num.integerValue == 2) &#123;</span><br><span class="line">		[muArr removeObject:num];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// block 内部可以修改可变数组的元素，而不用__blok</span><br><span class="line">[muArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">	if ([obj integerValue] == 2) &#123;</span><br><span class="line">		[muArr removeObject:obj];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">// 对于集合中对象数很多的情况下，for in 的遍历速度非常之快，但小规模的遍历并不明显（还没普通for循环快）</span><br><span class="line">// Value查询index的时候, 面对大量的数组推荐使用 enumerateObjectsWithOptions的并行方法.</span><br></pre></td></tr></table></figure>
-<h5 id="数组线程安全的思考"><a href="#数组线程安全的思考" class="headerlink" title="数组线程安全的思考"></a>数组线程安全的思考</h5><p>NSMutableArray是线程不安全的，当有多个线程同时对数组进行操作的时候可能导致崩溃或数据错误<br>用<code>dispatch_sync</code>读<br><code>dispatch_barrier_async</code>写</p>
-<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><p>数组和字典属于类族，最好不要继承</p>
-<p>在 Cocoa 中有一种奇葩的类存在 Class Clusters。面向对象的编程告诉我们：“类可以继承，子类具有父类的方法”。而 Cocoa 中的 Class Clusters 虽然平时表现的像普通类一样，但子类却没法继承父类的方法。 NSMutableArray就是这样的存在。为什么会这样呢？因为 Class Clusters 内部其实是由多个私有的类和方法组成。虽然它有这样的弊端，但是好处还是不言而喻的。例如，NSNumber 其实也是这种类，这样一个类可以把各种不同的原始类型封装到一个类下面，提供统一的接口。这正设计模式中的抽象工厂模式。</p>
-<p>查看Apple的文档，要继承这样的类需要必须实现其primitive methods方法，实现了这些方法，其它方法便都能通过这些方法组合而成。比如</p>
-<p>需要继承NSMutableArray就需要实现它的以下primitive methods：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)addObject:(id)anObject;</span><br><span class="line">- (void)insertObject:(id)anObject atIndex:(NSUInteger)index;</span><br><span class="line">- (void)removeLastObject;</span><br><span class="line">- (void)removeObjectAtIndex:(NSUInteger)index;</span><br><span class="line">- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;</span><br></pre></td></tr></table></figure></p>
-<p>NSArray的primitive methods：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (NSUInteger)count;</span><br><span class="line">- (id)objectAtIndex:(NSUInteger)index;</span><br></pre></td></tr></table></figure></p>
-<h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>动态数组并不是真正意义上的动态的内存，而是一块连续的内存，当添加新的元素时，容量已经等于当前的大小的时候(存不下了)，执行下面3步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[模块A] --&gt;|重新开辟一块大小为当前容量两倍的数组| B(模块B)</span><br><span class="line">B[模块A] --&gt;|把原数据拷贝过去| C(模块B)</span><br><span class="line">C[模块A] --&gt;|释放掉旧的数组| D(模块B)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>古老的C数组:<br>优点:查询速度很快，直接通过下表找到对应的值<br>缺点:修改、删除数据很慢，需要移动基于所有的其他的元素<img src="/2018/12/29/NSArray/11.png" title="图片说明">
-<img src="/2018/12/29/NSArray/12.png" title="图片说明"></li>
-<li>NSMutableArray<img src="/2018/12/29/NSArray/13.png" title="图片说明">
-offset: 有效数据起始位置偏移量<br>size: 实际占用的内存大小<br>used: 数组的实际的有效数据个数<br>*list: 实际内存的起始地址<img src="/2018/12/29/NSArray/14.png" title="图片说明">
-<strong>删除元素</strong><br>[arr removeObjecAtIndex:0];<br>仅仅修改 offset即可，内存完全不需要移动。<img src="/2018/12/29/NSArray/15.png" title="图片说明">
-<strong>插入元素</strong><br>[arr insertObjec:@”test”atIndex:0];<br>如果buff的size还够用，不需要扩展buff，数据会在buff的末端添加进去，此时offset由0变成size-1,used+1.over<br>循环buff的牛逼之处就在于此，无需移动内存，实现插入元素。<img src="/2018/12/29/NSArray/16.png" title="图片说明">
-<strong>删除元素</strong><br>[arr removeObjecAtIndex:3];<br>删除头尾元素直接修改offset或者used即可<br>但是如果删除中间元素，就避免不了移动其他元素，不过NSArray会选择更少移动的那一边移动数据。<br>所以我们在实际使用过程中应该尽量避免这么做。<img src="/2018/12/29/NSArray/17.png" title="图片说明">
-</li>
-</ul>
-<p><a href="https://www.jianshu.com/p/0b5a97720ebe" target="_blank" rel="noopener">https://www.jianshu.com/p/0b5a97720ebe</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/29/NSArray/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/ios-锁/">展开全文 >></a>
         </p>
       
 

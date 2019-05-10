@@ -69,6 +69,8 @@
 	        
 				<li><a href="/categories/ git">Git</a></li>
 	        
+				<li><a href="/categories/ react-native">react-native</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -129,6 +131,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -149,21 +153,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -179,6 +185,412 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-RxSwift" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/13/RxSwift/">RxSwift</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/13/RxSwift/" class="archive-article-date">
+  	<time datetime="2019-01-13T05:58:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以下是本人的笔记，如果有幸被你看到，最好看一下<a href="https://beeth0ven.github.io/RxSwift-Chinese-Documentation/" target="_blank" rel="noopener">官网</a></p>
+<img src="/2019/01/13/RxSwift/3.jpg" title="图片说明">
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol>
+<li><code>Observable</code>发送信号<code>String</code>,<code>Int</code></li>
+<li><code>map</code>信号变换<code>Bool</code></li>
+<li><code>Observer</code>接收信号<h3 id="Observable-可被监听的序列"><a href="#Observable-可被监听的序列" class="headerlink" title="Observable 可被监听的序列"></a>Observable 可被监听的序列</h3>可以发送信号的序列，信号类型为<code>String</code>,<code>Bool</code>,<code>Int</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let stringObservable: Observable&lt;String&gt; = textField.rx.text.orEmpty.asObservable()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>主要使用<code>Observable</code>下面的是其变种</p>
+<ul>
+<li>Single 要么只能发出一个元素，要么产生一个 error 事件</li>
+<li>Completable 要么只能产生一个 completed 事件，要么产生一个 error 事件。</li>
+<li>Driver</li>
+<li>ControlEvent 专门用于描述 UI 控件所产生的事件， 不会产生 error 事件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let numbers: Observable&lt;Int&gt; = Observable.create &#123; observer -&gt; Disposable in</span><br><span class="line">            </span><br><span class="line">    observer.onNext(0)</span><br><span class="line">    observer.onNext(1)</span><br><span class="line">    observer.onNext(2)</span><br><span class="line">    observer.onCompleted()</span><br><span class="line">            </span><br><span class="line">    return Disposables.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h3><p>观察者 响应Observable发出的信号</p>
+<ul>
+<li>AnyObserver</li>
+<li>Binder 不会处理错误事件 确保在主线程</li>
+</ul>
+<p>// create AnyObserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">let observer: AnyObserver&lt;Data&gt; = AnyObserver &#123; (event) in</span><br><span class="line">    switch event &#123;</span><br><span class="line">        case .next(let data):</span><br><span class="line">            print(&quot;Data Task Success with count: \(data.count)&quot;)</span><br><span class="line">        case .error(let error):</span><br><span class="line">            print(&quot;Data Task Error: \(error)&quot;)</span><br><span class="line">        default:</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    URLSession.shared.rx.data(request: URLRequest(url: URL.init(string: &quot;a&quot;)!))</span><br><span class="line">        .subscribe(observer)</span><br><span class="line">        .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
+<p>// create Binder<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let usernameValidOutlet = UIView()</span><br><span class="line">let observer: Binder&lt;Bool&gt; = Binder(usernameValidOutlet) &#123; (view, isHidden) in</span><br><span class="line">    view.isHidden = isHidden</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usernameValid</span><br><span class="line">    .bind(to: observer)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
+<p>让所有<code>view</code>都实现这种观察,来响应信号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">extension Reactive where Base: UIView &#123;</span><br><span class="line">    public var isHidden: Binder&lt;Bool&gt; &#123;</span><br><span class="line">        return Binder(self.base) &#123; view, hidden in</span><br><span class="line">            view.isHidden = hidden</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usernameValid</span><br><span class="line">.bind(to: usernameValidOutlet.rx.isHidden)</span><br><span class="line">.disposed(by: disposeBag)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">textField.rx.text.asObservable().bind(to: label.rx.text)</span><br></pre></td></tr></table></figure>
+<h3 id="Observable-发送信号"><a href="#Observable-发送信号" class="headerlink" title="Observable 发送信号"></a>Observable 发送信号</h3><p>// 创建 信号</p>
+<ol>
+<li>调用 Observable.create</li>
+<li>在构建函数里面描述元素的产生过程</li>
+<li>调用 observer.onCompleted() 表示完成</li>
+</ol>
+<h3 id="Observer-响应信号"><a href="#Observer-响应信号" class="headerlink" title="Observer 响应信号"></a>Observer 响应信号</h3><p>使用<code>subscribe</code>来响应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">json.subscribe(onNext: &#123; json in</span><br><span class="line">    print(&quot; json success &quot;)</span><br><span class="line">&#125;, onError: &#123;error in</span><br><span class="line">    print(error)</span><br><span class="line">&#125;, onCompleted: &#123;</span><br><span class="line">    print(&quot; completed &quot;)</span><br><span class="line">&#125;).disposed(by: disposeBage)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="Event-事件"><a href="#Event-事件" class="headerlink" title="Event 事件"></a>Event 事件</h3><p>onNext onError onCompleted 被称为事件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public enum Event&lt;Element&gt; &#123;</span><br><span class="line">    case next(Element)</span><br><span class="line">    case error(Swift.Error)</span><br><span class="line">    case completed</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>有些事物即使信号发送者也可以是接收者<br></p>
+<p>一般用户可以通过UI控制的信号是发送者，UI显示是信号接受者。像<code>UITextField.text</code>即是用户控制又是界面展示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 信号发送者 作为可被监听的序列 </span><br><span class="line">let observable = textField.rx.text</span><br><span class="line">observable.subscribe(onNext: &#123; text in show(text: text) &#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 信号接收者 作为观察者</span><br><span class="line">let observer = textField.rx.text</span><br><span class="line">let text: Observable&lt;String?&gt; = ...</span><br><span class="line">text.bind(to: observer)</span><br></pre></td></tr></table></figure>
+<h3 id="AsyncSubject"><a href="#AsyncSubject" class="headerlink" title="AsyncSubject"></a>AsyncSubject</h3><p><code>AsyncSubject</code> 将在源 <code>Observable</code> 产生完成事件后，发出最后一个元素（仅仅只有最后一个元素），如果源 <code>Observable</code> 没有发出任何元素，只有一个完成事件。</p>
+<h3 id="PublishSubject"><a href="#PublishSubject" class="headerlink" title="PublishSubject"></a>PublishSubject</h3><p><code>PublishSubject</code> 将对观察者发送订阅后产生的元素，而在订阅前发出的元素将不会发送给观察者。</p>
+<h3 id="BehaviorSubject"><a href="#BehaviorSubject" class="headerlink" title="BehaviorSubject"></a>BehaviorSubject</h3><p>当观察者对 <code>BehaviorSubject</code> 进行订阅时，它会将源 <code>Observable</code> 中最新的元素发送出来（如果不存在最新的元素，就发出默认元素）。然后将随后产生的元素发送出来。</p>
+<p>对比<code>PublishSubject</code>,多了一个当前元素信号</p>
+<h3 id="ControlProperty"><a href="#ControlProperty" class="headerlink" title="ControlProperty"></a>ControlProperty</h3><p><code>ControlProperty</code> 专门用于描述 <code>UI</code> 控件属性的，不会产生 <code>error</code> 事件,一定在<code>MainScheduler</code> 订阅（主线程订阅）</p>
+<hr>
+<h3 id="Schedulers-线程调度器"><a href="#Schedulers-线程调度器" class="headerlink" title="Schedulers - 线程调度器"></a>Schedulers - 线程调度器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let rxData: Observable&lt;Data&gt; = ...</span><br><span class="line"></span><br><span class="line">rxData</span><br><span class="line">    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))</span><br><span class="line">    .observeOn(MainScheduler.instance)</span><br><span class="line">    .subscribe(onNext: &#123; [weak self] data in</span><br><span class="line">        self?.data = data</span><br><span class="line">    &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<p>使用 <code>subscribeOn</code>在子线程发送信号,使用 <code>observeOn</code>在主线程监听信号</p>
+<hr>
+<h3 id="combineLatest-合并信号"><a href="#combineLatest-合并信号" class="headerlink" title="combineLatest 合并信号"></a>combineLatest 合并信号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Observable.combineLatest( // 合并信号</span><br><span class="line">    number1.rx.text.orEmpty, // 信号源为三个label的text</span><br><span class="line">    number2.rx.text.orEmpty, </span><br><span class="line">    number3.rx.text.orEmpty) </span><br><span class="line">    &#123; textValue1, textValue2, textValue3 -&gt; Int in</span><br><span class="line">        // 三个输入源作为参数，将其转换成Int信号</span><br><span class="line">        return (Int(textValue1) ?? 0) + (Int(textValue2) ?? 0) + (Int(textValue3) ?? 0)</span><br><span class="line">            &#125;</span><br><span class="line">    .map &#123; $0.description &#125; // 将Int信号转变为 text信号</span><br><span class="line">    .bind(to: result.rx.text) // text信号和label的text绑定</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<p><code>orEmpty</code>会把<code>String?</code>过滤<code>nil</code>帮我们变为<code>String</code>类型。</p>
+<hr>
+<h3 id="disposed-声明周期"><a href="#disposed-声明周期" class="headerlink" title="disposed 声明周期"></a>disposed 声明周期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 声明 disposeBag 属性，其生命周期同此VC</span><br><span class="line">var disposeBag = DisposeBag()</span><br><span class="line"></span><br><span class="line">// 最后调用下面方法，VC释放时会释放disposeBag，从而释放绑定</span><br><span class="line">.disposed(by: self.disposeBag)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 方法里面不能直接使用self，会造成内存泄漏，添加[weak self]，相当于使用weakSelf</span><br><span class="line">.subscribe &#123; [weak self] (text) in</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="just-产生特定的一个元素"><a href="#just-产生特定的一个元素" class="headerlink" title="just 产生特定的一个元素"></a>just 产生特定的一个元素</h3><p>一个序列只有唯一的元素 0：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let id = Observable.just(0)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="from-将其他类型或者数据结构转换为-Observable"><a href="#from-将其他类型或者数据结构转换为-Observable" class="headerlink" title="from 将其他类型或者数据结构转换为 Observable"></a>from 将其他类型或者数据结构转换为 Observable</h3><p>将一个数组转换为 Observable：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let numbers = Observable.from([0, 1, 2])</span><br></pre></td></tr></table></figure></p>
+<p>将一个可选值转换为 Observable：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let optional: Int? = 1</span><br><span class="line">let value = Observable.from(optional: optional)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="merge-任意一个-Observable-产生了元素，就发出这个元素"><a href="#merge-任意一个-Observable-产生了元素，就发出这个元素" class="headerlink" title="merge 任意一个 Observable 产生了元素，就发出这个元素"></a>merge 任意一个 Observable 产生了元素，就发出这个元素</h3><img src="/2019/01/13/RxSwift/1.png" title="图片说明">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let subject1 = PublishSubject&lt;String&gt;()</span><br><span class="line">let subject2 = PublishSubject&lt;String&gt;()</span><br><span class="line"></span><br><span class="line">Observable.of(subject1, subject2)</span><br><span class="line">    .merge()</span><br><span class="line">    .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="combineLatest-当任意一个-Observable-发出一个新的元素"><a href="#combineLatest-当任意一个-Observable-发出一个新的元素" class="headerlink" title="combineLatest 当任意一个 Observable 发出一个新的元素"></a>combineLatest 当任意一个 Observable 发出一个新的元素</h3><img src="/2019/01/13/RxSwift/2.png" title="图片说明">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let first = PublishSubject&lt;String&gt;()</span><br><span class="line">let second = PublishSubject&lt;String&gt;()</span><br><span class="line"></span><br><span class="line">Observable.combineLatest(first, second) &#123; $0 + $1 &#125;</span><br><span class="line">          .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">          .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="map-对每个元素直接转换"><a href="#map-对每个元素直接转换" class="headerlink" title="map 对每个元素直接转换"></a>map 对每个元素直接转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Observable.of(1, 2, 3)</span><br><span class="line">    .map &#123; $0 * 10 &#125;</span><br><span class="line">    .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="filter-通过判定条件过滤出一些元素"><a href="#filter-通过判定条件过滤出一些元素" class="headerlink" title="filter 通过判定条件过滤出一些元素"></a>filter 通过判定条件过滤出一些元素</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Observable.of(2, 30, 22, 5, 60, 1)</span><br><span class="line">          .filter &#123; $0 &gt; 10 &#125;</span><br><span class="line">          .subscribe(onNext: &#123; print($0) &#125;)</span><br><span class="line">          .disposed(by: disposeBag)</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/13/RxSwift/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-extention" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/12/swift-extention/">swift_extention</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/12/swift-extention/" class="archive-article-date">
+  	<time datetime="2019-01-12T02:57:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>protocol</code>声明的方法是必须要实现的，但是可以通过使用<code>extension</code>来实现默认实现，这样子类就可以不用实现而调用默认实现，但是子类要是想自己实现就要添加<code>override</code>标识，并且不能在<code>extension</code>中实现。<code>extension</code>不能覆盖父类的方法</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/12/swift-extention/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-权限" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift-权限/">swift_权限</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift-权限/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:06:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>模块：独立的代码单元 独立的框架 独立的应用程序 不同模块间使用 <code>import</code> 引入另一个模块<br>源文件：同一个框架或应用程序中不需要使用 <code>import</code></p>
+<h4 id="private-真正私有"><a href="#private-真正私有" class="headerlink" title="private 真正私有"></a>private 真正私有</h4><hr>
+<p>加了<code>private</code>就不要想在其他类中修改其值了，不论是<code>private(set)</code>还是不存在的<code>private(get)</code>，因为这样<code>private</code>就没有意义了，还不如直接去掉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 只有在 MyClass 中可以读写</span><br><span class="line">class MyClass &#123;</span><br><span class="line">    private var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在类型之外也能够读取到这个类型</span><br><span class="line">// 只能在类型内部对其进行更新</span><br><span class="line">class MyClass &#123;</span><br><span class="line">    private(set) var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种写法没有对”读”做限制,相当于使用了默认的 <code>internal</code> 权限。如果我们希望在别的 <code>module</code> 中也能访问这个属性,同时又保持只在当前类可以设置的话,我们需要将 <code>get</code> 的访问权限提高为 <code>public</code>。属性的访问控制可以通过两次的访问权限指定来实现, 具体来说,将刚才的声明变为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class MyClass &#123;</span><br><span class="line">    public private(set) var name: String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时我们就可以在 <code>module</code> 之外也访问到 <code>MyClass</code> 的 <code>name</code> 了。<br>我们在 <code>MyClass</code> 前面也添加的 <code>public</code>,这是编译器所要求的。因为如果只为 <code>name</code> 的 <code>get</code> 添加 <code>public</code> 而不管 <code>MyClass</code> 的话,<code>module</code> 外就连 <code>MyClass</code> 都访问不到了,属性的 访问控制级别也就没有任何意义了。</p>
+<h4 id="fileprivate-文件内私有"><a href="#fileprivate-文件内私有" class="headerlink" title="fileprivate 文件内私有"></a>fileprivate 文件内私有</h4><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class User &#123;</span><br><span class="line">    private var name1 = &quot;private&quot;</span><br><span class="line">    fileprivate var name2 = &quot;fileprivate&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension User &#123;</span><br><span class="line">    var accessPrivate: String &#123;</span><br><span class="line">        return name2</span><br><span class="line">//        return name1 // error</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Internal"><a href="#Internal" class="headerlink" title="Internal"></a>Internal</h4><hr>
+<p>可以访问自己模块或应用中源文件里的任何实体，但是别人不能访问该模块中源文件里的实体。通常情况下，某个接口或Framework作为内部结构使用时，你可以将其设置为internal级别。</p>
+<h2 id="Public"><a href="#Public" class="headerlink" title="####Public "></a>####Public </h2><ul>
+<li>public 修饰的 class 在 Module 内部可以访问和继承，在外部只能访问</li>
+<li>public 修饰的 func 在 Module 内部可以被访问和重载（override）,在外部只能访问</li>
+</ul>
+<h4 id="open"><a href="#open" class="headerlink" title="open"></a>open</h4><hr>
+<ul>
+<li>open 修饰的 class 在 Module 内部和外部都可以被访问和继承</li>
+<li>open 修饰的 func 在 Module 内部和外部都可以被访问和重载（override）</li>
+</ul>
+<h4 id="Final"><a href="#Final" class="headerlink" title="Final"></a>Final</h4><hr>
+<ul>
+<li>final 修饰的 class 任何地方都不能不能被继承</li>
+<li>final 修饰的 func 任何地方都不能被 Override</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift-权限/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-where" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift-where/">swift_where</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift-where/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:04:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>do catch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">enum ExceptionError: Error &#123;</span><br><span class="line">    case httpCode(Int)</span><br><span class="line">&#125;</span><br><span class="line">func throwError() throws &#123;</span><br><span class="line">    thtow ExceptionError.httpCode(500)</span><br><span class="line">&#125;</span><br><span class="line">do &#123;</span><br><span class="line">    try throwError()</span><br><span class="line">&#125; catch ExceptionError.httpCode(let httpCode) where httpCode &gt;= 500 &#123;</span><br><span class="line">    print(&quot;server error&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>switch</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var value:(Int, String) = (1, &quot;小明&quot;)</span><br><span class="line">switch value &#123;</span><br><span class="line">    case let (x, y) where x &lt; 60;</span><br><span class="line">        print(&quot;不及格&quot;)</span><br><span class="line">    default:</span><br><span class="line">        print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for score in scores where score &gt;= 60 &#123;</span><br><span class="line">    print(&quot;及格&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>for in</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arrayOne = [1, 2, 3, 4, 5];</span><br><span class="line">let dictionary = [1:&quot;a&quot;, 2:&quot;b&quot;]</span><br><span class="line">for i in arrayOne where dictionary[i] != nil &#123;</span><br><span class="line">    print (i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol aProtocol()</span><br><span class="line">extension aProtocol where Self: UIView &#123;</span><br><span class="line">    // 只给遵守aProtocol协议的UIView添加拓展</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>if let   guard中的where使用 , 替代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var optionName: String? = &quot;hang&quot;</span><br><span class="line">if let name = optionName , name.hasprefix(&quot;H&quot;) &#123;</span><br><span class="line">    print(name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Swift4 中的改进</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">可以在 associatedtype 后面声明的类型后追加 where 约束语句</span><br><span class="line"></span><br><span class="line">protocol aProtocol &#123;</span><br><span class="line">    associatedtype Element</span><br><span class="line">    associatedtype SubSequence: Sequence where </span><br><span class="line">        SubSequence.Iterator.Element == Iterator.Element</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">由于 associatedtype 支持追加 where ，swift4标准库中的 Sequence 中的 Element 声明如下</span><br><span class="line">它限定了 Sequence 中 Element 这个类型必须和 Iterator.Element 的类型一致，省去了拓展中的不必要判断</span><br><span class="line"></span><br><span class="line">protocol Sequence &#123;</span><br><span class="line">    associatedtype Element where Self.Element = Self.Iterator.Element</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift-where/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-swift-throws" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
@@ -573,19 +985,19 @@
 
 
   
-    <article id="post-组合模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-设计模式-组合模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/组合模式/">组合模式</a>
+      <a class="article-title" href="/2019/01/09/设计模式-组合模式/">组合模式</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/组合模式/" class="archive-article-date">
+        <a href="/2019/01/09/设计模式-组合模式/" class="archive-article-date">
   	<time datetime="2019-01-09T09:07:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
 </a>
         
@@ -617,7 +1029,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/组合模式/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/09/设计模式-组合模式/">展开全文 >></a>
         </p>
       
 
@@ -647,19 +1059,19 @@
 
 
   
-    <article id="post-单例模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-设计模式-单例模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/单例模式/">单例模式 - 创建型模式</a>
+      <a class="article-title" href="/2019/01/09/设计模式-单例模式/">单例模式 - 创建型模式</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/单例模式/" class="archive-article-date">
+        <a href="/2019/01/09/设计模式-单例模式/" class="archive-article-date">
   	<time datetime="2019-01-09T09:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
 </a>
         
@@ -671,9 +1083,10 @@
 <p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
 <p>意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
 <p>主要解决：一个全局使用的类频繁地创建与销毁。</p>
-<p>场景：确保程序运行期某个类，只有一份实例，用于进行资源共享控制。<br>实例：[UIApplication sharedApplication]。</p>
-<h5 id="全局变量和单例模式的区别"><a href="#全局变量和单例模式的区别" class="headerlink" title="全局变量和单例模式的区别"></a>全局变量和单例模式的区别</h5><p>全局变量是对一个对象的静态引用，全局变量确实可以提供单例模式实现的全局访问功能，但是它并不能保证应用程序只有一个实例；编码规范也明确的指出应该要少使用全局变量，因为过多的使用全局变量会造成代码难读；全局变量并不能实现继承。</p>
-<p>单例模式虽然在继承上不能很好的处理，但是还是可以实现继承的；单例模式在类中保存了它的唯实例这个类，可以保证只能创建一个实例，同时它还提供了一个访问该唯一实例的全局访问点。</p>
+<p>场景：确保程序运行期某个类，只有一份实例，用于进行资源共享控制。<br>实例：<code>[UIApplication sharedApplication]</code></p>
+<h5 id="全局变量和单例模式的区别"><a href="#全局变量和单例模式的区别" class="headerlink" title="全局变量和单例模式的区别"></a>全局变量和单例模式的区别</h5><p>全局变量和单例都可以提供全局访问的能力。</p>
+<p>全局变量只是对一个对象或变量的静态引用，并不能保证应用程序只有一个实例。</p>
+<p>编码规范也明确的指出应该要少使用全局变量，因为过多的使用全局变量会造成代码难读；全局变量并不能实现继承。</p>
 
       
 
@@ -697,323 +1110,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/单例模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-适配器模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/适配器模式/">适配器模式 - 结构型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/适配器模式/" class="archive-article-date">
-  	<time datetime="2019-01-09T09:03:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>适配器模式（Adapter Pattern）是作为两个不兼容的接口之间的桥梁。这种类型的设计模式属于结构型模式，它结合了两个独立接口的功能。</p>
-<p>这种模式涉及到一个单一的类，该类负责加入独立的或不兼容的接口功能。举个真实的例子，读卡器是作为内存卡和笔记本之间的适配器。您将内存卡插入读卡器，再将读卡器插入笔记本，这样就可以通过笔记本来读取内存卡。</p>
-<p>意图：将一个类的接口转换成客户希望的另外一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/适配器模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-原型模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/原型模式/">原型模式 - 创建型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/原型模式/" class="archive-article-date">
-  	<time datetime="2019-01-09T09:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原型模式（Prototype Pattern）是用于创建重复的对象，同时又能保证性能。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>这种模式是实现了一个原型接口，该接口用于创建当前对象的克隆。当直接创建对象的代价比较大时，则采用这种模式。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/原型模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-工厂模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/工厂模式/">工厂模式 - 创建型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/工厂模式/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:59:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
-<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。</p>
-<p>意图：定义一个创建对象的接口，让其子类自己决定实例化哪一个工厂类，工厂模式使其创建过程延迟到子类进行。</p>
-<p>主要解决：主要解决接口选择的问题。</p>
-<p>何时使用：我们明确地计划不同条件下创建不同实例时。</p>
-<p>如何解决：让其子类实现工厂接口，返回的也是一个抽象的产品。</p>
-<ul>
-<li>工厂<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation ProductOneFactory</span><br><span class="line"></span><br><span class="line">+(Product*)createProduct &#123;</span><br><span class="line">    return [[Product alloc]init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation ProductTwoFactory</span><br><span class="line"></span><br><span class="line">+(Product*)createProduct &#123;</span><br><span class="line">    return [[Product alloc]init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<ul>
-<li>简单工厂方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+(Product *)createProductWithType:(ProductType)type &#123;</span><br><span class="line">    switch(type) &#123;</span><br><span class="line">        case ProductTypeOne:</span><br><span class="line">            return [[ProductOne alloc] init];</span><br><span class="line">            break;</span><br><span class="line">        case ProductTypeTwo:</span><br><span class="line">            return [[ProductTwo alloc] init];</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/工厂模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-代理模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/代理模式/">代理模式 - 结构型模式</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/代理模式/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:57:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个类代表另一个类的功能。这种类型的设计模式属于结构型模式。</p>
-<p>意图：为其他对象提供一种代理以控制对这个对象的访问。</p>
-<p>主要解决：在直接访问对象时带来的问题，比如说：要访问的对象在远程的机器上。在面向对象系统中，有些对象由于某些原因（比如对象创建开销很大，或者某些操作需要安全控制，或者需要进程外的访问），直接访问会给使用者或者系统结构带来很多麻烦，我们可以在访问此对象时加上一个对此对象的访问层。</p>
-<p>场景：当一个类的某些功能需要由别的类来实现，但是又不确定具体会是哪个类实现。<br>实例：tableview的 数据源delegate，通过和protocol的配合，完成委托诉求。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/代理模式/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/09/设计模式-单例模式/">展开全文 >></a>
         </p>
       
 

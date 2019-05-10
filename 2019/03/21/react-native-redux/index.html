@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>react_native_redux | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sotre">
+  <meta name="description" content="sotrestore 是应用状态 state 的管理者，包含下列四个函数：  getState() # 获取整个 state dispatch(action) # ※ 触发 state 改变的【唯一途径】※ subscribe(listener) # 您可以理解成是 DOM 中的 addEventListener replaceReducer(nextReducer) # 一般在 Webpack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react_native_redux">
 <meta property="og:url" content="https://libo198615.github.io/2019/03/21/react-native-redux/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="sotre">
+<meta property="og:description" content="sotrestore 是应用状态 state 的管理者，包含下列四个函数：  getState() # 获取整个 state dispatch(action) # ※ 触发 state 改变的【唯一途径】※ subscribe(listener) # 您可以理解成是 DOM 中的 addEventListener replaceReducer(nextReducer) # 一般在 Webpack">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-21T09:03:59.170Z">
+<meta property="og:updated_time" content="2019-04-29T01:02:51.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react_native_redux">
-<meta name="twitter:description" content="sotre">
+<meta name="twitter:description" content="sotrestore 是应用状态 state 的管理者，包含下列四个函数：  getState() # 获取整个 state dispatch(action) # ※ 触发 state 改变的【唯一途径】※ subscribe(listener) # 您可以理解成是 DOM 中的 addEventListener replaceReducer(nextReducer) # 一般在 Webpack">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -72,6 +72,8 @@
 				<li><a href="/categories/ 设计模式">设计模式</a></li>
 	        
 				<li><a href="/categories/ git">Git</a></li>
+	        
+				<li><a href="/categories/ react-native">react-native</a></li>
 	        
 			</ul>
 		</nav>
@@ -133,6 +135,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -153,21 +157,23 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 12.5%"><a href="/categories/ 书籍">书籍</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 书籍">书籍</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ iOS">iOS</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ iOS">iOS</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ C++">C++</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ C++">C++</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ Swift">Swift</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ Swift">Swift</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ shell">shell命令</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ shell">shell命令</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 计算机基础">计算机基础</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 计算机基础">计算机基础</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ 设计模式">设计模式</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ 设计模式">设计模式</a></li>
 		        
-					<li style="width: 12.5%"><a href="/categories/ git">Git</a></li>
+					<li style="width: 11.11111111111111%"><a href="/categories/ git">Git</a></li>
+		        
+					<li style="width: 11.11111111111111%"><a href="/categories/ react-native">react-native</a></li>
 		        
 				</ul>
 			</nav>
@@ -202,7 +208,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="sotre"><a href="#sotre" class="headerlink" title="sotre"></a>sotre</h3>
+        <h4 id="sotre"><a href="#sotre" class="headerlink" title="sotre"></a>sotre</h4><p><code>store</code> 是应用状态 <code>state</code> 的管理者，包含下列四个函数：</p>
+<ul>
+<li><code>getState() # 获取整个 state</code></li>
+<li><code>dispatch(action) # ※ 触发 state 改变的【唯一途径】※</code></li>
+<li><code>subscribe(listener) # 您可以理解成是 DOM 中的 addEventListener</code></li>
+<li><code>replaceReducer(nextReducer) # 一般在 Webpack Code-Splitting 按需加载的时候用</code></li>
+</ul>
+<h4 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h4><p>用户每次 <code>dispatch(action)</code> 后，都会触发 <code>reducer</code> 的执行<br><code>reducer</code> 的实质是一个<strong>函数</strong>，根据 <code>action.type</code> 来<strong>更新</strong> <code>state</code> 并返回 <code>nextState</code><br>最后会用 <code>reducer</code> 的返回值 <code>nextState</code> <strong>完全替换掉</strong>原来的 <code>state</code></p>
+<h4 id="action"><a href="#action" class="headerlink" title="action"></a>action</h4><p>action代表界面的操作。我们定义一个界面有几个界面操作（或者叫触发事件），使用string来描述。然后定义一个方法即action creator，传入执行这个操作需要的参数，然后返回这个操作的类型，即上面定义的string类型中的一个，和完成后的新的界面数据。这个action creator只是描述输入与产出，不负责具体的执行。总体讲action负责定义操作类型，和提供一个获取该类型的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const ADD_TODO = &apos;ADD_TODO&apos;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  type: ADD_TODO,</span><br><span class="line">  text: &apos;Build my first Redux app&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Action Creator<br>Action Creator 是 <code>action</code> 的创造者，本质上就是一个<strong>函数</strong>，返回值是一个 <code>action</code>（<strong>对象</strong>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    type: <span class="string">'ADD_TODO'</span>,</span><br><span class="line">    payload: &#123;</span><br><span class="line">      id: id++,</span><br><span class="line">      content: content, <span class="comment">// 待办事项内容</span></span><br><span class="line">      completed: <span class="literal">false</span>  <span class="comment">// 是否完成的标识</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="state"><a href="#state" class="headerlink" title="state"></a>state</h4><p>是应用的状态,界面状态，界面显示的值</p>
+<h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4><p><strong>1. 调用</strong> <a href="https://www.redux.org.cn/docs/api/Store.html#dispatch" target="_blank" rel="noopener"><code>store.dispatch(action)</code></a>。</p>
+<p><strong>2. Redux store 调用传入的 reducer 函数。</strong></p>
+<p><a href="https://www.redux.org.cn/docs/basics/Store.html" target="_blank" rel="noopener">Store</a> 会把两个参数传入 <a href="https://www.redux.org.cn/docs/basics/Reducers.html" target="_blank" rel="noopener">reducer</a>： 当前的 state 树和 action。例如，在这个 todo 应用中，根 reducer 可能接收这样的数据：</p>
+<p><strong>3. 根 reducer 应该把多个子 reducer 输出合并成一个单一的 state 树。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function todos(state = [], action) &#123;</span><br><span class="line">  // 省略处理逻辑...</span><br><span class="line">  return nextState</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function visibleTodoFilter(state = &apos;SHOW_ALL&apos;, action) &#123;</span><br><span class="line">  // 省略处理逻辑...</span><br><span class="line">  return nextState</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let todoApp = combineReducers(&#123;</span><br><span class="line">  todos,</span><br><span class="line">  visibleTodoFilter</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>4. Redux store 保存了根 reducer 返回的完整 state 树。</strong></p>
+<p>这个新的树就是应用的下一个 state！所有订阅 <a href="https://www.redux.org.cn/docs/api/Store.html#subscribe" target="_blank" rel="noopener"><code>store.subscribe(listener)</code></a> 的监听器都将被调用；监听器里可以调用 <a href="https://www.redux.org.cn/docs/api/Store.html#getState" target="_blank" rel="noopener"><code>store.getState()</code></a> 获得当前 state。</p>
+<h3 id="实现容器组件"><a href="#实现容器组件" class="headerlink" title="实现容器组件"></a>实现容器组件</h3><p>容器组件就是使用 <a href="https://www.redux.org.cn/docs/api/Store.html#subscribe" target="_blank" rel="noopener"><code>store.subscribe()</code></a> 从 Redux state 树中读取部分数据，并通过 props 来把这些数据提供给要渲染的组件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">const getVisibleTodos = (todos, filter) =&gt; &#123;</span><br><span class="line">  switch (filter) &#123;</span><br><span class="line">    case &apos;SHOW_COMPLETED&apos;:</span><br><span class="line">      return todos.filter(t =&gt; t.completed)</span><br><span class="line">    case &apos;SHOW_ACTIVE&apos;:</span><br><span class="line">      return todos.filter(t =&gt; !t.completed)</span><br><span class="line">    case &apos;SHOW_ALL&apos;:</span><br><span class="line">    default:</span><br><span class="line">      return todos</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapStateToProps = state =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    todos: getVisibleTodos(state.todos, state.visibilityFilter)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 分发方法</span><br><span class="line">const mapDispatchToProps = dispatch =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    onTodoClick: id =&gt; &#123;</span><br><span class="line">      dispatch(toggleTodo(id))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;</span><br><span class="line"></span><br><span class="line">const VisibleTodoList = connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(TodoList)</span><br><span class="line"></span><br><span class="line">export default VisibleTodoList</span><br></pre></td></tr></table></figure>
+<h4 id="异步-action-创建函数"><a href="#异步-action-创建函数" class="headerlink" title="异步 action 创建函数"></a>异步 action 创建函数</h4><p>通过使用指定的 middleware，action 创建函数除了返回 action 对象外还可以返回函数。这时，这个 action 创建函数就成为了 <a href="https://en.wikipedia.org/wiki/Thunk" target="_blank" rel="noopener">thunk</a>。</p>
+<p>当 action 创建函数返回函数时，这个函数会被 Redux Thunk middleware 执行。这个函数并不需要保持纯净；它还可以带有副作用，包括执行异步 API 请求。这个函数还可以 dispatch action，就像 dispatch 前面定义的同步 action 一样。</p>
+
       
 
       
