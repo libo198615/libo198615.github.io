@@ -309,19 +309,19 @@
 
 
   
-    <article id="post-dealloc" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-dealloc" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/dealloc/">dealloc</a>
+      <a class="article-title" href="/2019/01/02/iOS-dealloc/">dealloc</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/dealloc/" class="archive-article-date">
+        <a href="/2019/01/02/iOS-dealloc/" class="archive-article-date">
   	<time datetime="2019-01-02T12:54:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -354,7 +354,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/dealloc/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/iOS-dealloc/">展开全文 >></a>
         </p>
       
 
@@ -761,19 +761,19 @@
 
 
   
-    <article id="post-Runloop" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-Runloop" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/Runloop/">Runloop</a>
+      <a class="article-title" href="/2019/01/02/iOS-Runloop/">Runloop</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/Runloop/" class="archive-article-date">
+        <a href="/2019/01/02/iOS-Runloop/" class="archive-article-date">
   	<time datetime="2019-01-02T11:56:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -781,7 +781,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><code>RunLoop</code> 说白了就是一种循环，只不过它这种循环比较高级。当没有事件时，<code>RunLoop</code> 会进入休眠状态，有事件发生时， <code>RunLoop</code> 会去找对应的 <code>Handler</code> 处理事件。</p>
+        <p><code>RunLoop</code>是通过内部维护的事件循环来对事件/消息进行管理的一个对象。没有消息需要处理时，休眠，以避免资源占用  用户态 -&gt; 内核态</p>
 <p><code>Runloop Mode</code> 实际上是<code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 的集合，不同的 <code>Mode</code> 把不同组的 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 隔绝开来。<code>Runloop</code> 在某个时刻只能跑在一个 <code>Mode</code> 下，处理这一个 <code>Mode</code> 当中的 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code>。</p>
 <p>苹果文档中提到的 Mode 有五个，分别是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSDefaultRunLoopMode</span><br><span class="line">NSConnectionReplyMode // 监控NSConnection对象</span><br><span class="line">NSModalPanelRunLoopMode // 标识用于modal panel（模态面板）的事件。</span><br><span class="line">NSEventTrackingRunLoopMode // Cocoa使用该模式来处理用户界面相关的事件。</span><br><span class="line">NSRunLoopCommonModes // 这是一组可配置的通用模式。将input sources与该模式关联则同时也将input sources与该组中的所有模式进行了关联</span><br></pre></td></tr></table></figure></p>
 <p>iOS 中公开暴露出来的只有 <code>NSDefaultRunLoopMode</code> 和 <code>NSRunLoopCommonModes</code>。 <code>NSRunLoopCommonModes</code> 实际上是所有<code>Mode</code>的集合，<br>让<code>Run Loop</code>运行在<code>NSRunLoopCommonModes</code>下是没有意义的，因为一个时刻<code>RunLoop</code>只能运行在一个特定模式下，而不可能是个模式集合。</p>
@@ -853,7 +853,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/Runloop/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/iOS-Runloop/">展开全文 >></a>
         </p>
       
 

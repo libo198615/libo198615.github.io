@@ -6,15 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://libo198615.github.io">
-  <title>Category: 知识点 | Hexo</title>
+  <title>在sourceTree中使用rebase（变基） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://libo198615.github.io/categories/知识点/index.html">
+  <meta name="description" content="原始状态假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1做一些开发，提交到本地，不要推送（push）到远端切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）切换到自己的开发分支 dev-1选中 master 分支，右键，选择  将当前变更变基到 mas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在sourceTree中使用rebase（变基）">
+<meta property="og:url" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原始状态假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1做一些开发，提交到本地，不要推送（push）到远端切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）切换到自己的开发分支 dev-1选中 master 分支，右键，选择  将当前变更变基到 mas">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/1.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/2.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/3.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/4.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/5.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/6.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/7.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/8.png">
+<meta property="og:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/9.png">
+<meta property="og:updated_time" content="2019-01-09T08:23:42.890Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="在sourceTree中使用rebase（变基）">
+<meta name="twitter:description" content="原始状态假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1做一些开发，提交到本地，不要推送（push）到远端切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）切换到自己的开发分支 dev-1选中 master 分支，右键，选择  将当前变更变基到 mas">
+<meta name="twitter:image" content="https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -172,75 +186,57 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Git-在sourceTree中使用rebase" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/11/图片/" class="archive-article-date">
-  	<time datetime="2019-03-11T08:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/11/图片/">图片</a>
+    <h1 class="article-title" itemprop="name">
+      在sourceTree中使用rebase（变基）
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/09/Git-在sourceTree中使用rebase/" class="archive-article-date">
+        
+        <a href="/2019/01/09/Git-在sourceTree中使用rebase/" class="archive-article-date">
   	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/09/Git-在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原始状态<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/Git-在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/9.png" title="图片说明"></p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -253,55 +249,113 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://libo198615.github.io/2019/01/09/Git-在sourceTree中使用rebase/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/09/制作自己的pod/" class="archive-article-date">
-  	<time datetime="2019-01-09T06:56:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/01/09/Git-tag/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Git Tag
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/09/制作自己的pod/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">制作自己的pod</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/09/制作自己的pod/">制作自己的pod</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -324,10 +378,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

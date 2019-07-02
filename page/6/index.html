@@ -250,19 +250,19 @@
 
 
   
-    <article id="post-原型模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-设计模式-原型模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/原型模式/">原型模式 - 创建型模式</a>
+      <a class="article-title" href="/2019/01/09/设计模式-原型模式/">原型模式 - 创建型模式</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/原型模式/" class="archive-article-date">
+        <a href="/2019/01/09/设计模式-原型模式/" class="archive-article-date">
   	<time datetime="2019-01-09T09:01:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
 </a>
         
@@ -295,7 +295,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/原型模式/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/09/设计模式-原型模式/">展开全文 >></a>
         </p>
       
 
@@ -723,19 +723,19 @@
 
 
   
-    <article id="post-git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/git-tag/">Git Tag</a>
+      <a class="article-title" href="/2019/01/09/Git-tag/">Git Tag</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/git-tag/" class="archive-article-date">
+        <a href="/2019/01/09/Git-tag/" class="archive-article-date">
   	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
 </a>
         
@@ -744,13 +744,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/1.png" title="图片说明"></p>
+<p>SourceTree:<br><img src="/2019/01/09/Git-tag/1.png" title="图片说明"></p>
 <p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/Git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
 <p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
 <p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/git-tag/3.png" title="图片说明"></p>
-<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/git-tag/4.png" title="图片说明"></p>
+<p>SourceTree:<br><img src="/2019/01/09/Git-tag/3.png" title="图片说明"></p>
+<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/Git-tag/4.png" title="图片说明"></p>
 
       
 
@@ -774,7 +774,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/git-tag/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/09/Git-tag/">展开全文 >></a>
         </p>
       
 
@@ -804,19 +804,19 @@
 
 
   
-    <article id="post-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Git-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
+      <a class="article-title" href="/2019/01/09/Git-在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
     </h1>
   
 
         
-        <a href="/2019/01/09/在sourceTree中使用rebase/" class="archive-article-date">
+        <a href="/2019/01/09/Git-在sourceTree中使用rebase/" class="archive-article-date">
   	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
 </a>
         
@@ -824,7 +824,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>原始状态<br><img src="/2019/01/09/在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/在sourceTree中使用rebase/9.png" title="图片说明"></p>
+        <p>原始状态<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/Git-在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/9.png" title="图片说明"></p>
 
       
 
@@ -848,7 +848,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/在sourceTree中使用rebase/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/09/Git-在sourceTree中使用rebase/">展开全文 >></a>
         </p>
       
 
