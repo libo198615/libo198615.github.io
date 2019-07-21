@@ -174,19 +174,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-KVO" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-KVO" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/27/KVO/">KVO</a>
+      <a class="article-title" href="/2018/12/27/iOS-KVO/">KVO</a>
     </h1>
   
 
         
-        <a href="/2018/12/27/KVO/" class="archive-article-date">
+        <a href="/2018/12/27/iOS-KVO/" class="archive-article-date">
   	<time datetime="2018-12-27T08:24:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-27</time>
 </a>
         
@@ -207,7 +207,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">static void * SubViewControllerBalanceObserverContext = &amp;SubViewControllerBalanceObserverContext;</span><br></pre></td></tr></table></figure>
 <p><code>superVC</code>和<code>subVC</code>都监听了<code>model.name</code>，当<code>model.name</code>改变时,子类会收到两次监听，一次是自己的，另一次因为<code>superVC</code>的监听，但<code>self</code>依然是<code>subVC</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context</span><br><span class="line">&#123;</span><br><span class="line">    if (context == SubViewControllerBalanceObserverContext)</span><br><span class="line">&#123;</span><br><span class="line">        NSLog(@&quot;SubViewController NewBalance: %lf&quot;, self.model.balance);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.model removeObserver:self forKeyPath:@&quot;balance&quot; context:SubViewControllerBalanceObserverContext</span><br></pre></td></tr></table></figure>
-<p>正确做法是判断不是自己的，主动调用父类的监听方法。<br><code>object</code>是被监听的对象</p>
+<p>正确做法是判断是不是自己的，如果不是，主动调用父类的监听方法。<br><code>object</code>是被监听的对象</p>
 <p><code>KVO</code>的<code>addObserver</code>和<code>removeObserver</code>需要是成对的，如果重复<code>remove</code>则会导致<code>NSRangeException</code>类型的<code>Crash</code>，如果忘记<code>remove</code>则会在观察者释放后再次接收到<code>KVO</code>回调时<code>Crash</code>。</p>
 <h5 id="手动调用KVO"><a href="#手动调用KVO" class="headerlink" title="手动调用KVO"></a>手动调用KVO</h5><p>KVO在属性发生改变时的调用是自动的，如果想要手动控制这个调用时机，或想自己实现KVO属性的调用，则可以通过KVO提供的方法进行调用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)setBalance:(double)theBalance &#123;</span><br><span class="line">    if (theBalance != _balance) &#123;</span><br><span class="line">        [self willChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">        _balance = theBalance;</span><br><span class="line">        [self didChangeValueForKey:@&quot;balance&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//balance属性实现该方法</span><br><span class="line">+ (BOOL)automaticallyNotifiesObserversOfBalance</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -219,7 +219,7 @@
 <p>由此可以推测，object_getClass函数内部返回的是对象的isa指针。</p>
 <h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>苹果提供的<code>KVO</code>自身存在很多问题，首要问题在于，<code>KVO</code>如果使用不当很容易崩溃。例如重复<code>add</code>和<code>remove</code>导致的<code>Crash</code>，<code>Observer</code>被释放导致的崩溃，<code>keyPath</code>传错导致的崩溃等。</p>
 <h5 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h5><p><code>FBKVOViewController</code>是<code>facebook</code>团队开源的框架，提供简洁的接口帮我调用kvo的功能。其核心的设计是 ：利用单例对象（_FBKVOSharedController）来接受对象属性改变的回调。保证了回调的安全。当接受到观察对象的属性改变回调时 ，再根据<code>context</code>，向上转发回调到你定义的代码块中。</p>
-<img src="/2018/12/27/KVO/1.png" title="图片说明">
+<img src="/2018/12/27/iOS-KVO/1.png" title="图片说明">
 <p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0tiihijppj31aq0kadm4.jpg" alt=""></p>
 <p><a href="https://blog.csdn.net/u014205968/article/details/78224820" target="_blank" rel="noopener">https://blog.csdn.net/u014205968/article/details/78224820</a><br><a href="https://www.jianshu.com/p/e59bb8f59302" target="_blank" rel="noopener">https://www.jianshu.com/p/e59bb8f59302</a></p>
 
@@ -245,7 +245,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/27/KVO/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/12/27/iOS-KVO/">展开全文 >></a>
         </p>
       
 

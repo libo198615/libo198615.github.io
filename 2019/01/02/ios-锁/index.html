@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>锁 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。 1">
+  <meta name="description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
 <meta property="og:type" content="article">
 <meta property="og:title" content="锁">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/02/ios-锁/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。 1">
+<meta property="og:description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg">
-<meta property="og:updated_time" content="2019-04-04T00:43:48.716Z">
+<meta property="og:updated_time" content="2019-07-02T14:15:57.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="锁">
-<meta name="twitter:description" content="概念 临界区  指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待  自旋锁  线程反复检查锁变量是否可用。由于线程在这一过程中保持执行，因此是一种忙等待。自旋锁避免了进程上下文的调度开销，因此对于线程只会阻塞很短时间的场合是有效的。由于自旋时不释放CPU，因而持有自旋锁的线程应该尽快释放自旋锁，否则会浪费CPU时间。 1">
+<meta name="twitter:description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
 <meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -199,9 +199,28 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><ul>
-<li>临界区</li>
+<li><p>死锁</p>
+<ol>
+<li>互斥条件：</li>
+</ol>
+<p>指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。</p>
+<ol start="2">
+<li>请求和保持条件：</li>
+</ol>
+<p>指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。</p>
+<ol start="3">
+<li><p>不剥夺条件：</p>
+<p>指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。</p>
+</li>
+<li><p>环路等待条件：</p>
+<p>指在发生死锁时，必然存在一个进程——资源的环形链，</p>
+</li>
+</ol>
+</li>
+<li><p>临界区</p>
+</li>
 </ul>
-<p>指的是一个访问共用资源的程序片段，而这些共用资源又无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待</p>
+<p>指的是一个访问共用资源的程序片段，而这些共用资源又具有无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待</p>
 <ul>
 <li>自旋锁</li>
 </ul>

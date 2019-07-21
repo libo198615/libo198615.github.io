@@ -514,14 +514,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>OpenGL的中，GPU屏幕渲染有两种方式。<br>屏幕渲染（当前屏幕渲染）</p>
+        <p>OpenGL的中，GPU屏幕渲染有两种方式。 </p>
+<ul>
+<li>屏幕渲染（当前屏幕渲染）</li>
+</ul>
 <p>指的是GPU的渲染操作是在当前用于显示的屏幕缓冲区进行。</p>
-<p>离屏渲染（离屏渲染）</p>
+<ul>
+<li>离屏渲染（离屏渲染）</li>
+</ul>
 <p>指的是在GPU在当前屏幕缓冲区以外开辟一个缓冲区进行渲染操作。</p>
-<p>显示器显示出来的图像是经过CRT电子枪一行一行的扫描。（可以是横向的也可以是纵向，具体CRT电子枪又是什么，百度文库介绍的很详细。），扫描出来就呈现了一帧画面，随后电子枪又会回到初始位置循环扫描，为了让显示器的显示跟视频控制器同步，当电子枪新扫描一行的时候。准备扫描的时候，会发送一个水平同步信号（HSync信号），显示器一般是固定刷新频率的，这个刷新的频率其实就是行同步信号产生的频率。然后CPU计算好帧等属性，就将计算好的内容提交给GPU去渲染，GPU渲染完成之后就会放入帧缓冲区，然后视频控制器会按照行同步信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器。就显示出来了。<br>原理图就不放了，过一遍概念。</p>
-<p>离屏渲染的代价很高，想要进行离屏渲染，首选要创建一个新的缓冲区，屏幕渲染会有一个上下文环境的一个概念，离屏渲染的整个过程需要切换上下文环境，先从当前显示幕切换到离屏，等结束后，又要将上下文环境切换回来。这也是为什么会消耗性能的原因了。<br>。由于垂直同步的机制，如果在一个HSync时间内，CPU或GPU没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
-<p>那有个问题：为什么离屏渲染这么耗性能，为什么有这套机制呢？</p>
 <p>当使用圆角，阴影，遮罩的时候，图层属性的混合体被指定为在未预合成之前（下一个HSync信号开始前）不能直接在屏幕中绘制，所以就需要屏幕外渲染</p>
+<h5 id="HSync"><a href="#HSync" class="headerlink" title="HSync"></a>HSync</h5><p>显示器显示出来的图像是经过CRT电子枪一行一行的扫描。扫描出来就呈现了一帧画面，随后电子枪又会回到初始位置循环扫描，为了让显示器的显示跟视频控制器同步，当电子枪新扫描一行的时候。准备扫描的时候，会发送一个水平同步信号（HSync信号），显示器一般是固定刷新频率的，这个刷新的频率其实就是行同步信号产生的频率。然后CPU计算好帧等属性，就将计算好的内容提交给GPU去渲染，GPU渲染完成之后就会放入帧缓冲区，然后视频控制器会按照行同步信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器。就显示出来了。 </p>
+<p>离屏渲染的代价很高，想要进行离屏渲染，首选要创建一个新的缓冲区，屏幕渲染会有一个上下文环境的一个概念，离屏渲染的整个过程需要切换上下文环境，先从当前显示幕切换到离屏，等结束后，又要将上下文环境切换回来。这也是为什么会消耗性能的原因了。<br>由于垂直同步的机制，如果在一个HSync时间内，CPU或GPU没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
+<p>​    </p>
 
       
 
@@ -595,8 +600,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>UIView之所以可以显示是因为他内部的layer图层，在创建UIView对象时，UIView内部会自动创建一个图层，即CALayer。可以通过UIView的layer属性访问。UIView并不具有显示功能，需要依赖于layer，所以设置圆角时我们都用view.layer。<code>CALayer</code>并不清楚具体的<em>响应链</em>（iOS通过视图层级关系用来传送触摸事件的机制），于是它并不能够响应事件，即使它提供了一些方法来判断是否一个触点在图层的范围之内</p>
-<ul>
+        <ul>
 <li><em>UIView</em> 继承于 <em>UIResponder</em> 和 <em>NSObject</em></li>
 <li><em>CALayer</em> 继承与 <em>NSObject</em></li>
 <li><em>UIView</em> 响应事件</li>
@@ -605,7 +609,7 @@
 <p>wwdc：</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1psd34gowj30eg03paam.jpg" alt=""></p>
 <blockquote>
-<p>Layers provide infrastructure for your views. Specifically, layers make it easier and more efficient to draw and animate the contents of views and maintain high frame rates while doing so. However, there are many things that layers do not do. Layers do not handle events, draw content, participate in the responder chain, or do many other things</p>
+<p>Layers provide infrastructure for your views. Specifically, layers make it easier and more efficient to draw and animate the contents of views and maintain high frame rates while doing so. However, there are many things that layers do not do. Layers do not handle events, draw content, participate in the responder chain, or do many other things </p>
 </blockquote>
 <blockquote>
 <p>Layers are often used to provide the backing store for views but can also be used without a view to display content. A layer’s main job is to manage the visual content that you provide but the layer itself has visual attributes that can be set, such as a background color, border, and shadow. In addition to managing visual content, the layer also maintains information about the geometry of its content (such as its position, size, and transform) that is used to present that content onscreen. Modifying the properties of the layer is how you initiate animations on the layer’s content or geometry. A layer object encapsulates the duration and pacing of a layer and its animations by adopting the <a href="apple-reference-documentation://hs8_lzhB0N" target="_blank" rel="noopener"><code>CAMediaTiming</code></a> protocol, which defines the layer’s timing information.</p>
@@ -657,7 +661,6 @@
 <p>这样的定位方式实际就是: 先在 layer 上确定锚点, 然后将锚点挂接到 position 指定的位置上, 就定位了该<br> layer 在父 layer 中的位置.</p>
 <p>anchorPoint 的默认值是 (0.5, 0.5), 即 layer 的中央位置. 这时 position 的作用就和 view 的 center 一样.</p>
 <p>而 layer 的 frame 实际是通过当前的 bounds 和 position 以及 anchorPoint 共同计算出来的. 当设置 layer 的 frame 时, 相当于同时修改了 layer 的 bounds 和 position.</p>
-<p>- </p>
 
       
 
