@@ -174,19 +174,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Runtime" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-Runtime" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/Runtime/">Runtime</a>
+      <a class="article-title" href="/2019/01/03/iOS-Runtime/">Runtime</a>
     </h1>
   
 
         
-        <a href="/2019/01/03/Runtime/" class="archive-article-date">
+        <a href="/2019/01/03/iOS-Runtime/" class="archive-article-date">
   	<time datetime="2019-01-03T08:59:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
 </a>
         
@@ -210,19 +210,19 @@
 <p><code>objc_selector</code>是一个映射到方法的C字符串。需要注意的是@selector()选择子只与函数名有关。不同类中相同名字的方法所对应的方法选择器是相同的，即使方法名字相同而变量类型不同也会导致它们具有相同的方法选择器。由于这点特性，也导致了OC不支持函数重载<br><code>objc_msgSend</code>会做以下几件事情：</p>
 <ol>
 <li>检测这个 <code>selector</code>是不是要忽略的。</li>
-<li>检查<code>target</code>是不是为<code>nil</code>。<br>如果这里有相应的<code>nil</code>的处理函数，就跳转到相应的函数中。<br>如果没有处理<code>nil</code>的函数，就自动清理现场并返回。这一点就是为何在<code>OC</code>中给<code>nil</code>发送消息不会崩溃的原因。</li>
+<li>检查<code>target</code>是不是为<code>nil</code>。<br>如果是<code>nil</code>就自动清理现场并返回。这一点就是为何在<code>OC</code>中给<code>nil</code>发送消息不会崩溃的原因。</li>
 <li>确定不是给<code>nil</code>发消息之后，在该class的缓存中查找方法对应的<code>IMP</code>实现。<br>如果找到，就跳转进去执行。<br>如果没有找到，就在方法分发表里面继续查找，一直找到<code>NSObject</code>为止。</li>
 <li>如果还没有找到，那就需要开始消息转发阶段了。</li>
 </ol>
 <p>方法列表中的方法结构体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method &#123;</span><br><span class="line">    SEL method_name                                      </span><br><span class="line">    char *method_types                                    </span><br><span class="line">    IMP method_imp                                           </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在寻找IMP的地址时，runtime提供了两种方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IMP class_getMethodImplementation(Class cls, SEL name);</span><br><span class="line">IMP method_getImplementation(Method m)</span><br></pre></td></tr></table></figure></p>
-<p>第一种方法<br>对于第一种方法而言，类方法和实例方法实际上都是通过调用class_getMethodImplementation()来寻找IMP地址的，不同之处在于传入的第一个参数不同。<br>类方法(假设有一个类 A)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_getMethodImplementation(objc_getMetaClass(&quot;A&quot;),@selector(methodName));</span><br></pre></td></tr></table></figure></p>
+<p>第一种方法<br>对于第一种方法而言，类方法和实例方法实际上都是通过调用class_getMethodImplementation()来寻找IMP地址的，不同之处在于传入的第一个参数不同。<br>类方法(假设有一个类 A)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_getMethodImplementation(objc_getMetaClass(&quot;A&quot;),@selector(methodName));</span><br></pre></td></tr></table></figure>
 <p>实例方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class_getMethodImplementation([A class],@selector(methodName));</span><br></pre></td></tr></table></figure></p>
-<p>如上图 <code>meta class</code>的<code>isa</code>指向了<code>root meta class</code>(绝大部分情况下root class就是NSObject)，<code>root meta class</code>的<code>isa</code>指向自身，isa的链路就是这样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;%p&quot;, [testObj class]); </span><br><span class="line">NSLog(@&quot;%p&quot;, [TestObject class]);</span><br><span class="line">NSLog(@&quot;%p&quot;, [NSObject class]); </span><br><span class="line"></span><br><span class="line">log输出：</span><br><span class="line">0x100001180</span><br><span class="line">0x100001180</span><br><span class="line">0x1004a0e98</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TestObject *testObj = [TestObject new];</span><br><span class="line">NSLog(@&quot;%d&quot;, [testObj class] == [TestObject class]);</span><br><span class="line"></span><br><span class="line">这个log会输出1</span><br></pre></td></tr></table></figure>
+<p>如上图 <code>meta class</code>的<code>isa</code>指向了<code>root meta class</code>(绝大部分情况下root class就是NSObject)，<code>root meta class</code>的<code>isa</code>指向自身，isa的链路就是这样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSLog(@&quot;%p&quot;, [testObj class]);  // isa指针指向了类</span><br><span class="line">NSLog(@&quot;%p&quot;, [TestObject class]); // 返回类自己</span><br><span class="line">NSLog(@&quot;%p&quot;, [NSObject class]); </span><br><span class="line"></span><br><span class="line">log输出：</span><br><span class="line">0x100001180</span><br><span class="line">0x100001180</span><br><span class="line">0x1004a0e98</span><br></pre></td></tr></table></figure></p>
 <p>从源码看结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+ (Class)class &#123;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (Class)class &#123;</span><br><span class="line">    return object_getClass(self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><code>object_getClass</code>方法最终返回的是<code>isa</code>。所以<code>TestObject</code>调用<code>class</code>方法，返回的是自身；<code>testObj</code>调用<code>class</code>方法，返回的是<code>isa</code>指向的类，也是<code>TestObject</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 只测试当前类</span><br><span class="line">+ (BOOL)isMemberOfClass:(Class)cls</span><br><span class="line"></span><br><span class="line">// 测试 superclass</span><br><span class="line">+ (BOOL)isKindOfClass:(Class)cls</span><br></pre></td></tr></table></figure>
+<h5 id="isMemberOfClass-VS-isKindOfClass"><a href="#isMemberOfClass-VS-isKindOfClass" class="headerlink" title="isMemberOfClass VS isKindOfClass"></a>isMemberOfClass VS isKindOfClass</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 只测试当前类</span><br><span class="line">+ (BOOL)isMemberOfClass:(Class)cls</span><br><span class="line"></span><br><span class="line">// 测试 superclass</span><br><span class="line">+ (BOOL)isKindOfClass:(Class)cls</span><br></pre></td></tr></table></figure>
 <h5 id="category"><a href="#category" class="headerlink" title="category"></a>category</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct category_t &#123; </span><br><span class="line">    const char *name; </span><br><span class="line">    classref_t cls; </span><br><span class="line">    struct method_list_t *instanceMethods; </span><br><span class="line">    struct method_list_t *classMethods;</span><br><span class="line">    struct protocol_list_t *protocols;</span><br><span class="line">    struct property_list_t *instanceProperties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>从上面的<code>category_t</code>的结构体中可以看出，分类中可以添加实例方法，类方法，甚至可以实现协议，添加属性，但不可以添加成员变量。<br>分类的实现原理是将<code>category</code>中的方法，属性，协议数据放在<code>category_t</code>结构体中，然后将结构体内的方法列表拷贝到类对象的方法列表中。<br><code>Category</code>可以添加属性，但是并不会自动生成成员变量及<code>set/get</code>方法。因为<code>category_t</code>体中并不存在成员变量。成员变量是存放在实例对象中的，并且编译的那一刻就已经决定好了。而分类是在运行时才去加载的。那么我们就无法在程序运行时将分类的成员变量中添加到实例对象的结构体中。因此分类中不可以添加成员变量。</p>
 <ul>
@@ -236,20 +236,21 @@
 <h5 id="方法添加-交换"><a href="#方法添加-交换" class="headerlink" title="方法添加 交换"></a>方法添加 交换</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+sw.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (sw)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line"></span><br><span class="line">    Class class = [self class];</span><br><span class="line"></span><br><span class="line">    // 原方法名和替换方法名</span><br><span class="line">    SEL originalSelector = @selector(viewWillAppear:);</span><br><span class="line">    SEL swizzledSelector = @selector(sw_viewWillAppear:);</span><br><span class="line"></span><br><span class="line">    // 原方法结构体和替换方法结构体</span><br><span class="line">    Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">    Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);</span><br><span class="line"></span><br><span class="line">    // 如果当前类没有原方法的实现IMP，先调用class_addMethod来给原方法添加默认的方法实现IMP</span><br><span class="line">    BOOL didAddMethod = class_addMethod(class,</span><br><span class="line">    originalSelector,</span><br><span class="line">    method_getImplementation(swizzledMethod),</span><br><span class="line">    method_getTypeEncoding(swizzledMethod));</span><br><span class="line"></span><br><span class="line">    if (didAddMethod) &#123;// 添加方法实现IMP成功后，修改替换方法结构体内的方法实现IMP和方法类型编码TypeEncoding</span><br><span class="line">        class_replaceMethod(class,</span><br><span class="line">        swizzledSelector,</span><br><span class="line">        method_getImplementation(originalMethod),</span><br><span class="line">        method_getTypeEncoding(originalMethod));</span><br><span class="line">    &#125; else &#123; // 添加失败，调用交互两个方法的实现</span><br><span class="line">        method_exchangeImplementations(originalMethod, swizzledMethod);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)sw_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;start&quot;);</span><br><span class="line">    [self sw_viewWillAppear:animated];</span><br><span class="line">    NSLog(@&quot;end&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <ul>
 <li>SubVC<br>对<code>SubVC</code>进行方法交换，无论SubVC是否实现<code>viewWillAppear</code>，默认也会调用，都将打印 <code>start</code></li>
-<li>UIViewController<br>对<code>UIViewController</code>进行方法交换，相当于对父类进行交换。<br>子类<code>SubVC</code>如果不实现<code>viewWillAppear</code>，会默认调用，打印<code>start</code><br>子类<code>SubVC</code>如果实现<code>viewWillAppear</code>，并调用父类的<code>viewWillAppear</code>，打印<code>start</code><br>子类<code>SubVC</code>如果实现<code>viewWillAppear</code>，但不调用父类的<code>viewWillAppear</code>，不打印<code>start</code><br>本质是：是否调用了交换后的方法</li>
+<li>UIViewController<br>对<code>UIViewController</code>进行方法交换，相当于对父类进行交换。<br>子类<code>SubVC</code>如果不实现<code>viewWillAppear</code>，会默认调用，打印<code>start</code><br>子类<code>SubVC</code>如果实现<code>viewWillAppear</code>，并调用父类的<code>viewWillAppear</code>，打印<code>start</code><br>子类<code>SubVC</code>如果实现<code>viewWillAppear</code>，但不调用父类的<code>viewWillAppear</code>，不打印<code>start</code></li>
+<li>本质是：是否调用了交换后的方法。思考，<code>viewWillAppear</code>这类方法本身子类肯定会调用，父类是否调用，要看子类是否调用了父类的方法。</li>
 </ul>
-<p><code>swizzling</code>应该只在<code>+load</code>中完成。 在 <code>Objective-C</code> 的运行时中，每个类有两个方法都会自动调用。<code>+load</code>是在一个类被初始装载时调用，<code>+initialize</code> 是在应用第一次调用该类的类方法或实例方法前调用的。两个方法都是可选的，并且只有在方法被实现的情况下才会被调用。</p>
 <p>可以使用第三方库<code>JRSwizzle.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;&quot;</span><br><span class="line"></span><br><span class="line">@implementation UINavigationController (help)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    [[UINavigationController class] jr_swizzleMethod:@selector(pushViewController:animated:) withMethod:@selector(LB_pushViewController:animated:) error:nil];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)LB_pushViewController:(UIViewController *)viewController animated:(BOOL)animated &#123;</span><br><span class="line"></span><br><span class="line">    viewController.hidesBottomBarWhenPushed = YES;</span><br><span class="line"></span><br><span class="line">    [self LB_pushViewController:viewController animated:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h5 id="Method-Swizzling使用场景"><a href="#Method-Swizzling使用场景" class="headerlink" title="Method Swizzling使用场景"></a>Method Swizzling使用场景</h5><ul>
 <li>实现埋点统计<br>如果app有埋点需求，并且要自己实现一套埋点逻辑，那么这里用到Swizzling是很合适的选择。</li>
 <li>实现异常保护</li>
 </ul>
-<p>日常开发我们经常会遇到<code>NSArray</code>数组越界的情况，苹果的<code>API</code>也没有对异常保护，所以需要我们开发者开发时候多多留意。关于<code>Index</code>有好多方法，objectAtIndex，removeObjectAtIndex，replaceObjectAtIndex，exchangeObjectAtIndex等等，这些设计到Index都需要判断是否越界。</p>
-<p>常见做法是给NSArray，NSMutableArray增加分类，增加这些异常保护的方法，不过如果原有工程里面已经写了大量的AtIndex系列的方法，去替换成新的分类的方法，效率会比较低。这里可以考虑用Swizzling做。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;NSArray+ Swizzling.h&quot;</span><br><span class="line">#import &quot;objc/runtime.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation NSArray (Swizzling)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    Method fromMethod = class_getInstanceMethod(objc_getClass(&quot;__NSArrayI&quot;), @selector(objectAtIndex:));</span><br><span class="line">    Method toMethod = class_getInstanceMethod(objc_getClass(&quot;__NSArrayI&quot;), @selector(swizzling_objectAtIndex:));</span><br><span class="line">    method_exchangeImplementations(fromMethod, toMethod);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)swizzling_objectAtIndex:(NSUInteger)index &#123;</span><br><span class="line">    if (self.count-1 &lt; index) &#123;</span><br><span class="line">    // 异常处理</span><br><span class="line">    @try &#123;</span><br><span class="line">        return [self swizzling_objectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">    @catch (NSException *exception) &#123;</span><br><span class="line">        // 打印崩溃信息</span><br><span class="line">        NSLog(@&quot;---------- %s Crash Because Method %s  ----------\n&quot;, class_getName(self.class), __func__);</span><br><span class="line">        NSLog(@&quot;%@&quot;, [exception callStackSymbols]);</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    @finally &#123;&#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return [self swizzling_objectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
+<p>日常开发我们经常会遇到<code>NSArray</code>数组越界的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;NSArray+ Swizzling.h&quot;</span><br><span class="line">#import &quot;objc/runtime.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation NSArray (Swizzling)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    Method fromMethod = class_getInstanceMethod(objc_getClass(&quot;__NSArrayI&quot;), @selector(objectAtIndex:));</span><br><span class="line">    Method toMethod = class_getInstanceMethod(objc_getClass(&quot;__NSArrayI&quot;), @selector(swizzling_objectAtIndex:));</span><br><span class="line">    method_exchangeImplementations(fromMethod, toMethod);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)swizzling_objectAtIndex:(NSUInteger)index &#123;</span><br><span class="line">    if (self.count-1 &lt; index) &#123;</span><br><span class="line">    // 异常处理</span><br><span class="line">    @try &#123;</span><br><span class="line">        return [self swizzling_objectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">    @catch (NSException *exception) &#123;</span><br><span class="line">        // 打印崩溃信息</span><br><span class="line">        NSLog(@&quot;---------- %s Crash Because Method %s  ----------\n&quot;, class_getName(self.class), __func__);</span><br><span class="line">        NSLog(@&quot;%@&quot;, [exception callStackSymbols]);</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    @finally &#123;&#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return [self swizzling_objectAtIndex:index];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意，调用这个objc_getClass方法的时候，要先知道类对应的真实的类名才行，NSArray其实在Runtime中对应着<strong>NSArrayI，NSMutableArray对应着</strong>NSArrayM，NSDictionary对应着<strong>NSDictionaryI，NSMutableDictionary对应着</strong>NSDictionaryM。</p>
 </blockquote>
 <h5 id="Isa-Swizzling"><a href="#Isa-Swizzling" class="headerlink" title="Isa Swizzling"></a>Isa Swizzling</h5><p><code>Method Swizzling</code>，本质上就是对<code>IMP</code>和<code>SEL</code>进行交换。也可以对<code>isa</code>指针进行交换<br>在苹果的官方库里面有一个很有名的技术就用到了这个<code>Isa Swizzling</code>，那就是<code>KVO</code><br><code>KVO</code>是为了监听一个对象的某个属性值是否发生变化。在属性值发生变化的时候，肯定会调用其<code>setter</code>方法。所以<code>KVO</code>的本质就是监听对象有没有调用被监听属性对应的<code>setter</code>方法。具体实现应该是重写其<code>setter</code>方法即可。</p>
+<h5 id="object-getClass"><a href="#object-getClass" class="headerlink" title="object_getClass"></a>object_getClass</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class cls = object_getClass(obj); // 获取isa指针</span><br><span class="line">    </span><br><span class="line">Class cls2 = [obj class]; // 1. 对象 获取isa指针  2. 类 返回的是自己，其结果同 1</span><br></pre></td></tr></table></figure>
 <h5 id="题一"><a href="#题一" class="headerlink" title="题一"></a>题一</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@implementation Son : Father</span><br><span class="line"></span><br><span class="line">- (id)init &#123;</span><br><span class="line">    self = [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        NSLog(@&quot;%@&quot;, NSStringFromClass([self class]));</span><br><span class="line">        NSLog(@&quot;%@&quot;, NSStringFromClass([super class]));</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p>[super class] != [super_class class]<br><code>objc_msgSendSuper</code>的工作原理应该是这样的:<br>从<code>objc_super</code>结构体指向的<code>superClass</code>父类的方法列表开始查找<code>selector</code>，找到后以<code>objc-&gt;receiver</code>去调用父类的这个<code>selector</code>。注意，最后的调用者是<code>objc-&gt;receiver</code>.<br>由于找到了父类<code>NSObject</code>里面的<code>class</code>方法的<code>IMP</code>，又因为传入的入参<code>objc_super-&gt;receiver = self</code>。<code>self</code>就是<code>son</code>，调用<code>class</code>，所以父类的方法<code>class</code>执行<code>IMP</code>之后，输出还是<code>son</code></p>
 <h5 id="题二"><a href="#题二" class="headerlink" title="题二"></a>题二</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface Sark : NSObject</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Sark</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
@@ -279,7 +280,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/Runtime/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/03/iOS-Runtime/">展开全文 >></a>
         </p>
       
 
@@ -384,19 +385,19 @@
 
 
   
-    <article id="post-NSURLSession的优势" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-NSURLSession的优势" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/NSURLSession的优势/">NSURLSession的优势</a>
+      <a class="article-title" href="/2019/01/02/iOS-NSURLSession的优势/">NSURLSession的优势</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/NSURLSession的优势/" class="archive-article-date">
+        <a href="/2019/01/02/iOS-NSURLSession的优势/" class="archive-article-date">
   	<time datetime="2019-01-02T12:50:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -434,7 +435,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/NSURLSession的优势/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/iOS-NSURLSession的优势/">展开全文 >></a>
         </p>
       
 
@@ -573,7 +574,6 @@
 <ul>
 <li>数据加密之后，数据量会变大，变大1/3左右。</li>
 <li>可进行反向解密。</li>
-<li>编码后有个非常显著的特点，末尾有个=号。</li>
 </ul>
 <h5 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h5><p>MD5加密（MD5是一种摘要，而非加密，只是经常与加密配合使用）</p>
 <ul>
@@ -677,7 +677,7 @@
 <li>手动调用<code>AutoreleasePool</code>的释放方法（drain方法）来销毁<code>AutoreleasePool</code>。超出作用域时，<code>pool drain</code></li>
 <li>autoreleasePool的析构方法。下面延迟释放有解释</li>
 </ol>
-<h5 id="如果子线程中没有runloop"><a href="#如果子线程中没有runloop" class="headerlink" title="如果子线程中没有runloop"></a>如果子线程中没有runloop</h5><p>在子线程你创建了<code>Pool</code>的话，产生的 <code>Autorelease</code> 对象就会交给 <code>pool</code> 去管理。如果你没有创建 <code>Pool</code> ，但是产生了 <code>Autorelease</code> 对象，就会调用 <code>autoreleaseNoPage</code> 方法。在这个方法中，会自动帮你创建一个 <code>hotpage</code>（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage）并调用 <code>page-&gt;add(obj)</code>将对象添加到 <code>AutoreleasePoolPage</code> 的栈中</p>
+<h5 id="子线程-vs-runloop"><a href="#子线程-vs-runloop" class="headerlink" title="子线程 vs runloop"></a>子线程 vs runloop</h5><p>在子线程你创建了<code>Pool</code>的话，产生的 <code>Autorelease</code> 对象就会交给 <code>pool</code> 去管理。如果你没有创建 <code>Pool</code> ，但是产生了 <code>Autorelease</code> 对象，就会调用 <code>autoreleaseNoPage</code> 方法。在这个方法中，会自动帮你创建一个 <code>hotpage</code>（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage）并调用 <code>page-&gt;add(obj)</code>将对象添加到 <code>AutoreleasePoolPage</code> 的栈中</p>
 <h5 id="子线程是否要手动创建autoreleasepool"><a href="#子线程是否要手动创建autoreleasepool" class="headerlink" title="子线程是否要手动创建autoreleasepool"></a>子线程是否要手动创建autoreleasepool</h5><p><code>NSThread</code>和<code>NSOperationQueue</code>开辟子线程需要手动创建<code>autoreleasepool</code>，<code>GCD</code>开辟子线程不需要手动创建<code>autoreleasepool</code>，因为<code>GCD</code>的每个队列都会自行创建<code>autoreleasepool</code></p>
 <h5 id="关于-NSString-的疑问"><a href="#关于-NSString-的疑问" class="headerlink" title="关于 NSString 的疑问"></a>关于 NSString 的疑问</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSString *str = @&quot;Joy&quot;;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;%lu&quot;,[str retainCount]);</span><br><span class="line">NSLog(@&quot;地址：%p&quot;,str);</span><br></pre></td></tr></table></figure>
 <p>打印结果：<br>计数：18446744073709551615<br>地址：0x1045077d0<br>会发现引用计数是一个很大的值，为什么？这是一个放在常量区的字符串常量，返回的结果是UINT_MAX值</p>
@@ -968,19 +968,19 @@
 
 
   
-    <article id="post-AutoLayout" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-AutoLayout" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/02/AutoLayout/">AutoLayout</a>
+      <a class="article-title" href="/2019/01/02/iOS-AutoLayout/">AutoLayout</a>
     </h1>
   
 
         
-        <a href="/2019/01/02/AutoLayout/" class="archive-article-date">
+        <a href="/2019/01/02/iOS-AutoLayout/" class="archive-article-date">
   	<time datetime="2019-01-02T11:52:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-02</time>
 </a>
         
@@ -998,6 +998,7 @@
 <li>Hugging 拉伸优先级</li>
 <li>Compression 压缩优先级</li>
 </ul>
+<p>如果设置了AutoLayout，然后又改变了frame，view的frame会改变，但是旋转屏幕后还是会回到AutoLayout的设置。AutoLayout会在view每次刷新frame时生效，手动改变frame只是临时改变一下，当下次更新view时还是依据AutoLayout来显示</p>
 
       
 
@@ -1021,7 +1022,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/02/AutoLayout/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/02/iOS-AutoLayout/">展开全文 >></a>
         </p>
       
 
@@ -1103,11 +1104,11 @@
 <ul>
 <li>互斥锁</li>
 </ul>
-<p>是一种用于多线程编程中，防止两条线程同时对同一公共资源（比如全局变量）进行读写的机制。该目的通过将代码切片成一个一个的临界区而达成。</p>
+<p>是一种用于多线程编程中，防止两条线程同时对同一公共资源（比如全局变量）进行读写的机制。通过将代码切片成一个一个的临界区而达成。</p>
 <ul>
 <li>读写锁</li>
 </ul>
-<p>是计算机程序的并发控制的一种同步机制，用于解决多线程对公共资源读写问题。读操作可并发重入，写操作是互斥的。 读写锁通常用互斥锁、条件变量、信号量实现。</p>
+<p>是计算机程序的并发控制的一种同步机制，用于解决多线程对公共资源读写问题。读操作可并发，写操作是互斥的。 读写锁通常用互斥锁、条件变量、信号量实现。</p>
 <ul>
 <li>信号量</li>
 </ul>
@@ -1117,9 +1118,15 @@
 </ul>
 <p>就是条件变量，当进程的某些资源要求不满足时就进入休眠，也就是锁住了。当资源被分配到了，条件锁打开，进程继续运行。</p>
 <h5 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h5><ul>
-<li>NSLock</li>
-<li>pthread_mutex</li>
-<li>@synchronized:</li>
+<li><p>NSLock</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)methodA &#123;</span><br><span class="line">  [lock lock];</span><br><span class="line">  [self methodB];</span><br><span class="line">  [lock unlock];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)methodB &#123;</span><br><span class="line">	// 重复获取锁，导致死锁，应该使用递归锁</span><br><span class="line">  [lock lock];</span><br><span class="line">  // ...</span><br><span class="line">  [lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>pthread_mutex</p>
+</li>
+<li><p>@synchronized:</p>
+</li>
 </ul>
 <p>实际项目中：AFNetworking中 isNetworkActivityOccurring属性的getter方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isNetworkActivityOccurring &#123;</span><br><span class="line">    @synchronized(self) &#123;</span><br><span class="line">        return self.activityCount &gt; 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>锁是如何与你传入 <code>@synchronized</code> 的对象关联上的？<code>@synchronized</code>会保持（retain，增加引用计数）被锁住的对象么？假如你传入 <code>@synchronized</code> 的对象在 <code>@synchronized</code> 的 block 里面被释放或者被赋值为 <code>nil</code> 将会怎么样？</p>

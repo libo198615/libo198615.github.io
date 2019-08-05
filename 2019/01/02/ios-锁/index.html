@@ -16,7 +16,7 @@
 <meta property="og:description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg">
-<meta property="og:updated_time" content="2019-07-02T14:15:57.754Z">
+<meta property="og:updated_time" content="2019-08-05T10:21:28.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="锁">
 <meta name="twitter:description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
@@ -230,11 +230,11 @@
 <ul>
 <li>互斥锁</li>
 </ul>
-<p>是一种用于多线程编程中，防止两条线程同时对同一公共资源（比如全局变量）进行读写的机制。该目的通过将代码切片成一个一个的临界区而达成。</p>
+<p>是一种用于多线程编程中，防止两条线程同时对同一公共资源（比如全局变量）进行读写的机制。通过将代码切片成一个一个的临界区而达成。</p>
 <ul>
 <li>读写锁</li>
 </ul>
-<p>是计算机程序的并发控制的一种同步机制，用于解决多线程对公共资源读写问题。读操作可并发重入，写操作是互斥的。 读写锁通常用互斥锁、条件变量、信号量实现。</p>
+<p>是计算机程序的并发控制的一种同步机制，用于解决多线程对公共资源读写问题。读操作可并发，写操作是互斥的。 读写锁通常用互斥锁、条件变量、信号量实现。</p>
 <ul>
 <li>信号量</li>
 </ul>
@@ -244,9 +244,15 @@
 </ul>
 <p>就是条件变量，当进程的某些资源要求不满足时就进入休眠，也就是锁住了。当资源被分配到了，条件锁打开，进程继续运行。</p>
 <h5 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h5><ul>
-<li>NSLock</li>
-<li>pthread_mutex</li>
-<li>@synchronized:</li>
+<li><p>NSLock</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)methodA &#123;</span><br><span class="line">  [lock lock];</span><br><span class="line">  [self methodB];</span><br><span class="line">  [lock unlock];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)methodB &#123;</span><br><span class="line">	// 重复获取锁，导致死锁，应该使用递归锁</span><br><span class="line">  [lock lock];</span><br><span class="line">  // ...</span><br><span class="line">  [lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>pthread_mutex</p>
+</li>
+<li><p>@synchronized:</p>
+</li>
 </ul>
 <p>实际项目中：AFNetworking中 isNetworkActivityOccurring属性的getter方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)isNetworkActivityOccurring &#123;</span><br><span class="line">    @synchronized(self) &#123;</span><br><span class="line">        return self.activityCount &gt; 0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>锁是如何与你传入 <code>@synchronized</code> 的对象关联上的？<code>@synchronized</code>会保持（retain，增加引用计数）被锁住的对象么？假如你传入 <code>@synchronized</code> 的对象在 <code>@synchronized</code> 的 block 里面被释放或者被赋值为 <code>nil</code> 将会怎么样？</p>
@@ -374,7 +380,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/01/02/AutoLayout/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/01/02/iOS-AutoLayout/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         

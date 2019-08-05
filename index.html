@@ -174,6 +174,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-RSA加密" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/05/RSA加密/">RSA加密</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/05/RSA加密/" class="archive-article-date">
+  	<time datetime="2019-07-05T02:52:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>查看.cer<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in CERT.cer -text</span><br></pre></td></tr></table></figure></p>
+<p>查看 .pem<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat private.pem</span><br></pre></td></tr></table></figure></p>
+<p>pfx  文件转  pem 文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -in /Users/admin/Desktop/private.pfx -nodes -out server.pem</span><br></pre></td></tr></table></figure></p>
+<p>从私钥中获取公钥 Private.pem -&gt; public.pem<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -in /Users/admin/Downloads/key/private.pem  -pubout -out public.pem</span><br></pre></td></tr></table></figure></p>
+<p>查看 .pfx<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// END CERTIFICATE</span><br><span class="line">openssl pkcs12 -in /Users/admin/Desktop/private.pfx  -clcerts </span><br><span class="line"></span><br><span class="line">// BEGIN PRIVATE KEY</span><br><span class="line">openssl pkcs12 -in /Users/admin/Desktop/private.pfx  -nocerts -nodes</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/05/RSA加密/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-react-native-错误" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -606,7 +673,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">_s_String = tempString;</span><br><span class="line">_c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:originalchange</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br></pre></td></tr></table></figure>
-<p>如果我们不用self.点语法，这样就不会调用 getter setter 方法，copy也就不会起作用了</p>
+<p>如果我们不用self.点语法，这样就不会调用 getter setter 方法，copy也就不会起作用了。所以说，系统的属性修饰符，strong copy 等的作用范围是 set get 方法。</p>
 <h5 id="mutaleArr"><a href="#mutaleArr" class="headerlink" title="mutaleArr"></a>mutaleArr</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MySark *sark = [[MySark alloc] init];</span><br><span class="line">sark.name = @&quot;cat&quot;;</span><br><span class="line"></span><br><span class="line">NSMutableArray *mArr = [NSMutableArray arrayWithObject:sark];</span><br><span class="line">self.c_arr = mArr;</span><br><span class="line">self.s_arr = mArr;</span><br><span class="line">NSLog(@&quot;before change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br><span class="line"></span><br><span class="line">[mArr removeAllObjects];</span><br><span class="line">NSLog(@&quot;after change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">before change</span><br><span class="line">mArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) strongArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongArr:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongArr:0x104c0bee8 copyArr:0x104c0bee0</span><br><span class="line">after change</span><br><span class="line">mArr:(</span><br><span class="line">) strongString:(</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongString:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongString:0x104c0bee8 copyArr:0x104c0bee0</span><br></pre></td></tr></table></figure>
 <p>集合类型，内容不复制，指针引用内容</p>
@@ -727,7 +794,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="常用属性修饰符"><a href="#常用属性修饰符" class="headerlink" title="常用属性修饰符"></a>常用属性修饰符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 成员变量 只能在自己类内部使用的 （自己的.m中使用）</span><br><span class="line">@interface someObject : NSObject &#123; </span><br><span class="line">	NSString *firstName; // 成员变量 私有</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *lastName; // 属性 默认 public</span><br><span class="line">@property (nonatomic, unsafe_unretained)</span><br><span class="line">@property (nonatomic, assign) // 修饰基础变量 int  bool 等</span><br><span class="line">  </span><br><span class="line">// MRC 时使用 retain  </span><br><span class="line">@property (nonatomic, retain) // 会使引用计数加1</span><br><span class="line"></span><br><span class="line">// ARC 后使用 weak strong  </span><br><span class="line">@property (nonatomic, weak) // 若引用</span><br><span class="line">@property (nonatomic, strong) // 强引用</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+        <h4 id="常用属性修饰符"><a href="#常用属性修饰符" class="headerlink" title="常用属性修饰符"></a>常用属性修饰符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 成员变量 只能在自己类内部使用的 （自己的.m中使用）</span><br><span class="line">@interface someObject : NSObject &#123; </span><br><span class="line">	NSString *firstName; // 成员变量 私有</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *lastName; // 属性 默认 public</span><br><span class="line">@property (nonatomic, unsafe_unretained)</span><br><span class="line">@property (nonatomic, assign) // 修饰基础变量 int  bool 等</span><br><span class="line">  </span><br><span class="line">// MRC 时使用 retain  </span><br><span class="line">@property (nonatomic, retain) // 会使引用计数加1</span><br><span class="line"></span><br><span class="line">// ARC 后使用 weak strong  </span><br><span class="line">@property (nonatomic, weak) // 弱引用</span><br><span class="line">@property (nonatomic, strong) // 强引用</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// someObject.m 文件</span><br><span class="line"></span><br><span class="line">@interface someObject ()</span><br><span class="line">@property (nonatomic, copy) NSString *name; // 属性 默认 private</span><br><span class="line">@end</span><br><span class="line">  </span><br><span class="line">@implementation someObject</span><br><span class="line">  </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <h5 id="默认行为"><a href="#默认行为" class="headerlink" title="默认行为"></a>默认行为</h5><p><code>nonatomic</code>和<code>atomic</code> 中默认 <code>atomic</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@property (assign) int age;</span><br><span class="line">相当于</span><br><span class="line">@property (atomic, assign) int age;</span><br></pre></td></tr></table></figure>
@@ -747,20 +814,23 @@
 <p>从代码中可以看到，atomic只能保证setter，getter方法内部的线程安全，而且只能保证在单独调用setter或getter方法时是线程安全的，这就有很大的隐患。假设有一个线程A在不断的读取属性name的值，同时有一个线程B修改了属性name的值，那么即使属性name是atomic，线程A读到的仍旧是修改后的值，可见不是线程安全的。如果想要实现线程安全，需要手动的实现锁。</p>
 <p>引申一下：在64位操作系统中，一个cpu寻址就是8个字节，int占4个字节，所以对于int，无论是不是原子操作，其本身都是原子操作。long double 分别占8个字节，理论上也是原子操作的。对一个long型数据的读写，操作系统有可能分两部分进行，一部分是高位，一部分是低位，所以两个线程同时操作long数据，有可能导致数据不同步，但实际应该很少发生，因为太快了。再说 double，double 类型的数据同样占8个字节，按道理来说，他读写的速度应当和long 一样快。但是。一个线程读写内存仅仅只是一个方面，cpu 需要对数据进行计算，这个计算的中间结果一般都会放到寄存器或者cpu 高速缓存，double 数据计算的复杂度远非long型所能比，因此double 数据类型相比long 型数据更容易出现并发的问题。</p>
 <h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a>assign</h4><p>assign修饰的修饰基本数据类型分配在栈上，栈上空间的分配和回收都是系统来处理的，因此开发者无需关注，也就不会产生野指针的问题。</p>
-<p>而assign修饰的对象类型数据和weak修饰的对象类型数据一样分配在堆中。如果assing修饰对象释放后，其指针将称为野指针。</p>
-<h4 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h4><p><code>weak</code>是ARC的产物，主要作用是修饰若引用的对象，防止循环引用。</p>
+<p>而assign修饰的对象类型数据和weak修饰的对象类型数据一样分配在堆中。如果assing修饰对象释放后，其指针将成为野指针。</p>
+<h4 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h4><p><code>weak</code>是ARC的产物，主要作用是修饰弱引用的对象，防止循环引用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, weak) id objc;</span><br></pre></td></tr></table></figure>
 <p>而<code>weak</code>具有如此功能的原因是在<code>weak</code>修饰的<code>objc</code>被销毁时，会主动在<code>objc</code>的<code>dealloc</code>方法中将所有用<code>weak</code>修饰的指向objc的指针置为<code>nil</code>。</p>
 <p>简单理解如下，具体执行过程还要参考内存方面的文章</p>
 <p><code>Runtime</code>维护了一个<code>weak</code>表，用于存储指向某个对象的所有<code>weak</code>指针。<br><code>weak</code>表其实是一个<code>hash</code>（哈希）表，<code>Key</code>是所指对象的地址，<code>Value</code>是<code>weak</code>指针的地址数组。<br>当<code>A</code>对象销毁时.以<code>A</code>的内存地址为<code>Key</code>， 在这个 <code>weak</code> 表中搜索</p>
 <h4 id="delegate-用assign还weak？"><a href="#delegate-用assign还weak？" class="headerlink" title="delegate 用assign还weak？"></a>delegate 用assign还weak？</h4><p>assign属性一般是对C基本数据类型成员变量的声明，当然也可以用在对象类型成员变量上，只是其代表的意义只是单纯地拷贝所赋值变量的指针。即如果对某assign成员变量B赋值某对象A的指针，则此B只是简单地保存此指针的值，且并不持有对象A，也就意味着如果A被销毁，则B就指向了一个已经被销毁的对象，如果再对其发送消息会引发崩溃。</p>
+<blockquote>
+<p>nil 指向oc中对象的空指针，weak会自动将指针指向的对象置为nil</p>
+<p>null 指向其他类型的空指针，如一个c类型的内存指针。assign修饰的对象销毁后，指针指向的即为null</p>
+<p>向nil发送消息，不会崩溃，但是想null发送消息会引发崩溃。</p>
+</blockquote>
 <p><code>MRC</code> 时用 <code>assign</code> 修饰 <code>delegate</code> 但是要在<code>dealloc</code>中主动将其置为<code>nil</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@interface someObject ()</span><br><span class="line">  </span><br><span class="line">@property (nonatomic, assign) id &lt;someDelegate&gt; delegate;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line">  </span><br><span class="line">@implementation someObject </span><br><span class="line">  </span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">		_delegate = nil;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p><code>ARC</code> 后直接使用<code>weak</code>进行修饰，并且不用将其置为<code>nil</code></p>
 <h5 id="unsafe-unretained"><a href="#unsafe-unretained" class="headerlink" title="unsafe_unretained"></a>unsafe_unretained</h5><p>和assign类似，但是它适用于对象类型，当目标被摧毁时，属性值不会自动清空（unsafe）。这是和weak的区别</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, unsafe_unretained)  TestObj *s2;</span><br></pre></td></tr></table></figure>
-<h4 id="protocol-中的属性声明"><a href="#protocol-中的属性声明" class="headerlink" title="protocol 中的属性声明"></a>protocol 中的属性声明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
-<p>不自动生成<code>getter</code> <code>setter</code>，表明实现此协议的类必须自己声明<code>NSString *name</code><br>不声明也可以写<code>self.name</code>，但当调用<code>setter</code>，<code>getter</code>方法时会因为找不到方法而崩溃<br>即使自己不添加属性<code>NSString *name</code>，而只添加<code>setter</code>，<code>getter</code>方法，你会发现，<code>setter</code>方法无法写，因为没有<code>ivar</code>，你调用不了<code>_name</code>。</p>
 <h4 id="category-中的属性声明"><a href="#category-中的属性声明" class="headerlink" title="category 中的属性声明"></a>category 中的属性声明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
 <p>不自动生成<code>getter</code> <code>setter</code>,<br>自己无法写<code>setter</code>方法，因为没有<code>ivar</code>，你调用不了<code>_name</code>。</p>
 <p>##### </p>
@@ -838,18 +908,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li><p>单一职责原则告诉我们实现类要职责单一；</p>
+<li><p>单一职责原则</p>
+<p>一个类只负责一件事</p>
 </li>
-<li><p>里氏替换原则告诉我们不要破坏继承关系；</p>
+<li><p>里氏替换原则</p>
+<p>父类可以被子类无缝替换，且原有功能不受任何影响。kvo会生成被观察类的子类，单不影响原类的功能</p>
 </li>
-<li><p>依赖倒置原则告诉我们要面向接口编程；</p>
+<li><p>依赖倒置原则</p>
+<p>抽象不应该依赖于具体实现，具体实现可以依赖于抽象。增删改查的接口，所有的上层调用都依赖于这些抽象接口，而接口内部具体实现，用数据库还是文件，对上层业务来说是感知不到的</p>
 </li>
-<li><p>接口隔离原则告诉我们在设计接口的时候要精简单一；</p>
+<li><p>接口隔离原则</p>
+<p>使用多个专门的协议，而不是一个庞大臃肿的协议</p>
 </li>
-<li><p>迪米特法则告诉我们要降低耦合</p>
+<li><p>迪米特原则</p>
+<p>一个对象应该对其他对象有尽可能少的了解，高内聚，低耦合</p>
 </li>
-<li><p>开闭原则告诉我们要对扩展开发，对修改关闭：</p>
-<p>在<a href="https://baike.baidu.com/item/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B" target="_blank" rel="noopener">面向对象编程</a>领域中，<strong>开闭原则</strong>规定“<em>软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的</em>”，这意味着一个实体是允许在不改变它的<a href="https://baike.baidu.com/item/%E6%BA%90%E4%BB%A3%E7%A0%81" target="_blank" rel="noopener">源代码</a>的前提下变更它的行为。</p>
+<li><p>开闭原则</p>
+<p>对修改关闭，对扩展开放</p>
 </li>
 </ul>
 
@@ -1031,116 +1106,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/04/11/ios-Object/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-react-native-navigation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/09/react-native-navigation/">react-native-navigation</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/09/react-native-navigation/" class="archive-article-date">
-  	<time datetime="2019-04-09T14:32:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="react-navigation"><a href="#react-navigation" class="headerlink" title="react navigation"></a>react navigation</h3><p>安装</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn add react-navigation</span><br><span class="line">yarn add react-native-gesture-handler</span><br><span class="line">react-native link react-native-gesture-handler</span><br></pre></td></tr></table></figure>
-<p>导航器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createStackNavigator</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; View, Text &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createStackNavigator, createAppContainer &#125; <span class="keyword">from</span> <span class="string">'react-navigation'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> navigationOptions = &#123;</span><br><span class="line">    title: <span class="string">'Home'</span>,</span><br><span class="line">    headerStyle: &#123; <span class="comment">// 一个应用于 header 的最外层 View 的 样式对象</span></span><br><span class="line">      backgroundColor: <span class="string">'#f4511e'</span>, </span><br><span class="line">    &#125;,</span><br><span class="line">    headerTintColor: <span class="string">'#fff'</span>, <span class="comment">// 返回按钮和标题的颜色</span></span><br><span class="line">    headerTitleStyle: &#123;</span><br><span class="line">      fontWeight: <span class="string">'bold'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View style=&#123;&#123; <span class="attr">flex</span>: <span class="number">1</span>, <span class="attr">alignItems</span>: <span class="string">'center'</span>, <span class="attr">justifyContent</span>: <span class="string">'center'</span> &#125;&#125;&gt;</span><br><span class="line">        &lt;Text&gt;Home Screen&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>View&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailsScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;View style=&#123;&#123; <span class="attr">flex</span>: <span class="number">1</span>, <span class="attr">alignItems</span>: <span class="string">'center'</span>, <span class="attr">justifyContent</span>: <span class="string">'center'</span> &#125;&#125;&gt;</span><br><span class="line">        &lt;Text&gt;Details Screen&lt;<span class="regexp">/Text&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>View&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RootStack = createStackNavigator(</span><br><span class="line">  &#123;</span><br><span class="line">    Home: HomeScreen,</span><br><span class="line">    Details: DetailsScreen,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    initialRouteName: <span class="string">'Home'</span>, <span class="comment">// 堆栈的初始路由是Home路由</span></span><br><span class="line">    defaultNavigationOptions: &#123; <span class="comment">// 共享导航栏，具体页面可直接覆盖</span></span><br><span class="line">			headerStyle: &#123;</span><br><span class="line">				backgroundColor: <span class="string">'#f4511e'</span>,</span><br><span class="line">			&#125;,</span><br><span class="line">			headerTintColor: <span class="string">'#fff'</span>,</span><br><span class="line">			headerTitleStyle: &#123;</span><br><span class="line">				fontWeight: <span class="string">'bold'</span>,</span><br><span class="line">			&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppContainer = createAppContainer(RootStack);</span><br><span class="line"><span class="comment">// 导出根组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;AppContainer /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">  title=<span class="string">"Go to Details... again"</span></span><br><span class="line">  onPress=&#123;() =&gt; <span class="keyword">this</span>.props.navigation.push(<span class="string">'Details'</span>)&#125; <span class="comment">// 直接 push 到新页面</span></span><br><span class="line">/&gt;</span><br><span class="line">&lt;Button</span><br><span class="line">  title=<span class="string">"Go to Home"</span></span><br><span class="line">  onPress=&#123;() =&gt; <span class="keyword">this</span>.props.navigation.navigate(<span class="string">'Home'</span>)&#125; <span class="comment">// 路由中有此页面才会生效，如果当前就在此页面，将不起作用</span></span><br><span class="line">/&gt;</span><br><span class="line">&lt;Button</span><br><span class="line">  title=<span class="string">"Go back"</span></span><br><span class="line">  onPress=&#123;() =&gt; <span class="keyword">this</span>.props.navigation.goBack()&#125; <span class="comment">// 手动触发返回</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 返回根页面</span><br><span class="line">navigate(&apos;Home&apos;)</span><br><span class="line">navigation.popToTop()</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传递参数给路由</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.props.navigation.navigate(<span class="string">'RouteName'</span>, &#123;<span class="attr">itemId</span>: <span class="number">86</span>,</span><br><span class="line">              otherParam: <span class="string">'anything you want here'</span>,&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取</span></span><br><span class="line"><span class="keyword">this</span>.props.navigation.state.params </span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; navigation &#125; = <span class="keyword">this</span>.props;</span><br><span class="line"><span class="keyword">const</span> itemId = navigation.getParam(<span class="string">'itemId'</span>, <span class="string">'NO-ID'</span>);</span><br></pre></td></tr></table></figure>
-<p>使用自定义组件替换标题</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LogoTitle</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Image</span><br><span class="line">        source=&#123;<span class="built_in">require</span>(<span class="string">'./spiro.png'</span>)&#125;</span><br><span class="line">        style=&#123;&#123; <span class="attr">width</span>: <span class="number">30</span>, <span class="attr">height</span>: <span class="number">30</span> &#125;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> navigationOptions = &#123;</span><br><span class="line">    <span class="comment">// headerTitle instead of title</span></span><br><span class="line">    headerTitle: &lt;LogoTitle /&gt;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  /* render function, etc */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>标题栏按钮</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeScreen</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> navigationOptions = <span class="function">(<span class="params">&#123; navigation &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      headerTitle: &lt;LogoTitle /&gt;,</span><br><span class="line">      headerRight: (</span><br><span class="line">        &lt;Button</span><br><span class="line">          onPress=&#123;navigation.getParam('increaseCount')&#125;</span><br><span class="line">          title="+1"</span><br><span class="line">          color="#fff"</span><br><span class="line">        /&gt;</span><br><span class="line">      ),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    this.props.navigation.setParams(&#123; increaseCount: this._increaseCount &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  state = &#123;</span><br><span class="line">    count: 0,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  _increaseCount = () =&gt; &#123;</span><br><span class="line">    this.setState(&#123; count: this.state.count + 1 &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  /* later in the render function we display the count */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="AppContainers"><a href="#AppContainers" class="headerlink" title="AppContainers"></a>AppContainers</h3><p>App 容器负责管理应用的 state, 并将顶层的 navigator 链接到整个应用环境。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createAppContainer, createStackNavigator &#125; <span class="keyword">from</span> <span class="string">'react-navigation'</span>;</span><br><span class="line"><span class="comment">// you can also import from @react-navigation/native</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppNavigator = createStackNavigator(...);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppContainer = createAppContainer(AppNavigator);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now AppContainer is the main component for React to render</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> AppContainer;</span><br></pre></td></tr></table></figure>
-<p>React Native 中的 <code>createAppContainer</code> prop</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;AppContainer</span><br><span class="line">  onNavigationStateChange=&#123;handleNavigationChange&#125;</span><br><span class="line">  uriPrefix=<span class="string">"/app"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>onNavigationStateChange(prevState, newState, action)</code></li>
-</ul>
-<p>每当导航器管理的 navigation state 发生变化时，都会调用该函数。 它接收之前的 state、navigation 的新 state 以及发布状态更改的 action。 默认情况下，它将 state 的更改打印到控制台。</p>
-<ul>
-<li><code>uri前缀</code></li>
-</ul>
-<p>应用可能会处理的 URI 前缀， 在处理一用于提取传递给 route 的一个 <a href="https://reactnavigation.org/docs/zh-Hans/deep-linking.html" target="_blank" rel="noopener">深度链接</a>时将会用到。</p>
-<h3 id="专业术语"><a href="#专业术语" class="headerlink" title="专业术语"></a>专业术语</h3><ul>
-<li><p>Navigation prop</p>
-<p><a href="https://reactnavigation.org/docs/zh-Hans/navigation-prop.html" target="_blank" rel="noopener">Navigation prop API</a></p>
-<p>只能用在只有通过 React Navigation 渲染为路由的页面才会生效，即第一级组件(vc)，子组件需回调到第一级组件进行调用。即只有在UIViewController.view中可以使用</p>
-</li>
-<li><p>Navigation State</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  key: <span class="string">'StackRouterRoot'</span>,</span><br><span class="line">  index: <span class="number">1</span>,</span><br><span class="line">  routes: [</span><br><span class="line">    &#123; <span class="attr">key</span>: <span class="string">'A'</span>, <span class="attr">routeName</span>: <span class="string">'Home'</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">key</span>: <span class="string">'B'</span>, <span class="attr">routeName</span>: <span class="string">'Profile'</span> &#125;,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Route</p>
-<p>每个路由都是一个 navigation state</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  key: &apos;B&apos;,</span><br><span class="line">  routeName: &apos;Profile&apos;,</span><br><span class="line">  params: &#123; id: &apos;123&apos; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/09/react-native-navigation/">展开全文 >></a>
         </p>
       
 

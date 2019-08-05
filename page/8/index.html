@@ -174,19 +174,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Object-C高级编程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-书籍-Object-C高级编程" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/05/Object-C高级编程/">Objective-C高级编程+iOS与OS+X多线程和内存管理</a>
+      <a class="article-title" href="/2019/01/05/书籍-Object-C高级编程/">Objective-C高级编程+iOS与OS+X多线程和内存管理</a>
     </h1>
   
 
         
-        <a href="/2019/01/05/Object-C高级编程/" class="archive-article-date">
+        <a href="/2019/01/05/书籍-Object-C高级编程/" class="archive-article-date">
   	<time datetime="2019-01-05T06:22:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
 </a>
         
@@ -425,7 +425,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/05/Object-C高级编程/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/05/书籍-Object-C高级编程/">展开全文 >></a>
         </p>
       
 
@@ -554,19 +554,19 @@
 
 
   
-    <article id="post-APP瘦身" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-APP瘦身" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/APP瘦身/">APP瘦身</a>
+      <a class="article-title" href="/2019/01/04/iOS-APP瘦身/">APP瘦身</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/APP瘦身/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-APP瘦身/" class="archive-article-date">
   	<time datetime="2019-01-04T14:35:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -575,8 +575,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li>一是处理代码里打警告<br>方法废弃警告<br>类型转换警告<br>unused警告等。</li>
-<li>二是删除一些重复图片<br>当时用的是<code>PhotoSweepper</code>，软件只能查出来重复的图片，但是删的时候还是要注意留谁，建议把不准的看下重复图片的像素。</li>
+<li>一是处理代码里打警告<br>方法废弃警告<br>类型转换警告<br>unused警告</li>
+<li>二是删除一些重复图片<br>使用工具<code>PhotoSweepper</code>，软件只能查出来重复的图片，但是删的时候还是要注意留谁.</li>
 </ul>
 <h5 id="无用图片"><a href="#无用图片" class="headerlink" title="无用图片"></a>无用图片</h5><p><code>LSUnusedResources</code> 做的改进</p>
 <p>查找：选定的目录下的所有资源文件。这一步与上述方案1区别不大，都是调用 find 命令查找指定后缀名的文件。<br>匹配：与上述方案不同，我不是对每个资源文件名都做一次全文搜索匹配，因为加入项目的资源太多，这里会导致性能快速下降。而我只是针对源码、Xib、Storyboard 和 plist 等文件，先全文搜索其中可能是引用了资源的字符串，然后用资源名和字符串做匹配。<br>优化匹配结果<br>Unused 会把大量实际上有使用的资源，当做未使用的资源输出。LSUnusedResources 则不会出现这样的问题，并且使得结果更加优化。</p>
@@ -585,7 +585,7 @@
 <p>icon_tag_x.png 是不应该被当做未使用的资源的，只是以一种比较隐晦的方式间接引用了，所以不应该出现在结果列表中。</p>
 <h5 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h5><p>编译器优化级别<br>Build Settings-&gt;Optimization Level有几个编译优化选项，release版应该选择Fastest, Smalllest，这个选项会开启那些不增加代码大小的全部优化，并让可执行文件尽可能小。</p>
 <p>去除符号信息<br>Strip Debug Symbols During Copy 和 Symbols Hidden by Default 在release版本应该设为yes，可以去除不必要的调试符号。Symbols Hidden by Default会把所有符号都定义成”private extern”，具体意思和作用我还不清楚，有待研究，但设了后会减小体积。这些选项目前都是XCode默认选项，但旧版XCode生成的项目可能不是，可以检查一下。</p>
-<img src="/2019/01/04/APP瘦身/1.png" title="图片说明">
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g4mmq70hskj30lv0ltacb.jpg" alt="1"></p>
 
       
 
@@ -609,7 +609,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/APP瘦身/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-APP瘦身/">展开全文 >></a>
         </p>
       
 
@@ -639,19 +639,19 @@
 
 
   
-    <article id="post-drawRect" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-drawRect" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/drawRect/">drawRect layoutSubview</a>
+      <a class="article-title" href="/2019/01/04/iOS-drawRect/">drawRect layoutSubview</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/drawRect/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-drawRect/" class="archive-article-date">
   	<time datetime="2019-01-04T14:31:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -663,13 +663,6 @@
 <h3 id="drawRect"><a href="#drawRect" class="headerlink" title="drawRect"></a>drawRect</h3><p>1、如果在<code>UIView</code>初始化时没有设置<code>rect</code>大小，将直接导致<code>drawRect</code>不被自动调用。<br>2、该方法在调用<code>sizeThatFits</code>后被调用，所以可以先调用<code>sizeToFit</code>计算出<code>size</code>。然后系统自动调用<code>drawRect:</code>方法。<br>3、通过设置<code>contentMode</code>属性值为<code>UIViewContentModeRedraw</code>。那么将在每次设置或更改frame的时候自动调用drawRect:。<br>4、直接调用setNeedsDisplay，或者setNeedsDisplayInRect:触发drawRect:，但是有个前提条件是rect不能为0. </p>
 <h3 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h3><p>1、若使用UIView绘图，只能在drawRect：方法中获取相应的contextRef并绘图。如果在其他方法中获取将获取到一个invalidate的ref并且不能用于画图。drawRect：方法不能手动显示调用，必须通过调用setNeedsDisplay 或者 setNeedsDisplayInRect ，让系统自动调该方法。<br>2、若使用calayer绘图，只能在drawInContext: 中（类似于drawRect）绘制，或者在delegate中的相应方法绘制。同样也是调用setNeedDisplay等间接调用以上方法。<br>3、若要实时画图，不能使用gestureRecognizer，只能使用touchbegan等方法来调用setNeedsDisplay实时刷新屏幕</p>
 <h3 id="layoutSubView"><a href="#layoutSubView" class="headerlink" title="layoutSubView"></a>layoutSubView</h3><p>调用时机  (父控件-&gt;本View-&gt;子控件)</p>
-<p>本<code>view</code>的<code>frame</code>改变时，可能会影自己的<code>subView</code>的<code>frame</code>和自己同一级的<code>view</code>，所以除了要调用自己<code>layoutSubView</code>还要调用<code>subView</code>的<code>layoutSubView</code></p>
-<ol>
-<li><p>本View init初始化不会触发layoutSubviews</p>
-</li>
-<li><p>子控件addSubview会触发本View的layoutSubviews;(最常用)</p>
-</li>
-</ol>
 <p><code>layoutSubviews</code>方法调用先于<code>drawRect</code>，也就是先布局子视图，再重绘。<br>系统会自动调用<code>layoutSubviews</code> ,不要手动调用,如果要强制更新布局,可以调用<code>setNeedsLayout</code>方法,如果想立即显示<code>View</code>,需要调用<code>layoutIfNeeded</code>方法;</p>
 <p>-setNeedsLayout<br>标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，但layoutSubviews一定会被调用<br>-layoutIfNeeded<br>如果有需要刷新的标记，立即调用layoutSubviews进行布局（如果没有标记，不会调用layoutSubviews）</p>
 
@@ -695,7 +688,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/drawRect/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-drawRect/">展开全文 >></a>
         </p>
       
 
@@ -725,19 +718,19 @@
 
 
   
-    <article id="post-NSHasTable" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-NSHasTable" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/NSHasTable/">NSHasTable NSMapTable</a>
+      <a class="article-title" href="/2019/01/04/iOS-NSHasTable/">NSHasTable NSMapTable</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/NSHasTable/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-NSHasTable/" class="archive-article-date">
   	<time datetime="2019-01-04T14:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -796,7 +789,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/NSHasTable/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-NSHasTable/">展开全文 >></a>
         </p>
       
 
@@ -826,19 +819,19 @@
 
 
   
-    <article id="post-NSDictionary" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-NSDictionary" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/NSDictionary/">NSDictionary</a>
+      <a class="article-title" href="/2019/01/04/iOS-NSDictionary/">NSDictionary</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/NSDictionary/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-NSDictionary/" class="archive-article-date">
   	<time datetime="2019-01-04T14:05:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -846,16 +839,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在OC中<code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。<br>那么问题来了什么是hash表呢？<br>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。<br>读到此处我们得到一个关键信息：所谓哈希表就是一个数组，数组中每一个元素称为一个箱子，箱子中存放的是键值对。</p>
+        <p>在OC中<code>NSDictionary</code>是使用<code>hash</code>表来实现<code>key</code>和<code>value</code>的映射和存储的。</p>
+<p>哈希表（hash表）：又叫做散列表，是根据关键码值（key value）而直接访问的数据结构。也就是说它通过关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射叫做函数，存放记录的数组叫做哈希表。</p>
 <p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0vcqwnsyfj30e40ca0t3.jpg" alt=""></p>
-<ul>
-<li>hash表存储过程简单介绍：</li>
-</ul>
-<p>根据<code>key</code>值计算出它的<code>hash</code>值<code>h</code>；<br>假设箱子的个数是<code>n</code>，那么键值对应该放在第<code>h%n</code>个箱子中。<br>如果该箱子中已经有了键值对，就是用开放寻址法或者拉链法解决冲突。使用拉链法解决哈希冲突时，每个箱子其实是一个链表，属于同一个箱子的所有键值对都会排列在链表中。</p>
-<p>依此我们得出结论： OC中的字典其实是一个数组，数组中每一个元素同样为一个链表实现的数组，也就是数组中套数组。</p>
-<p>那么对应在oc中字典是如何进行存储的呢？</p>
-<p>在oc中每一个对象创建时，都默认生成一个hashCode,也就是经过hash算法生成的一串数字，当利用key去取字典中的value时，若是使用遍历或者二分查找等方法，效率相对较低，于是出现了根据每一个key生成的hashCode将键值对放到hasCode对应的数组中的指定位置，这样当用key去取值时，便不必遍历去获取，既可以根据hashCode直接取出。因为hashCode的值过大，或许经过取余获取一个较小的数字，假如是对999进行取余运算，那么得到的结果始终处于0-999之间。但是，这样做的弊端在于取余所得到的值，可能是相同的，这样可能导致完全不相干的键值对被新的键值对（取余后值key相等）所覆盖，于是出现了数组中套链表实现的数组。这样，key值取余得到值相等的键值对，都将保存在同一个链表数组中，当查找key对应的值时，首先获取到该链表数组，然后遍历数组，取正确的key所对应的值即可。</p>
+<p>字典中的key会被复制</p>
+<p>The key for value. The key is copied (using copyWithZone:; keys must conform to the NSCopying protocol). If aKey already exists in the dictionary, anObject takes its place.</p>
+<p>所以只能使用实现了NSCopying协议的对象来作为key</p>
+<p>原因：由于对象存储在特定位置，<code>NSDictionary</code>中要求<code>key</code> 的值不能改变（否则 object 的位置会错误）。为了保证这一点，<code>NSDictionary</code> 会始终复制 <code>key</code> 到自己的私有空间。<code>key</code> 应该是小且高效的，以至于复制的时候不会对 CPU 和内存造成负担。</p>
 <h5 id="iOS使用自定义对象作为NSDictionary的key"><a href="#iOS使用自定义对象作为NSDictionary的key" class="headerlink" title="iOS使用自定义对象作为NSDictionary的key"></a>iOS使用自定义对象作为NSDictionary的key</h5><p>The key for value. The key is copied (using copyWithZone:; keys must conform to the NSCopying protocol). If aKey already exists in the dictionary, anObject takes its place.</p>
+<h3 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h3><p>字典和数组会强引用他们内部存储的元素，要存储弱引用的对象，或者说自己创建一个弱引用表，可以考虑<code>NSPointerArray</code>、<code>NSHashTable</code>、<code>NSMapTable</code>这三个新类。另外还有<code>NSProxy</code>，使用 <a href="https://link.jianshu.com/?t=https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSProxy_Class/index.html" target="_blank" rel="noopener">NSProxy</a> 的消息转发机制让它来调用其他类的方法。 前面三个类都要存取对象，要把对象从容器中取出来才能用；NSProxy利用了消息转发机制就不需要这样做了。</p>
+<h3 id="NSProxy"><a href="#NSProxy" class="headerlink" title="NSProxy"></a>NSProxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface NSProxy &lt;NSObject&gt;&#123;</span><br><span class="line">    Class   isa;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>NSProxy是一个实现了NSObject协议的根类</p>
+<p>文档：</p>
+<p>An abstract superclass defining an API for objects that act as stand-ins for other objects or for objects that don’t exist yet</p>
+<p>Typically, a message to a proxy is forwarded to the real object or causes the proxy to load (or transform itself into) the real object. Subclasses of <code>NSProxy</code> can be used to implement transparent distributed messaging (for example, <a href="apple-reference-documentation://hcjbKo5Y4O" target="_blank" rel="noopener"><code>NSDistantObject</code></a>) or for lazy instantiation of objects that are expensive to create.</p>
+<p><code>NSProxy</code> implements the basic methods required of a root class, including those defined in the <a href="apple-reference-documentation://hcG_DhA_-L" target="_blank" rel="noopener"><code>NSObject</code></a> protocol. However, as an abstract class it doesn’t provide an initialization method, and it raises an exception upon receiving any message it doesn’t respond to. A concrete subclass must therefore provide an initialization or creation method and override the <a href="apple-reference-documentation://hcINGMrSPT" target="_blank" rel="noopener"><code>forwardInvocation:</code></a> and <a href="apple-reference-documentation://hcI0I_Bfhp" target="_blank" rel="noopener"><code>methodSignatureForSelector:</code></a> methods to handle messages that it doesn’t implement itself. A subclass’s implementation of <a href="apple-reference-documentation://hcINGMrSPT" target="_blank" rel="noopener"><code>forwardInvocation:</code></a> should do whatever is needed to process the invocation, such as forwarding the invocation over the network or loading the real object and passing it the invocation. <a href="apple-reference-documentation://hcI0I_Bfhp" target="_blank" rel="noopener"><code>methodSignatureForSelector:</code></a> is required to provide argument type information for a given message; a subclass’s implementation should be able to determine the argument types for the messages it needs to forward and should construct an <a href="apple-reference-documentation://hcLJKSpwpo" target="_blank" rel="noopener"><code>NSMethodSignature</code></a>object accordingly. See the <a href="apple-reference-documentation://hcjbKo5Y4O" target="_blank" rel="noopener"><code>NSDistantObject</code></a>, <a href="apple-reference-documentation://hcjVj4h-wP" target="_blank" rel="noopener"><code>NSInvocation</code></a>, and <a href="apple-reference-documentation://hcLJKSpwpo" target="_blank" rel="noopener"><code>NSMethodSignature</code></a> class specifications for more information.</p>
+<p><code>YYKit</code>中的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> A proxy used to hold a weak object.</span><br><span class="line"> It can be used to avoid retain cycles, such as the target in NSTimer or CADisplayLink.</span><br><span class="line"> </span><br><span class="line"> sample code:</span><br><span class="line"> </span><br><span class="line">     @implementation MyView &#123;</span><br><span class="line">        NSTimer *_timer;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     - (void)initTimer &#123;</span><br><span class="line">        YYWeakProxy *proxy = [YYWeakProxy proxyWithTarget:self];</span><br><span class="line">        _timer = [NSTimer timerWithTimeInterval:0.1 target:proxy selector:@selector(tick:) userInfo:nil repeats:YES];</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     - (void)tick:(NSTimer *)timer &#123;...&#125;</span><br><span class="line">     @end</span><br><span class="line"> */</span><br><span class="line">@interface YYWeakProxy : NSProxy</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> The proxy target.</span><br><span class="line"> */</span><br><span class="line">@property (nullable, nonatomic, weak, readonly) id target;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Creates a new weak proxy for target.</span><br><span class="line"> </span><br><span class="line"> @param target Target object.</span><br><span class="line"> </span><br><span class="line"> @return A new proxy object.</span><br><span class="line"> */</span><br><span class="line">- (instancetype)initWithTarget:(id)target;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> Creates a new weak proxy for target.</span><br><span class="line"> </span><br><span class="line"> @param target Target object.</span><br><span class="line"> </span><br><span class="line"> @return A new proxy object.</span><br><span class="line"> */</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;YYWeakProxy.h&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation YYWeakProxy</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithTarget:(id)target &#123;</span><br><span class="line">    _target = target;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">    return [[YYWeakProxy alloc] initWithTarget:target];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)selector &#123;</span><br><span class="line">    return _target;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">    void *null = NULL;</span><br><span class="line">    [invocation setReturnValue:&amp;null];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector &#123;</span><br><span class="line">    return [NSObject instanceMethodSignatureForSelector:@selector(init)];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)respondsToSelector:(SEL)aSelector &#123;</span><br><span class="line">    return [_target respondsToSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isEqual:(id)object &#123;</span><br><span class="line">    return [_target isEqual:object];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSUInteger)hash &#123;</span><br><span class="line">    return [_target hash];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (Class)superclass &#123;</span><br><span class="line">    return [_target superclass];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (Class)class &#123;</span><br><span class="line">    return [_target class];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isKindOfClass:(Class)aClass &#123;</span><br><span class="line">    return [_target isKindOfClass:aClass];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isMemberOfClass:(Class)aClass &#123;</span><br><span class="line">    return [_target isMemberOfClass:aClass];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)conformsToProtocol:(Protocol *)aProtocol &#123;</span><br><span class="line">    return [_target conformsToProtocol:aProtocol];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)isProxy &#123;</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)description &#123;</span><br><span class="line">    return [_target description];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)debugDescription &#123;</span><br><span class="line">    return [_target debugDescription];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>为什么hash表的 size是 二的次方数</p>
+<p>为了散列性，即值均匀分布</p>
+<p>二的次方数 减一，新数的低位都是 1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">16 0001 0000</span><br><span class="line">15 0000 1111 再去做 &amp; 运算，由低四位 1111 控制最后结果，得到类似取余操作，使其分布在容量内</span><br></pre></td></tr></table></figure>
+<p>多线程对同一hashmap进行扩容可能会造成死循环，</p>
 
       
 
@@ -879,7 +885,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/NSDictionary/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-NSDictionary/">展开全文 >></a>
         </p>
       
 
@@ -909,19 +915,19 @@
 
 
   
-    <article id="post-NSCache" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-NSCache" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/NSCache/">NSCache</a>
+      <a class="article-title" href="/2019/01/04/iOS-NSCache/">NSCache</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/NSCache/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-NSCache/" class="archive-article-date">
   	<time datetime="2019-01-04T14:04:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -953,7 +959,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/NSCache/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-NSCache/">展开全文 >></a>
         </p>
       
 
@@ -983,19 +989,19 @@
 
 
   
-    <article id="post-Animation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-Animation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/Animation/">Animation</a>
+      <a class="article-title" href="/2019/01/04/iOS-Animation/">Animation</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/Animation/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-Animation/" class="archive-article-date">
   	<time datetime="2019-01-04T14:01:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -1007,9 +1013,9 @@
 <p><code>CAKeyframeAnimation</code>：关键帧动画，同样是通过属性进行动画参数控制，但是同基础动画不同的是它可以有多个状态控制。</p>
 <p>基础动画、关键帧动画都属于属性动画，就是通过修改属性值产生动画效果，开发人员只需要设置初始值和结束值，中间的过程动画由系统自动计算产生。</p>
 <p>关键帧动画开发分为两种形式：一种是通过设置不同的属性值进行关键帧控制，另一种是通过绘制路径进行关键帧控制。后者优先级高于前者，如果设置了路径则属性值就不再起作用。</p>
-<p>前面说过图层动画的本质就是将图层内部的内容转化为位图经硬件操作形成一种动画效果，其实图层本身并没有任何的变化。上面的动画中图层并没有因为动画效果而改变它的位置（对于缩放动画其大小也是不会改变的），所以动画完成之后图层还是在原来的显示位置没有任何变化，如果这个图层在一个UIView中你会发现在UIView移动过程中你要触发UIView的点击事件也只能点击原来的位置，因为它的位置从来没有变过。</p>
+<p>图层动画的本质就是将图层内部的内容转化为位图经硬件操作形成一种动画效果，其实图层本身并没有任何的变化。上面的动画中图层并没有因为动画效果而改变它的位置（对于缩放动画其大小也是不会改变的），所以动画完成之后图层还是在原来的显示位置没有任何变化，如果这个图层在一个UIView中你会发现在UIView移动过程中你要触发UIView的点击事件也只能点击原来的位置，因为它的位置从来没有变过。</p>
 <p>解决此点击问题可以在动画view中重写如下方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event &#123;</span><br><span class="line">    CGRect presentingRect = self.frame;</span><br><span class="line">    //如果不在动画中则presentationLayer为空，在动画中就需要实时的判断点击是否点中动画中的位图</span><br><span class="line">    if (self.layer.presentationLayer) &#123;</span><br><span class="line">        presentingRect = self.layer.presentationLayer.frame;</span><br><span class="line">    &#125;</span><br><span class="line">    CGPoint superPoint = [self convertPoint:point toView:self.superview];</span><br><span class="line">    BOOLisInside = CGRectContainsPoint(presentingRect, superPoint);</span><br><span class="line">    return isInside;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>UIView</code>动画称为隐式动画，此动画和显示动画不同的是在动画过程中改变的就是uiview各个属性的值，所以点击会生效。<br> 但是这里需要注意的是隐式动画默认是不接收点击事件的，需要我们手动打开<br> <code>UIViewAnimationOptionAllowUserInteraction</code></p>
+<p><code>UIView</code>动画称为隐式动画，此动画和显示动画不同的是在动画过程中改变的就是uiview各个属性的值，所以点击会生效。<br> 但是这里需要注意的是隐式动画默认是不接收点击事件的，需要我们手动打开<br> <code>UIViewAnimationOptionAllowUserInteraction</code> </p>
 
       
 
@@ -1033,7 +1039,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/Animation/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-Animation/">展开全文 >></a>
         </p>
       
 
@@ -1063,19 +1069,19 @@
 
 
   
-    <article id="post-AFNetworking" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-AFNetworking" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/04/AFNetworking/">AFNetworking</a>
+      <a class="article-title" href="/2019/01/04/iOS-AFNetworking/">AFNetworking</a>
     </h1>
   
 
         
-        <a href="/2019/01/04/AFNetworking/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-AFNetworking/" class="archive-article-date">
   	<time datetime="2019-01-04T07:38:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
 </a>
         
@@ -1088,14 +1094,14 @@
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)operationDidStart &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    if (![self isCancelled]) &#123;</span><br><span class="line">        self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];</span><br><span class="line">        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];</span><br><span class="line">        for (NSString *runLoopMode in self.runLoopModes) &#123;</span><br><span class="line">            [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">            [self.outputStream scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">        &#125;</span><br><span class="line">        [self.outputStream open];</span><br><span class="line">        [self.connection start];</span><br><span class="line">    &#125;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidStartNotification object:self];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>首先，每一个请求对应一个AFHTTPRequestOperation实例对象（以下简称operation），每一个operation在初始化完成后都会被添加到一个NSOperationQueue中。<br>由这个NSOperationQueue来控制并发，系统会根据当前可用的核心数以及负载情况动态地调整最大的并发 operation 数量，我们也可以通过setMaxConcurrentoperationCount:方法来设置最大并发数。注意：并发数并不等于所开辟的线程数。具体开辟几条线程由系统决定。</p>
+<p>首先，每一个请求对应一个AFHTTPRequestOperation实例对象，每一个operation在初始化完成后都会被添加到一个NSOperationQueue中。<br>由这个NSOperationQueue来控制并发，系统会根据当前可用的核心数以及负载情况动态地调整最大的并发 operation 数量，我们也可以通过setMaxConcurrentoperationCount:方法来设置最大并发数。</p>
 <p>也就是说此处执行operation是并发的、多线程的。</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0vdjb6l13j30fx0f6q2z.jpg" alt=""></p>
 <ul>
 <li>3.x<br>3.x 不需要常驻线程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.operationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">self.operationQueue.maxConcurrentOperationCount = 1;</span><br><span class="line">self.session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.operationQueue];</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><code>NSURLSession</code>发起的请求，不再需要在当前线程进行代理方法的回调！可以指定回调的<code>delegateQueue</code>，这样我们就不用为了等待代理回调方法而苦苦保活线程了。</p>
+<p><code>NSURLSession</code>发起的请求，不再需要在当前线程进行代理方法的回调。可以指定回调的<code>delegateQueue</code>，这样我们就不用为了等待代理回调方法而苦苦保活线程了。</p>
 <p><code>2.0</code>的<code>operationQueue</code>是用来添加operation并进行并发请求的，所以不要设置为1，其回调都会在固定的单一线程中，是线程安全的<br><code>3.0</code>的<code>operationqueue</code>是专门用来执行请求回调的，为了安全的考虑，需要设置<code>maxConcurrentOperationCount = 1</code>来达到串行回调的效果</p>
 <h5 id="AFURLSessionManagerTaskDelegate"><a href="#AFURLSessionManagerTaskDelegate" class="headerlink" title="AFURLSessionManagerTaskDelegate"></a>AFURLSessionManagerTaskDelegate</h5><p>使用<code>KVO</code>监听上传、下载进度变化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSString *,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    if ([object isEqual:self.downloadProgress]) &#123;</span><br><span class="line">        if (self.downloadProgressBlock) &#123;</span><br><span class="line">            self.downloadProgressBlock(object);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if ([object isEqual:self.uploadProgress]) &#123;</span><br><span class="line">        if (self.uploadProgressBlock) &#123;</span><br><span class="line">            self.uploadProgressBlock(object);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><a href="http://www.cocoachina.com/ios/20181017/25225.html" target="_blank" rel="noopener">http://www.cocoachina.com/ios/20181017/25225.html</a></p>
@@ -1122,7 +1128,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/04/AFNetworking/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/04/iOS-AFNetworking/">展开全文 >></a>
         </p>
       
 

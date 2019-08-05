@@ -225,7 +225,20 @@
 </ol>
 <p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">body: new Center (</span><br><span class="line">    child: new RandomWords(),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h4 id="创建一个无限滚动的-ListView"><a href="#创建一个无限滚动的-ListView" class="headerlink" title="创建一个无限滚动的 ListView"></a>创建一个无限滚动的 <code>ListView</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class RandomWordsState extens State &lt;RandomWords&gt; &#123;</span><br><span class="line">    // _开始的变量会强制变成私有的</span><br><span class="line">    final _suggestions = &lt;WordPair&gt;[];</span><br><span class="line">    final _biggerFont = const TextStyle(fontSize: 18.0);</span><br><span class="line"></span><br><span class="line">    // 此方法构建显示建议单词对的ListView</span><br><span class="line">    Widget _buildSuggestions() &#123;</span><br><span class="line">        return new ListView.buider(</span><br><span class="line">            padding: const EdgeInsets.all(16.0),</span><br><span class="line"></span><br><span class="line">            itemBuilder:(context, i) &#123;</span><br><span class="line">                // 在每一列之前，添加一个1像素高的分割线 widget</span><br><span class="line">                if (i.isOdd) return new Divider();</span><br><span class="line"></span><br><span class="line">                final index = i ~/ 2; // 除法</span><br><span class="line">                if (index &gt;= _suggestions.length) &#123;</span><br><span class="line">                    _suggestions.allAll(generateWordPairs().take(10));</span><br><span class="line">                &#125;</span><br><span class="line">                return _buildRow(_sugestions[index]);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 对于每一个单词对，_buildSuggestions函数都会调用一次_buildRow</span><br><span class="line">    Widget _buildRow(WordPair pair) &#123;</span><br><span class="line">        return new ListTitle(</span><br><span class="line">            title: new Text(</span><br><span class="line">                pair.asPascalCase,</span><br><span class="line">                style: _biggerFont,</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="创建一个无限滚动的-ListView"><a href="#创建一个无限滚动的-ListView" class="headerlink" title="创建一个无限滚动的 ListView"></a>创建一个无限滚动的 <code>ListView</code></h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomWordsState</span> <span class="title">extens</span> <span class="title">State</span> &lt;<span class="title">RandomWords</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// _开始的变量会强制变成私有的</span></span><br><span class="line">    <span class="keyword">final</span> _suggestions = &lt;WordPair&gt;[];</span><br><span class="line">    <span class="keyword">final</span> _biggerFont = <span class="keyword">const</span> TextStyle(fontSize: <span class="number">18.0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 此方法构建显示建议单词对的ListView</span></span><br><span class="line">    Widget _buildSuggestions() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ListView.buider(</span><br><span class="line">            padding: <span class="keyword">const</span> EdgeInsets.all(<span class="number">16.0</span>),</span><br><span class="line"></span><br><span class="line">            itemBuilder:(context, i) &#123;</span><br><span class="line">                <span class="comment">// 在每一列之前，添加一个1像素高的分割线 widget</span></span><br><span class="line">                <span class="keyword">if</span> (i.isOdd) <span class="keyword">return</span> <span class="keyword">new</span> Divider();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">final</span> index = i ~/ <span class="number">2</span>; <span class="comment">// 除法</span></span><br><span class="line">                <span class="keyword">if</span> (index &gt;= _suggestions.length) &#123;</span><br><span class="line">                    _suggestions.allAll(generateWordPairs().take(<span class="number">10</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> _buildRow(_sugestions[index]);</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对于每一个单词对，_buildSuggestions函数都会调用一次_buildRow</span></span><br><span class="line">    Widget _buildRow(WordPair pair) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ListTitle(</span><br><span class="line">            title: <span class="keyword">new</span> Text(</span><br><span class="line">                pair.asPascalCase,</span><br><span class="line">                style: _biggerFont,</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h4><ul>
+<li>Padding</li>
+</ul>
+<p>包裹其子元素，统一控制其 上下左右间距</p>
+<ul>
+<li>Row</li>
+</ul>
+<p>水平布局</p>
+<ul>
+<li>Column</li>
+</ul>
+<p>垂直布局</p>
+
       
 
       
@@ -910,19 +923,19 @@
 
 
   
-    <article id="post-错误调试" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-错误调试" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/错误调试/">错误调试</a>
+      <a class="article-title" href="/2019/01/06/iOS-错误调试/">错误调试</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/错误调试/" class="archive-article-date">
+        <a href="/2019/01/06/iOS-错误调试/" class="archive-article-date">
   	<time datetime="2019-01-06T12:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
 </a>
         
@@ -930,7 +943,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="dSYM"><a href="#dSYM" class="headerlink" title="dSYM"></a>dSYM</h5><p><code>Xcode</code>编译项目后，我们会看到一个同名的 <code>dSYM</code> 文件，<code>dSYM</code> 是保存 <code>16</code> 进制函数地址映射信息的中转文件，我们调试的 <code>symbols</code> 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 <code>dSYM</code> 文件，位于 <code>/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 </p>
+        <p>内存泄漏：</p>
+<ol>
+<li>timer</li>
+<li>delegate</li>
+<li>block</li>
+</ol>
+<h5 id="dSYM"><a href="#dSYM" class="headerlink" title="dSYM"></a>dSYM</h5><p><code>Xcode</code>编译项目后，我们会看到一个同名的 <code>dSYM</code> 文件，<code>dSYM</code> 是保存 <code>16</code> 进制函数地址映射信息的中转文件，我们调试的 <code>symbols</code> 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 <code>dSYM</code> 文件，位于 <code>/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 </p>
 <h5 id="dSYM-文件有什么作用"><a href="#dSYM-文件有什么作用" class="headerlink" title="dSYM 文件有什么作用"></a>dSYM 文件有什么作用</h5><p>当我们软件 <code>release</code> 模式打包或上线后，不会像我们在 <code>Xcode</code> 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 <code>crash report</code> 文件了，<code>iOS</code> 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 <code>Xcode</code> 的 <code>Organizer</code> 可以将 <code>iOS</code> 设备中的 <code>DeviceLog</code> 导出成 <code>crash</code> 文件，这个时候我们就可以通过出错的函数地址去查询 <code>dSYM</code> 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 <code>dSYM</code> 文件，这也是为什么我们很有必要保存每个发布版本的 <code>Archives</code> 文件了。</p>
 <h5 id="如何将文件一一对应每一个"><a href="#如何将文件一一对应每一个" class="headerlink" title="如何将文件一一对应每一个"></a>如何将文件一一对应每一个</h5><p>xx.app 和 xx.app.dSYM 文件都有对应的 UUID，crash 文件也有自己的 UUID，只要这三个文件的 UUID 一致，我们就可以通过他们解析出正确的错误函数信息了。<br>1.查看 xx.app 文件的 UUID，terminal 中输入命令 ：<br>dwarfdump –uuid xx.app/xx (xx代表你的项目名)<br>2.查看 xx.app.dSYM 文件的 UUID ，在 terminal 中输入命令：<br>dwarfdump –uuid xx.app.dSYM<br>3.crash 文件内第一行 Incident Identifier 就是该 crash 文件的 UUID。<br>dSYM工具于是我抽了几个小时的时间将这些命令封装到一个应用中，也为以后解决bug提供了便利。<br>使用步骤:<br>1.将打包发布软件时的xcarchive文件拖入软件窗口内的任意位置(支持多个文件同时拖入，注意：文件名不要包含空格)<br>2.选中任意一个版本的xcarchive文件，右边会列出该xcarchive文件支持的CPU类型，选中错误对应的CPU类型。<br>3.对比错误给出的UUID和工具界面中给出的UUID是否一致。4.将错误地址输入工具的文本框中，点击分析。Mac app下载地址  项目源码地址</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0vdvv07utj30gz0icn3i.jpg" alt=""></p>
@@ -957,7 +976,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/错误调试/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/06/iOS-错误调试/">展开全文 >></a>
         </p>
       
 
@@ -987,19 +1006,19 @@
 
 
   
-    <article id="post-NSError" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-NSError" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/NSError/">NSError</a>
+      <a class="article-title" href="/2019/01/06/iOS-NSError/">NSError</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/NSError/" class="archive-article-date">
+        <a href="/2019/01/06/iOS-NSError/" class="archive-article-date">
   	<time datetime="2019-01-06T12:42:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
 </a>
         
@@ -1034,7 +1053,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/NSError/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/06/iOS-NSError/">展开全文 >></a>
         </p>
       
 
@@ -1064,19 +1083,19 @@
 
 
   
-    <article id="post-编译链接" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-编译链接" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/编译链接/">编译链接</a>
+      <a class="article-title" href="/2019/01/06/iOS-编译链接/">编译链接</a>
     </h1>
   
 
         
-        <a href="/2019/01/06/编译链接/" class="archive-article-date">
+        <a href="/2019/01/06/iOS-编译链接/" class="archive-article-date">
   	<time datetime="2019-01-06T12:39:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
 </a>
         
@@ -1086,31 +1105,29 @@
       
         <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0vdqctdgwj30k203zdfs.jpg" alt=""></p>
 <p>程序中的源代码计算机是无法识别的，需要将其转成0、1二进制代码，计算机才能识别。将源代码转成二进制代码需要两步：编译和链接。</p>
-<ul>
-<li>预处理：分析程序前先处理的语句，它可以识别散布在程序中的特定语句。所有的预处理语句都适用“＃”开头，这个符号必须是一行中的第一个非空字符。</li>
-</ul>
-<p>预处理可以大概分为三类：文件包含、宏定义和条件编译。</p>
+<h5 id="例"><a href="#例" class="headerlink" title="例"></a>例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSLog(@&quot;%@&quot;,@&quot;Hello Leo&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0: input, &quot;Foundation&quot;, object </span><br><span class="line">1: input, &quot;test.m&quot;, objective-c</span><br><span class="line">2: preprocessor, &#123;1&#125;, objective-c-cpp-output//预处理</span><br><span class="line">3: compiler, &#123;2&#125;, ir //编译生成IR(中间代码)</span><br><span class="line">4: backend, &#123;3&#125;, assembler//汇编器生成汇编代码</span><br><span class="line">5: assembler, &#123;4&#125;, object//生成机器码</span><br><span class="line">6: linker, &#123;0, 5&#125;, image//链接</span><br><span class="line">7: bind-arch, &quot;x86_64&quot;, &#123;6&#125;, image//生成Image，也就是最后的可执行文件</span><br></pre></td></tr></table></figure>
+<p>传统的编译器通常分为三个部分，</p>
 <ol>
-<li><p>文件包含<br>文件包含：在当前文件中用到其它文件中的函数或方法或其它信息时，可以将其它文件的头文件包含进来，然后在当前文件中使用，文件包含一般放到文件的开头。<br>&lt;&gt;会先去找系统文件，如果找不到，再去找自定义文件。所以正确的选择样式，能够提高程序的执行效率。</p>
-</li>
-<li><p>宏定义</p>
-</li>
-<li><p>条件编译<br>条件编译主要分为两种：一种是判断是否定义过某个宏，根据是否定义过这个宏，来决定是否编译某段代码。另外，还有一组语句和条件结构中的阶梯if结构非常类似，但是写法上有区别，是#if、#elif、#else、#endif组成。需要注意的是，无论哪种，都要有#endif 结束标志。此外，最重要的一点是：条件编译中的条件不能使用普通变量，一般会选择使用宏定义。</p>
-</li>
+<li>前端主要负责词法和语法分析，会进行类型检查，如果发现错误或者警告会标注出来在哪一行。</li>
+<li>优化器则是在前端的基础上，对得到的中间代码进行优化，进行BitCode的生成。</li>
+<li>后端则是针对不同的架构，比如arm64等生成不同的机器码</li>
 </ol>
-<ul>
-<li>编译是通过编译器将每个文件的代码都转为二进制代码，在这个过程中，如果有语法错误，会有编译失败的提示，如果成功，那么会生成对应多个目标文件。</li>
-<li>在一个文件中可能会用到其他文件，因此，还需要将编译生成的目标文件和系统提供的文件组合到一起，这个过程就是链接。</li>
+<h2 id="Xcode执行Build的流程"><a href="#Xcode执行Build的流程" class="headerlink" title="Xcode执行Build的流程"></a>Xcode执行Build的流程</h2><ul>
+<li>编译信息写入辅助文件，创建编译后的文件架构(name.app)</li>
+<li>写入辅助文件：将项目的文件结构对应表、将要执行的脚本、项目依赖库的文件结构对应表写成文件，方便后面使用</li>
+<li>运行预设脚本：Cocoapods 会预设一些脚本，当然你也可以自己预设一些脚本来运行。这些脚本都在 Build Phases 中可以看到；</li>
+<li>编译文件：针对每一个文件进行编译，生成可执行文件 Mach-O，这过程 LLVM 的完整流程，前端、优化器、后端；使用CompileC和clang命令。</li>
+<li>链接库，例如Foundation.framework,AFNetworking.framework…</li>
+<li>拷贝资源文件：将项目中的资源文件拷贝到目标包；</li>
+<li>编译 storyboard 文件：storyboard 文件也是会被编译的；</li>
+<li>链接 storyboard 文件：将编译后的 storyboard 文件链接成一个文件；</li>
+<li>编译 Asset 文件：我们的图片如果使用 Assets.xcassets 来管理图片，那么这些图片将会被编译成机器码，除了 icon 和 launchImage；</li>
+<li>运行 Cocoapods 脚本：将在编译项目之前已经编译好的依赖库和相关资源拷贝到包中。</li>
+<li>创建.app文件和对其签名</li>
 </ul>
-<h5 id="main函数之前"><a href="#main函数之前" class="headerlink" title="main函数之前"></a>main函数之前</h5><ul>
-<li><p>系统先读取App的可执行文件(Mach-O文件)，从里面获得<code>dyld</code>的路径，然后加载<code>dyld</code>,<code>dyld</code>去初始化运行环境。</p>
-</li>
-<li><p>开启缓存策略，加载程序相关依赖库(其中也包含我们的可执行文件)，并对这些库进行链接，最后调用每个依赖库的初始化方法，在这一步，<code>runtime</code>被初始化。</p>
-</li>
-<li><p>当所有依赖库的初始化后，轮到最后一位(程序可执行文件)进行初始化，在这时<code>runtime</code>会对项目中所有类进行类机构初始化，然后调用所有的<code>load</code>方法。最后<code>dyld</code>返回<code>main</code>函数地址，<code>main</code>函数被调用，我们便来到程序入口<code>main</code>函数。</p>
-</li>
-</ul>
-
+<p>编译链接都发生在main函数之前。同时<code>runtime</code>会对项目中所有类进行类机构初始化，然后调用所有的<code>load</code>方法。最后<code>dyld</code>返回<code>main</code>函数地址，<code>main</code>函数被调用，我们便来到程序入口<code>main</code>函数。</p>
+<h5 id="main-之后"><a href="#main-之后" class="headerlink" title="main 之后"></a>main 之后</h5>
       
 
       
@@ -1133,7 +1150,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/编译链接/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/06/iOS-编译链接/">展开全文 >></a>
         </p>
       
 

@@ -194,7 +194,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="TCP-IP协议族分层"><a href="#TCP-IP协议族分层" class="headerlink" title="TCP/IP协议族分层"></a>TCP/IP协议族分层</h3><ol>
+        <h3 id="四层模型"><a href="#四层模型" class="headerlink" title="四层模型"></a>四层模型</h3><ol>
 <li>应用层</li>
 </ol>
 <p>HTTP</p>
@@ -205,11 +205,18 @@
 <p>不同的程序通过不同的端口获取数据 </p>
 <p>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。 </p>
 <ol start="3">
-<li>网络层</li>
-<li>链路层</li>
+<li><p>网络层</p>
+<p>IP</p>
+</li>
+<li><p>链路层</p>
+</li>
 </ol>
 <hr>
-<h3 id="一条HTTP请求的流程"><a href="#一条HTTP请求的流程" class="headerlink" title="一条HTTP请求的流程"></a>一条HTTP请求的流程</h3><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0youh4c3kj30r60nsgzu.jpg" alt=""></p>
+<h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h4><p>持久连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connection : keep-alive 客户端期许采用持久连接</span><br><span class="line">time : 20 持续20秒内不会进行4次挥手关闭</span><br><span class="line">max : 10 最多 多少个http请求</span><br></pre></td></tr></table></figure>
+<p>持久连接的结束：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">content-length : 1024 server端告知客户端数据的总大小</span><br><span class="line">chunked 最后一次的chunked是空</span><br></pre></td></tr></table></figure>
+<h3 id="一条HTTP请求的流程"><a href="#一条HTTP请求的流程" class="headerlink" title="一条HTTP请求的流程"></a>一条HTTP请求的流程</h3><p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5k3q6a6v4j30r60nsgzu.jpg" alt=""></p>
 <ol>
 <li>客户端发送请求</li>
 <li>传输层，TCP把从应用层接收到的HTTP请求报文进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。</li>
@@ -222,76 +229,69 @@
 <li>空行</li>
 <li>请求体</li>
 </ul>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yopeq49mj313e0m21kx.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g5k3rxtx5mj313e0m21kx.jpg" alt=""></p>
 <h3 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control</span><br><span class="line">Connection:  Keep-Alive // 默认持久连接  </span><br><span class="line">Date: 报文创建时间</span><br><span class="line">Transfer-Encoding: 编码格式</span><br></pre></td></tr></table></figure>
 <h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Accept // 首部字段可通知服务器，用户代理能够处理的媒体类型及媒体类型的相对优先级</span><br><span class="line">Accept-Language // 用来告知服务器用户代理能够处理的自然语言集</span><br><span class="line">Authorization //  是用来告知服务器，用户代理的认证信息（证书值）。通常，想要通过服务器认证的用户代理会在接收到返回的 401 状态码响应后</span><br><span class="line">Host // 会告知服务器，请求的资源所处的互联网主机名和端口号</span><br><span class="line">If-Modified-Since //  字段指定的日期时间后，资源发生了更新，服务器会接受请求</span><br><span class="line">Range</span><br></pre></td></tr></table></figure>
 <h3 id="响应报文格式"><a href="#响应报文格式" class="headerlink" title="响应报文格式"></a>响应报文格式</h3><ul>
-<li><p>状态行<br>由HTTP协议版本号， 状态码， 状态消息</p>
-</li>
-<li><p>消息报头<br>用来说明客户端要使用的一些附加信息</p>
-</li>
-<li><p>空行</p>
-</li>
-<li><p>响应正文</p>
-</li>
+<li>状态行<br>由HTTP协议版本号， 状态码， 状态消息</li>
+<li>消息报头<br>用来说明客户端要使用的一些附加信息</li>
+<li>空行</li>
+<li>响应正文</li>
 </ul>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0yoqin8pfj31180ig7cp.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5k3sze28jj31180ig7cp.jpg" alt=""></p>
 <h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ETag</span><br><span class="line">Server 告知客户端当前服务器上安装的 HTTP 服务器应用程序的信息</span><br><span class="line">Content-Type 说明了实体主体内对象的媒体类型</span><br><span class="line">Last-Modified 指明资源最终修改的时间</span><br><span class="line">Set-Cookie</span><br></pre></td></tr></table></figure>
 <p>### </p>
-<h3 id="URL-格式"><a href="#URL-格式" class="headerlink" title="URL 格式"></a>URL 格式</h3><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yorlnc7ej30k503sglm.jpg" alt=""></p>
-<h3 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h3><p>在传输层（<code>TCP</code>协议）把从应用层处收到的数据（<code>HTTP</code>请求报文）进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。在网络层（<code>IP</code>协议），增加作为通信目的地的<code>MAC</code>地址后转发给链路层。</p>
+<h3 id="URL-格式"><a href="#URL-格式" class="headerlink" title="URL 格式"></a>URL 格式</h3><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k3tzn4p6j30k503sglm.jpg" alt=""></p>
+<h4 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h4><p>当使用socket创建套接字后，底层会建立一个包含 本地IP 端口号 目的IP 端口号 的数据结构，然后TCP发起连接请求，即三次握手。</p>
+<p>出于性能的考虑，心跳包一般由客户端发送，一般只发送非常简单的包或空包。一个原因是防火墙会把一定时间内没有数据交互的连接断开。这个时候就需要心跳包维持长连接了。服务器在一定时间内没有收到客户端发送的心跳包，可以判断客户离线了，客户端在一定时间内没有收到服务器的影响包，可以判定服务器挂了</p>
+<h4 id="GET-POST"><a href="#GET-POST" class="headerlink" title="GET POST"></a>GET POST</h4><p><code>GET</code> 请求参数以？分割拼接到URL后面，<code>POST</code> 请求参数在Body里面</p>
+<p><code>GET</code> 参数长度限制2048个字符， <code>POST</code> 一般没有限制</p>
+<p>GET :</p>
+<p>​    安全性：<code>GET</code>获取资源，执行不会引起<code>server</code>端的变化。还有<code>HEAD</code>,<code>OPTIONS</code><br>​    幂等：同一个请求方法执行多次和执行一次的效果完全相同(GET请求返回的数据可能不同，但GET请求本身是不变的)<br>   可缓存：</p>
+<h4 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h4><p>用户数据报协议</p>
+<p>无连接：不建立连接和释放连接<br>尽最大努力交付：不保证可靠传输<br>面向报文：既不合并也不拆分，报文小不合并，报文大也不拆分</p>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>传输控制协议</p>
+<p>面向连接<br>可靠传输：超时重传，确认丢失(丢弃重复报文)，<br>面向字节流：报文的拆分和合并<br>流量控制：滑动窗口协议<br>拥塞控制</p>
 <hr>
-<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p>提供的是面向连接、可靠的字节流服务。</p>
-<p>三次握手</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yont8qs0g311w0lcju4.gif" alt=""></p>
-<ol>
-<li>服务器进入监听状态，客户进程向服务器发出连接请求报文。</li>
-<li>服务器收到请求报文后，如果同意连接，则发出确认报文。</li>
-<li>客户进程收到确认后，还要向服务器给出确认。此时，TCP连接建立，客户端进入已建立连接状态。当服务器收到客户端的确认后也进入已建立连接状态，此后双方就可以开始通信了。</li>
-</ol>
-<p><strong><em>为什么TCP客户端最后还要发送一次确认呢？</em></strong><br>一句话，主要防止已经失效的连接请求报文突然又传送到了服务器，从而产生错误。</p>
-<p>如果使用的是两次握手建立连接，假设有这样一种场景，客户端发送了第一个请求连接，只是因为在网络结点中滞留的时间太长了，由于TCP的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。此时此前滞留的那一次请求连接到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费。</p>
-<h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0you727yng30iy0aoq5k.gif" alt=""></p>
+<h3 id="TCP-1"><a href="#TCP-1" class="headerlink" title="TCP"></a>TCP</h3><p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5k3vudnkgg311w0lcju4.gif" alt=""></p>
+<p><strong><em>为什么TCP客户端最后还要发送一次确认呢？</em></strong><br>如果使用的是两次握手建立连接，假设有这样一种场景，客户端发送了第一个连接请求，只是因为在网络结点中滞留的时间长了，由于TCP的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。此时此前滞留的那一次连接请求到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费。</p>
+<h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k3wq9j9rg30iy0aoq5k.gif" alt=""></p>
 <ol>
 <li>客户端进程发出连接释放报文，并且停止发送数据。</li>
 <li>服务器收到连接释放报文，发出确认报文。这时候处于半关闭状态，即客户端已经没有数据要发送了，但是服务器若发送数据，客户端依然要接受。</li>
 <li>服务器将最后的数据发送完毕后，就向客户端发送连接释放报文。</li>
-<li>客户端收到服务器的连接释放报文后，必须发出确认。注意此时TCP连接还没有释放，必须经过2∗∗MSL（最长报文段寿命）的时间后。服务器只要收到了客户端发出的确认，立即进入CLOSED状态。。可以看到，服务器结束TCP连接的时间要比客户端早一些。</li>
+<li>客户端收到服务器的连接释放报文后，必须发出确认。注意此时TCP连接还没有释放，必须经过2MSL（最长报文段寿命）的时间后。服务器只要收到了客户端发出的确认，立即进入CLOSED状态。服务器端的socket先断开，不可以再读取数据。2MSL后，如果没有收到服务器发送的连接释放报文，说明客户端发送的确认断开报文被服务器成功接收，客户端进入close状态</li>
 </ol>
 <p><strong><em>为什么客户端最后还要等待2MSL？</em></strong><br>第一，保证客户端发送的最后一个ACK报文能够到达服务器，因为这个ACK报文可能丢失，站在服务器的角度看来，我已经发送了FIN+ACK报文请求断开了，客户端还没有给我回应，应该是我发送的请求断开报文它没有收到，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。</p>
 <p>第二，防止类似与“三次握手”中提到了的“已经失效的连接请求报文段”出现在本连接中。客户端发送完最后一个确认报文后，在这个2MSL时间中，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样新的连接中不会出现旧连接的请求报文。</p>
-<p>为什么建立连接是三次握手，关闭连接确是四次挥手呢？</p>
-<p>建立连接的时候， 服务器在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。<br>而关闭连接时，服务器收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，而自己也未必全部数据都发送给对方了，所以己方可以立即关闭，也可以发送一些数据给对方后，再发送FIN报文给对方来表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送，从而导致多了一次。</p>
 <p><strong><em>如果已经建立了连接，但是客户端突然出现故障了怎么办？</em></strong><br>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75分钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
 <h4 id="ACK"><a href="#ACK" class="headerlink" title="ACK"></a>ACK</h4><p>默认情况下，接收方每收到两个 TCP 数据包，就要发送一个确认消息。”确认”的英语是 acknowledgement，所以这个确认消息就简称 ACK。</p>
 <p>ACK 携带两个信息。</p>
 <ul>
-<li>期待要收到下一个数据包的编号</li>
-<li>接收方的接收窗口的剩余容量<br>发送方有了这两个信息，再加上自己已经发出的数据包的最新编号，就会推测出接收方大概的接收速度，从而降低或增加发送速率。</li>
+<li><p>期待要收到下一个数据包的编号</p>
+</li>
+<li><p>接收方的接收窗口的剩余容量</p>
+</li>
 </ul>
+<p>发送方有了这两个信息，再加上自己已经发出的数据包的最新编号，就会推测出接收方大概的接收速度，从而降低或增加发送速率。</p>
 <h5 id="数据包的遗失处理"><a href="#数据包的遗失处理" class="headerlink" title="数据包的遗失处理"></a>数据包的遗失处理</h5><p>TCP 协议可以保证数据通信的完整性，这是怎么做到的？</p>
 <p>前面说过，每一个数据包都带有下一个数据包的编号。如果下一个数据包没有收到，那么 ACK 的编号就不会发生变化。</p>
 <p>举例来说，现在收到了4号包，但是没有收到5号包。ACK 就会记录，期待收到5号包。过了一段时间，5号包收到了，那么下一轮 ACK 会更新编号。如果5号包还是没收到，但是收到了6号包或7号包，那么 ACK 里面的编号不会变化，总是显示5号包。这会导致大量重复内容的 ACK。</p>
 <p>如果发送方发现收到三个连续的重复 ACK，或者超时了还没有收到任何 ACK，就会确认丢包，即5号包遗失了，从而再次发送这个包。通过这种机制，TCP 保证了不会有数据包丢失。</p>
 <hr>
-<h3 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h3><p>Socket接口是TCP/IP网络的API接口函数</p>
-<ol>
-<li>客户端调用 socket(…) 创建socket；</li>
-<li>客户端调用 connect(…) 向服务器发起连接请求以建立连接；</li>
-<li>客户端与服务器建立连接之后，就可以通过send(…)/receive(…)向客户端发送或从客户端接收数据；</li>
-<li>客户端调用 close 关闭 socket；</li>
-</ol>
-<hr>
-<h3 id="负责传输的IP协议"><a href="#负责传输的IP协议" class="headerlink" title="负责传输的IP协议"></a>负责传输的<code>IP</code>协议</h3><p>IP（Internet Protocol）网际协议位于网络层。<code>IP</code>其实是一种协议的名称。不要和<code>IP地址</code>搞混</p>
-<p><code>IP</code> 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <code>IP 地址</code>和 <code>MAC 地址</code></p>
-<p><code>IP 地址</code>指明了节点被分配到的地址，<code>MAC 地址</code>是指网卡所属的固定地址。<code>IP 地址</code>可变换，但 <code>MAC 地址</code>基本上不会更改。</p>
+<h3 id="负责传输的IP协议"><a href="#负责传输的IP协议" class="headerlink" title="负责传输的IP协议"></a>负责传输的<code>IP</code>协议</h3><p>IP（Internet Protocol）网际协议位于网络层。<code>IP</code>其实是一种协议的名称。不要和<code>IP</code>地址搞混</p>
+<p><code>IP</code> 协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <code>IP</code> 地址和 <code>MAC</code> 地址</p>
+<p><code>IP</code>地址指明了节点被分配到的地址，<code>MAC</code> 地址是指网卡所属的固定地址。<code>IP</code> 地址可变换，但 <code>MAC 地址</code>基本上不会更改。</p>
 <p>规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。 </p>
 <p>联网上的每一台计算机，都会分配到一个IP地址。这个地址分成两个部分，前一部分代表网络，后一部分代表主机。比如，IP地址172.16.254.1，这是一个32位的地址，假定它的网络部分是前24位（172.16.254），那么主机部分就是后8位（最后的那个1）。处于同一个子网络的电脑，它们IP地址的网络部分必定是相同的，也就是说172.16.254.2应该与172.16.254.1处在同一个子网络。 </p>
 <p>所谓”子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。 </p>
 <p>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。 </p>
 <hr>
-<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。</p>
-<h3 id="各协议和HTTP的关系"><a href="#各协议和HTTP的关系" class="headerlink" title="各协议和HTTP的关系"></a>各协议和HTTP的关系</h3><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0yslr03acj30u017tajf.jpg" alt=""></p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。<br>DNS解析请求采用UDP数据报，43端口，且明文<br>DNS解析：<br>    递归查询：本地DNS -&gt; 顶级DNS -&gt; 根DNS<br>    迭代查询：本地DNS -&gt; 顶级DNS(某DNS知道，你去问它吧) -&gt; 某DNS</p>
+<p>DNS解析和HTTP没有关系，DNS解析发生在HTTP建立之前，DNS解析请求使用UDP数据报，端口号53</p>
+<p>防止DNS劫持</p>
+<p>httpDNS：使用HTTP协议向DNS服务器的80窗口进行解析，不在是UDP的明文<br>长连接：</p>
+<h3 id="各协议和HTTP的关系"><a href="#各协议和HTTP的关系" class="headerlink" title="各协议和HTTP的关系"></a>各协议和HTTP的关系</h3><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k41lz5icj30u017tajf.jpg" alt=""></p>
 <h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><ul>
 <li><p>200 OK</p>
 </li>
@@ -307,11 +307,12 @@
 </li>
 </ul>
 <hr>
-<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g0ysto4to0j30x90a0wfn.jpg" alt="">代理服务器的基本行为就是接收客户端发送的请求后转发给其他服务器。每次通过代理服务器转发请求或响应时，会追加写入 Via 首部信息.使用代理服务器的理由有：利用缓存技术减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k42a2omoj30x90a0wfn.jpg" alt=""></p>
+<p>代理服务器的基本行为就是接收客户端发送的请求后转发给其他服务器。每次通过代理服务器转发请求或响应时，会追加写入 Via 首部信息.使用代理服务器的理由有：利用缓存技术减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
 <hr>
 <h3 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h3><p>同一个端口不会同时出现，传输层通过辨认端口号来确认应用。但是只靠端口号识别通信是不够的。需要采取五个信息来识别一个通信，分别是源 IP 地址，目标 IP 地址，协议号，源端口号，目标端口号。两个包中只要任何一个信息不同就不是同一个通信。</p>
 <hr>
-<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0ysut3z8zj30pr0633yu.jpg" alt=""></p>
+<h3 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h3><p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5k4376z3nj30pr0633yu.jpg" alt=""></p>
 <p>利用网关可以由 HTTP 请求转化为其他协议通信</p>
 <hr>
 <h3 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h3><p>网卡的固定地址，独一无二 </p>
@@ -328,11 +329,11 @@
 <p>拉取待初始化列表元素的的URL数组(也就是各个Model的主键)<br>根据上面的URL数组分页拉取列表元素</p>
 <p>仍然以上面的情况举例, 我们看看这种思路能不能解决上面的问题:<br>初始化一个200人的好友列表, 首先我们会拉取这200个好友的用户Id, 假设是[0…199]. 拉取第一页时我们传入[0…49]个Id从服务器拉取50个好友, 拉取成功后从初始化Id列表删除这50个Id, 初始化Id列表变成[50…199], 此时有50个新好友被添加到服务器, 服务器数据变动, 但是本地的初始化列表没变, 所以我们可以继续拉取到[50…99]部分的数据, 以此类推. 显然, 我们不会有任何冗余的数据请求.<br>反过来, 如果[0…49]部分的好友被删除, 服务器数据变动, 但是本地列表因为没有变动, 后续的[50…199]自然也是能准确拉取到的, 不会发生数据丢失.<br>但是这样的做法依然存在弊端, 因为本地的初始化列表不做变更, 那么服务器在初始化过程中新增的数据我们是不知道的, 自然也就不会去拉取, 初始化的数据就少了. 反过来, 初始化过程已拉取的数据如果被删除了, 客户端依然不知情, 缓存中就会有无效数据. 那么, 如何解决这两个问题呢?<br>一个简单的解决方法是: 在某次分页拉取的返回数据中, 服务器不仅返回对应的数据, 同时也返回一下此时最新的Id数组. 本地根据这个最新的Id数组进行比对, 多出来的部分显然就是新增的, 我们将这部分更新到初始化列表继续拉取. 而少掉的部分显然就是被删除的, 我们从数据库中删除这部分无效数据.<br>这样会多一部分Id数组的开销, 但是相比它解决的问题而言, 这点开销微不足道.</p>
 <hr>
-<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0ysvun8wxj30mq0ke75o.jpg" alt=""></p>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k43oj5k1j30mq0ke75o.jpg" alt=""></p>
 <ol>
 <li>客户端发起HTTPS请求 </li>
 </ol>
-<p>用户在浏览器里输入一个https网址，然后连接到server的443端口。 </p>
+<p>用户在浏览器里输入一个https网址，然后连接到server的443端口。 信息包含：支持的加密算法，随机数C</p>
 <ol start="2">
 <li>服务端的配置 </li>
 </ol>
@@ -340,7 +341,7 @@
 <ol start="3">
 <li>传送证书 </li>
 </ol>
-<p>这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。 </p>
+<p>这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。还包含 随机数S，和所选定的加密算法</p>
 <ol start="4">
 <li>客户端解析证书 </li>
 </ol>
@@ -348,7 +349,7 @@
 <ol start="5">
 <li>传送加密信息 </li>
 </ol>
-<p>这部分传送的是用证书加密后的随机值，目的就是让服务端得到这个随机值，以后客户端和服务端的通信就可以通过这个随机值来进行加密解密了。 </p>
+<p>这部分传送的是用证书加密后的随机值，目的就是让服务端得到这个随机值，以后客户端和服务端的通信就可以通过这个随机值来进行加密解密了。<br>会话密钥 = random S  + random C + 预主密钥</p>
 <ol start="6">
 <li>服务端解密信息 </li>
 </ol>
@@ -363,8 +364,13 @@
 <p>客户端用之前生成的私钥解密服务端传过来的信息，于是获取了解密后的内容。整个过程第三方即使监听到了数据，也束手无策。对称加密：需要对加密和解密使用相同密钥的加密算法。由于其速度快，对称性加密通常在消息发送方需要加密大量数据时使用。 </p>
 <p>每一个使用 HTTPS 的服务器都必须去专门的证书机构注册一个证书，证书中存储了用权威机构私钥加密的公钥。这样客户端用权威机构的公钥解密就可以了。</p>
 <p>这个公钥不用传输，会直接内置在各大操作系统(或者浏览器)的出厂设置里。</p>
+<p>CA的作用就是颁发证书，颁发证书其实就是使用CA的私钥对证书请求签名文件进行签名，其次，CA颁发的证书浏览器要信任，浏览器只需要用CA的公钥进行验签成功就表示这个证书是合法可信的，这就需要浏览器内置CA的公钥，也就是内置CA的证书。一般来说，操作系统都会内置权威CA的证书</p>
 <p>为了确保原始证书没有被篡改，我们可以在传递证书的同时传递证书的哈希值。那么修改后的数据在解密后，就不可能通过哈希。</p>
+<p>常见的非对称加密算法有RSA和ECC（椭圆曲线算法）。</p>
+<p>SSL结合了这两种加密算法的优点，通过非对称加密来协商对称加密的密钥，握手成功之后便可使用对称加密来做加密通信，对于RSA来说，客户端是用RSA的公钥把预主密钥加密后传给服务器，服务器再用私钥来解密，双方再通过相同的算法来生成会话密钥，之后的应用层数据就可以通过会话密钥来加密通信。</p>
 <hr>
+<h4 id="粘包"><a href="#粘包" class="headerlink" title="粘包"></a>粘包</h4><p>tcp对两个数据报进行分割传输，接收方接收到了两个数据包，但是这两个数据包要么是不完整的，要么就是多出来一块，这种情况即发生了拆包和粘包。</p>
+<p>发送方将两个数据报合并发送，接收端只收到一个数据包，由于TCP是不会出现丢包的，所以这一个数据包中包含了发送端发送的两个数据包的信息，这种现象即为粘包。这种情况由于接收端不知道这两个数据包的界限，所以很难处理</p>
 <h3 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h3><p>抓取https包的时候,青花瓷会要求使用者对抓包的设备(手机或其他设备),安装一个证书,安装这个证书的时候,其实是安装了一个根证书(允许颁发CA的一个证书机构的根证书),当你安装了该根证书之后,该证书机构颁发的其他证书,默认都会被你的系统所信任,这个就是青花瓷完成https抓包的一个重要前提!! </p>
 <ol>
 <li><p>客户端对服务器发送请求,由于青花瓷做了代理,请求被青花瓷拦截,处理,青花瓷将客户端带的随机数和加密算法处理,然后返回自己的证书通过客户端校验,获取到客户端提交的请求参数等数据, </p>
@@ -375,16 +381,7 @@
 </li>
 </ol>
 <p>在此,中间人攻击的过程就完成了 </p>
-<h5 id="防止抓包"><a href="#防止抓包" class="headerlink" title="防止抓包"></a>防止抓包</h5><p>1.当进行网络请求的时候,客户端判断当前是否设置了代理,如果设置了代理,不允许进行访问 </p>
-<hr>
-<p>`<code></code>mermaid </p>
-<p>graph TD </p>
-<p>A(<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a>) –&gt;|通过URL查找IP| B(Hosts文件缓存/DNS服务器缓存) </p>
-<p>B –&gt; C(DNS服务器) </p>
-<p>C –&gt; D(对IP结果建立TCP连接) </p>
-<p>D –&gt; E(向服务器发送数据) </p>
-<p>E –&gt; F(服务器解析,并返回) </p>
-<p>`<code></code> </p>
+<h5 id="防止抓包"><a href="#防止抓包" class="headerlink" title="防止抓包"></a>防止抓包</h5><p>当进行网络请求的时候,客户端判断当前是否设置了代理，判断是否有 Via字段。如果设置了代理,不允许进行访问。</p>
 
       
 
