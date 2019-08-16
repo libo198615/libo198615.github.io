@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>swift_func参数 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345test(name1: &amp;quot;a&amp;quot;, age1: 1)func test(name1 name2: String, age1 age2: Int) &amp;#123;    print(name2)    print(age2)&amp;#125; 12345test2(&amp;quot;b&amp;quot;)func test2(_ name2: String, age1 age2: Int =">
+  <meta name="description" content="12345test(name1: &quot;a&quot;, age1: 1)func test(name1 name2: String, age1 age2: Int) &amp;#123;    print(name2)    print(age2)&amp;#125; 12345test2(&quot;b&quot;)func test2(_ name2: String, age1 age2: Int = 0) &amp;#123;    print(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="swift_func参数">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/15/swift-func参数/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="12345test(name1: &amp;quot;a&amp;quot;, age1: 1)func test(name1 name2: String, age1 age2: Int) &amp;#123;    print(name2)    print(age2)&amp;#125; 12345test2(&amp;quot;b&amp;quot;)func test2(_ name2: String, age1 age2: Int =">
+<meta property="og:description" content="12345test(name1: &quot;a&quot;, age1: 1)func test(name1 name2: String, age1 age2: Int) &amp;#123;    print(name2)    print(age2)&amp;#125; 12345test2(&quot;b&quot;)func test2(_ name2: String, age1 age2: Int = 0) &amp;#123;    print(">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-16T09:10:06.099Z">
+<meta property="og:updated_time" content="2019-08-13T02:26:26.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="swift_func参数">
-<meta name="twitter:description" content="12345test(name1: &amp;quot;a&amp;quot;, age1: 1)func test(name1 name2: String, age1 age2: Int) &amp;#123;    print(name2)    print(age2)&amp;#125; 12345test2(&amp;quot;b&amp;quot;)func test2(_ name2: String, age1 age2: Int =">
+<meta name="twitter:description" content="12345test(name1: &quot;a&quot;, age1: 1)func test(name1 name2: String, age1 age2: Int) &amp;#123;    print(name2)    print(age2)&amp;#125; 12345test2(&quot;b&quot;)func test2(_ name2: String, age1 age2: Int = 0) &amp;#123;    print(">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -196,10 +196,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(name1: &quot;a&quot;, age1: 1)</span><br><span class="line">func test(name1 name2: String, age1 age2: Int) &#123;</span><br><span class="line">    print(name2)</span><br><span class="line">    print(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2(&quot;b&quot;)</span><br><span class="line">func test2(_ name2: String, age1 age2: Int = 0) &#123;</span><br><span class="line">    print(name2)</span><br><span class="line">    print(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func test(_ name1: String, _ name2: String) &#123;&#125;</span><br><span class="line">test(&quot;&quot;, &quot;&quot;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func test(_ age1: Int, age2 : Int) &#123;&#125;</span><br><span class="line">test(1, age2: 2)</span><br></pre></td></tr></table></figure>
+        <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(name1: <span class="string">"a"</span>, age1: <span class="number">1</span>)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(name1 name2: String, age1 age2: Int)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(name2)</span><br><span class="line">    <span class="built_in">print</span>(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2(<span class="string">"b"</span>)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test2</span><span class="params">(<span class="number">_</span> name2: String, age1 age2: Int = <span class="number">0</span>)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(name2)</span><br><span class="line">    <span class="built_in">print</span>(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(<span class="number">_</span> name1: String, <span class="number">_</span> name2: String)</span></span> &#123;&#125;</span><br><span class="line">test(<span class="string">""</span>, <span class="string">""</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(<span class="number">_</span> age1: Int, age2 : Int)</span></span> &#123;&#125;</span><br><span class="line">test(<span class="number">1</span>, age2: <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
       
 

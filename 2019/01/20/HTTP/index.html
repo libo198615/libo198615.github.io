@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>HTTP | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="四层模型 应用层  HTTP  传输层  TCP UDP 不同的程序通过不同的端口获取数据  “传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。   网络层 IP  链路层    HTTP持久连接">
+  <meta name="description" content="四层模型 应用层  HTTP HTTPS FTP DNS  xmpp  传输层  TCP UDP 不同的程序通过不同的端口获取数据  “传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。  get">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/20/HTTP/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="四层模型 应用层  HTTP  传输层  TCP UDP 不同的程序通过不同的端口获取数据  “传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。   网络层 IP  链路层    HTTP持久连接">
+<meta property="og:description" content="四层模型 应用层  HTTP HTTPS FTP DNS  xmpp  传输层  TCP UDP 不同的程序通过不同的端口获取数据  “传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。  get">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g5k3q6a6v4j30r60nsgzu.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g5k3rxtx5mj313e0m21kx.jpg">
@@ -25,10 +25,10 @@
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79ly1g5k42a2omoj30x90a0wfn.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g5k4376z3nj30pr0633yu.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79ly1g5k43oj5k1j30mq0ke75o.jpg">
-<meta property="og:updated_time" content="2019-08-05T07:09:31.697Z">
+<meta property="og:updated_time" content="2019-08-14T13:05:01.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP">
-<meta name="twitter:description" content="四层模型 应用层  HTTP  传输层  TCP UDP 不同的程序通过不同的端口获取数据  “传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。   网络层 IP  链路层    HTTP持久连接">
+<meta name="twitter:description" content="四层模型 应用层  HTTP HTTPS FTP DNS  xmpp  传输层  TCP UDP 不同的程序通过不同的端口获取数据  “传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。  get">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g5k3q6a6v4j30r60nsgzu.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -210,13 +210,14 @@
         <h3 id="四层模型"><a href="#四层模型" class="headerlink" title="四层模型"></a>四层模型</h3><ol>
 <li>应用层</li>
 </ol>
-<p>HTTP</p>
+<p>HTTP HTTPS FTP DNS  xmpp</p>
 <ol start="2">
 <li>传输层</li>
 </ol>
 <p>TCP UDP</p>
 <p>不同的程序通过不同的端口获取数据 </p>
 <p>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。 </p>
+<p>get pust put delete header options</p>
 <ol start="3">
 <li><p>网络层</p>
 <p>IP</p>
@@ -256,7 +257,7 @@
 <p>### </p>
 <h3 id="URL-格式"><a href="#URL-格式" class="headerlink" title="URL 格式"></a>URL 格式</h3><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k3tzn4p6j30k503sglm.jpg" alt=""></p>
 <h4 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h4><p>当使用socket创建套接字后，底层会建立一个包含 本地IP 端口号 目的IP 端口号 的数据结构，然后TCP发起连接请求，即三次握手。</p>
-<p>出于性能的考虑，心跳包一般由客户端发送，一般只发送非常简单的包或空包。一个原因是防火墙会把一定时间内没有数据交互的连接断开。这个时候就需要心跳包维持长连接了。服务器在一定时间内没有收到客户端发送的心跳包，可以判断客户离线了，客户端在一定时间内没有收到服务器的影响包，可以判定服务器挂了</p>
+<p>出于性能的考虑，心跳包一般由客户端发送，一般只发送非常简单的包或空包。一个原因是防火墙会把一定时间内没有数据交互的连接断开。这个时候就需要心跳包维持长连接了。服务器在一定时间内没有收到客户端发送的心跳包，可以判断客户离线了，客户端在一定时间内没有收到服务器的响应包，可以判定服务器挂了</p>
 <h4 id="GET-POST"><a href="#GET-POST" class="headerlink" title="GET POST"></a>GET POST</h4><p><code>GET</code> 请求参数以？分割拼接到URL后面，<code>POST</code> 请求参数在Body里面</p>
 <p><code>GET</code> 参数长度限制2048个字符， <code>POST</code> 一般没有限制</p>
 <p>GET :</p>
@@ -300,7 +301,7 @@
 <p>所谓”子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。 </p>
 <p>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。 </p>
 <hr>
-<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。<br>DNS解析请求采用UDP数据报，43端口，且明文<br>DNS解析：<br>    递归查询：本地DNS -&gt; 顶级DNS -&gt; 根DNS<br>    迭代查询：本地DNS -&gt; 顶级DNS(某DNS知道，你去问它吧) -&gt; 某DNS</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。<br>DNS解析请求采用UDP数据报，53端口，且明文<br>DNS解析：<br>    递归查询：本地DNS -&gt; 顶级DNS -&gt; 根DNS<br>    迭代查询：本地DNS -&gt; 顶级DNS(某DNS知道，你去问它吧) -&gt; 某DNS</p>
 <p>DNS解析和HTTP没有关系，DNS解析发生在HTTP建立之前，DNS解析请求使用UDP数据报，端口号53</p>
 <p>防止DNS劫持</p>
 <p>httpDNS：使用HTTP协议向DNS服务器的80窗口进行解析，不在是UDP的明文<br>长连接：</p>
@@ -358,7 +359,7 @@
 <ol start="4">
 <li>客户端解析证书 </li>
 </ol>
-<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。如果证书没有问题，那么就生成一个随即值。然后用证书对该随机值进行加密。就好像上面说的，把随机值用锁头锁起来，这样除非有钥匙，不然看不到被锁住的内容。 </p>
+<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。</p>
 <ol start="5">
 <li>传送加密信息 </li>
 </ol>
@@ -395,6 +396,7 @@
 </ol>
 <p>在此,中间人攻击的过程就完成了 </p>
 <h5 id="防止抓包"><a href="#防止抓包" class="headerlink" title="防止抓包"></a>防止抓包</h5><p>当进行网络请求的时候,客户端判断当前是否设置了代理，判断是否有 Via字段。如果设置了代理,不允许进行访问。</p>
+<h4 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">content-type：multipart/form-data</span><br><span class="line"></span><br><span class="line">POST http://www.example.com HTTP/1.1</span><br><span class="line">Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"> </span><br><span class="line">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line">Content-Disposition: form-data; name=&quot;text&quot;</span><br><span class="line"> </span><br><span class="line">title</span><br><span class="line">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;chrome.png&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"> </span><br><span class="line">PNG ... content of chrome.png ...</span><br><span class="line">------WebKitFormBoundaryrGKCBY7qhFd3TrwA--</span><br></pre></td></tr></table></figure>
 
       
 
@@ -509,8 +511,8 @@
     </a>
   
   
-    <a href="/2019/01/17/程序员的自我修养/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">程序员的自我修养</div>
+    <a href="/2019/01/15/swift-构造过程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">swift_构造过程</div>
       <i class="icon-circle-right"></i>
     </a>
   

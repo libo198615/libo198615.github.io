@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1g1psd34gowj30eg03paam.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1g1ptb3khufj314r0coabn.jpg">
-<meta property="og:updated_time" content="2019-07-02T14:15:57.746Z">
+<meta property="og:updated_time" content="2019-08-14T11:29:01.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ios-layer">
 <meta name="twitter:description" content="UIView 继承于 UIResponder 和 NSObject CALayer 继承与 NSObject UIView 响应事件 CALayer 显示内容  wwdc：   Layers provide infrastructure for your views. Specifically, layers make it easier and more efficient to draw a">
@@ -219,7 +219,7 @@
 <p>layer不参与view的事件处理、不参与响应链</p>
 </blockquote>
 <p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g1ptb3khufj314r0coabn.jpg" alt=""></p>
-<p>层是基于绘画模型实现的，层并不会在我们的<code>app</code>中做什么事，实际上是层只是捕获<code>app</code>所提供的内容，并缓存成<code>bitmap</code>，当任何与层关联的属性值发生变化时，<code>Core Animation</code>就会将新的<code>bitmap</code>传给绘图硬件，并根据新的位图更新显示。</p>
+<p>layer是基于绘画模型实现的，层并不会在我们的<code>app</code>中做什么事，实际上layer只是捕获<code>app</code>所提供的内容，并缓存成<code>bitmap</code>，当任何与层关联的属性值发生变化时，<code>Core Animation</code>就会将新的<code>bitmap</code>传给绘图硬件，并根据新的位图更新显示。</p>
 <p><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自<code>UIView</code>。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame</code>、<code>bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</p>
 <blockquote>
 <p>提示：<code>layer-based drawing</code>不同于<code>view-based drawing</code>，后者的性能消耗是很高的，它是在主线程上直接通过<code>CPU</code>完成的，而且通常是在<code>-drawRect:</code>中绘制动画。</p>
@@ -254,12 +254,13 @@
 <p>如果要拿到动画过程中view的数据，可以通过表现树来获取。</p>
 <h4 id="图层的定位"><a href="#图层的定位" class="headerlink" title="图层的定位"></a>图层的定位</h4><p>图层在其对应的 view 坐标系中, 或是在对应的父 layer 的坐标系中的大小是通过 bounds 定义的. 但位置是通过如下两个属性共同定义:</p>
 <ul>
-<li>position: 描述的是在父layer坐标系下的一个点.</li>
+<li>position: 描述的是其锚点在父layer坐标系下的一个位置（点）.</li>
 <li>anchorPoint: 描述 position 点在 layer 上的位置, 这个位置是相对于 layer 自身的坐标系而言的, 且值为 0 到 1.</li>
 </ul>
 <p>这样的定位方式实际就是: 先在 layer 上确定锚点, 然后将锚点挂接到 position 指定的位置上, 就定位了该<br> layer 在父 layer 中的位置.</p>
 <p>anchorPoint 的默认值是 (0.5, 0.5), 即 layer 的中央位置. 这时 position 的作用就和 view 的 center 一样.</p>
 <p>而 layer 的 frame 实际是通过当前的 bounds 和 position 以及 anchorPoint 共同计算出来的. 当设置 layer 的 frame 时, 相当于同时修改了 layer 的 bounds 和 position.</p>
+<p><a href="https://mp.weixin.qq.com/s/k9m6eJQXvfSSXhfTnd3goA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/k9m6eJQXvfSSXhfTnd3goA</a></p>
 
       
 
@@ -364,11 +365,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/04/03/ios-离屏渲染/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/04/04/ios-MDM/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          ios-离屏渲染
+          ios-MDM
         
       </div>
     </a>

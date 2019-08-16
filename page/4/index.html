@@ -174,6 +174,566 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法-思路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/12/算法-思路/">算法-思路</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/12/算法-思路/" class="archive-article-date">
+  	<time datetime="2019-03-12T01:28:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="钟表的时针和分针一天内重叠多少次？"><a href="#钟表的时针和分针一天内重叠多少次？" class="headerlink" title="钟表的时针和分针一天内重叠多少次？"></a>钟表的时针和分针一天内重叠多少次？</h3><p>开头和结尾一样都是指向12点，只能算一次，我们在开头不算，结尾时再算 </p>
+<p>第一个小时时针和分针赛跑，起始位置一样，分针跑的快，分针跑过一圈，时针跑过1/12圈，没有重合 </p>
+<p>第二个小时重新开始赛跑，起始位置不一样，分针在后，一个小时下来，分针超过时针跑了一圈，重合一次 </p>
+<p>… </p>
+<p>第12个小时重新开始赛跑，时针在11/12的位置，结尾时分针刚好赶上时针，这是结尾，此次重合需要计算进去，第11次重合 </p>
+<p>一天24小时，共重合22次</p>
+<h3 id="找出瑕疵球"><a href="#找出瑕疵球" class="headerlink" title="找出瑕疵球"></a>找出瑕疵球</h3><p>你有10箱球（每个正常球的质量是10克），而其中一箱球都是有瑕疵的（有瑕疵球的质量是9克）。给你一个电子秤和一次称量的机会，如何设计称量方案可以确定哪个箱子的球有瑕疵？ </p>
+<p>解答： </p>
+<p>为了方便，我们给箱子标记为1到10号。 </p>
+<p>想解决这个问题，我们要利用已知的知识：每个正常的球的质量是10克，有瑕疵球的质量是9克。 </p>
+<p>大部分人本能地会从一个箱子里拿出一个球，然后去琢磨如何利用这10个球。可题目的窍门就在于从箱子里拿出不同数量的球。 </p>
+<p>首先我们从每个箱子拿出和箱子号码等数量的球，比如，1号箱子拿出1个球，2号箱子拿出2个球… 这样我们总计拿出55个球。 </p>
+<p>如果所有的球都没瑕疵，称重总计 55 x 10=550 克。 </p>
+<p>如果1号箱子是瑕疵的球，那么总重应比期望的重量少1克，因为只有1个球是9克，其余的球是10克。 </p>
+<p>如果2号箱子是瑕疵的球，那总重应比期望重量少2克。 </p>
+<p>…… </p>
+<p>以此类推，如果是9号箱子是瑕疵的球，那总重比期望重量少9克。 </p>
+<p>所以当你最终称量出选中的55个球的总质量，计算出这个质量和期望质量的差值，而这个差值就是有瑕疵球箱子的号码。 </p>
+<h3 id="过桥时间"><a href="#过桥时间" class="headerlink" title="过桥时间"></a>过桥时间</h3><p>有四个人需要在漆黑的夜晚过一个破旧的木桥，不幸的是，破旧的桥最多只能支持2个人同时过桥，而由于是在夜晚他们需要使用仅有的一个手电筒才能安全过桥，并且每个人过桥的时间也是不同的，分别是 1分钟，2分钟，7分钟和10分钟。请问四个人全部安全通过这座桥最短需要多长时间？ </p>
+<p>确保 7 和 10 一次过桥，需要1先过去等待 </p>
+<p>1 和 2过桥，2 返回 </p>
+<p>7 和 10 过桥，1 返回 </p>
+<p>1 和 2一起过桥 (结束) </p>
+<p>合计时间 = 2 + 2 + 10 + 1 + 2 = 17 分钟 </p>
+<h3 id="数组中出现次数超过一半的数字"><a href="#数组中出现次数超过一半的数字" class="headerlink" title="数组中出现次数超过一半的数字"></a>数组中出现次数超过一半的数字</h3><p>数组中有一个数字出现的次数超过数组长度的一半，也就是说它出现的次数比其他所有数字出现次数的和还要多。 </p>
+<p>因此我们可以考虑在遍历数组的时候保存两个值：一个是数组中的一个数字，一个是次数。当我们遍历到下一个数字的时候，如果下一个数字和我们之前保存的数字相同，则次数加1；如果下一个数字和我们之前保存的数字不同，则次数减1。 </p>
+<p>如果次数为0，我们需要保存下一个数字，并把次数置1。因为次数为0，表示前面是字符串计数抵消为0 </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/12/算法-思路/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-算法-字符串" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/11/算法-字符串/">算法-字符串</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/11/算法-字符串/" class="archive-article-date">
+  	<time datetime="2019-03-11T09:15:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="原地逆序"><a href="#原地逆序" class="headerlink" title="原地逆序"></a>原地逆序</h3><p>如下图。给定字符串”abcdef”，逆序的过程分别是交换字符a和f，交换字符b和e，交换字符c和d。<br><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0yz8npqwqj30h80a3jre.jpg" alt=""></p>
+<p>设置两个指针，分别指向字符串的头部和尾部，然后交换两个指针所指的字符，并向中间移动指针直到交叉。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">Reverse</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// p指向字符串头部</span></span><br><span class="line">    <span class="keyword">char</span>* p = s;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// q指向字符串尾部</span></span><br><span class="line">    <span class="keyword">char</span>* q = s;</span><br><span class="line">    <span class="keyword">while</span>(* q) &#123;</span><br><span class="line">        ++q;</span><br><span class="line">    &#125;</span><br><span class="line">    q --;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 交换并移动指针，直到p和q交叉</span></span><br><span class="line">    <span class="keyword">while</span>(q &gt; p) &#123;</span><br><span class="line">        <span class="keyword">char</span> t = *p;</span><br><span class="line">        *p = *q;</span><br><span class="line">        *q = t;</span><br><span class="line">        p ++;</span><br><span class="line">        q --;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="不允许临时变量的原地逆序"><a href="#不允许临时变量的原地逆序" class="headerlink" title="不允许临时变量的原地逆序"></a>不允许临时变量的原地逆序</h3><p>使用异或操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">Reverse</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span>* r = s;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//令p指向字符串最后一个字符</span></span><br><span class="line">    <span class="keyword">char</span>* p = s;</span><br><span class="line">    <span class="keyword">while</span>(*(p+<span class="number">1</span>) != <span class="string">'\0'</span>) &#123;</span><br><span class="line">        ++ p;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(p &gt; s) &#123;</span><br><span class="line">        *p = *p ^ *s;</span><br><span class="line">        *s = *p ^ *s;</span><br><span class="line">        *p = *p ^ *s;</span><br><span class="line">        </span><br><span class="line">        p --;</span><br><span class="line">        s ++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="按单词逆序"><a href="#按单词逆序" class="headerlink" title="按单词逆序"></a>按单词逆序</h3><p>输入 “This is a sentence”，输出”sentence a is This”</p>
+<blockquote>
+<p> 思路二：按空格切分为数组，依次入栈，再出栈(用空格连接) </p>
+</blockquote>
+<p>分两步</p>
+<p>1 先按单词逆序得到”sihT si a ecnetnes”</p>
+<p>2 再整个句子逆序得到”sentence a is This”</p>
+<p>对于步骤一，关键是如何确定单词，这里以空格为单词的分界。当找到一个单词后，就可以使用上面讲过的方法将这个单词进行逆序，当所有的单词都逆序以后，将整个句子看做一个整体（即一个大的包含空格的单词）再逆序一次即可，如下图所示，第一行是原始字符换，第二行是按单词逆序后的字符串，最后一行是按整个句子逆序后的字符串。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0zq457otej30hb0ab0sv.jpg" alt=""></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对指针p和q之间的所有字符逆序</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RecerseWord</span><span class="params">(<span class="keyword">char</span>* p, <span class="keyword">char</span>* q)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(p &lt; q) &#123;</span><br><span class="line">        <span class="keyword">char</span> t = *p;</span><br><span class="line">        *p = *q;</span><br><span class="line">        *q = t;</span><br><span class="line">        </span><br><span class="line">        p++;</span><br><span class="line">        q--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将句子按单词逆序</span></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">ReverseSentence</span><span class="params">(<span class="keyword">char</span>* s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span>* p = s;<span class="comment">// 指向单词的首字符</span></span><br><span class="line">    <span class="keyword">char</span>* q = s;<span class="comment">// 指向空格或者 '\0'</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(*q) &#123;</span><br><span class="line">        <span class="keyword">if</span> (*q == <span class="string">'\0'</span>) &#123;</span><br><span class="line">            ReverseWord(p, q<span class="number">-1</span>);</span><br><span class="line">            q ++;</span><br><span class="line">            p = q;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            q ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ReverseWord(p, q<span class="number">-1</span>); <span class="comment">// 对最后一个单词逆序</span></span><br><span class="line">    ReverseWord(s, q<span class="number">-1</span>); <span class="comment">// 对整个句子逆序</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="左旋转字符串"><a href="#左旋转字符串" class="headerlink" title="左旋转字符串"></a>左旋转字符串</h3><p>输入字符串”abcdefg”和数字2，该函数将返回左旋转2位得到的结果”cdefgab”; </p>
+<p>第一步：翻转字符串“ab”，得到”ba”； </p>
+<p>第二步：翻转字符串”cdefg”，得到”gfedc”； </p>
+<p>第三步：翻转字符串”bagfedc”，得到”cdefgab”； </p>
+<h3 id="大数相加："><a href="#大数相加：" class="headerlink" title="大数相加："></a>大数相加：</h3><p>要点：按位相加、进位数处理</p>
+<p>思路：大数以字符串传入，如“123456789999”加上“987654321”，为了方便计算，我们将这两个数，位数上补齐，得到：A:“123456789999”和B:“000987654321”，接下来就开始计算了。</p>
+<p> A的个位和B的个位相加（9+1），得到一个数（10），记录进位数（1）和个位数（0），字符串strJ拼接个位数（“0”）；然后十位和十位加上刚才的进位数（9+2+1），得到一个数（12），记录进位数（1）和个位数（2），字符串strJ拼接个位数（“0”+“2”=“02”）；后面类推，</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/11/算法-字符串/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-图片" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/11/图片/">图片</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/11/图片/" class="archive-article-date">
+  	<time datetime="2019-03-11T08:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h3><p>无损压缩<br>支持透明效果</p>
+<ul>
+<li>能在保证最不失真的情况下尽可能压缩图像文件的大小。 </li>
+</ul>
+<h3 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h3><p>有损压缩</p>
+<ul>
+<li><p>支持摄影图像或写实图像的高级压缩，并且可利用压缩比例控制图像文件大小。 </p>
+</li>
+<li><p>有损压缩会使图像数据质量下降，并且在编辑和重新保存JPG格式图像时，这种下降损失会累积。 </p>
+</li>
+<li><p>JPG不适用于所含颜色很少、具有大块颜色相近的区域或亮度差异十分明显的较简单的图片。 </p>
+</li>
+</ul>
+<h3 id="图片大小"><a href="#图片大小" class="headerlink" title="图片大小"></a>图片大小</h3><p>以一张尺寸为900 × 600的图片为例，图片共有像素数： </p>
+<p>900 × 600 = 540,000像素(Pixel)。 </p>
+<p>如果图片是RGB 色彩模式，占用的内存是： </p>
+<p>900 × 600 × 3 = 1,620,000 字节(bytes). </p>
+<p>后面”× 3”表示每个像素内RGB 颜色的信息需要3字节，也是24比特(bit)。  </p>
+<p>也可以说每个像素中 3 RGB值，每一个RGB值需要一个 8 比特，也是一个字节，总计24个比特。 </p>
+<h3 id="位图"><a href="#位图" class="headerlink" title="位图"></a>位图</h3><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0yyhnoehzj30fi098gm2.jpg" alt=""><br>位图是由称作像素的单个点组成的。这些点通过不同的排列、染色构成图像。当放大位图图像时，可以看见构成整个图像的无数单个方块，如果从稍远的位置观看它，位图图像的颜色和形状又感觉是连续的。只要有足够多的像素，就可以制作出色彩丰富的图象，逼真地表现自然界的景象。位图常用的位图处理软件是 Photoshop 和 Windows 系统自带的画图，最常见的格式是：JPG/JPEG、PNG、GIF</p>
+<h5 id="矢量图"><a href="#矢量图" class="headerlink" title="矢量图"></a>矢量图</h5><p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0yyhnl6uwj30fe098q38.jpg" alt=""><br>矢量图，使用直线和曲线来描述图形，包括圆形、长方形、线条和曲线等形状；它们都是通过数学公式计算获得的。矢量图只能靠软件生成，它的特点是放大后图像不会失真，和分辨率无关，适用于图形设计、文字设计和一些标志设计、版式设计等。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/11/图片/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-iOS-NSInvocation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/05/iOS-NSInvocation/">NSInvocation</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/05/iOS-NSInvocation/" class="archive-article-date">
+  	<time datetime="2019-03-05T00:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>NSInvocation</code>是调用函数的另一种方式，它将调用者，函数名，参数封装到一个对象，然后通过一个<code>invoke</code>函数来执行被调用的函数，其思想就是命令者模式，将请求封装成对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@implementation Test</span><br><span class="line"></span><br><span class="line">- (int)AddA:(int)a andB:(int)b &#123;   </span><br><span class="line"> 	return a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>一般调用函数的方式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Test *t = [Test new];</span><br><span class="line"></span><br><span class="line">int result = [t AddA:2 andB:3];</span><br></pre></td></tr></table></figure>
+<p>也可以用<code>performSelector</code>，但是只能有一个参数</p>
+<p>所以对于有多个参数的情况，就可以用·NSInvocation·来调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Test *t = [Test new];</span><br><span class="line"> //根据selector得到一个签名对象</span><br><span class="line">NSMethodSignature *sig= [[Test class] instanceMethodSignatureForSelector:@selector(AddA:andB:)]; </span><br><span class="line"> //根据该签名对象创建一个NSInvocation对象</span><br><span class="line">NSInvocation *invocation=[NSInvocation invocationWithMethodSignature:sig];</span><br><span class="line"> //指定调用函数的对象</span><br><span class="line">invocation.target = t;</span><br><span class="line"> //指定要调用的函数名</span><br><span class="line">invocation.selector = @selector(AddA:andB:);</span><br><span class="line"> </span><br><span class="line">int a = 20;</span><br><span class="line">int b = 30;</span><br><span class="line">//指定参数，以指针方式，并且第一个参数的起始index是2，</span><br><span class="line">// 因为index为1，2的分别是self和selector</span><br><span class="line">[invocation setArgument:&amp;a atIndex:2];</span><br><span class="line">[invocation setArgument:&amp;b atIndex:3];</span><br><span class="line">//因为NSInvocation不会自己去retain参数，因此需要用户去retain，当然本例中其实没必要</span><br><span class="line">[invocation retainArguments];</span><br><span class="line">[invocation invoke];</span><br><span class="line"> </span><br><span class="line"> //获取返回值的过程略有点复杂,需要根据起类型长度分配空间，然后转为对象</span><br><span class="line"> //如果是int，BOOL等简单类型，返回的对象是NSNumber</span><br><span class="line"> //如果是其他类型的对象，返回的对象是NSValue</span><br><span class="line"> //判断返回值类型，用strcmp(returnType, @encode(NSInteger))</span><br><span class="line"> </span><br><span class="line">const char *returnType = sig.methodReturnType;</span><br><span class="line">id returnValue;</span><br><span class="line">NSUInteger length = [sig methodReturnLength];</span><br><span class="line">void *buffer = (void *)malloc(length);</span><br><span class="line">[invocation getReturnValue:buffer];</span><br><span class="line">//int的情况</span><br><span class="line">returnValue = [NSNumber numberWithInteger:*((NSInteger*)buffer)];</span><br><span class="line">//returnValue = [NSNumber numberWithBool:*((BOOL*)buffer)]; //bool 的情况</span><br><span class="line">//returnValue = [NSValue valueWithBytes:buffer objCType:returnType];</span><br><span class="line">// 其他类型的情况</span><br><span class="line">int result = [returnValue intValue];</span><br><span class="line">NSLog(@&quot;result=%d&quot;,result);</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/05/iOS-NSInvocation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-知识点" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/20/swift-知识点/">swift_知识点</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/20/swift-知识点/" class="archive-article-date">
+  	<time datetime="2019-02-20T06:32:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="导航栏下划线"><a href="#导航栏下划线" class="headerlink" title="导航栏下划线"></a>导航栏下划线</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">navigationController?.navigationBar.setShadow(hidden: <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UINavigationBar</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">setShadow</span><span class="params">(hidden: Bool)</span></span> &#123;</span><br><span class="line">        setValue(hidden, forKey: <span class="string">"hidesShadow"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/MyHome//" class="article-tag-list-link color2">MyHome</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/20/swift-知识点/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-swift-tips" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/19/swift-tips/">swift_tips</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/19/swift-tips/" class="archive-article-date">
+  	<time datetime="2019-02-19T01:27:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h4><p>在<code>class</code>中使用 <code>weak</code> 修饰<code>delegate</code>，在这个<code>delegate</code>实际的对象被释放时，会被重置回<code>nil</code>。<br>但是<code>swift</code>中的<code>protoco</code>l除了被<code>class</code>遵守外，还可以被<code>struct</code>和<code>enum</code>遵守，而对于像 <code>struct</code> 或是<code>enum</code> 这样的类型，本身就不通过引用计数来管理内存，所以也不可能用 <code>weak</code> 这样的 <code>ARC</code> 的概念来进行修饰。<br>想要在 <code>Swift</code> 中使用 <code>weak delegate</code>，我们就需要将 <code>protocol</code> 限制在<code>class</code> 内。</p>
+<ul>
+<li><p>将 <code>protocol</code> 声明为 <code>Objective-C</code> 的，这可以通过在 <code>protocol</code> 前面加上 <code>@objc</code> 关键字来达到，<code>Objective-C</code> 的 <code>protocol</code>都只有类能实现，因此使用<code>weak</code> 来修饰就合理了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@objc protocol MyClassDelegate &#123;</span><br><span class="line">    func method()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>protocol</code> 声明的名字后面加上<code>class</code>，这可以为编译器显式地指明这个 <code>protocol</code> 只能由 <code>class</code>来实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protocol MyClassDelegate: class &#123;</span><br><span class="line">    func method()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>问题：如果<code>struct</code>遵守了<code>delegate</code>，怎么办，可能我们需要自己去释放</p>
+<hr>
+<h4 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a>溢出</h4><p>Swift 在溢出的时候选择了让程序直接崩溃而不是截掉超出的部分，这也是一种安全性的表现。</p>
+<p>另外，编译器其实已经足够智能，可以帮助我们在编译的时候就发现某些必然的错误。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func method() &#123;</span><br><span class="line">    var max = Int.max</span><br><span class="line">    max = max + 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这种常量运算在编译时就进行了，发现计算溢出后编译无法通过。</p>
+<p>最后，如果我们想要其他编程语言那样的对溢出处理温柔一些，不是让程序崩溃，而是简单地从高位截断的话，可以使用溢出处理的运算符，在 Swift 中，我们可以使用以下这五个带有 &amp; 的操作符，这样 Swift 就会忽略掉溢出的错误：</p>
+<p>溢出加法 (&amp;+)<br>溢出减法 (&amp;-)<br>溢出乘法 (&amp;*)<br>溢出除法 (&amp;/)<br>溢出求模 (&amp;%)<br>这样处理的结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var max = Int.max</span><br><span class="line">max = max &amp;+ 1</span><br><span class="line"></span><br><span class="line">// 64 位系统下</span><br><span class="line">// max = -9,223,372,036,854,775,808</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="初始化顺序"><a href="#初始化顺序" class="headerlink" title="初始化顺序"></a>初始化顺序</h4><p>与 Objective-C 不同，Swift 的初始化方法需要保证类型的所有属性都被初始化。所以初始化方法的调用顺序就很有讲究。在某个类的子类中，初始化方法里语句的顺序并不是随意的，我们需要保证在当前子类实例的成员初始化完成后才能调用父类的初始化方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Cat &#123;</span><br><span class="line">    var name: String</span><br><span class="line">    init() &#123;</span><br><span class="line">        name = &quot;cat&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Tiger: Cat &#123;</span><br><span class="line">    let power: Int</span><br><span class="line">    override init() &#123;</span><br><span class="line">        power = 10</span><br><span class="line">        super.init()</span><br><span class="line">        name = &quot;tiger&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一般来说，子类的初始化顺序是：</p>
+<ol>
+<li>设置子类自己需要初始化的参数，power = 10</li>
+<li>调用父类的相应的初始化方法，super.init()</li>
+<li>对父类中的需要改变的成员进行设定，name = “tiger”<br>其中第三步是根据具体情况决定的，如果我们在子类中不需要对父类的成员做出改变的话，就不存在第 3 步。而在这种情况下，Swift 会自动地对父类的对应 init 方法进行调用，也就是说，第 2 步的 super.init() 也是可以不用写的 (但是实际上还是调用的，只不过是为了简便 Swift 帮我们完成了)。这种情况下的初始化方法看起来就很简单：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Cat &#123;</span><br><span class="line">    var name: String</span><br><span class="line">    init() &#123;</span><br><span class="line">        name = &quot;cat&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Tiger: Cat &#123;</span><br><span class="line">    let power: Int</span><br><span class="line">    override init() &#123;</span><br><span class="line">        power = 10</span><br><span class="line">        // 如果我们不需要打改变 name 的话，</span><br><span class="line">        // 虽然我们没有显式地对 super.init() 进行调用</span><br><span class="line">        // 不过由于这是初始化的最后了，Swift 替我们自动完成了</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h4 id="编译标记"><a href="#编译标记" class="headerlink" title="编译标记"></a>编译标记</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// MARK: </span><br><span class="line">// TODO: </span><br><span class="line">// FIXME:</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>swift 中的扩展可以添加计算属性</p>
+<h3 id="Class-VS-Struct"><a href="#Class-VS-Struct" class="headerlink" title="Class VS Struct"></a>Class VS Struct</h3><p>Class是引用类型，Struct是值类型<br>继承允许一个类继承另一个类的特性<br>类型转换允许在运行时检查和解释一个类实例的类型<br>析构器允许一个类实例释放任何其所被分配的资源<br>引用计数允许对一个类的多次引用</p>
+<p>map：对每一个元素做一次处理<br>flatmap：返回的数组中不能存在nil，同时会把optional解包<br>flatmap 合并数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let array = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</span><br><span class="line"> </span><br><span class="line">let arr1 = array.map&#123; $0 &#125;</span><br><span class="line">arr1 // [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</span><br><span class="line"> </span><br><span class="line">let arr2 = array.flatMap&#123; $0 &#125;</span><br><span class="line">arr2 // [1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br></pre></td></tr></table></figure></p>
+<p>compactMap的改变是在于将flatMap处理non-optional序列类型，compactMap处理optional类型。即处理optional时，flatMap已被废弃</p>
+<h5 id="for-each"><a href="#for-each" class="headerlink" title="for each"></a>for each</h5><p>不能使用<code>continue</code>和<code>break</code><br>return 只是跳出本次循环</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>] &#123;</span><br><span class="line">     <span class="keyword">if</span> element == <span class="number">2</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">     <span class="built_in">print</span>(<span class="string">"for --- \(element)"</span>)</span><br><span class="line"> &#125;</span><br><span class="line">结果：</span><br><span class="line"><span class="keyword">for</span> --- <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>].forEach &#123; element <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">if</span> element == <span class="number">2</span> &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"forEach -- \(element)"</span>)</span><br><span class="line">&#125;</span><br><span class="line">结果：</span><br><span class="line">forEach -- <span class="number">1</span></span><br><span class="line">forEach -- <span class="number">3</span></span><br><span class="line">forEach -- <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<h3 id="weak-unowned"><a href="#weak-unowned" class="headerlink" title="weak unowned"></a>weak unowned</h3><p> <code>weak</code>,属性可以是可选类型，即允许有 <code>nil</code> 值的情况。另一方面，倘若你使用 <code>unowned</code>，它不允许设为可选类型。因为一个 unowned 属性不能为可选类型</p>
+<p>在闭包里面为了解决循环引用问题，使用了 <code>[unowned self]</code>。如果回调在self已经被释放后再调用，会导致crash掉。unowned设置以后即使它原来引用的内容已经被释放了，它仍然会保持对被已经释放了的对象的一个 “无效的” 引用，它不能是 Optional 值，也不会被指向 nil 。如果你尝试调用这个引用的方法或者访问成员属性的话，程序就会崩溃。而 weak 则友好一些，在引用的内容被释放后，标记为 weak 的成员将会自动地变成 nil (因此被标记为 @ weak 的变量一定需要是 Optional 值)。</p>
+<h3 id="swift的优点"><a href="#swift的优点" class="headerlink" title="swift的优点"></a>swift的优点</h3><p>使用swift来开发的话，要考虑swift的特性，语法特性，闭包、元组、快速迭代，支持方法扩展协议的结构体，函数式编程，原生错误处理。编程思想方面：函数式编程，面向协议编程，AOP面向切面编程</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"android"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c1 = &#123; [str] <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"I love \(str)"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c2 = &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"I love \(str)"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">str = <span class="string">"ios"</span></span><br><span class="line">c1() <span class="comment">// I love android</span></span><br><span class="line">c2() <span class="comment">// I love ios</span></span><br></pre></td></tr></table></figure>
+<h3 id="copy-on-write"><a href="#copy-on-write" class="headerlink" title="copy on write"></a>copy on write</h3><p>在内部，这些 Array 结构体含有指向某个内存的引用。这个内存就是数组中元素所存储的位置。 两个数组的引用指向的是内存中同一个位置，这两个数组共享了它们的存储部分。不过，当我 们改变 x 的时候，这个共享会被检测到，内存将会被复制。这样一来，我们得以独立地改变两个 变量。昂贵的元素复制操作只在必要的时候发生，也就是我们改变这两个变量的时候发生复制</p>
+<h3 id="objc、-objcMembers、dynamic"><a href="#objc、-objcMembers、dynamic" class="headerlink" title="@objc、@objcMembers、dynamic"></a>@objc、@objcMembers、dynamic</h3><p>Swift的动态派发依赖 ObjC 的运行时系统，为了将 Swift 的方法属性甚至类型暴露给 ObjC 使用，我们需要声明为 @objc ，此时可以在 ObjC 中访问，但是，声明为 @objc 的属性或方法有可能会被 Swift 优化为静态调用，不一定会动态派发，如果要使用动态特性，需要声明 dynamic ，这样才能完全的使用动态特性。</p>
+<ul>
+<li>@objcMembers 声明的类会隐式地为所有的属性或方法添加 @objc 标示</li>
+<li>声明为 @objc 的类需要继承自 NSObject ，而 @objcMembers 不需要继承自 NSObject</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/19/swift-tips/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-HTTP" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -197,13 +757,14 @@
         <h3 id="四层模型"><a href="#四层模型" class="headerlink" title="四层模型"></a>四层模型</h3><ol>
 <li>应用层</li>
 </ol>
-<p>HTTP</p>
+<p>HTTP HTTPS FTP DNS  xmpp</p>
 <ol start="2">
 <li>传输层</li>
 </ol>
 <p>TCP UDP</p>
 <p>不同的程序通过不同的端口获取数据 </p>
 <p>“传输层”的功能，就是建立”端口到端口”的通信。相比之下，”网络层”的功能是建立”主机到主机”的通信。只要确定主机和端口，我们就能实现程序之间的交流。因此，Unix系统就把主机+端口，叫做”套接字”（socket）。有了它，就可以进行网络应用程序开发了。 </p>
+<p>get pust put delete header options</p>
 <ol start="3">
 <li><p>网络层</p>
 <p>IP</p>
@@ -243,7 +804,7 @@
 <p>### </p>
 <h3 id="URL-格式"><a href="#URL-格式" class="headerlink" title="URL 格式"></a>URL 格式</h3><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5k3tzn4p6j30k503sglm.jpg" alt=""></p>
 <h4 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h4><p>当使用socket创建套接字后，底层会建立一个包含 本地IP 端口号 目的IP 端口号 的数据结构，然后TCP发起连接请求，即三次握手。</p>
-<p>出于性能的考虑，心跳包一般由客户端发送，一般只发送非常简单的包或空包。一个原因是防火墙会把一定时间内没有数据交互的连接断开。这个时候就需要心跳包维持长连接了。服务器在一定时间内没有收到客户端发送的心跳包，可以判断客户离线了，客户端在一定时间内没有收到服务器的影响包，可以判定服务器挂了</p>
+<p>出于性能的考虑，心跳包一般由客户端发送，一般只发送非常简单的包或空包。一个原因是防火墙会把一定时间内没有数据交互的连接断开。这个时候就需要心跳包维持长连接了。服务器在一定时间内没有收到客户端发送的心跳包，可以判断客户离线了，客户端在一定时间内没有收到服务器的响应包，可以判定服务器挂了</p>
 <h4 id="GET-POST"><a href="#GET-POST" class="headerlink" title="GET POST"></a>GET POST</h4><p><code>GET</code> 请求参数以？分割拼接到URL后面，<code>POST</code> 请求参数在Body里面</p>
 <p><code>GET</code> 参数长度限制2048个字符， <code>POST</code> 一般没有限制</p>
 <p>GET :</p>
@@ -287,7 +848,7 @@
 <p>所谓”子网掩码”，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。 </p>
 <p>IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。 </p>
 <hr>
-<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。<br>DNS解析请求采用UDP数据报，43端口，且明文<br>DNS解析：<br>    递归查询：本地DNS -&gt; 顶级DNS -&gt; 根DNS<br>    迭代查询：本地DNS -&gt; 顶级DNS(某DNS知道，你去问它吧) -&gt; 某DNS</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p><code>DNS</code>服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。<br>DNS解析请求采用UDP数据报，53端口，且明文<br>DNS解析：<br>    递归查询：本地DNS -&gt; 顶级DNS -&gt; 根DNS<br>    迭代查询：本地DNS -&gt; 顶级DNS(某DNS知道，你去问它吧) -&gt; 某DNS</p>
 <p>DNS解析和HTTP没有关系，DNS解析发生在HTTP建立之前，DNS解析请求使用UDP数据报，端口号53</p>
 <p>防止DNS劫持</p>
 <p>httpDNS：使用HTTP协议向DNS服务器的80窗口进行解析，不在是UDP的明文<br>长连接：</p>
@@ -345,7 +906,7 @@
 <ol start="4">
 <li>客户端解析证书 </li>
 </ol>
-<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。如果证书没有问题，那么就生成一个随即值。然后用证书对该随机值进行加密。就好像上面说的，把随机值用锁头锁起来，这样除非有钥匙，不然看不到被锁住的内容。 </p>
+<p>这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。</p>
 <ol start="5">
 <li>传送加密信息 </li>
 </ol>
@@ -382,6 +943,7 @@
 </ol>
 <p>在此,中间人攻击的过程就完成了 </p>
 <h5 id="防止抓包"><a href="#防止抓包" class="headerlink" title="防止抓包"></a>防止抓包</h5><p>当进行网络请求的时候,客户端判断当前是否设置了代理，判断是否有 Via字段。如果设置了代理,不允许进行访问。</p>
+<h4 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">content-type：multipart/form-data</span><br><span class="line"></span><br><span class="line">POST http://www.example.com HTTP/1.1</span><br><span class="line">Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"> </span><br><span class="line">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line">Content-Disposition: form-data; name=&quot;text&quot;</span><br><span class="line"> </span><br><span class="line">title</span><br><span class="line">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;chrome.png&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line"> </span><br><span class="line">PNG ... content of chrome.png ...</span><br><span class="line">------WebKitFormBoundaryrGKCBY7qhFd3TrwA--</span><br></pre></td></tr></table></figure>
 
       
 
@@ -406,122 +968,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/20/HTTP/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-程序员的自我修养" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/17/程序员的自我修养/">程序员的自我修养</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/17/程序员的自我修养/" class="archive-article-date">
-  	<time datetime="2019-01-17T05:52:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="隔离"><a href="#隔离" class="headerlink" title="隔离"></a>隔离</h3><p>虚拟地址空间是指虚拟的、人们想象出来的地址空间，其实它并不存在，每个进程都有自己独立的虚拟空间，而且每个进程只能访问自己的地址空间，这样就有效地做到了进程的隔离。</p>
-<h3 id="i-实现过程"><a href="#i-实现过程" class="headerlink" title="++i 实现过程"></a>++i 实现过程</h3><ol>
-<li>读取i到某个寄存器X。</li>
-<li>X++。</li>
-<li>将X的内容存储回i。</li>
-</ol>
-<p>自增（++）操作在多线程环境下会出现错误是因为这个操作被编译为汇编代码之后不止一条指令，因此在执行的时候可能执行了一半就被调度系统打断，去执行别的代码。我们把单指令的操作称为原子的（Atomic），因为无论如何，单条指令的执行是不会被打断的</p>
-<h3 id="同步锁"><a href="#同步锁" class="headerlink" title="同步锁"></a>同步锁</h3><p>在一个线程访问数据未结束的时候，其他线程不得对同一个数据进行访问。如此，对数据的访问被原子化了。</p>
-<p>同步的最常见方法是使用锁<code>Lock</code>。每一个线程在访问数据或资源之前首先试图获取（Acquire）锁，并在访问结束之后释放（Release）锁。在锁已经被占用的时候试图获取锁时，线程会等待，直到锁重新可用。</p>
-<p>二元信号量（Binary Semaphore）是最简单的一种锁，它只有两种状态：占用与非占用。它适合只能被唯一一个线程独占访问的资源。当二元信号量处于非占用状态时，第一个试图获取该二元信号量的线程会获得该锁，并将二元信号量置为占用状态，此后其他的所有试图获取该二元信号量的线程将会等待，直到该锁被释放。</p>
-<p>对于允许多个线程并发访问的资源，多元信号量简称信号量（Semaphore），它是一个很好的选择。一个初始值为N的信号量允许N个线程并发访问。</p>
-<h3 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h3><p>互斥量<code>Mutex</code>和二元信号量很类似，资源仅同时允许一个线程访问，但和信号量不同的是，信号量在整个系统可以被任意线程获取并释放，也就是说，同一个信号量可以被系统中的一个线程获取之后由另一个线程释放。而互斥量则要求哪个线程获取了互斥量，哪个线程就要负责释放这个锁，其他线程越俎代庖去释放互斥量是无效的。</p>
-<h3 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h3><p>临界区是比互斥量更加严格的同步手段。在术语中，把临界区的锁的获取称为进入临界区，而把锁的释放称为离开临界区。临界区和互斥量与信号量的区别在于，互斥量和信号量在系统的任何进程里都是可见的，也就是说，一个进程创建了一个互斥量或信号量，另一个进程试图去获取该锁是合法的。然而，临界区的作用范围仅限于本进程，其他的进程无法获取该锁。</p>
-<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>读写锁有两种获取方式：</p>
-<ol>
-<li>共享的（Shared）</li>
-<li>独占的（Exclusive）</li>
-</ol>
-<p>当锁处于自由的状态时，试图以任何一种方式获取锁都能成功，并将锁置于对应的状态。如果锁处于共享状态，其他线程以共享的方式获取锁仍然会成功，此时这个锁分配给了多个线程。然而，如果其他线程试图以独占的方式获取已经处于共享状态的锁，那么它将必须等待锁被所有的线程释放。</p>
-<h3 id="编译和链接"><a href="#编译和链接" class="headerlink" title="编译和链接"></a>编译和链接</h3><ul>
-<li>预编译</li>
-</ul>
-<p>展开宏定义</p>
-<ul>
-<li>编译</li>
-</ul>
-<p>编译过程就是把预处理完的文件进行一系列词法分析、语法分析、语义分析及优化后生产相应的汇编代码文件</p>
-<ul>
-<li><p>汇编</p>
-</li>
-<li><p>链接</p>
-</li>
-</ul>
-<hr>
-<h4 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h4><ul>
-<li>栈<br>“栈：栈用于维护函数调用的上下文，离开了栈函数调用就没法实现”<br>“栈在程序运行中具有举足轻重的地位。最重要的，栈保存了一个函数调用所需要的维护信息，这常常被称为堆栈帧（Stack Frame）或活动记录（Activate Record）。堆栈帧一般包括如下几方面内容：</li>
-</ul>
-<p>函数的返回地址和参数。</p>
-<p>临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量。”<br>“保存的上下文：包括在函数调用前后需要保持不变的寄存器。”</p>
-<ul>
-<li>堆<br>“堆：堆是用来容纳应用程序动态分配的内存区域，当程序使用malloc或new分配内存时，得到的内存来自堆里”</li>
-</ul>
-<p>“光有栈对于面向过程的程序设计还远远不够，因为栈上的数据在函数返回的时候就会被释放掉，所以无法将数据传递至函数外部。而全局变量没有办法动态地产生，只能在编译的时候定义，有很多情况下缺乏表现力。在这种情况下，堆（Heap）是唯一的选择。”</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/书籍//" class="article-tag-list-link color3">书籍</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/17/程序员的自我修养/">展开全文 >></a>
         </p>
       
 
@@ -702,10 +1148,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protocol SomeProtocol &#123;</span><br><span class="line">    var mustBeSettable: Int &#123;get set&#125;</span><br><span class="line">    var doesNotNeedToBeSettable: Int &#123;get&#125; //只读</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SomeProtocol</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> mustBeSettable: <span class="type">Int</span> &#123;<span class="keyword">get</span> <span class="keyword">set</span>&#125;</span><br><span class="line">    <span class="keyword">var</span> doesNotNeedToBeSettable: <span class="type">Int</span> &#123;<span class="keyword">get</span>&#125; <span class="comment">//只读</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>属性必须声明为 {get set} 或{get}</p>
-<h4 id="使用-extension-来达到-可选"><a href="#使用-extension-来达到-可选" class="headerlink" title="使用 extension 来达到 可选"></a>使用 extension 来达到 可选</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">protocol OptionalProtocol &#123;</span><br><span class="line">    func optionalMethod()        // 可选</span><br><span class="line">    func necessaryMethod()       // 必须</span><br><span class="line">    func anotherOptionalMethod() // 可选</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension OptionalProtocol &#123;</span><br><span class="line">    func optionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in extension&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func anotherOptionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in extension&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyClass: OptionalProtocol &#123;</span><br><span class="line">    func necessaryMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in Class3&quot;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func optionalMethod() &#123;</span><br><span class="line">        print(&quot;Implemented in Class3&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let obj = MyClass()</span><br><span class="line">obj.necessaryMethod() // Implemented in Class3</span><br><span class="line">obj.optionalMethod()  // Implemented in Class3</span><br><span class="line">obj.anotherOptionalMethod() // Implemented in extension</span><br></pre></td></tr></table></figure>
-<h4 id="question-1"><a href="#question-1" class="headerlink" title="question 1"></a>question 1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">protocol A : class &#123;&#125; // 只能被 class 实现</span><br><span class="line">protocol B &#123;&#125;</span><br><span class="line"></span><br><span class="line">class aa : A</span><br><span class="line">struct bb : A // error</span><br></pre></td></tr></table></figure>
+<h4 id="使用-extension-来达到-可选"><a href="#使用-extension-来达到-可选" class="headerlink" title="使用 extension 来达到 可选"></a>使用 extension 来达到 可选</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">OptionalProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span>        <span class="comment">// 可选</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">necessaryMethod</span><span class="params">()</span></span>       <span class="comment">// 必须</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">anotherOptionalMethod</span><span class="params">()</span></span> <span class="comment">// 可选</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">OptionalProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"Implemented in extension"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">anotherOptionalMethod</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"Implemented in extension"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span>: <span class="title">OptionalProtocol</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">necessaryMethod</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"Implemented in Class3"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">optionalMethod</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"Implemented in Class3"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = <span class="type">MyClass</span>()</span><br><span class="line">obj.necessaryMethod() <span class="comment">// Implemented in Class3</span></span><br><span class="line">obj.optionalMethod()  <span class="comment">// Implemented in Class3</span></span><br><span class="line">obj.anotherOptionalMethod() <span class="comment">// Implemented in extension</span></span><br></pre></td></tr></table></figure>
+<h4 id="question-1"><a href="#question-1" class="headerlink" title="question 1"></a>question 1</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">A</span> : <span class="title">class</span> </span>&#123;&#125; <span class="comment">// 只能被 class 实现</span></span><br><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">B</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">aa</span> : <span class="title">A</span></span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">bb</span> : <span class="title">A</span> // <span class="title">error</span></span></span><br></pre></td></tr></table></figure>
 
       
 
@@ -779,10 +1225,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(name1: &quot;a&quot;, age1: 1)</span><br><span class="line">func test(name1 name2: String, age1 age2: Int) &#123;</span><br><span class="line">    print(name2)</span><br><span class="line">    print(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2(&quot;b&quot;)</span><br><span class="line">func test2(_ name2: String, age1 age2: Int = 0) &#123;</span><br><span class="line">    print(name2)</span><br><span class="line">    print(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func test(_ name1: String, _ name2: String) &#123;&#125;</span><br><span class="line">test(&quot;&quot;, &quot;&quot;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func test(_ age1: Int, age2 : Int) &#123;&#125;</span><br><span class="line">test(1, age2: 2)</span><br></pre></td></tr></table></figure>
+        <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test(name1: <span class="string">"a"</span>, age1: <span class="number">1</span>)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(name1 name2: String, age1 age2: Int)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(name2)</span><br><span class="line">    <span class="built_in">print</span>(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test2(<span class="string">"b"</span>)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test2</span><span class="params">(<span class="number">_</span> name2: String, age1 age2: Int = <span class="number">0</span>)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(name2)</span><br><span class="line">    <span class="built_in">print</span>(age2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(<span class="number">_</span> name1: String, <span class="number">_</span> name2: String)</span></span> &#123;&#125;</span><br><span class="line">test(<span class="string">""</span>, <span class="string">""</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">(<span class="number">_</span> age1: Int, age2 : Int)</span></span> &#123;&#125;</span><br><span class="line">test(<span class="number">1</span>, age2: <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
       
 
@@ -807,459 +1253,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/15/swift-func参数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-enum" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-enum/">swift_enum</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/15/swift-enum/" class="archive-article-date">
-  	<time datetime="2019-01-15T07:25:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">enum CompassPoint &#123;</span><br><span class="line">    case north</span><br><span class="line">    case south</span><br><span class="line">    case east</span><br><span class="line">    case west</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = CompassPoint.west</span><br><span class="line">var a = .west</span><br><span class="line">switch west &#123;</span><br><span class="line">    case .west:</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">enum Barcode &#123;</span><br><span class="line">    case upc(Int, Int, Int, Int)</span><br><span class="line">    case qrCode(String)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var productBarcode = Barcode.upc(1, 2, 3, 4)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">enum Planet: Int &#123;</span><br><span class="line">    case mercury = 1</span><br><span class="line">    case venus = 2</span><br><span class="line">    case earth = 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let earthOrder = Planet.earth.rawValue // 3</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">enum CompassPoint: String &#123;</span><br><span class="line">    case north, south, east, west</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let sunsetDirection = CompassPoint.west.rawValue // &quot;west&quot;</span><br></pre></td></tr></table></figure>
-<h4 id="where"><a href="#where" class="headerlink" title="where"></a>where</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let yetAnotherPoint = (1, -1)</span><br><span class="line">switch yetAnotherPoint&#123;</span><br><span class="line">    case let (x,y) where x == y:&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">    case let (x,y) where x == -y:&#123;</span><br><span class="line">        // 当where为true时执行</span><br><span class="line">    &#125;</span><br><span class="line">    case let (x,y:)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>匹配范围<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">let age = 36</span><br><span class="line">switch age &#123;</span><br><span class="line">case 0 ..&lt; 18:</span><br><span class="line">   print(&quot;You have the energy and time, but not the money&quot;)</span><br><span class="line">case 18 ..&lt; 70:</span><br><span class="line">   print(&quot;You have the energy and money, but not the time&quot;)</span><br><span class="line">default:</span><br><span class="line">   print(&quot;You have the time and money, but not the energy&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if case 0 ..&lt; 18 = age &#123;</span><br><span class="line">   print(&quot;You have the energy and time, but not the money&quot;)</span><br><span class="line">&#125; else if case 18 ..&lt; 70 = age &#123;</span><br><span class="line">   print(&quot;You have the energy and money, but not the time&quot;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">   print(&quot;You have the time and money, but not the energy&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (0 ..&lt; 18).contains(age) &#123;</span><br><span class="line">   print(&quot;You have the energy and time, but not the money&quot;)</span><br><span class="line">&#125; else if (18 ..&lt; 70).contains(age) &#123;</span><br><span class="line">   print(&quot;You have the energy and money, but not the time&quot;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">   print(&quot;You have the time and money, but not the energy&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="is"><a href="#is" class="headerlink" title="is"></a>is</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let view: AnyObject = UIButton()</span><br><span class="line">switch view &#123;</span><br><span class="line">case is UIButton:</span><br><span class="line">   print(&quot;Found a button&quot;)</span><br><span class="line">case is UILabel:</span><br><span class="line">   print(&quot;Found a label&quot;)</span><br><span class="line">case is UISwitch:</span><br><span class="line">   print(&quot;Found a switch&quot;)</span><br><span class="line">case is UIView:</span><br><span class="line">   print(&quot;Found a view&quot;)</span><br><span class="line">default:</span><br><span class="line">   print(&quot;Found something else&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for label in view.subviews where label is UILabel &#123;</span><br><span class="line">   print(&quot;Found a label with frame \(label.frame)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">for case let label as UILabel in view.subviews &#123;</span><br><span class="line">   print(&quot;Found a label with text \(label.text)&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">enum Media &#123;</span><br><span class="line">    case Book(title: String)</span><br><span class="line">    case Movie(title: String)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let m = Media.Book // 不报错，但会影响之后的枚举判断</span><br><span class="line">let m = Media.Book(title: &quot;a&quot;)</span><br><span class="line"></span><br><span class="line">var mediaTitle: String &#123;</span><br><span class="line">    switch m &#123;</span><br><span class="line">    case .Book(title: let aTitle):</span><br><span class="line">        return aTitle</span><br><span class="line">    case let .Movie(aTitle): // .Movie(title: let aTitle):</span><br><span class="line">        return aTitle</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-enum/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-base" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/15/swift-base/">swift_base</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/15/swift-base/" class="archive-article-date">
-  	<time datetime="2019-01-15T07:14:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="整形"><a href="#整形" class="headerlink" title="整形"></a>整形</h4><p>有符号整形 singed  无符号整形 unsigned</p>
-<p>16位系统中的int   </p>
-<p>有符号 [-2^15, 2^15-1] = (-32768 ~ 32767)<br>无符号 [0, 2^16] = (0 ~ 65535)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let minValue = UInt8.min   // 0</span><br><span class="line">let maxValue = UInt8.max // 255</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>On a 32-bit platform, Int is the same size as Int32  4字节 每字节8位 2的32次方 </li>
-<li>On a 64-bit platform, Int is the same size as Int64</li>
-</ul>
-<p>Floating-Point Numbers</p>
-<ul>
-<li>Double represents a 64-bit floating-poing number</li>
-<li>Float represents a 32-bit floating-point number</li>
-</ul>
-<p>Double 精确度 15位<br>Float 最少只有6位</p>
-<ul>
-<li>类型别名 typealias  ( type  alias )</li>
-</ul>
-<p>使阅读代码更简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typealias AudioSample = UInt16</span><br><span class="line">var maxAmplitudeFound = AudioSample.min</span><br><span class="line">// maxAmplitudeFound 现在是 0</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>Constants and Variables</strong></li>
-</ul>
-<p><code>let</code> 声明常量 </p>
-<p><code>var</code> 声明变量</p>
-<ul>
-<li><strong>Type Annotations</strong></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><strong>Printing Constans and Variables</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var name: String</span><br><span class="line">name = &quot;a&quot; //swift 自我检查，没有赋值无法打印</span><br><span class="line">print(name)</span><br><span class="line">print(&quot;Your name is \(name)&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Booleans</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let orangesAreOrange = true</span><br><span class="line">let turnipsAreDelicious = false</span><br><span class="line"></span><br><span class="line">if (1)&#123;&#125;   // 错误， ‘Int’is not convertible to &apos;BooleanType&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>类型转换</p>
-</li>
-</ul>
-<p>结合数字类常量或变量需要显示的将两个参数转换为同一数字类型。转换相当于生成一个新的数字类型，并没有改变原来常量的类型（常量不可以被改变）。字面量 3 和 字面量 0.1 可以直接相加，因为数字字面量本身没有明确的类型，它们的类型只在编译器需要求值的时候被推断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let five = 2 + 3.0</span><br><span class="line">var ten = five + 5.0</span><br><span class="line">let two = 2</span><br><span class="line">var seven = Int(five) + two</span><br><span class="line">print(&quot;\(five)   \(ten)  \(seven)&quot;)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><strong>Tuples</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let http404Error = (404, &quot;Not Found&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>You can decompose a tuple’s contents into separate constant or variables, which you then  as usual:<br>let   ( statusCode,  statusMessage )  = http404Error</p>
-<p>If you only need some of the tuple’s values, ignore parts of the tuple with an underscore ( _ ) when you decompose the tuple:<br>let   (  statusCode, _  ) = http404Error<br>print( “The status code is ( statusCode )” )      //404</p>
-<p>Access the individual element values in a tuple using index numbers starting at zero:<br>print (“ The status code is ( http404Error.0 ) ”)     //404<br>let http200Status = ( statusCode:200, description:”ok” )<br>print (“ The status code is ( http200Status.statusCode ) ”)</p>
-<ul>
-<li><strong>Optionals</strong></li>
-</ul>
-<p>If you define an variable without providing a default value, the variable is automatically set to nil for you<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">var surveyAnser: String?</span><br><span class="line"></span><br><span class="line">// 隐式解析</span><br><span class="line">var name : String? = &quot;lee&quot;</span><br><span class="line">var age : Int? = 5</span><br><span class="line"></span><br><span class="line">if let people0 = age &#123;</span><br><span class="line">    println(people0) // 5</span><br><span class="line">&#125;</span><br><span class="line">if let people1 = name &#123;</span><br><span class="line">    println(people1) // lee</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func closure(name: String)&#123;</span><br><span class="line">    println(name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var completion : (() -&gt; ())?</span><br><span class="line">completion = &#123;</span><br><span class="line">    println(&quot;completion&quot;)</span><br><span class="line">&#125;</span><br><span class="line">if let success = completion &#123;</span><br><span class="line">    success()   // completion</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var failure : ((name: String) -&gt; ())?</span><br><span class="line">failure = &#123; title in</span><br><span class="line">    println(&quot;\(title) failure&quot;)</span><br><span class="line">&#125;</span><br><span class="line">if let success = failure &#123;</span><br><span class="line">    success(name: &quot;lee&quot;) // lee failure</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>nil 不能用于非可选类型的变量或常量<br>oc：nil是一个指向一个不存在的对象的指针<br>swift：nil不是指针，它是一个确定的值，任何类型的可选状态都可以被设为nil，不只是对象类型</p>
-<ul>
-<li><strong>Assertions</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let age = -3</span><br><span class="line">assert(age &gt;= 0, &quot;A person&apos;s age cannot be less than zero&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>… 和 ..&lt;</li>
-</ul>
-<p><code>0...3</code> 就表示从 0 开始到 3 为止并包含 3 这个数字的范围，全闭合的范围操作；</p>
-<p><code>0..&lt;3</code> 不包含最后的 3<br>对于这样得到的数字的范围，我们可以对它进行 for…in 的访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i in 0...3 &#123;</span><br><span class="line">    print(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>//输出 0123</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/15/swift-base/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-willSet-didSet" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/14/swift-willSet-didSet/">swift_willSet_didSet</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/14/swift-willSet-didSet/" class="archive-article-date">
-  	<time datetime="2019-01-14T13:59:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    var date: NSDate&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            println(&quot;即将将日期从\(date)设定至\(newValue)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        didSet&#123;</span><br><span class="line">            println(&quot;已经将日期从\(oldValue)设定至\(date)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init()&#123;</span><br><span class="line">        date = NSDate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">let foo = MyClass()</span><br><span class="line">foo.date = foo.date.dateByAddingTimeInterval(10086)</span><br><span class="line"></span><br><span class="line">//输出</span><br><span class="line">即将将日期从2015-07-21 10:11:41 +0000设定至2015-07-21 12:59:47 +0000</span><br><span class="line">已经将日期从2015-07-21 10:11:41 +0000设定至2015-07-21 12:59:47 +0000</span><br></pre></td></tr></table></figure>
-<p>属性观察的一个重要用处是作为设置值的验证，比如上面的例子中我们不希望date超过当前时间的一年以上的话，我们可以将 didSet 修改一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">    let oneYearInSecond: NSTimeInterval = 365 * 24 * 60 * 60</span><br><span class="line">    var date: NSDate&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            println(&quot;即将将日期从\(date)设定至\(newValue)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        didSet&#123;</span><br><span class="line">            if (date.timeIntervalSinceNow &gt; oneYearInSecond)&#123;</span><br><span class="line">                println(&quot;设定的时间太晚了&quot;)</span><br><span class="line">                date = NSDate().dateByAddingTimeInterval(oneYearInSecond)</span><br><span class="line">            &#125;</span><br><span class="line">            println(&quot;已经将日期从\(oldValue)设定至\(date)&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    init()&#123;</span><br><span class="line">        date = NSDate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><em>初始化方法对属性的设定，以及在willSet 和 didSet 中对属性的再次设定都不会再次触发属性观察的调用</em></p>
-<p>Swift 中所声明的属性包括存储属性和计算属性两种。</p>
-<ul>
-<li>存储属性将会在内存中实际分配地址对属性进行存储</li>
-<li>计算属性不存储，只是提供 set 和 get 两种方法</li>
-</ul>
-<p>在同一个类型中，属性观察和计算属性不能同时共存。<br>计算属性中我们可以重写它的set属性，已达到使用willSet和didSet同样的属性观察的目的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">    var number : Int&#123;</span><br><span class="line">        get&#123;</span><br><span class="line">            print(&quot;get&quot;)</span><br><span class="line">            return 1</span><br><span class="line">        &#125;</span><br><span class="line">        set&#123;</span><br><span class="line">            print(&quot;set&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class B:A &#123;</span><br><span class="line">    override var number: Int&#123;</span><br><span class="line">        willSet&#123;</span><br><span class="line">            print(&quot;willSet&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        didSet&#123;</span><br><span class="line">            print(&quot;didSet&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
-<p>let b = B()<br>b.number = 0</p>
-<p>//输出<br>get<br>willSet<br>set<br>didSet</p>
-<p>//输出<br>willSet<br>set<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">set 和对应的属性观察的调用都在我们的预想之中。这里要注意的是 get 首先被调用了一次。这是因为我们实现了 didSet，didSet 中会用到 oldValue，而这个值需要在整个 set 动作之前进行获取并存储待用，否则将无法确保正确性。如果我们不实现 didSet 的话，这次 get 操作也将不存在。</span><br><span class="line"></span><br><span class="line">// 属性观察器 默认是 get</span><br></pre></td></tr></table></figure></p>
-<p>var label0 : UILabel{<br>    return UILabel(frame: CGRectMake(0, 0, 0, 0))<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// 闭包赋值 只执行一次</span><br></pre></td></tr></table></figure></p>
-<p>var label1: UILabel = {<br>        return UILabel(frame: CGRectMake(1, 1, 1, 1))<br>}()<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">struct AlternativeRect &#123; </span><br><span class="line">    var origin = Point() </span><br><span class="line">    var size = Size()</span><br><span class="line">    var center: Point &#123; </span><br><span class="line">        get &#123; </span><br><span class="line">            let centerX = origin.x + (size.width / 2) </span><br><span class="line">            let centerY = origin.y + (size.height / 2) </span><br><span class="line">            return Point(x: centerX, y: centerY) </span><br><span class="line">        &#125; </span><br><span class="line">        set &#123; </span><br><span class="line">            origin.x = newValue.x - (size.width / 2) </span><br><span class="line">            origin.y = newValue.y - (size.height / 2) </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>// 隐含信息 set get 中不出现center 自身，只涉及计算属性的计算来源</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/14/swift-willSet-didSet/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-1" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/14/swift-1/">swift_双问好</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/14/swift-1/" class="archive-article-date">
-  	<time datetime="2019-01-14T12:46:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public func ??&lt;T&gt;(optional: T?, @autoclosure defaultValue: () throws -&gt; T)</span><br><span class="line">    rethrows -&gt; T</span><br></pre></td></tr></table></figure>
-<h4 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let username = login() ?? &quot;Dog&quot;</span><br><span class="line">// 成功则为login()返回值，否则为 Dog</span><br></pre></td></tr></table></figure>
-<h4 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let username = login() ?? getUserName()</span><br><span class="line">// 由于getUserName是@autoClosure类型，会延迟展开</span><br><span class="line">// 执行上面的代码，login()为真的话，getUserName()不会被调用</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let age : Int?? // 可选的 Int?</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/14/swift-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-swift-type" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/14/swift-type/">.type</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/14/swift-type/" class="archive-article-date">
-  	<time datetime="2019-01-14T12:42:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func printType&lt;T&gt;(of type: T.Type) &#123;</span><br><span class="line">    print(&quot;\(type)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">printType(of: Int.self) // Int</span><br><span class="line"></span><br><span class="line">print(Int.self) // Int</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct S &#123;&#125;</span><br><span class="line">protocol P &#123;&#125;</span><br><span class="line"></span><br><span class="line">print(&quot;\(type(of: S.self))&quot;)      // S.Type</span><br><span class="line">print(&quot;\(type(of: S.Type.self))&quot;) // S.Type.Type</span><br><span class="line">print(&quot;\(type(of: P.self))&quot;)      // P.Protocol</span><br><span class="line">print(&quot;\(type(of: P.Type.self))&quot;) // P.Type.Protocol</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/14/swift-type/">展开全文 >></a>
         </p>
       
 

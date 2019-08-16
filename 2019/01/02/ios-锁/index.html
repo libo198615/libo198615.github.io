@@ -16,7 +16,7 @@
 <meta property="og:description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg">
-<meta property="og:updated_time" content="2019-08-05T10:21:28.745Z">
+<meta property="og:updated_time" content="2019-08-08T02:50:36.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="锁">
 <meta name="twitter:description" content="概念 死锁  互斥条件：  指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。  请求和保持条件：  指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。  不剥夺条件： 指进程已获得的资源，在未使用完之前，不能被剥夺">
@@ -220,7 +220,7 @@
 <li><p>临界区</p>
 </li>
 </ul>
-<p>指的是一个访问共用资源的程序片段，而这些共用资源又具有无法同时被多个线程访问的特性。当有线程进入临界区段时，其他线程或进程必须等待</p>
+<p>指的是一个访问共用资源的程序片段，而这些共用资源又具有无法同时被多个线程访问的特性。当有线程进入临界区时，其他线程或进程必须等待</p>
 <ul>
 <li>自旋锁</li>
 </ul>
@@ -242,7 +242,7 @@
 <ul>
 <li>条件锁</li>
 </ul>
-<p>就是条件变量，当进程的某些资源要求不满足时就进入休眠，也就是锁住了。当资源被分配到了，条件锁打开，进程继续运行。</p>
+<p>就是条件变量，当进程的某些资源要求不满足时就进入休眠。当资源被分配到了，条件锁打开，进程继续运行。</p>
 <h5 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h5><ul>
 <li><p>NSLock</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)methodA &#123;</span><br><span class="line">  [lock lock];</span><br><span class="line">  [self methodB];</span><br><span class="line">  [lock unlock];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)methodB &#123;</span><br><span class="line">	// 重复获取锁，导致死锁，应该使用递归锁</span><br><span class="line">  [lock lock];</span><br><span class="line">  // ...</span><br><span class="line">  [lock unlock];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -265,13 +265,6 @@
 </li>
 </ol>
 <p>@synchronized()需要一个参数。该参数可以使任何的Objective-C对象，包括self。这个对象就是互斥信号量。他能够让一个线程对一段代码进行保护</p>
-<h5 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h5><ul>
-<li>OSSpinLock 自旋锁</li>
-</ul>
-<p>性能最高的锁。原理很简单，就是一直 do while 忙等。它的缺点是当等待时会消耗大量 CPU 资源，所以它不适用于较长时间的任务。对于内存缓存的存取来说，它非常合适。</p>
-<ul>
-<li>os_unfair_lock</li>
-</ul>
 <h5 id="递归锁"><a href="#递归锁" class="headerlink" title="递归锁"></a>递归锁</h5><p>递归锁有一个特点，就是同一个线程可以加锁N次而不会引发死锁</p>
 <h5 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h5><p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0um1sqv70j30tg0j0wg5.jpg" alt=""></p>
 <p>现代操作系统在管理普通线程时，通常采用时间片轮转算法。每个线程会被分配一段时间片，通常在 10-100 毫秒左右。当线程用完属于自己的时间片以后，就会被操作系统挂起，放入等待队列中，直到下一次被分配时间片。</p>
@@ -390,7 +383,7 @@
     </a>
   
   
-    <a href="/2018/12/29/内存/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/12/29/iOS-内存/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">内存</div>
       <i class="icon-circle-right"></i>
     </a>

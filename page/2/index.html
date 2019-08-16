@@ -174,6 +174,750 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ios-NSTimer" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/26/ios-NSTimer/">ios-NSTimer</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/26/ios-NSTimer/" class="archive-article-date">
+  	<time datetime="2019-04-26T03:43:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="创建方法比较"><a href="#创建方法比较" class="headerlink" title="创建方法比较"></a>创建方法比较</h5><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5t7fymz9aj30sg0lcmxv.jpg" alt=""></p>
+<p>如果你想使用<code>timerWithTimeInterval</code>或<code>initWithFireDate</code>的话, 需要使用<code>NSRunloop</code>的以下方法将NSTimer加入到runloop中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)addTimer:(NSTimer *)aTimer forMode:(NSString *)mode</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5t7fyjah8j30sg0lcwfn.jpg" alt=""></p>
+<h5 id="invalide"><a href="#invalide" class="headerlink" title="invalide"></a>invalide</h5><p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5t7fyfctoj30sg0lcjs1.jpg" alt=""></p>
+<h5 id="runloop"><a href="#runloop" class="headerlink" title="runloop"></a>runloop</h5><p>创建NSTimer, 加入到runloop后, 除了ViewController之外iOS系统也会强引用NSTimer对象<br><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5t7fybgnkj30sg0lc75m.jpg" alt=""><br>当调用invalidate方法时, 移除runloop后, iOS系统会解除对NSTimer对象的强引用, 当ViewController销毁时, ViewController和NSTimer就都可以释放了<br><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5t7fy7iubj30sg0lcmyd.jpg" alt=""></p>
+<h5 id="销毁"><a href="#销毁" class="headerlink" title="销毁"></a>销毁</h5><p>// 在 ViewWillDisappear</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[_timer invalidate];// 真正销毁NSTimer对象的地方</span><br><span class="line">_timer=nil;// 对象置nil是一种规范和习惯</span><br></pre></td></tr></table></figure>
+<h5 id="循环引用的解决方法"><a href="#循环引用的解决方法" class="headerlink" title="循环引用的解决方法"></a>循环引用的解决方法</h5><ul>
+<li>将target设置为 weakSelf // 不行<br>同样是<code>target-action</code>方式<code>button</code>就不会出现循环引用的问题，这是因为<code>UIControl</code>的内部使用<code>weak</code>持有<code>self</code>,并没有导致应用计数器加1，而<code>NSTimer</code>由于<code>runloop</code>的原因并没有做<code>weak</code>操作。</li>
+<li>block<br>使用block的形式替换掉原先的“target-selector”方式，打断_timer对于其他对象的引用。<br>官方已经在iOS10之后加入了新的api，从而支持了block形式创建timer：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)interval repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block</span><br></pre></td></tr></table></figure>
+<ul>
+<li>MSWeakTimer<br>使用GCD来实现，没有引用循环的问题并且线程安全。</li>
+<li>category<br>1.为NSTimer添加一个Category方法<br>NSTimer+WeakTimer.h</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)wx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">																			 repeats:(BOOL)repeats</span><br><span class="line">																	handlerBlock:(void(^)())handler;</span><br></pre></td></tr></table></figure>
+<p>NSTimer+WeakTimer.m</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+ (NSTimer *)wx_scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval</span><br><span class="line">																			 repeats:(BOOL)repeats</span><br><span class="line">																  handlerBlock:(void(^)())handler &#123;</span><br><span class="line">		return [self scheduledTimerWithTimeInterval:timeInterval</span><br><span class="line">																				 target:self</span><br><span class="line">																			 selector:@selector(handlerBlockInvoke:)</span><br><span class="line">																			 userInfo:[handler copy]</span><br><span class="line">																				repeats:repeats];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)handlerBlockInvoke:(NSTimer *)timer &#123;</span><br><span class="line">		void (^block)() = timer.userInfo;</span><br><span class="line">		if (block) &#123;</span><br><span class="line">				block();</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.如何使用这个Category方法<br>创建一个NSTimer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">- (void)startPolling &#123;</span><br><span class="line">		__weak typeof(self)weakSelf = self;</span><br><span class="line">		self.timer = [NSTimer zx_scheduledTimerWithTimeInterval:5.0 </span><br><span class="line">                  																	repeats:YES </span><br><span class="line">                  														 handlerBlock:^void(void)&#123;</span><br><span class="line">				__strong typeof(weakSelf)strongSelf = weakSelf;</span><br><span class="line">				[strongSelf doPolling];</span><br><span class="line">		&#125;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 执行轮询任务slector</span><br><span class="line">- (void)doPolling &#123;</span><br><span class="line">		//Todo...;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 销毁NSTimer对象</span><br><span class="line">- (void)stopPolling &#123;</span><br><span class="line">		[self.timer invalidate];</span><br><span class="line">		self.timer = nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">		[self.timer invalidate];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>计时器现在的targer是NSTimer类对象。这段代码先是定义了个弱引用，令其指向self,然后block捕获这个引用，而不直接去捕获普通的self变量，也就是说self不会被计时器所保留。当block开始执行时，立刻生成strong强引用，以保证实例在执行期间持续存活，不被释放。</p>
+<p>采用这种写法后，外界指向NSTimer的实例最后一个引用被释放后，则创建NSTimer的实例也随之被系统回收。</p>
+<h5 id="不准原因分析："><a href="#不准原因分析：" class="headerlink" title="不准原因分析："></a>不准原因分析：</h5><p>定时器被添加在主线程中，由于定时器在一个RunLoop中被检测一次，所以如果在这一次的RunLoop中做了耗时的操作，当前RunLoop持续的时间超过了定时器的间隔时间，那么下一次定时就被延后了。<br>解决方法：<br>1、在子线程中创建timer，在主线程进行定时任务的操作<br>2、在子线程中创建timer，在子线程中进行定时任务的操作，需要UI操作时切换回主线程进行操作</p>
+<ul>
+<li>CADisplayLink<br>CADisplayLink是一个频率能达到屏幕刷新率的定时器类。iPhone屏幕刷新频率为60帧/秒，也就是说最小间隔可以达到1/60s。</li>
+<li>GCD定时器<br>我们知道，RunLoop是dispatch_source_t实现的timer，所以理论上来说，GCD定时器的精度比NSTimer只高不低。</li>
+</ul>
+<h5 id="CADisplayLink"><a href="#CADisplayLink" class="headerlink" title="CADisplayLink"></a>CADisplayLink</h5><p>CADisplayLink是基于屏幕刷新的周期，所以其一般很准时，每秒刷新60次。其本质也是通过RunLoop，所以不难看出，当RunLoop选择其他模式或被耗时操作过多时，仍旧会造成延迟。<br>其使用步骤为 创建CADisplayLink-&gt;添加至RunLoop中-&gt;终止-&gt;销毁。代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 创建CADisplayLink</span><br><span class="line">CADisplayLink *disLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(linkMethod)];</span><br><span class="line">// 添加至RunLoop中</span><br><span class="line">[disLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];</span><br><span class="line">// 终止定时器</span><br><span class="line">[disLink invalidate];</span><br><span class="line">// 销毁对象</span><br><span class="line">disLink = nil;</span><br></pre></td></tr></table></figure>
+<p>在日常开发中，适当使用CADisplayLink甚至有优化作用。比如对于需要动态计算进度的进度条，由于起进度反馈主要是为了UI更新，那么当计算进度的频率超过帧数时，就造成了很多无谓的计算。如果将计算进度的方法绑定到CADisplayLink上来调用，则只在每次屏幕刷新时计算进度，优化了性能。MBProcessHUB则是利用了这一特性。</p>
+<h5 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h5><p>GCD定时器是<code>dispatch_source_t</code>类型的变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/** 创建定时器对象</span><br><span class="line">* para1: DISPATCH_SOURCE_TYPE_TIMER 为定时器类型</span><br><span class="line">* para2-3: 中间两个参数对定时器无用</span><br><span class="line">* para4: 最后为在什么调度队列中使用</span><br><span class="line">*/</span><br><span class="line">_gcdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));</span><br><span class="line">/** 设置定时器</span><br><span class="line">* para2: 任务开始时间</span><br><span class="line">* para3: 任务的间隔</span><br><span class="line">* para4: 可接受的误差时间，设置0即不允许出现误差</span><br><span class="line">* Tips: 单位均为纳秒</span><br><span class="line">*/</span><br><span class="line">dispatch_source_set_timer(_gcdTimer, DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC, 0.0 * NSEC_PER_SEC);</span><br><span class="line">/** 设置定时器任务</span><br><span class="line">* 可以通过block方式</span><br><span class="line">* 也可以通过C函数方式</span><br><span class="line">*/</span><br><span class="line">dispatch_source_set_event_handler(_gcdTimer, ^&#123;</span><br><span class="line">static int gcdIdx = 0;</span><br><span class="line">NSLog(@&quot;GCD Method: %d&quot;, gcdIdx++);</span><br><span class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</span><br><span class="line"></span><br><span class="line">if(gcdIdx == 5) &#123;</span><br><span class="line">// 终止定时器</span><br><span class="line">dispatch_suspend(_gcdTimer);</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line">// 启动任务，GCD计时器创建后需要手动启动</span><br><span class="line">dispatch_resume(_gcdTimer);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>GCD更准时的原因<br>通过观察代码，我们可以发现GCD定时器实际上是使用了dispatch源(dispatch source)，dispatch源监听系统内核对象并处理。<code>dispatch</code>类似生产者消费者模式，通过监听系统内核对象，在生产者生产数据后自动通知相应的<code>dispatch</code>队列执行，后者充当消费者。通过系统级调用，更加精准。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/26/ios-NSTimer/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-react-native-第三方库" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/23/react-native-第三方库/">react-native_第三方库</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/23/react-native-第三方库/" class="archive-article-date">
+  	<time datetime="2019-04-23T05:16:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://github.com/kkkelicheng/ReactNative-CountDownButton" target="_blank" rel="noopener">ReactNative-CountDownButton link</a><br><a href="https://github.com/easyui/react-native-ezswiper" target="_blank" rel="noopener">react-native-ezswiper</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/23/react-native-第三方库/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-react-native-通知" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/23/react-native-通知/">react-native_通知</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/23/react-native-通知/" class="archive-article-date">
+  	<time datetime="2019-04-23T05:08:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="DeviceEventEmitter"><a href="#DeviceEventEmitter" class="headerlink" title="DeviceEventEmitter"></a>DeviceEventEmitter</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; DeviceEventEmitter &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</span><br><span class="line">...</span><br><span class="line">componentDidMount() &#123;</span><br><span class="line">    <span class="comment">//收到监听</span></span><br><span class="line">    <span class="keyword">this</span>.listener = DeviceEventEmitter.addListener(<span class="string">'通知名称'</span>, (message) =&gt; &#123;</span><br><span class="line">    <span class="comment">//收到监听后想做的事情</span></span><br><span class="line">    <span class="built_in">console</span>.log(message);  <span class="comment">//监听</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">componentWillUnmount() &#123;</span><br><span class="line">    <span class="comment">//移除监听</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.listener) &#123;</span><br><span class="line">      <span class="keyword">this</span>.listener.remove();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">startEmit() &#123;</span><br><span class="line">    <span class="comment">//准备值，发监听</span></span><br><span class="line">    <span class="keyword">const</span> message = <span class="string">'监听'</span>;</span><br><span class="line">    DeviceEventEmitter.emit(<span class="string">'通知名称'</span>, message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/23/react-native-通知/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ios-深拷贝——浅拷贝" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/18/ios-深拷贝——浅拷贝/">ios-深拷贝—浅拷贝</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/18/ios-深拷贝——浅拷贝/" class="archive-article-date">
+  	<time datetime="2019-04-18T01:55:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>浅拷贝：只是对指向对象的指针进行拷贝<br>深拷贝：直接拷贝对象到内存中一块区域，然后把新对象的指针指向这块内存</p>
+<p>遵循<code>NSCopying</code>协议的类可以发送<code>Copy</code>消息，<br>遵循<code>NSMutableCopying</code>协议的类可以发送<code>MutableCopy</code>消息。</p>
+<p>定义一个NSString类型属性时，为什么用copy不用strong?<br>如果用的就是<code>NSString</code>，<code>copy</code>,<code>strong</code>没有区别，区别主要是使用<code>NSMutableSting</code>时</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可变对象</td>
+<td>strong</td>
+<td>分配内存指针指向原对象</td>
+<td>浅拷贝</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>不可变对象</td>
+<td>copy</td>
+<td>分配内存指针指向原对象</td>
+<td>浅拷贝</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>不可变对象</td>
+<td>mutableCopy</td>
+<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
+<td>深拷贝</td>
+<td>新对象可变</td>
+<td></td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>strong</td>
+<td>分配内存指针指向原对象</td>
+<td>浅拷贝</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>copy</td>
+<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
+<td>深拷贝</td>
+<td>新对象不可变</td>
+<td></td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>mutableCopy</td>
+<td>分配内存指针，分配数据内存，指针指向新的数据对象</td>
+<td>深拷贝</td>
+<td>新对象可变</td>
+</tr>
+</tbody>
+</table>
+<h5 id="以下规则，string-array都适用"><a href="#以下规则，string-array都适用" class="headerlink" title="以下规则，string array都适用"></a>以下规则，string array都适用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">	if (_name != name) &#123;</span><br><span class="line">		[_name release];</span><br><span class="line">		_name = [name copy]; // 这是面试时优化的点 [name retain]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) NSString *c_String;</span><br><span class="line">@property (nonatomic, strong) NSString *s_String;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line">// before change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line">// after change</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:original</span><br><span class="line">tempString:0x6080000756c0 strongString:0x6080000756c0 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff58006738 strongString:0x7fc6d4d0d0b0 copyString:0x7fc6d4d0d0a8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NSMutableString<br>strong 开辟内存，分配指针，指向原始数据<br>copy 开辟内存，复制原始数据 ，开辟内存，分配指针，指向复制后的数据<br>原始数据改变,在原内存上更新数据，strong指向的也是改变后的地址，内容更新，copy指向的是复制后的内容地址，内容不变</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSString *tempString = [NSString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">self.s_String = tempString;</span><br><span class="line">self.c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">tempString = @&quot;change&quot;;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0xa000c505a04b2028 strongString:0xa000c505a04b2028 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff5f4bc738 strongString:0x7f9990d0c8f0 copyString:0x7f9990d0c8e8</span><br><span class="line"></span><br><span class="line">tempString:change strongString:original copyString:original</span><br><span class="line">tempString:0x100757b90 strongString:0xa000c505a04b2028 copyString:0xa000c505a04b2028</span><br><span class="line">tempString:0x7fff5f4bc738 strongString:0x7f9990d0c8f0 copyString:0x7f9990d0c8e8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NSString<br>strong 开辟内存，分配指针，指向原始数据A<br>copy 开辟内存，分配指针，指向原始数据A<br>改变原始数据时，由于原始数据不可变，实际上并不是改变了原始数据，而是将原始数据的指针指向的新分配内存，并在新内存上设置新值，之前copy和strong指针还指向原始的A，即改变不可变对象其实改变的是其指针指向的内存</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NSMutableString *tempString = [NSMutableString stringWithFormat:@&quot;original&quot;];</span><br><span class="line">_s_String = tempString;</span><br><span class="line">_c_String = tempString;</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br><span class="line"></span><br><span class="line">[tempString appendString:@&quot;change&quot;];</span><br><span class="line"></span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,tempString,_s_String,_c_String);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;tempString,&amp;_s_String,&amp;_c_String);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tempString:original strongString:original copyString:original</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br><span class="line"></span><br><span class="line">tempString:originalchange strongString:originalchange copyString:originalchange</span><br><span class="line">tempString:0x6080000795c0 strongString:0x6080000795c0 copyString:0x6080000795c0</span><br><span class="line">tempString:0x7fff5cb3b738 strongString:0x7fc545d0b6d0 copyString:0x7fc545d0b6c8</span><br></pre></td></tr></table></figure>
+<p>如果我们不用self.点语法，这样就不会调用 getter setter 方法，copy也就不会起作用了。所以说，系统的属性修饰符，strong copy 等的作用范围是 set get 方法。</p>
+<h5 id="mutaleArr"><a href="#mutaleArr" class="headerlink" title="mutaleArr"></a>mutaleArr</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MySark *sark = [[MySark alloc] init];</span><br><span class="line">sark.name = @&quot;cat&quot;;</span><br><span class="line"></span><br><span class="line">NSMutableArray *mArr = [NSMutableArray arrayWithObject:sark];</span><br><span class="line">self.c_arr = mArr;</span><br><span class="line">self.s_arr = mArr;</span><br><span class="line">NSLog(@&quot;before change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br><span class="line"></span><br><span class="line">[mArr removeAllObjects];</span><br><span class="line">NSLog(@&quot;after change&quot;);</span><br><span class="line">NSLog(@&quot;tempString:%@ strongString:%@ copyString:%@&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,mArr,_s_arr,_c_arr);</span><br><span class="line">NSLog(@&quot;tempString:%p strongString:%p copyString:%p&quot;,&amp;mArr,&amp;_s_arr,&amp;_c_arr);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">before change</span><br><span class="line">mArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) strongArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongArr:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongArr:0x104c0bee8 copyArr:0x104c0bee0</span><br><span class="line">after change</span><br><span class="line">mArr:(</span><br><span class="line">) strongString:(</span><br><span class="line">) copyArr:(</span><br><span class="line">&quot;&lt;MySark: 0x1c001ec70&gt;&quot;</span><br><span class="line">)</span><br><span class="line">mArr:0x1c04506b0 strongString:0x1c04506b0 copyArr:0x1c001ec00</span><br><span class="line">mArr:0x16b64bec0 strongString:0x104c0bee8 copyArr:0x104c0bee0</span><br></pre></td></tr></table></figure>
+<p>集合类型，内容不复制，指针引用内容</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>例子</th>
+<th>操作</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可变对象</td>
+<td>arr</td>
+<td>copy</td>
+<td>arr</td>
+</tr>
+<tr>
+<td>不可变对象</td>
+<td>arr</td>
+<td>mutableCopy</td>
+<td>mutableArr</td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>mutableArr</td>
+<td>copy</td>
+<td>arr</td>
+</tr>
+<tr>
+<td>可变对象</td>
+<td>mutableArr</td>
+<td>mutableCopy</td>
+<td>mutableArr</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>copy 产出不可变对象</li>
+<li>mutablecopy 产出可变对象</li>
+</ul>
+<p>直接的 NSArray 不是 isMemberOfClass:[NSArray class]<br>由于类簇的性质，这类对象实际返回的实例有不确定性。</p>
+<p>NSArray对象可能会在运行时发现其实运作的是NSCFArray(来自Core Foundation框架(C语言的实现版本),很多Cocoa对象都是如此做桥接的)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">NSArray *arr = [NSArray array];</span><br><span class="line">if ([arr isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[arr isKindOfClass:[NSArray class]]&quot;); // 输出</span><br><span class="line">&#125; </span><br><span class="line">if ([arr isKindOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[arr isKindOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[arr isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([arr isMemberOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[arr isMemberOfClass:[NSMutableArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ([[arr mutableCopy] isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[[arr mutableCopy] isKindOfClass:[NSArray class]]&quot;); // 输出</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isKindOfClass:[NSMutableArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[[arr mutableCopy] isKindOfClass:[NSMutableArray class]]&quot;); // 输出</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[[arr mutableCopy] isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([[arr mutableCopy] isMemberOfClass:[NSMutableDictionary class]]) &#123;</span><br><span class="line">	NSLog( @&quot;[[arr mutableCopy] isMemberOfClass:[NSMutableDictionary class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// MyArray 继承于 NSArray</span><br><span class="line">MyArray *myArr = [[MyArray alloc] init];</span><br><span class="line">if ([myArr isMemberOfClass:[MyArray class]]) &#123;</span><br><span class="line">	NSLog(@&quot;[myArr isMemberOfClass:[MyArray class]]&quot;); // 输出</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isMemberOfClass:[NSArray class]]) &#123;</span><br><span class="line">	NSLog(@&quot;[myArr isMemberOfClass:[NSArray class]]&quot;);</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isKindOfClass:[MyArray class]]) &#123;</span><br><span class="line">	NSLog(@&quot;[myArr isKindOfClass:[MyArray class]]&quot;); // 输出</span><br><span class="line">&#125;</span><br><span class="line">if ([myArr isKindOfClass:[NSArray class]]) &#123;</span><br><span class="line">	NSLog(@&quot;[myArr isKindOfClass:[NSArray class]]&quot;); // 输出</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输出</span><br><span class="line">[arr isKindOfClass:[NSArray class]]</span><br><span class="line">[[arr mutableCopy] isKindOfClass:[NSArray class]]</span><br><span class="line">[[arr mutableCopy] isKindOfClass:[NSMutableArray class]]</span><br><span class="line">( b )</span><br><span class="line">[myArr isMemberOfClass:[MyArray class]]</span><br><span class="line">[myArr isKindOfClass:[MyArray class]]</span><br><span class="line">[myArr isKindOfClass:[NSArray class]]</span><br></pre></td></tr></table></figure>
+<p>##### </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/18/ios-深拷贝——浅拷贝/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ios-属性修饰符" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/18/ios-属性修饰符/">ios-属性修饰符</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/18/ios-属性修饰符/" class="archive-article-date">
+  	<time datetime="2019-04-18T01:37:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="常用属性修饰符"><a href="#常用属性修饰符" class="headerlink" title="常用属性修饰符"></a>常用属性修饰符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 成员变量 只能在自己类内部使用的 （自己的.m中使用）</span><br><span class="line">@interface someObject : NSObject &#123; </span><br><span class="line">	NSString *firstName; // 成员变量 私有</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *lastName; // 属性 默认 public</span><br><span class="line">@property (nonatomic, unsafe_unretained)</span><br><span class="line">@property (nonatomic, assign) // 修饰基础变量 int  bool 等</span><br><span class="line">  </span><br><span class="line">// MRC 时使用 retain  </span><br><span class="line">@property (nonatomic, retain) // 会使引用计数加1</span><br><span class="line"></span><br><span class="line">// ARC 后使用 weak strong  </span><br><span class="line">@property (nonatomic, weak) // 弱引用</span><br><span class="line">@property (nonatomic, strong) // 强引用</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// someObject.m 文件</span><br><span class="line"></span><br><span class="line">@interface someObject ()</span><br><span class="line">@property (nonatomic, copy) NSString *name; // 属性 默认 private</span><br><span class="line">@end</span><br><span class="line">  </span><br><span class="line">@implementation someObject</span><br><span class="line">  </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h5 id="默认行为"><a href="#默认行为" class="headerlink" title="默认行为"></a>默认行为</h5><p><code>nonatomic</code>和<code>atomic</code> 中默认 <code>atomic</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@property (assign) int age;</span><br><span class="line">相当于</span><br><span class="line">@property (atomic, assign) int age;</span><br></pre></td></tr></table></figure>
+<p><code>strong</code>、<code>assign</code>、<code>weak</code>、<code>copy</code> 中默认 <code>assign</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic) int age;</span><br><span class="line">相当于</span><br><span class="line">@property (nonatomic, assign) int age;</span><br></pre></td></tr></table></figure>
+<h4 id="property-的本质"><a href="#property-的本质" class="headerlink" title="@property 的本质"></a>@property 的本质</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@property = ivar + getter + setter;</span><br><span class="line">// 实例变量(成员变量) + getter方法 + setter方法</span><br><span class="line">// 默认的成员变量为 在变量名前加下划线_</span><br></pre></td></tr></table></figure>
+<p>我们把@property修饰的变量称为属性(相对于成员变量，最上面的代码有注释)，其默认实现了getter，setter方法，使得我们可以使用.(点语法)来访问</p>
+<h3 id="setter-getter-方法"><a href="#setter-getter-方法" class="headerlink" title="setter  getter 方法"></a>setter  getter 方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, copy) NSString *name; // 默认生成成员变量 _name</span><br></pre></td></tr></table></figure>
+<p>对于成员变量name，set方法的格式是setName，get方法的格式只是直接使用属性名name</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic,copy) NSString *name;</span><br><span class="line"></span><br><span class="line">// 可自己实现 set  或 get 方法，两个都实现就必须实现下面这行，否则报错</span><br><span class="line">// 因为你重写了set 和 get 方法后，系统就不会实现synthesize，相当于没有声明 _name 成员变量</span><br><span class="line">@synthesize name = _name;</span><br><span class="line"></span><br><span class="line">- (NSString *)name&#123;</span><br><span class="line">    if (!_name) &#123;</span><br><span class="line">        _name = @&quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    return _name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setName:(NSString *)name &#123;</span><br><span class="line">    if (_name != name) &#123; // 如果这里不判断，同时_name == name 变量就会被释放，下一步的赋值就无效</span><br><span class="line">        [_name release];</span><br><span class="line">        _name = [name copy]; // 这是面试时优化的点 [name retain] 同时不能使用.语法，.语法默认会调用setName方法，从而形成递归调用，造成崩溃</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义一个@property，在编译期间，编译器会生成实例变量、getter方法、setter方法，这些方法、变量是通过自动合成（autosynthesize）的方式生成并添加到类中。实际上，一个类经过编译后，会生成变量列表ivar_list，方法列表method_list，每添加一个属性，在变量列表ivar_list会添加对应的变量，如_name，方法列表method_list中会添加对应的setter方法和getter方法。</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title=". 语法"></a>. 语法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.name = @&quot;dog&quot;;</span><br></pre></td></tr></table></figure>
+<p>会调用getter方法获取_name，然后调用setter方法进行赋值。</p>
+<p>所以如果在setter方法中通过. 语法进行赋值将会出现递归调用setter方法，导致崩溃</p>
+<h4 id="原子"><a href="#原子" class="headerlink" title="原子"></a>原子</h4><p>atomic：原子属性，为setter方法加自旋锁（即为单写多读）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)setObj2:(NSObject *)obj2&#123; </span><br><span class="line">    //加锁</span><br><span class="line">    @synchronized(self) &#123;</span><br><span class="line">        _obj2 = obj2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从代码中可以看到，atomic只能保证setter，getter方法内部的线程安全，而且只能保证在单独调用setter或getter方法时是线程安全的，这就有很大的隐患。假设有一个线程A在不断的读取属性name的值，同时有一个线程B修改了属性name的值，那么即使属性name是atomic，线程A读到的仍旧是修改后的值，可见不是线程安全的。如果想要实现线程安全，需要手动的实现锁。</p>
+<p>引申一下：在64位操作系统中，一个cpu寻址就是8个字节，int占4个字节，所以对于int，无论是不是原子操作，其本身都是原子操作。long double 分别占8个字节，理论上也是原子操作的。对一个long型数据的读写，操作系统有可能分两部分进行，一部分是高位，一部分是低位，所以两个线程同时操作long数据，有可能导致数据不同步，但实际应该很少发生，因为太快了。再说 double，double 类型的数据同样占8个字节，按道理来说，他读写的速度应当和long 一样快。但是。一个线程读写内存仅仅只是一个方面，cpu 需要对数据进行计算，这个计算的中间结果一般都会放到寄存器或者cpu 高速缓存，double 数据计算的复杂度远非long型所能比，因此double 数据类型相比long 型数据更容易出现并发的问题。</p>
+<h4 id="assign"><a href="#assign" class="headerlink" title="assign"></a>assign</h4><p>assign修饰的修饰基本数据类型分配在栈上，栈上空间的分配和回收都是系统来处理的，因此开发者无需关注，也就不会产生野指针的问题。</p>
+<p>而assign修饰的对象类型数据和weak修饰的对象类型数据一样分配在堆中。如果assing修饰对象释放后，其指针将成为野指针。</p>
+<h4 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h4><p><code>weak</code>是ARC的产物，主要作用是修饰弱引用的对象，防止循环引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, weak) id objc;</span><br></pre></td></tr></table></figure>
+<p>而<code>weak</code>具有如此功能的原因是在<code>weak</code>修饰的<code>objc</code>被销毁时，会主动在<code>objc</code>的<code>dealloc</code>方法中将所有用<code>weak</code>修饰的指向objc的指针置为<code>nil</code>。</p>
+<p>简单理解如下，具体执行过程还要参考内存方面的文章</p>
+<p><code>Runtime</code>维护了一个<code>weak</code>表，用于存储指向某个对象的所有<code>weak</code>指针。<br><code>weak</code>表其实是一个<code>hash</code>（哈希）表，<code>Key</code>是所指对象的地址，<code>Value</code>是<code>weak</code>指针的地址数组。<br>当<code>A</code>对象销毁时.以<code>A</code>的内存地址为<code>Key</code>， 在这个 <code>weak</code> 表中搜索</p>
+<h4 id="delegate-用assign还weak？"><a href="#delegate-用assign还weak？" class="headerlink" title="delegate 用assign还weak？"></a>delegate 用assign还weak？</h4><p>assign属性一般是对C基本数据类型成员变量的声明，当然也可以用在对象类型成员变量上，只是其代表的意义只是单纯地拷贝所赋值变量的指针。即如果对某assign成员变量B赋值某对象A的指针，则此B只是简单地保存此指针的值，且并不持有对象A，也就意味着如果A被销毁，则B就指向了一个已经被销毁的对象，如果再对其发送消息会引发崩溃。</p>
+<blockquote>
+<p>nil 指向oc中对象的空指针，weak会自动将指针指向的对象置为nil</p>
+<p>null 指向其他类型的空指针，如一个c类型的内存指针。assign修饰的对象销毁后，指针指向的即为null</p>
+<p>向nil发送消息，不会崩溃，但是想null发送消息会引发崩溃。</p>
+</blockquote>
+<p><code>MRC</code> 时用 <code>assign</code> 修饰 <code>delegate</code> 但是要在<code>dealloc</code>中主动将其置为<code>nil</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@interface someObject ()</span><br><span class="line">  </span><br><span class="line">@property (nonatomic, assign) id &lt;someDelegate&gt; delegate;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line">  </span><br><span class="line">@implementation someObject </span><br><span class="line">  </span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">		_delegate = nil;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p><code>ARC</code> 后直接使用<code>weak</code>进行修饰，并且不用将其置为<code>nil</code></p>
+<h5 id="unsafe-unretained"><a href="#unsafe-unretained" class="headerlink" title="unsafe_unretained"></a>unsafe_unretained</h5><p>和assign类似，但是它适用于对象类型，当目标被摧毁时，属性值不会自动清空（unsafe）。这是和weak的区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, unsafe_unretained)  TestObj *s2;</span><br></pre></td></tr></table></figure>
+<h4 id="category-中的属性声明"><a href="#category-中的属性声明" class="headerlink" title="category 中的属性声明"></a>category 中的属性声明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic, strong) NSString *name;</span><br></pre></td></tr></table></figure>
+<p>不自动生成<code>getter</code> <code>setter</code>,<br>自己无法写<code>setter</code>方法，因为没有<code>ivar</code>，你调用不了<code>_name</code>。</p>
+<p>##### </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/18/ios-属性修饰符/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-设计模式-六大设计原则" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/18/设计模式-六大设计原则/">设计模式-六大设计原则</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/18/设计模式-六大设计原则/" class="archive-article-date">
+  	<time datetime="2019-04-18T00:50:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p>单一职责原则</p>
+<p>一个类只负责一件事</p>
+</li>
+<li><p>里氏替换原则</p>
+<p>父类可以被子类无缝替换，且原有功能不受任何影响。kvo会生成被观察类的子类，单不影响原类的功能</p>
+</li>
+<li><p>依赖倒置原则</p>
+<p>抽象不应该依赖于具体实现，具体实现可以依赖于抽象。增删改查的接口，所有的上层调用都依赖于这些抽象接口，而接口内部具体实现，用数据库还是文件，对上层业务来说是感知不到的</p>
+</li>
+<li><p>接口隔离原则</p>
+<p>使用多个专门的协议，而不是一个庞大臃肿的协议</p>
+</li>
+<li><p>迪米特原则</p>
+<p>一个对象应该对其他对象有尽可能少的了解，高内聚，低耦合</p>
+</li>
+<li><p>开闭原则</p>
+<p>对修改关闭，对扩展开放</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/18/设计模式-六大设计原则/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-react-基础" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/16/react-基础/">react-基础</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/16/react-基础/" class="archive-article-date">
+  	<time datetime="2019-04-16T03:28:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>### </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Text&gt; 内容 &lt;/Text&gt;</span><br><span class="line">&lt;Image source=&#123;&#125; style=&#123;&#123;&#125;&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><ul>
+<li>函数定义组件 使用函数或类来声明</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &lt;h1&gt;Hello, &#123;props.name&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;h1&gt;Hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用 所有的参数都会合并到 props 和ios对比，不用声明标准格式的带参数的方法</span></span><br><span class="line">&lt;Welcome name=<span class="string">"Sara"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>组件的返回值</p>
+<p>组件的返回值只能有一个根元素，可能是基于多个组件如何排列，或如何分配参数的考虑</p>
+</li>
+<li><p>组件的<code>props</code>参数是不可更改的，需要更改则要使用<code>state</code></p>
+</li>
+</ul>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">activateLasers</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;button onClick=&#123;activateLasers&#125;&gt;</span><br><span class="line">  Activate Lasers</span><br><span class="line">&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以下两种默认绑定 this</span></span><br><span class="line"><span class="comment">// 1. 函数声明时使用 箭头函数方法</span></span><br><span class="line">handleClick = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'this is:'</span>, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 2. 如果函数声明时没有使用箭头函数方法，调用时使用箭头函数</span></span><br><span class="line"><span class="comment">// e 是一个合成事件</span></span><br><span class="line">&lt;button onClick=&#123;(e) =&gt; <span class="keyword">this</span>.handleClick(e)&#125;&gt;</span><br><span class="line">        Click me</span><br><span class="line">&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="状态提升"><a href="#状态提升" class="headerlink" title="状态提升"></a>状态提升</h3><p>在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。然后，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的共同祖先中。你应该依赖 <a href="https://react.docschina.org/docs/state-and-lifecycle.html#%E6%95%B0%E6%8D%AE%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%B5%81%E5%8A%A8" target="_blank" rel="noopener">自上而下的数据流</a>，而不是尝试在不同组件中同步状态。</p>
+<p>从ios开发者的角度考虑：</p>
+<p><code>react</code>中的<code>props</code>是不可变的，<code>state</code>才是可变的数据。可变数据在super中以state的形式存储，通过在子类初始化时传入 this.state.parameter, function(可以理解为ios中的block)。在子类中通过props获取变量和更新函数，更新时再调用获取的更新函数来更新数据。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/04/16/react-基础/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-react-native-navigation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -445,647 +1189,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/04/04/ios-MDM/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ios-离屏渲染" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/ios-离屏渲染/">ios-离屏渲染</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/03/ios-离屏渲染/" class="archive-article-date">
-  	<time datetime="2019-04-03T14:29:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>OpenGL的中，GPU屏幕渲染有两种方式。 </p>
-<ul>
-<li>屏幕渲染（当前屏幕渲染）</li>
-</ul>
-<p>指的是GPU的渲染操作是在当前用于显示的屏幕缓冲区进行。</p>
-<ul>
-<li>离屏渲染（离屏渲染）</li>
-</ul>
-<p>指的是在GPU在当前屏幕缓冲区以外开辟一个缓冲区进行渲染操作。</p>
-<p>当使用圆角，阴影，遮罩的时候，图层属性的混合体被指定为在未预合成之前（下一个HSync信号开始前）不能直接在屏幕中绘制，所以就需要屏幕外渲染</p>
-<h5 id="HSync"><a href="#HSync" class="headerlink" title="HSync"></a>HSync</h5><p>显示器显示出来的图像是经过CRT电子枪一行一行的扫描。扫描出来就呈现了一帧画面，随后电子枪又会回到初始位置循环扫描，为了让显示器的显示跟视频控制器同步，当电子枪新扫描一行的时候。准备扫描的时候，会发送一个水平同步信号（HSync信号），显示器一般是固定刷新频率的，这个刷新的频率其实就是行同步信号产生的频率。然后CPU计算好帧等属性，就将计算好的内容提交给GPU去渲染，GPU渲染完成之后就会放入帧缓冲区，然后视频控制器会按照行同步信号逐行读取帧缓冲区的数据，经过可能的数模转换传递给显示器。就显示出来了。 </p>
-<p>离屏渲染的代价很高，想要进行离屏渲染，首选要创建一个新的缓冲区，屏幕渲染会有一个上下文环境的一个概念，离屏渲染的整个过程需要切换上下文环境，先从当前缓冲区切换到离屏，等结束后，又要将上下文环境切换回来。这也是为什么会消耗性能的原因了。<br>由于垂直同步的机制，如果在一个HSync时间内，CPU或GPU没有完成内容提交，则那一帧就会被丢弃，等待下一次机会再显示，而这时显示屏会保留之前的内容不变。这就是界面卡顿的原因。</p>
-<p>​    </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/03/ios-离屏渲染/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ios-layer" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/ios-layer/">ios-layer</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/03/ios-layer/" class="archive-article-date">
-  	<time datetime="2019-04-03T13:38:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><em>UIView</em> 继承于 <em>UIResponder</em> 和 <em>NSObject</em></li>
-<li><em>CALayer</em> 继承与 <em>NSObject</em></li>
-<li><em>UIView</em> 响应事件</li>
-<li><em>CALayer</em> 显示内容</li>
-</ul>
-<p>wwdc：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1psd34gowj30eg03paam.jpg" alt=""></p>
-<blockquote>
-<p>Layers provide infrastructure for your views. Specifically, layers make it easier and more efficient to draw and animate the contents of views and maintain high frame rates while doing so. However, there are many things that layers do not do. Layers do not handle events, draw content, participate in the responder chain, or do many other things </p>
-</blockquote>
-<blockquote>
-<p>Layers are often used to provide the backing store for views but can also be used without a view to display content. A layer’s main job is to manage the visual content that you provide but the layer itself has visual attributes that can be set, such as a background color, border, and shadow. In addition to managing visual content, the layer also maintains information about the geometry of its content (such as its position, size, and transform) that is used to present that content onscreen. Modifying the properties of the layer is how you initiate animations on the layer’s content or geometry. A layer object encapsulates the duration and pacing of a layer and its animations by adopting the <a href="apple-reference-documentation://hs8_lzhB0N" target="_blank" rel="noopener"><code>CAMediaTiming</code></a> protocol, which defines the layer’s timing information.</p>
-<p>If the layer object was created by a view, the view typically assigns itself as the layer’s delegate automatically, and you should not change that relationship. For layers you create yourself, you can assign a <a href="apple-reference-documentation://hsVE9DGmQl" target="_blank" rel="noopener"><code>delegate</code></a> object and use that object to provide the contents of the layer dynamically and perform other tasks. A layer may also have a layout manager object (assigned to the <a href="apple-reference-documentation://hsqsBalAZn" target="_blank" rel="noopener"><code>layoutManager</code></a> property) to manage the layout of subviews separately.</p>
-</blockquote>
-<blockquote>
-<p>layer给view提供了基础设施，使得绘制内容和呈现<strong>更高效动画</strong>更容易、更低耗</p>
-<p>layer不参与view的事件处理、不参与响应链</p>
-</blockquote>
-<p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g1ptb3khufj314r0coabn.jpg" alt=""></p>
-<p>层是基于绘画模型实现的，层并不会在我们的<code>app</code>中做什么事，实际上是层只是捕获<code>app</code>所提供的内容，并缓存成<code>bitmap</code>，当任何与层关联的属性值发生变化时，<code>Core Animation</code>就会将新的<code>bitmap</code>传给绘图硬件，并根据新的位图更新显示。</p>
-<p><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自<code>UIView</code>。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame</code>、<code>bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</p>
-<blockquote>
-<p>提示：<code>layer-based drawing</code>不同于<code>view-based drawing</code>，后者的性能消耗是很高的，它是在主线程上直接通过<code>CPU</code>完成的，而且通常是在<code>-drawRect:</code>中绘制动画。</p>
-</blockquote>
-<p>layer的更新并不会立马导致屏幕的刷新，而是通过setNeedsDisplay，做一个标记，在系统的刷新周期到来时统一展现。</p>
-<p>UIView将layer的delegate指定为自身，使得大多数时候我们直接修改view的属性(颜色位置透明度等等)，layer的呈现就自动发生变化了。</p>
-<p>当 layer 中的绘制内容超过其 frame 的边界时, 可以通过 <code>masksToBounds</code> 属性来决定是否绘制边界以外的内容. 而 view 的 <code>clipsToBounds</code> 属性实际就是在设置 layer 的 <code>maskToBounds</code> 属性</p>
-<ul>
-<li>animation</li>
-</ul>
-<blockquote>
-<p>Instead, a layer captures the content your app provides and caches it in a bitmap, which is sometimes referred to as the backing store. … When a change triggers an animation, Core Animation passes the layer’s bitmap and state information to the graphics hardware, which does the work of rendering the bitmap using the new information. Manipulating the bitmap in hardware yields much faster animations than could be done in software.</p>
-</blockquote>
-<blockquote>
-<p> layer的内容生成一个位图(bitmap),触发动画的时候，是把这个动画和状态信息传递给图形硬件，图形硬件使用这两个数据就可以构造动画了。处理位图对于图形硬件更快。</p>
-</blockquote>
-<p>使用layer做动画的好处</p>
-<p>view的移动，依靠的是不断的更新view的位置，每次更新完，把数据提供给图形系统，重新绘制。对于有复杂子视图的view，要把整个子视图树都全部重绘。</p>
-<p>使用layer的话</p>
-<ul>
-<li>不用不断的更新view的数据</li>
-<li>不用不断的和图形硬件交互数据</li>
-<li>对于复杂的view，不用重绘整个图层树</li>
-<li>处理这些图形硬件更擅长</li>
-</ul>
-<h5 id="图层树"><a href="#图层树" class="headerlink" title="图层树"></a>图层树</h5><p>由于此动画系统，催生了layer3种不同的图层树：</p>
-<ul>
-<li>模型树(model layer tree)，存储了动画的结束值</li>
-<li>表现树(presentation tree),包含了动画正在进行中的值</li>
-<li>渲染层(render tree),用来表现实际动画的数据</li>
-</ul>
-<p>如果要拿到动画过程中view的数据，可以通过表现树来获取。</p>
-<h4 id="图层的定位"><a href="#图层的定位" class="headerlink" title="图层的定位"></a>图层的定位</h4><p>图层在其对应的 view 坐标系中, 或是在对应的父 layer 的坐标系中的大小是通过 bounds 定义的. 但位置是通过如下两个属性共同定义:</p>
-<ul>
-<li>position: 描述的是在父layer坐标系下的一个点.</li>
-<li>anchorPoint: 描述 position 点在 layer 上的位置, 这个位置是相对于 layer 自身的坐标系而言的, 且值为 0 到 1.</li>
-</ul>
-<p>这样的定位方式实际就是: 先在 layer 上确定锚点, 然后将锚点挂接到 position 指定的位置上, 就定位了该<br> layer 在父 layer 中的位置.</p>
-<p>anchorPoint 的默认值是 (0.5, 0.5), 即 layer 的中央位置. 这时 position 的作用就和 view 的 center 一样.</p>
-<p>而 layer 的 frame 实际是通过当前的 bounds 和 position 以及 anchorPoint 共同计算出来的. 当设置 layer 的 frame 时, 相当于同时修改了 layer 的 bounds 和 position.</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/03/ios-layer/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-react-native-error" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/01/react-native-error/">react-native-error</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/01/react-native-error/" class="archive-article-date">
-  	<time datetime="2019-04-01T08:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mac listen EADDRINUSE: address already <span class="keyword">in</span> use :::<span class="number">8081</span></span><br><span class="line">端口被占用</span><br><span class="line"></span><br><span class="line">第一步：sudo lsof -i:<span class="number">8081</span></span><br><span class="line"></span><br><span class="line">➜  Bill sudo lsof -i:<span class="number">8081</span></span><br><span class="line">COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</span><br><span class="line">node    <span class="number">13654</span> libo   <span class="number">23</span>u  IPv6 <span class="number">0xc9988e691127882f</span>      <span class="number">0</span>t0  TCP *:sunproxyadmin (LISTEN)</span><br><span class="line">node    <span class="number">13654</span> libo   <span class="number">36</span>u  IPv6 <span class="number">0xc9988e6911f0efef</span>      <span class="number">0</span>t0  TCP localhost:sunproxyadmin-&gt;localhost:<span class="number">58843</span> (ESTABLISHED)</span><br><span class="line">Bill    <span class="number">23847</span> libo   <span class="number">10</span>u  IPv6 <span class="number">0xc9988e6911f0fb6f</span>      <span class="number">0</span>t0  TCP localhost:<span class="number">58843</span>-&gt;localhost:sunproxyadmin (ESTABLISHED)</span><br><span class="line">Bill    <span class="number">23847</span> libo   <span class="number">11</span>u  IPv6 <span class="number">0xc9988e6911f0fb6f</span>      <span class="number">0</span>t0  TCP localhost:<span class="number">58843</span>-&gt;localhost:sunproxyadmin (ESTABLISHED)</span><br><span class="line"></span><br><span class="line">第二步：sudo kill <span class="number">13654</span></span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/01/react-native-error/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-react-native-基础" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/21/react-native-基础/">react_native_基础</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/21/react-native-基础/" class="archive-article-date">
-  	<time datetime="2019-03-21T09:05:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import a from A 导入 A中的默认导出组件，并命名为a</span><br><span class="line">import &#123;a&#125; from A 导入A中的非默认组件</span><br></pre></td></tr></table></figure>
-<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>render() 方法依赖于 this.props 和 this.state ，框架会确保渲染出来的 UI 界面总是与输入（ this.props 和 this.state ）保持一致。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 state</span></span><br><span class="line">state = &#123;</span><br><span class="line">    name: <span class="string">''</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新 state</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使 this 不失效</span></span><br><span class="line">&lt;button onClick=&#123;<span class="keyword">this</span>.handleAdd&#125;&gt;<span class="string">"xx"</span>&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;button onClick=&#123;this.handleClick.bind(this)&#125;&gt;"xx"&lt;/</span>button&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//此时this指向是当前实例对象</span></span><br><span class="line">handleAdd = <span class="function"><span class="params">()</span>=&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        count:<span class="number">5</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">handleClick()&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        count:<span class="number">6</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>—save 安装模块的时候，同时把它写到package.json 文件中, dependencies。</p>
-<p> –save-dev 安装依模块的时候，把它写到package.json中，devDependencies中</p>
-<p>“express”: “4.15.2” 版本号前面什么符号都没有，它表示固定版本</p>
-<p>“express”: “~4.15.2”，版本号前面有符号~，它表示安装4.15.x 的版本</p>
-<p>“express”: “^4.15.2” , 版本号前面有符号^, 它表示可以安装4.x.x 的版本，只要中间的x  大于15就可以</p>
-<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">super flexDirection:&apos;row&apos; </span><br><span class="line">&#123;</span><br><span class="line">	alignSelf:&apos;flex-start&apos;  // 左上</span><br><span class="line">	alignSelf:&apos;center&apos;  // 中间</span><br><span class="line">	alignSelf:&apos;flex-end&apos;  // 左下</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	alignSelf:&apos;flex-start&apos;  // 左上</span><br><span class="line">	alignSelf:&apos;center&apos;  // 中间	</span><br><span class="line">  alignSelf:&apos;flex-end&apos;  // 右上</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// css</span></span><br><span class="line">margin <span class="comment">// 自己距离外边框的距离</span></span><br><span class="line">border <span class="comment">// 边框</span></span><br><span class="line">padding <span class="comment">// 内边框 自己的子元素距离自己边框的距离</span></span><br><span class="line"></span><br><span class="line">width: <span class="string">'95%'</span>, <span class="comment">// 除了vc的第一view会默认为是屏幕尺寸，其他subview都要指定宽度</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// flex</span></span><br><span class="line">flexDirection: row(横向) | row-reverse | column | column-reverse</span><br><span class="line">flexWrap: wrap <span class="comment">// 换行</span></span><br><span class="line">justifyContent: <span class="comment">// 主轴 控制子元素</span></span><br><span class="line">alignItems: <span class="comment">// 交叉轴 控制子元素</span></span><br><span class="line">alignSelf: <span class="comment">// 允许单个项目有与其他项目不一样的对齐方式 元素本身</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flexbox定位和position定位可以同时使用</span><br><span class="line">positon有两个取值：relative（默认值）</span><br><span class="line">absolute(绝对定位)：相对于父元素来定位 top left ..</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g1igyjyi3fj30hp0l70sn.jpg" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alignItems: 交叉轴上如何对齐</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1ih0q0tt8j30h50lu3yg.jpg" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// flex 项目属性</span><br><span class="line">flexGrow: 0 // 项目的放大比例，如果所有项目的flex-grow属性都为1，则它们将等分剩余空间</span><br><span class="line">flexShrink: 1 // 项目缩小比例，</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g1ihimznq1j30kn0aua9w.jpg" alt=""></p>
-<h3 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AsyncStorage.setItem(&quot;userToken&quot;, &quot;token&quot;);</span><br><span class="line">    </span><br><span class="line">const userToken = await AsyncStorage.getItem(&apos;userToken&apos;);</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/21/react-native-基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-react-native-redux" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/21/react-native-redux/">react_native_redux</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/21/react-native-redux/" class="archive-article-date">
-  	<time datetime="2019-03-21T09:03:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="sotre"><a href="#sotre" class="headerlink" title="sotre"></a>sotre</h4><p><code>store</code> 是应用状态 <code>state</code> 的管理者，包含下列四个函数：</p>
-<ul>
-<li><code>getState() # 获取整个 state</code></li>
-<li><code>dispatch(action) # ※ 触发 state 改变的【唯一途径】※</code></li>
-<li><code>subscribe(listener) # 您可以理解成是 DOM 中的 addEventListener</code></li>
-<li><code>replaceReducer(nextReducer) # 一般在 Webpack Code-Splitting 按需加载的时候用</code></li>
-</ul>
-<h4 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h4><p>用户每次 <code>dispatch(action)</code> 后，都会触发 <code>reducer</code> 的执行<br><code>reducer</code> 的实质是一个<strong>函数</strong>，根据 <code>action.type</code> 来<strong>更新</strong> <code>state</code> 并返回 <code>nextState</code><br>最后会用 <code>reducer</code> 的返回值 <code>nextState</code> <strong>完全替换掉</strong>原来的 <code>state</code></p>
-<h4 id="action"><a href="#action" class="headerlink" title="action"></a>action</h4><p>action代表界面的操作。我们定义一个界面有几个界面操作（或者叫触发事件），使用string来描述。然后定义一个方法即action creator，传入执行这个操作需要的参数，然后返回这个操作的类型，即上面定义的string类型中的一个，和完成后的新的界面数据。这个action creator只是描述输入与产出，不负责具体的执行。总体讲action负责定义操作类型，和提供一个获取该类型的方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const ADD_TODO = &apos;ADD_TODO&apos;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  type: ADD_TODO,</span><br><span class="line">  text: &apos;Build my first Redux app&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>Action Creator<br>Action Creator 是 <code>action</code> 的创造者，本质上就是一个<strong>函数</strong>，返回值是一个 <code>action</code>（<strong>对象</strong>）</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    type: <span class="string">'ADD_TODO'</span>,</span><br><span class="line">    payload: &#123;</span><br><span class="line">      id: id++,</span><br><span class="line">      content: content, <span class="comment">// 待办事项内容</span></span><br><span class="line">      completed: <span class="literal">false</span>  <span class="comment">// 是否完成的标识</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="state"><a href="#state" class="headerlink" title="state"></a>state</h4><p>是应用的状态,界面状态，界面显示的值</p>
-<h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4><p><strong>1. 调用</strong> <a href="https://www.redux.org.cn/docs/api/Store.html#dispatch" target="_blank" rel="noopener"><code>store.dispatch(action)</code></a>。</p>
-<p><strong>2. Redux store 调用传入的 reducer 函数。</strong></p>
-<p><a href="https://www.redux.org.cn/docs/basics/Store.html" target="_blank" rel="noopener">Store</a> 会把两个参数传入 <a href="https://www.redux.org.cn/docs/basics/Reducers.html" target="_blank" rel="noopener">reducer</a>： 当前的 state 树和 action。例如，在这个 todo 应用中，根 reducer 可能接收这样的数据：</p>
-<p><strong>3. 根 reducer 应该把多个子 reducer 输出合并成一个单一的 state 树。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function todos(state = [], action) &#123;</span><br><span class="line">  // 省略处理逻辑...</span><br><span class="line">  return nextState</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function visibleTodoFilter(state = &apos;SHOW_ALL&apos;, action) &#123;</span><br><span class="line">  // 省略处理逻辑...</span><br><span class="line">  return nextState</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let todoApp = combineReducers(&#123;</span><br><span class="line">  todos,</span><br><span class="line">  visibleTodoFilter</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p><strong>4. Redux store 保存了根 reducer 返回的完整 state 树。</strong></p>
-<p>这个新的树就是应用的下一个 state！所有订阅 <a href="https://www.redux.org.cn/docs/api/Store.html#subscribe" target="_blank" rel="noopener"><code>store.subscribe(listener)</code></a> 的监听器都将被调用；监听器里可以调用 <a href="https://www.redux.org.cn/docs/api/Store.html#getState" target="_blank" rel="noopener"><code>store.getState()</code></a> 获得当前 state。</p>
-<h3 id="实现容器组件"><a href="#实现容器组件" class="headerlink" title="实现容器组件"></a>实现容器组件</h3><p>容器组件就是使用 <a href="https://www.redux.org.cn/docs/api/Store.html#subscribe" target="_blank" rel="noopener"><code>store.subscribe()</code></a> 从 Redux state 树中读取部分数据，并通过 props 来把这些数据提供给要渲染的组件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">const getVisibleTodos = (todos, filter) =&gt; &#123;</span><br><span class="line">  switch (filter) &#123;</span><br><span class="line">    case &apos;SHOW_COMPLETED&apos;:</span><br><span class="line">      return todos.filter(t =&gt; t.completed)</span><br><span class="line">    case &apos;SHOW_ACTIVE&apos;:</span><br><span class="line">      return todos.filter(t =&gt; !t.completed)</span><br><span class="line">    case &apos;SHOW_ALL&apos;:</span><br><span class="line">    default:</span><br><span class="line">      return todos</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const mapStateToProps = state =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    todos: getVisibleTodos(state.todos, state.visibilityFilter)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 分发方法</span><br><span class="line">const mapDispatchToProps = dispatch =&gt; &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    onTodoClick: id =&gt; &#123;</span><br><span class="line">      dispatch(toggleTodo(id))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;</span><br><span class="line"></span><br><span class="line">const VisibleTodoList = connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(TodoList)</span><br><span class="line"></span><br><span class="line">export default VisibleTodoList</span><br></pre></td></tr></table></figure>
-<h4 id="异步-action-创建函数"><a href="#异步-action-创建函数" class="headerlink" title="异步 action 创建函数"></a>异步 action 创建函数</h4><p>通过使用指定的 middleware，action 创建函数除了返回 action 对象外还可以返回函数。这时，这个 action 创建函数就成为了 <a href="https://en.wikipedia.org/wiki/Thunk" target="_blank" rel="noopener">thunk</a>。</p>
-<p>当 action 创建函数返回函数时，这个函数会被 Redux Thunk middleware 执行。这个函数并不需要保持纯净；它还可以带有副作用，包括执行异步 API 请求。这个函数还可以 dispatch action，就像 dispatch 前面定义的同步 action 一样。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/21/react-native-redux/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-react-特定平台" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/14/react-特定平台/">react-特定平台</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/14/react-特定平台/" class="archive-article-date">
-  	<time datetime="2019-03-14T03:18:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Platform-模块"><a href="#Platform-模块" class="headerlink" title="Platform 模块"></a>Platform 模块</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Platform, StyleSheet &#125; <span class="keyword">from</span> <span class="string">"react-native"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> styles = StyleSheet.create(&#123;</span><br><span class="line">    height: Platform.OS === <span class="string">"ios"</span> ? <span class="number">200</span> : <span class="number">100</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>Platform.select()</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> styles = StyleSheet.create(&#123;</span><br><span class="line">    container: &#123;</span><br><span class="line">        flex: <span class="number">1</span>,</span><br><span class="line">        ...Platform.select(&#123;</span><br><span class="line">            ios: &#123;</span><br><span class="line">                backgroundColor: <span class="string">"red"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            android: &#123;</span><br><span class="line">                backgroundColor: <span class="string">"blue"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Component = Platform.select(&#123;</span><br><span class="line">    ios: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">require</span>(<span class="string">"ComponentIOS"</span>),</span><br><span class="line">    android: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">require</span>(<span class="string">"ComponentAndroid"</span>)</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/14/react-特定平台/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-react-let" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/14/react-let/">react-let</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/14/react-let/" class="archive-article-date">
-  	<time datetime="2019-03-14T01:00:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="export-导出"><a href="#export-导出" class="headerlink" title="export 导出"></a>export 导出</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导出变量 text.js</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">var</span> age = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">export</span> &#123;name, age&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导出函数 myModule.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">myModule</span>(<span class="params">someArg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> someArg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="import-导入"><a href="#import-导入" class="headerlink" title="import 导入"></a>import 导入</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;myModule&#125; form <span class="string">'myModule'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;name, age&#125; <span class="keyword">from</span> <span class="string">'text'</span></span><br></pre></td></tr></table></figure>
-<h3 id="gt-function-的缩写"><a href="#gt-function-的缩写" class="headerlink" title="=&gt; function 的缩写"></a>=&gt; function 的缩写</h3><h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 变量字符串拼接</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'your name is $&#123;name&#125;'</span></span><br></pre></td></tr></table></figure>
-<h3 id="延展操作符"><a href="#延展操作符" class="headerlink" title="延展操作符"></a>延展操作符</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [...arr]; <span class="comment">// arr2和arr内容一样</span></span><br></pre></td></tr></table></figure>
-<h3 id="props-组件的属性"><a href="#props-组件的属性" class="headerlink" title="props 组件的属性"></a>props 组件的属性</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.props.xxx</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/react-native//" class="article-tag-list-link color3">react-native</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/14/react-let/">展开全文 >></a>
         </p>
       
 

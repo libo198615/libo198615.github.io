@@ -16,7 +16,7 @@
 <meta property="og:description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 注册监听1234- (void)addObserver:(id)observer   				 selector:(SEL)aSelector">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g1pr2mfw2jj30ly0ezgm5.jpg">
-<meta property="og:updated_time" content="2019-07-17T12:54:20.927Z">
+<meta property="og:updated_time" content="2019-08-09T02:27:17.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSNotification">
 <meta name="twitter:description" content="NSNotification在发送消息时是同步的，可以这样理解：如果不是同步的，则发送通知时告知A的值为1，发送完后立即将值变为2，则接受到通知的一方在处理数据时就会出错。想要异步，可在接受消息时使用dispatch_async进行异步处理 注册监听1234- (void)addObserver:(id)observer   				 selector:(SEL)aSelector">
@@ -204,10 +204,9 @@
 <li>object</li>
 </ul>
 <p>在发送通知的时候也会传递一个<code>object</code>参数，一般情况下发送通知的<code>object</code>参数传递的是发送方自己，那么在注册监听者这里，<code>object</code>参数指代的也是发送方的这个<code>object</code>参数，意思就是接收<code>object</code>对象发出的名为<code>name</code>的通知，如果有其它发送方发出同样<code>name</code>的通知，是不会接收到通知的。如果把<code>name</code>和<code>object</code>这两个参数同时置为nil，则会接收所有的通知</p>
-<p>NSNotification 应该是采用单例模式设计。使用<strong>观察者模式</strong>来实现跨层传递消息。</p>
-<p>主体应该是一个dictionary，key就是注册通知时的name。value应该是一个数组，里面是所有注册了该通知的数据模型(observer, SEL)</p>
+<p>NSNotification 应该是采用单例模式设计。</p>
+<p>主体应该是一个dictionary，key就是注册通知时的name。value应该是一个数组（NSHashTable，存储observe的弱引用），里面是所有注册了该通知的数据模型(observer, SEL)，发送通知时遍历此hashtable，如果observe是nil，主动移除</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g1pr2mfw2jj30ly0ezgm5.jpg" alt=""></p>
-<p>value中的observe要使用week，避免强引用；每次发送通知时，如果observe为nil，主动移除</p>
 
       
 

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://libo198615.github.io">
   <title>AutoLayout | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏  分别设置B到顶部和到A的约束，根据A是否显示，设置两个约束的优先级 使用stackView，隐藏了A，系统会自动达到上面的效果    Hugging 拉伸优先级 Compression 压缩优先级  如果设置了AutoLayout，然后又改变了frame，view的frame会改变，但是旋转屏幕后还是会回到AutoLayout的设置。Au">
+  <meta name="description" content="需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏  分别设置B到左侧和到A的约束，根据A是否显示，设置两个约束的优先级 使用stackView，隐藏了A，系统会自动达到上面的效果  给 UIScrollView 的元素添加约束view 的top left right 距UIScrollView为0，高度固定使其能上下滑动，同时要限定水平方向居中，因为UIScrollView的content">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AutoLayout">
 <meta property="og:url" content="https://libo198615.github.io/2019/01/02/iOS-AutoLayout/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏  分别设置B到顶部和到A的约束，根据A是否显示，设置两个约束的优先级 使用stackView，隐藏了A，系统会自动达到上面的效果    Hugging 拉伸优先级 Compression 压缩优先级  如果设置了AutoLayout，然后又改变了frame，view的frame会改变，但是旋转屏幕后还是会回到AutoLayout的设置。Au">
+<meta property="og:description" content="需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏  分别设置B到左侧和到A的约束，根据A是否显示，设置两个约束的优先级 使用stackView，隐藏了A，系统会自动达到上面的效果  给 UIScrollView 的元素添加约束view 的top left right 距UIScrollView为0，高度固定使其能上下滑动，同时要限定水平方向居中，因为UIScrollView的content">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1g0vffzyj86j30dy080wf7.jpg">
-<meta property="og:updated_time" content="2019-07-17T12:54:20.899Z">
+<meta property="og:updated_time" content="2019-08-14T05:29:45.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AutoLayout">
-<meta name="twitter:description" content="需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏  分别设置B到顶部和到A的约束，根据A是否显示，设置两个约束的优先级 使用stackView，隐藏了A，系统会自动达到上面的效果    Hugging 拉伸优先级 Compression 压缩优先级  如果设置了AutoLayout，然后又改变了frame，view的frame会改变，但是旋转屏幕后还是会回到AutoLayout的设置。Au">
+<meta name="twitter:description" content="需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏  分别设置B到左侧和到A的约束，根据A是否显示，设置两个约束的优先级 使用stackView，隐藏了A，系统会自动达到上面的效果  给 UIScrollView 的元素添加约束view 的top left right 距UIScrollView为0，高度固定使其能上下滑动，同时要限定水平方向居中，因为UIScrollView的content">
 <meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1g0vffzyj86j30dy080wf7.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -200,13 +200,14 @@
       
         <p>需求： 两个标签，A标签在B标签的前面，A标签有时会隐藏</p>
 <ol>
-<li>分别设置B到顶部和到A的约束，根据A是否显示，设置两个约束的优先级</li>
+<li>分别设置B到左侧和到A的约束，根据A是否显示，设置两个约束的优先级</li>
 <li>使用stackView，隐藏了A，系统会自动达到上面的效果</li>
 </ol>
+<h4 id="给-UIScrollView-的元素添加约束"><a href="#给-UIScrollView-的元素添加约束" class="headerlink" title="给 UIScrollView 的元素添加约束"></a>给 UIScrollView 的元素添加约束</h4><p>view 的top left right 距UIScrollView为0，高度固定使其能上下滑动，同时要限定水平方向居中，因为UIScrollView的contentSize还未确定。我们只确定了高度，没有固定宽度。</p>
 <p><img src="https://ws4.sinaimg.cn/large/006tKfTcly1g0vffzyj86j30dy080wf7.jpg" alt=""></p>
 <ul>
-<li>Hugging 拉伸优先级</li>
-<li>Compression 压缩优先级</li>
+<li>Hugging 拉伸优先级<br>值越大，越会被拉伸</li>
+<li>Compression 压缩优先级<br>值越大，越会被压缩</li>
 </ul>
 <p>如果设置了AutoLayout，然后又改变了frame，view的frame会改变，但是旋转屏幕后还是会回到AutoLayout的设置。AutoLayout会在view每次刷新frame时生效，手动改变frame只是临时改变一下，当下次更新view时还是依据AutoLayout来显示</p>
 

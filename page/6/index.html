@@ -174,6 +174,389 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-swift修饰符" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/11/swift修饰符/">swift修饰符</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/11/swift修饰符/" class="archive-article-date">
+  	<time datetime="2019-01-11T13:30:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Self"><a href="#Self" class="headerlink" title="Self"></a>Self</h4><ul>
+<li><p>protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protocol Copyavle &#123;</span><br><span class="line">    func copy() -&gt; Self</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class引用类型，可以使用Self作为函数的返回值</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">action</span><span class="params">()</span></span> -&gt; <span class="type">Self</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>struct值类型，不能使用Self作为函数返回值</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">StructA</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">action</span><span class="params">()</span></span> -&gt; <span class="type">StructA</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h4 id="precedencegroup"><a href="#precedencegroup" class="headerlink" title="precedencegroup"></a>precedencegroup</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 优先运算符</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">infix</span> <span class="keyword">operator</span> +* : <span class="type">InnerProductPrecedence</span> <span class="comment">// 定义一个中位操作符，即前后都是输入</span></span><br><span class="line"></span><br><span class="line">precedencegroup <span class="type">InnerProducePrecedence</span> &#123;</span><br><span class="line">    <span class="comment">// 结合律：内积的结果是一个 Double，不再会和其他内积结合使用，所以这里写成 none</span></span><br><span class="line">    <span class="keyword">associativity</span>: <span class="keyword">none</span></span><br><span class="line">    <span class="comment">// 优先级设置：高于普通运算。</span></span><br><span class="line">    <span class="comment">// MultiplicationPrecedence（代表乘法和除法）</span></span><br><span class="line">    <span class="comment">// AdditionPrecedence（代表加法和减法）</span></span><br><span class="line">    higherThan: <span class="type">MultiplicationPrecedence</span>, <span class="type">AdditionPrecedence</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> +*<span class="params">(<span class="keyword">left</span>: Vector2D, <span class="keyword">right</span>: Vector2D)</span></span> -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">left</span>.x * <span class="keyword">right</span>.x + <span class="keyword">left</span>.y * <span class="keyword">right</span>.y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = v1 +* v2 <span class="comment">// 14</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// The return type of functions that do not return normally, that is, a type</span></span><br><span class="line"><span class="comment">/// with no values.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// Use `Never` as the return type when declaring a closure, function, or</span></span><br><span class="line"><span class="comment">/// method that unconditionally throws an error, traps, or otherwise does</span></span><br><span class="line"><span class="comment">/// not terminate.</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///     func crashAndBurn() -&gt; Never &#123;</span></span><br><span class="line"><span class="comment">///         fatalError("Something very, very bad happened")</span></span><br><span class="line"><span class="comment">///     &#125;</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Never</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="mutating"><a href="#mutating" class="headerlink" title="mutating"></a>mutating</h4><p>通过方法调用来改变 <code>struct enumeration</code> 的实参</p>
+<p><code>swift</code> 包含三种类型</p>
+<ul>
+<li>struct // value type</li>
+<li>enum // value type</li>
+<li>class  // reference type  默认可以修改属性值<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">0</span>, y = <span class="number">0</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">moveBy</span><span class="params">(x: Int, y: Int)</span></span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.x += x</span><br><span class="line">        <span class="keyword">self</span>.y += y</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">TriStateSwitch</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Off</span>, <span class="type">Low</span>, <span class="type">High</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">next</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</span><br><span class="line">            <span class="keyword">case</span> .<span class="type">Off</span>:</span><br><span class="line">                <span class="keyword">self</span> = .<span class="type">Low</span></span><br><span class="line">            <span class="keyword">case</span> .<span class="type">Low</span>:</span><br><span class="line">                <span class="keyword">self</span> = .<span class="type">High</span></span><br><span class="line">            <span class="keyword">case</span> . <span class="type">High</span>:</span><br><span class="line">                <span class="keyword">self</span> = .<span class="type">Off</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="lazy"><a href="#lazy" class="headerlink" title="lazy"></a>lazy</h4><p><code>swift</code> 懒加载相当于静态空间，只运行一次。<br>只有第一次访问时才加载，如果永远不访问，它就不创建</p>
+<p>// 两种写法<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> name = <span class="string">"Dog"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> a: <span class="type">Int</span> = &#123;</span><br><span class="line">    pring(<span class="string">"a = 1"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只打印一次</span></span><br><span class="line">classA.a</span><br><span class="line">classA.a</span><br></pre></td></tr></table></figure>
+<p>如果在<code>closure</code>里面使用了<code>self</code>，也不会造成循环引用的问题，我们可以放心使用。注意：如果这个属性没有被<code>lazy</code>修饰，在<code>closure</code>里面是不能使用<code>self</code>的，因为这时<code>self</code>还没有初始化完成。</p>
+<hr>
+<h4 id="if-if-let"><a href="#if-if-let" class="headerlink" title="if    if let"></a>if    if let</h4><p>如果常量是可选项<code>Optional</code>，<code>if</code>判断后仍然需要解包<code>!</code><br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name: <span class="type">String</span>? = <span class="string">"老王"</span></span><br><span class="line"><span class="keyword">let</span> age: <span class="type">Int</span>? = <span class="number">10</span></span><br><span class="line"><span class="keyword">if</span> name != <span class="literal">nil</span> &amp;&amp; age != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(name! + <span class="type">String</span>(age!))     </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出:老王10</span></span><br></pre></td></tr></table></figure></p>
+<p>如果常量是可选项<code>Optional</code>，<code>if let</code>判断后不需要解包<code>!</code>，<code>{}</code>内一定有值<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name: <span class="type">String</span>? = <span class="string">"老王"</span></span><br><span class="line"><span class="keyword">let</span> age: <span class="type">Int</span>? = <span class="number">10</span><span class="comment">// if let 连用,判断对象的值是否为'nil'</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> nameNew = name,<span class="keyword">let</span> ageNew = age &#123;</span><br><span class="line">    <span class="comment">// 进入分支后,nameNew 和 ageNew 一定有值</span></span><br><span class="line">    <span class="built_in">print</span>(nameNew + <span class="type">String</span>(ageNew)) </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出:老王10</span></span><br></pre></td></tr></table></figure></p>
+<p><code>if var</code>的用法，和<code>if let</code>的区别就是可以在<code>{}</code>内修改变量的值<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name: <span class="type">String</span>? = <span class="string">"老王"</span></span><br><span class="line"><span class="keyword">let</span> age: <span class="type">Int</span>? = <span class="number">10</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">var</span> nameNew = name,<span class="keyword">let</span> ageNew = age &#123;</span><br><span class="line">    <span class="comment">// 'var'修饰,可以修改'nameNew'的值,'let'修改的不可以修改</span></span><br><span class="line">    nameNew = <span class="string">"老李"</span></span><br><span class="line">    <span class="built_in">print</span>(nameNew + <span class="type">String</span>(ageNew))     </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出:老李10</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="guard"><a href="#guard" class="headerlink" title="guard"></a>guard</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> age = <span class="number">5</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">guard</span> age &gt;= <span class="number">10</span> <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"error"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="comment">// 不加return，编译器会提示错误</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="final"><a href="#final" class="headerlink" title="final"></a>final</h5><p>可以防止类<code>class</code>被继承，还可以防止子类重写父类的属性、方法以及下标。需要注意的是，<code>final</code>修饰符只能用于类，不能修饰结构体<code>struct</code>和枚举<code>enum</code>，<br> 因为结构体和枚举只能遵循协议<code>protocol</code>。但是它并不能重写遵循的协议的任何成员，这就是结构体和枚举不需要final修饰的原因</p>
+<hr>
+<h4 id="Defer"><a href="#Defer" class="headerlink" title="Defer"></a>Defer</h4><p>代码压入栈，<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">lookforSomething</span><span class="params">(name:String)</span></span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"begin"</span>)</span><br><span class="line">    <span class="keyword">if</span> name == <span class="string">""</span>&#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"1-1"</span>)</span><br><span class="line">        <span class="keyword">defer</span>&#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"2-1"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"1-2"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"1-3"</span>)</span><br><span class="line">    <span class="keyword">defer</span>&#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"3-1"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"eng"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>begin</strong></p>
+<p><strong>1-1</strong></p>
+<p><strong>1-2</strong></p>
+<p><strong>2-1</strong></p>
+<p><strong>1-3</strong></p>
+<p><strong>eng</strong></p>
+<p><strong>3-1</strong></p>
+<hr>
+<h4 id="associatedtype"><a href="#associatedtype" class="headerlink" title="associatedtype"></a>associatedtype</h4><p><code>associatedtype</code>类型是在<code>protocol中</code> 代指一个确定类型并要求该类型实现指定方法<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">Container</span> </span>&#123;   </span><br><span class="line">  <span class="keyword">associatedtype</span> <span class="type">ItemType</span>    </span><br><span class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">append</span><span class="params">(<span class="number">_</span> item:ItemType)</span></span>   </span><br><span class="line">  <span class="keyword">var</span> <span class="built_in">count</span>:<span class="type">Int</span> &#123; </span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">   &#125;    </span><br><span class="line">  <span class="keyword">subscript</span>(i:<span class="type">Int</span>) -&gt; <span class="type">ItemType</span> &#123; </span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义一个协议时，有的时候声明一个或多个关联类型作为协议定义的一部分将会非常有用。关联类型为协议中的某个类型提供了一个占位名（或者说别名），其代表的实际类型在协议被采纳时才会被指定<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">Sequence</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// A type representing the sequence's elements.</span></span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Element</span> <span class="keyword">where</span> <span class="type">Self</span>.<span class="type">Element</span> == <span class="type">Self</span>.<span class="type">Iterator</span>.<span class="type">Element</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// A type that provides the sequence's iteration interface and</span></span><br><span class="line">    <span class="comment">/// encapsulates its iteration state.</span></span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">Iterator</span> : <span class="type">IteratorProtocol</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// A type that represents a subsequence of some of the sequence's elements.</span></span><br><span class="line">    <span class="keyword">associatedtype</span> <span class="type">SubSequence</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Returns an iterator over the elements of this sequence.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">makeIterator</span><span class="params">()</span></span> -&gt; <span class="type">Self</span>.<span class="type">Iterator</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="discardableResult"><a href="#discardableResult" class="headerlink" title="@discardableResult"></a>@discardableResult</h4><p>取消如果不使用返回值的警告</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Swift//" class="article-tag-list-link color1">Swift</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/11/swift修饰符/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-设计模式-MVVM" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/设计模式-MVVM/">MVVM</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/设计模式-MVVM/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:08:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="mvc"><a href="#mvc" class="headerlink" title="mvc"></a>mvc</h5><p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g4md25ee1cj30r20coab0.jpg" alt="2"></p>
+<p>Models： 数据层，负责数据的处理和获取的数据接口层。</p>
+<p>Views： 展示层(GUI)，对于 iOS 来说所有以 UI 开头的类基本都属于这层。</p>
+<p>Controller： 控制器层，它是 Model 和 View 之间的胶水或者说是中间人。一般来说，当用户对 View 有操作时它负责去修改相应 Model；当 Model 的值发生变化时它负责去更新对应 View。</p>
+<p>每个viewcontroller都带有一个根view，这就导致C和V紧密耦合在一起构成了iOS里面的C层，目的就是为了提高开发效率，简化操作。对于简单界面来说，viewcontroller结构确实可以提高开发效率，但是一旦需要构建复杂界面，那么viewcontroller很容易就会出现代码膨胀，逻辑满天飞的问题。</p>
+<p>Model层实现的正确姿势：</p>
+<p>业务模型。也就是你所有业务数据和业务实现逻辑都应该定义在M层里面，而且业务逻辑的实现和定义应该和具体的界面无关，也就是和视图以及控制之间没有任何的关系，它是可以独立存在的，您甚至可以将业务模型单独编译出一个静态库来提供给第三方或者其他系统使用。</p>
+<ol>
+<li>定义的M层中的代码应该和V层和C层完全无关的，也就是M层的对象是不需要依赖任何C层和V层的对象而独立存在的。整个框架的设计最优结构是V层不依赖C层而独立存在，M层不依赖C层和V层独立存在，C层负责关联二者，V层只负责展示，M层持有数据和业务的具体实现，而C层则处理事件响应以及业务的调用以及通知界面更新。三者之间一定要明确的定义为单向依赖，而不应该出现双向依赖</li>
+<li>M层要完成对业务逻辑实现的封装，一般业务逻辑最多的是涉及到客户端和服务器之间的业务交互。M层里面要完成对使用的网络协议(HTTP, TCP，其他)、和服务器之间交互的数据格式（XML, JSON,其他)、本地缓存和数据库存储（COREDATA, SQLITE,其他)等所有业务细节的封装，而且这些东西都不能暴露给C层。所有供C层调用的都是M层里面一个个业务类所提供的成员方法来实现。也就是说C层是不需要知道也不应该知道和客户端和服务器通信所使用的任何协议，以及数据报文格式，以及存储方面的内容。这样的好处是客户端和服务器之间的通信协议，数据格式，以及本地存储的变更都不会影响任何的应用整体框架，因为提供给C层的接口不变，只需要升级和更新M层的代码就可以了。比如说我们想将网络请求库从ASI换成AFN就只要在M层变化就可以了，整个C层和V层的代码不变。</li>
+</ol>
+<p>mvc缺点：业务逻辑和业务展示强耦合</p>
+<p>必须生成cell，然后点击cell上面的点赞按钮，才可以触发点赞的业务逻辑。<br>但是业务逻辑一般改变的model数据，view只是拿到model的数据进行展示。现在却把这两个原本独立的事情合在一起了。导致业务逻辑没法单独测试了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line"></span><br><span class="line">    BlogCellHelper *cellHelper = self.blogs[indexPath.row];</span><br><span class="line">    BlogTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];</span><br><span class="line">    cell.title = cellHelper.blogTitleText;</span><br><span class="line">    cell.summary = cellHelper.blogSummaryText;</span><br><span class="line">    cell.likeState = cellHelper.isLiked;</span><br><span class="line">    cell.likeCountText = cellHelper.blogLikeCountText;</span><br><span class="line">    cell.shareCountText = cellHelper.blogShareCountText;</span><br><span class="line"></span><br><span class="line">    //点赞的业务逻辑</span><br><span class="line">    __weak typeof(cell) weakCell = cell;</span><br><span class="line">    [cell setDidLikeHandler:^&#123;</span><br><span class="line">        if (cellHelper.blog.isLiked) &#123;</span><br><span class="line">            [self.tableView showToastWithText:@&quot;你已经赞过它了~&quot;];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            [[UserAPIManager new] likeBlogWithBlogId:cellHelper.blog.blogId completionHandler:^(NSError *error, id result) &#123;</span><br><span class="line">                if (error) &#123;</span><br><span class="line">                    [self.tableView showToastWithText:error.domain];</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    cellHelper.blog.likeCount += 1;</span><br><span class="line">                    cellHelper.blog.isLiked = YES;</span><br><span class="line">                    //点赞的业务展示</span><br><span class="line">                    weakCell.likeState = cellHelper.blog.isLiked;</span><br><span class="line">                    weakCell.likeCountText = cellHelper.blogTitleText;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    return cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h4><p>MVC的缺点在于并没有区分业务逻辑和业务展示, 这对单元测试很不友好. MVP针对以上缺点做了优化, 它将业务逻辑和业务展示也做了一层隔离, 对应的就变成了MVCP.</p>
+<blockquote>
+<p>Presenter层职责</p>
+</blockquote>
+<ul>
+<li>实现view的事件处理逻辑，暴露相应的接口给view的事件调用</li>
+<li>调用model的接口获取数据，然后加工数据，封装成view可以直接用来显示的数据和状态</li>
+<li>处理界面之间的跳转（这个根据实际情况来确定放在P还是C）</li>
+</ul>
+<h5 id="MVVM（Model-View-View-Mode）"><a href="#MVVM（Model-View-View-Mode）" class="headerlink" title="MVVM（Model View View-Mode）"></a>MVVM（Model View View-Mode）</h5><p>MVVM：将业务逻辑从 Controller 移出放到一个新的对象里，即 View Model，促进了 UI 代码与业务逻辑的分离。<br><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g4md9ctz33j31300fujt2.jpg" alt="3"></p>
+<p>view 和 view controller 都不能直接引用model，而是引用视图模型（viewModel）</p>
+<p>viewModel 是一个放置用户输入验证逻辑，视图显示逻辑，发起网络请求和其他代码的地方</p>
+<p>使用MVVM会轻微的增加代码量，但总体上减少了代码的复杂性</p>
+<p>MVVM 配合一个绑定机制效果最好</p>
+<p><a href="https://objccn.io/issue-13-1/" target="_blank" rel="noopener">https://objccn.io/issue-13-1/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/设计模式-MVVM/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-设计模式-组合模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/设计模式-组合模式/">组合模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/设计模式-组合模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:07:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用于把一组相似的对象当作一个单一的对象。组合模式依据树形结构来组合对象，用来表示部分以及整体层次<br>例子：<br>公司的员工表<br>创建CEO和创建主管、普通员工一样，只是CEO下有下属列表，里面包括各个主管，主管的下属列表里包含相对应的员工。当打印所有员工时，只打印CEO和他的下属（循环打印）即可，CEO代表了这个树形结构的顶点</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/设计模式-组合模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-设计模式-单例模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/设计模式-单例模式/">单例模式 - 创建型模式</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/设计模式-单例模式/" class="archive-article-date">
+  	<time datetime="2019-01-09T09:04:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
+<p>意图：保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+<p>主要解决：一个全局使用的类频繁地创建与销毁。</p>
+<p>场景：确保程序运行期某个类，只有一份实例，用于进行资源共享控制。<br>实例：<code>[UIApplication sharedApplication]</code></p>
+<h5 id="全局变量和单例模式的区别"><a href="#全局变量和单例模式的区别" class="headerlink" title="全局变量和单例模式的区别"></a>全局变量和单例模式的区别</h5><p>全局变量和单例都可以提供全局访问的能力。</p>
+<p>全局变量只是对一个对象或变量的静态引用，并不能保证应用程序只有一个实例。</p>
+<p>编码规范也明确的指出应该要少使用全局变量，因为过多的使用全局变量会造成代码难读；全局变量并不能实现继承。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/设计模式-单例模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-设计模式-适配器模式" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -613,321 +996,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/09/设计模式-建造者模式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-inline" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/inline/">inline VS define</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/inline/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:50:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>define<br>定义预编译时处理的宏，只是简单的字符串替换，无类型检查。</li>
-<li>inline</li>
-</ul>
-<ol>
-<li><code>inline</code>关键字用来定义一个类的内联函数，引入它的主要原因是用它替代C中的宏定义，编译阶段完成。  </li>
-<li>内联函数要做类型安全检查，<code>inline</code>是指嵌入代码，在调用函数的地方不是跳转，而是把代码直接写到那里去，对于短小的函数来说，<code>inline</code>函数可以得到一定效率的提升，和c时代的宏函数相比，<code>inline</code>函数更加安全可靠，这个是以增加空间的消耗为代价的。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/inline/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/Git-tag/">Git Tag</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/Git-tag/" class="archive-article-date">
-  	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/Git-tag/1.png" title="图片说明"></p>
-<p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/Git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
-<p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
-<p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
-<p>SourceTree:<br><img src="/2019/01/09/Git-tag/3.png" title="图片说明"></p>
-<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/Git-tag/4.png" title="图片说明"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/git//" class="article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/Git-tag/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Git-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/Git-在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/Git-在sourceTree中使用rebase/" class="archive-article-date">
-  	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原始状态<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/1.png" title="图片说明"><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/2.png" title="图片说明"><br><img src="/2019/01/09/Git-在sourceTree中使用rebase/3.png" title="图片说明"><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/4.png" title="图片说明"><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/5.png" title="图片说明"><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/6.png" title="图片说明"><br>此时我们的本地更新是基于最新的 master 分支<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/7.png" title="图片说明"><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1 的更新到 master 分支<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/8.png" title="图片说明"><br>再推送 master 分支，就保证了git分支的整洁<br><img src="/2019/01/09/Git-在sourceTree中使用rebase/9.png" title="图片说明"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/Git-在sourceTree中使用rebase/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-制作自己的pod" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/09/iOS-制作自己的pod/">制作自己的pod</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/09/iOS-制作自己的pod/" class="archive-article-date">
-  	<time datetime="2019-01-09T06:56:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-在github上创建一个空白工程-APPHelp，克隆到本地"><a href="#1-在github上创建一个空白工程-APPHelp，克隆到本地" class="headerlink" title="1. 在github上创建一个空白工程 APPHelp，克隆到本地"></a>1. 在github上创建一个空白工程 <code>APPHelp</code>，克隆到本地</h2><h2 id="2-在终端-cd-到-APPHelp-目录，执行"><a href="#2-在终端-cd-到-APPHelp-目录，执行" class="headerlink" title="2. 在终端 cd 到 APPHelp 目录，执行"></a>2. 在终端 cd 到 <code>APPHelp</code> 目录，执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create APPHelp</span><br></pre></td></tr></table></figure>
-<p>会创建 <code>APPHelp.podspec</code><br><br>使用xcode打开，可以看里面的注释，我这里放一个自己使用的精简版的，可以对照着改<br>里面的注释被我删掉了，可能是我用的注释格式不正确“//   #”,注意点都写在了下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Pod::Spec.new do |s|</span><br><span class="line"></span><br><span class="line">s.name         = &quot;APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.version      = &quot;0.0.1&quot;</span><br><span class="line"></span><br><span class="line">s.summary      = &quot;app开发常用知识点收集&quot;</span><br><span class="line"></span><br><span class="line">s.homepage     = &quot;https://github.com/libo198615/APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.license = &#123; :type =&gt; &apos;MIT&apos;, :text =&gt; &lt;&lt;-LICENSE</span><br><span class="line">Copyright PPAbner 2016-2017</span><br><span class="line">LICENSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s.author             = &#123; &quot;boli&quot; =&gt; &quot;libo198615@163.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.platform     = :ios</span><br><span class="line"></span><br><span class="line">s.source       = &#123; :git =&gt; &quot;https://github.com/libo198615/APPHelp.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.source_files  = &quot;Pod/**/*&quot;</span><br><span class="line"></span><br><span class="line">s.public_header_files = &quot;Pod/**/*.h&quot;</span><br><span class="line"></span><br><span class="line">s.requires_arc = true</span><br><span class="line"></span><br><span class="line">s.ios.deployment_target = &quot;8.0&quot;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
-<h2 id="3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag"><a href="#3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag" class="headerlink" title="3. 将 APPHelp.podspec和你自己的文件提交到github，创建APPHelp.podspec中相应的 0.0.1的分支或者tag"></a>3. 将 <code>APPHelp.podspec</code>和你自己的文件提交到github，创建<code>APPHelp.podspec</code>中相应的 <code>0.0.1</code>的分支或者tag</h2><p>里面的内容需要改成自己的信息，其中s.source_files和s.public_header_files中如果有其它文件夹，要用两个*，不然也会报错，应该是正则匹配的问题，这里不深究了。</p>
-<h2 id="4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方"><a href="#4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方" class="headerlink" title="4. 执行下面命令，验证APPHelp.podspec是否正确，如果有错误请细读一下APPHelp.podspec看是否有设置不对的地方"></a>4. 执行下面命令，验证<code>APPHelp.podspec</code>是否正确，如果有错误请细读一下<code>APPHelp.podspec</code>看是否有设置不对的地方</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec lint APPHelp.podspec</span><br></pre></td></tr></table></figure>
-<h2 id="5-提交-APPHelp-podspec-到-CocoaPods"><a href="#5-提交-APPHelp-podspec-到-CocoaPods" class="headerlink" title="5. 提交 APPHelp.podspec 到 CocoaPods"></a>5. 提交 <code>APPHelp.podspec</code> 到 <code>CocoaPods</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果是第一次提交，需要注册一下</span><br><span class="line">$ pod trunk register 邮箱 &apos;昵称&apos; --description=&apos; 这里写描述&apos;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push APPHelp.podspec</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/09/iOS-制作自己的pod/">展开全文 >></a>
         </p>
       
 

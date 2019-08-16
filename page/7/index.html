@@ -174,6 +174,325 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-inline" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/inline/">inline VS define</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/inline/" class="archive-article-date">
+  	<time datetime="2019-01-09T08:50:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>define<br>宏，只是简单的字符串替换，无类型检查。</li>
+<li>inline</li>
+</ul>
+<ol>
+<li><code>inline</code>关键字用来定义一个类的内联函数，引入它的主要原因是用它替代C中的宏定义，编译阶段完成。  </li>
+<li>内联函数要做类型安全检查，<code>inline</code>是指嵌入代码，在调用函数的地方不是跳转，而是把代码直接写到那里去，对于短小的函数来说，<code>inline</code>函数可以得到一定效率的提升，和c时代的宏函数相比，<code>inline</code>函数更加安全可靠，这个是以增加空间的消耗为代价的。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/计算机基础//" class="article-tag-list-link color1">计算机基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/inline/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git-tag" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/Git-tag/">Git Tag</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/Git-tag/" class="archive-article-date">
+  	<time datetime="2019-01-09T08:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>创建</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag 0.1  // lightweight 轻量级</span><br><span class="line">// 在某次提交上创建分支</span><br><span class="line">git tag 0.2 -m &quot;v-0.2&quot; 69324355  // annotated 含附注</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/Git-tag/1.png" title="图片说明"></p>
+<p><strong>推送</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 连同标签一起推送</span><br><span class="line">git push origin master --tags</span><br><span class="line">只推送标签</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/Git-tag/2.png" title="图片说明"><br><strong>更新</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取所有的提交及标签更新</span><br><span class="line">git fetch</span><br><span class="line">// 仅仅获取标签更新</span><br><span class="line">git fetch origin --tags</span><br></pre></td></tr></table></figure></p>
+<p><strong>查看</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag </span><br><span class="line">git ls-remote --tags  // 远程</span><br></pre></td></tr></table></figure></p>
+<p><strong>删除</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d 0.1</span><br><span class="line">git push origin(远程名字) --delete tag 0.1</span><br></pre></td></tr></table></figure></p>
+<p>SourceTree:<br><img src="/2019/01/09/Git-tag/3.png" title="图片说明"></p>
+<p><strong>移动</strong><br>SourceTree:<br><img src="/2019/01/09/Git-tag/4.png" title="图片说明"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/git//" class="article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/Git-tag/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Git-在sourceTree中使用rebase" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/Git-在sourceTree中使用rebase/">在sourceTree中使用rebase（变基）</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/Git-在sourceTree中使用rebase/" class="archive-article-date">
+  	<time datetime="2019-01-09T07:00:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原始状态<br><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g61rmhilkyj30sy0pg41h.jpg" alt=""><br>假如我们要在 master 分支上进行开发，在远端的 master 分支上右键，检出 一个自己的开发分支  dev-1<br><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g61rmhaf1kj30t20v2ae7.jpg" alt=""><br><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g61rmh06ekj30u40r2diy.jpg" alt=""><br>做一些开发，提交到本地，不要推送（push）到远端<br>切换到 master 分支，拉取远端的 master 更新，（这里另一个同事在 master 分支上提交了 dev 2 的更新）<br><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g61rmgsxuaj30zk0ec0xz.jpg" alt=""><br>切换到自己的开发分支 dev-1<br>选中 master 分支，右键，选择  将当前变更变基到 master<br><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g61rmgjv4aj30ta0mm0wn.jpg" alt=""><br>如果有冲突则合并冲突，<br>点击左上角的加号，选择 继续变基 (如果点击加号没反应，直接进行下一步)<br><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g61rmgcbe0j30zk0g4434.jpg" alt=""><br>此时我们的本地更新是基于最新的 master 分支<br><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g61rmg07pkj30uo0h20vf.jpg" alt=""><br>最后’推送’我们的开发分支 dev-1到远端<br>切换到master分支，点击 拉取，拉取 dev-1（我们自己的开发分支） 的更新到 master 分支<br><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g61rmfse17j30ym0h00vp.jpg" alt=""><br>再推送 master 分支，就保证了git分支的整洁<br><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g61rn5g4jzj30zk0fstbx.jpg" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/Git-在sourceTree中使用rebase/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-iOS-制作自己的pod" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/09/iOS-制作自己的pod/">制作自己的pod</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/09/iOS-制作自己的pod/" class="archive-article-date">
+  	<time datetime="2019-01-09T06:56:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-在github上创建一个空白工程-APPHelp，克隆到本地"><a href="#1-在github上创建一个空白工程-APPHelp，克隆到本地" class="headerlink" title="1. 在github上创建一个空白工程 APPHelp，克隆到本地"></a>1. 在github上创建一个空白工程 <code>APPHelp</code>，克隆到本地</h2><h2 id="2-在终端-cd-到-APPHelp-目录，执行"><a href="#2-在终端-cd-到-APPHelp-目录，执行" class="headerlink" title="2. 在终端 cd 到 APPHelp 目录，执行"></a>2. 在终端 cd 到 <code>APPHelp</code> 目录，执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec create APPHelp</span><br></pre></td></tr></table></figure>
+<p>会创建 <code>APPHelp.podspec</code><br><br>使用xcode打开，可以看里面的注释，我这里放一个自己使用的精简版的，可以对照着改<br>里面的注释被我删掉了，可能是我用的注释格式不正确“//   #”,注意点都写在了下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">Pod::Spec.new do |s|</span><br><span class="line"></span><br><span class="line">s.name         = &quot;APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.version      = &quot;0.0.1&quot;</span><br><span class="line"></span><br><span class="line">s.summary      = &quot;app开发常用知识点收集&quot;</span><br><span class="line"></span><br><span class="line">s.homepage     = &quot;https://github.com/libo198615/APPHelp&quot;</span><br><span class="line"></span><br><span class="line">s.license = &#123; :type =&gt; &apos;MIT&apos;, :text =&gt; &lt;&lt;-LICENSE</span><br><span class="line">Copyright PPAbner 2016-2017</span><br><span class="line">LICENSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">s.author             = &#123; &quot;boli&quot; =&gt; &quot;libo198615@163.com&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.platform     = :ios</span><br><span class="line"></span><br><span class="line">s.source       = &#123; :git =&gt; &quot;https://github.com/libo198615/APPHelp.git&quot;, :tag =&gt; &quot;#&#123;s.version&#125;&quot; &#125;</span><br><span class="line"></span><br><span class="line">s.source_files  = &quot;Pod/**/*&quot;</span><br><span class="line"></span><br><span class="line">s.public_header_files = &quot;Pod/**/*.h&quot;</span><br><span class="line"></span><br><span class="line">s.requires_arc = true</span><br><span class="line"></span><br><span class="line">s.ios.deployment_target = &quot;8.0&quot;</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag"><a href="#3-将-APPHelp-podspec和你自己的文件提交到github，创建APPHelp-podspec中相应的-0-0-1的分支或者tag" class="headerlink" title="3. 将 APPHelp.podspec和你自己的文件提交到github，创建APPHelp.podspec中相应的 0.0.1的分支或者tag"></a>3. 将 <code>APPHelp.podspec</code>和你自己的文件提交到github，创建<code>APPHelp.podspec</code>中相应的 <code>0.0.1</code>的分支或者tag</h2><p>里面的内容需要改成自己的信息，其中s.source_files和s.public_header_files中如果有其它文件夹，要用两个*，不然也会报错，应该是正则匹配的问题，这里不深究了。</p>
+<h2 id="4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方"><a href="#4-执行下面命令，验证APPHelp-podspec是否正确，如果有错误请细读一下APPHelp-podspec看是否有设置不对的地方" class="headerlink" title="4. 执行下面命令，验证APPHelp.podspec是否正确，如果有错误请细读一下APPHelp.podspec看是否有设置不对的地方"></a>4. 执行下面命令，验证<code>APPHelp.podspec</code>是否正确，如果有错误请细读一下<code>APPHelp.podspec</code>看是否有设置不对的地方</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod spec lint APPHelp.podspec</span><br></pre></td></tr></table></figure>
+<h2 id="5-提交-APPHelp-podspec-到-CocoaPods"><a href="#5-提交-APPHelp-podspec-到-CocoaPods" class="headerlink" title="5. 提交 APPHelp.podspec 到 CocoaPods"></a>5. 提交 <code>APPHelp.podspec</code> 到 <code>CocoaPods</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果是第一次提交，需要注册一下</span><br><span class="line">$ pod trunk register 邮箱 &apos;昵称&apos; --description=&apos; 这里写描述&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push APPHelp.podspec</span><br></pre></td></tr></table></figure>
+<h4 id="user-frameworks"><a href="#user-frameworks" class="headerlink" title="user_frameworks!"></a>user_frameworks!</h4><p>表名使用动态链接库，会生成framework；默认是static libraries方式管理，会生成.a文件(静态连接库)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pod ``, `~&gt; 2.0` // 大于 2.0 的最新版</span><br><span class="line">pod ``, `2.0` // 固定 2.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 不同的target 不同的 platform 引入不同的插件</span><br><span class="line">target :&apos;zxptUser&apos; do</span><br><span class="line">platform :ios  </span><br><span class="line">pod &apos;Reachability&apos;,  &apos;~&gt; 3.0.0&apos;  </span><br><span class="line">pod &apos;SBJson&apos;, &apos;~&gt; 4.0.0&apos;  </span><br><span class="line">  </span><br><span class="line">platform :ios, &apos;7.0&apos;  </span><br><span class="line">pod &apos;AFNetworking&apos;, &apos;~&gt; 2.0&apos;</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">target :&apos;zxptUser_local&apos; do</span><br><span class="line">pod &apos;OpenUDID&apos;, &apos;~&gt; 1.0.0&apos;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="Podfile-lock"><a href="#Podfile-lock" class="headerlink" title="Podfile.lock"></a>Podfile.lock</h3><p>当你执行<code>pod install</code>之后，除了 Podfile 外，CocoaPods 还会生成一个名为<code>Podfile.lock</code>的文件，Podfile.lock 应该加入到版本控制里面，不应该把这个文件加入到<code>.gitignore</code>中。因为<code>Podfile.lock</code>会锁定当前各依赖库的版本，之后如果多次执行<code>pod install</code> 不会更改版本，要<code>pod update</code>才会改<code>Podfile.lock</code>了。这样多人协作的时候，可以防止第三方库升级时造成大家各自的第三方库版本不一致。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/知识点//" class="article-tag-list-link color4">知识点</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/09/iOS-制作自己的pod/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-flutter" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -853,23 +1172,20 @@
       
         <h5 id="p"><a href="#p" class="headerlink" title="%p"></a>%p</h5><p>作用：输出内存地址</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSString *name = @&quot;xxxx&quot;;</span><br><span class="line">NSLog(@&quot;%p&quot;,name); // 字符串 “xxxx” 内存首地址</span><br><span class="line">NSLog(@&quot;%p&quot;,&amp;name); // 指针name 内存首地址</span><br></pre></td></tr></table></figure>
-<h5 id="NSSet"><a href="#NSSet" class="headerlink" title="NSSet"></a>NSSet</h5><p>NSSet到底什么类型，其实它和NSArray功能性质一样，用于存储对象，属于集合；NSSet  ， NSMutableSet类声明编程接口对象，无序的集合，在内存中存储方式是不连续的，不像NSArray（是有序的集合）类声明编程接口对象是有序集合，在内存中存储位置是连续的；</p>
-<p>NSSet和我们常用NSArry区别是：在搜索一个一个元素时NSSet比NSArray效率高，主要是它用到了一个算法hash(散列，也可直译为哈希)；<br>比如你要存储元素A，一个hash算法直接就能直接找到A应该存储的位置；同样，当你要访问A时，一个hash过程就能找到A存储的位置。而对于NSArray，若想知道A到底在不在数组中，则需要便利整个数组，显然效率较低了；</p>
 <h5 id="分辨率"><a href="#分辨率" class="headerlink" title="分辨率"></a>分辨率</h5><p>分辨率就是屏幕上横、纵的总象素点数</p>
 <ul>
 <li>物理分辨率是硬件所支持的，如果我们设计的时候用单位px，可以说是物理分辨率尺寸。</li>
 <li>逻辑分辨率是软件可以达到的，如果我们设计的时候用单位pt，可以说是逻辑分辨率尺寸。</li>
 </ul>
-<h5 id="NSClassFromString"><a href="#NSClassFromString" class="headerlink" title="NSClassFromString"></a>NSClassFromString</h5><p>正常来说，使用如下方法来对不确定的类进行初始化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id myObj = [[NSClassFromString(@&quot;MySpecialClass&quot;) alloc] init];</span><br><span class="line">和</span><br><span class="line">id myObj = [[MySpecialClass alloc] init];</span><br></pre></td></tr></table></figure></p>
-<p>是一样的。</p>
+<h5 id="NSClassFromString-映射"><a href="#NSClassFromString-映射" class="headerlink" title="NSClassFromString 映射"></a>NSClassFromString 映射</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id myObj = [[NSClassFromString(@&quot;MySpecialClass&quot;) alloc] init];</span><br><span class="line">// 相当于</span><br><span class="line">id myObj = [[MySpecialClass alloc] init];</span><br></pre></td></tr></table></figure>
 <p>但是，如果你的程序中并不存在MySpecialClass这个类，下面的写法会出错，而上面的写法只是返回一个空对象而已。<br>因此，在某些情况下，可以使用NSClassFromString来进行你不确定的类的初始化。<br>NSClassFromString的好处是：<br>1 弱化连接，因此并不会把没有的Framework也link到程序中。<br>2 不需要使用import，因为类是动态加载的，只要存在就可以加载。因此如果你的toolchain中没有某个类的头文件定义，而你确信这个类是可以用的，那么也可以用这种方法。</p>
 <h5 id="layoutIfNeeded"><a href="#layoutIfNeeded" class="headerlink" title="layoutIfNeeded"></a>layoutIfNeeded</h5><p>先调用<code>setNeedsLayout</code>,标记为需要重新布局,在下个UI刷新循环中系统自动调用<code>layoutSubviews</code>进行刷新<br>调用<code>layoutIfNeeded</code>，判断是否被标记为需要重新布局，如果有，则立即调用<code>layoutSubviews</code>进行刷新</p>
-<p>14）我们能将 int 强制转换为 byte 类型的变量吗？如果该值大于 byte 类型的范围，将会出现什么现象？<br>是的，我们可以做强制转换，但是 Java 中 int 是 32 位的，而 byte 是 8 位的，所以，如果强制转化是，int 类型的高 24 位将会被丢弃，byte 类型的范围是从 -128 到 128。 </p>
-<p>15）Java 中 ++ 操作符是线程安全的吗？<br>不是线程安全的操作。它涉及到多个指令，如读取变量值，增加，然后存储回内存，这个过程可能会出现多个线程交差。 </p>
+<p>我们能将 int 强制转换为 byte 类型的变量吗？如果该值大于 byte 类型的范围，将会出现什么现象？<br>是的，我们可以做强制转换，但是 Java 中 int 是 32 位的，而 byte 是 8 位的，所以，如果强制转化是，int 类型的高 24 位将会被丢弃，byte 类型的范围是从 -128 到 128。 </p>
 <p>16）a = a + b 与 a += b 的区别？<br>+= 隐式的将加操作的结果类型强制转换为持有结果的类型。如果两这个整型相加，如 byte、short 或者 int，首先会将它们提升到 int 类型，然后在执行加法操作。如果加法操作的结果比 a 的最大值要大，则 a+b 会出现编译错误，但是 a += b 没问题，如下：<br>byte a = 127;<br>byte b = 127;<br>b = a + b; // error : cannot convert from int to byte<br>b += a; // ok </p>
 <p>注：其实无论 a+b 的值为多少，编译器都会报错，因为 a+b 操作会将 a、b 提升为 int 类型，所以将 int 类型赋值给 byte 就会编译出错 </p>
-<p>17）我能在不进行强制转换的情况下将一个 double 值赋值给 long 类型的变量吗？<br>不行，你不能在没有强制类型转换的前提下将一个 double 值赋值给 long 类型的变量，因为 double 类型的范围比 long 类型更广，所以必须要进行强制转换。 </p>
-<p>18）3*0.1 == 0.3 将会返回什么？true 还是 false？<br>false，因为有些浮点数不能完全精确的表示出来。 </p>
+<p>我能在不进行强制转换的情况下将一个 double 值赋值给 long 类型的变量吗？<br>不行，你不能在没有强制类型转换的前提下将一个 double 值赋值给 long 类型的变量，因为 double 类型的范围比 long 类型更广，所以必须要进行强制转换。 </p>
+<p>3*0.1 == 0.3 将会返回什么？true 还是 false？<br>false，因为有些浮点数不能完全精确的表示出来。 </p>
+<h4 id="异步单元测试"><a href="#异步单元测试" class="headerlink" title="异步单元测试"></a>异步单元测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// XCTestCase 系统方法</span><br><span class="line">- (void)waitForExpectationsWithTimeout:(NSTimeInterval)timeout handler:(XCWaitCompletionHandler)handler;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -894,337 +1210,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/06/知识点/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-错误调试" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/iOS-错误调试/">错误调试</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/iOS-错误调试/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>内存泄漏：</p>
-<ol>
-<li>timer</li>
-<li>delegate</li>
-<li>block</li>
-</ol>
-<h5 id="dSYM"><a href="#dSYM" class="headerlink" title="dSYM"></a>dSYM</h5><p><code>Xcode</code>编译项目后，我们会看到一个同名的 <code>dSYM</code> 文件，<code>dSYM</code> 是保存 <code>16</code> 进制函数地址映射信息的中转文件，我们调试的 <code>symbols</code> 都会包含在这个文件中，并且每次编译项目的时候都会生成一个新的 <code>dSYM</code> 文件，位于 <code>/Library/Developer/Xcode/Archives</code> 目录下，对于每一个发布版本我们都很有必要保存对应的 <code>Archives</code> 文件 </p>
-<h5 id="dSYM-文件有什么作用"><a href="#dSYM-文件有什么作用" class="headerlink" title="dSYM 文件有什么作用"></a>dSYM 文件有什么作用</h5><p>当我们软件 <code>release</code> 模式打包或上线后，不会像我们在 <code>Xcode</code> 中那样直观的看到用崩溃的错误，这个时候我们就需要分析 <code>crash report</code> 文件了，<code>iOS</code> 设备中会有日志文件保存我们每个应用出错的函数内存地址，通过 <code>Xcode</code> 的 <code>Organizer</code> 可以将 <code>iOS</code> 设备中的 <code>DeviceLog</code> 导出成 <code>crash</code> 文件，这个时候我们就可以通过出错的函数地址去查询 <code>dSYM</code> 文件中程序对应的函数名和文件名。大前提是我们需要有软件版本对应的 <code>dSYM</code> 文件，这也是为什么我们很有必要保存每个发布版本的 <code>Archives</code> 文件了。</p>
-<h5 id="如何将文件一一对应每一个"><a href="#如何将文件一一对应每一个" class="headerlink" title="如何将文件一一对应每一个"></a>如何将文件一一对应每一个</h5><p>xx.app 和 xx.app.dSYM 文件都有对应的 UUID，crash 文件也有自己的 UUID，只要这三个文件的 UUID 一致，我们就可以通过他们解析出正确的错误函数信息了。<br>1.查看 xx.app 文件的 UUID，terminal 中输入命令 ：<br>dwarfdump –uuid xx.app/xx (xx代表你的项目名)<br>2.查看 xx.app.dSYM 文件的 UUID ，在 terminal 中输入命令：<br>dwarfdump –uuid xx.app.dSYM<br>3.crash 文件内第一行 Incident Identifier 就是该 crash 文件的 UUID。<br>dSYM工具于是我抽了几个小时的时间将这些命令封装到一个应用中，也为以后解决bug提供了便利。<br>使用步骤:<br>1.将打包发布软件时的xcarchive文件拖入软件窗口内的任意位置(支持多个文件同时拖入，注意：文件名不要包含空格)<br>2.选中任意一个版本的xcarchive文件，右边会列出该xcarchive文件支持的CPU类型，选中错误对应的CPU类型。<br>3.对比错误给出的UUID和工具界面中给出的UUID是否一致。4.将错误地址输入工具的文本框中，点击分析。Mac app下载地址  项目源码地址</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g0vdvv07utj30gz0icn3i.jpg" alt=""></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/iOS-错误调试/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-NSError" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/iOS-NSError/">NSError</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/iOS-NSError/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:42:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)doSomethingError:(NSError**)error</span><br></pre></td></tr></table></figure>
-<p>传递给方法的参数是个指针，而该指针本身又指向另外一个指针，那个指针指向NSError对象。或者也可以把它当成一个直接指向NSError对象的指针。这样一来，此方法不仅能有普通的返回值，而且还能经由”输出参数”把NSError对象回传给调用者。其用法如下:<br>在方法里面被赋值，指针是引用传值，会生成一个新指针（新指针还是指向‘指向error’的指针，可以通过这个双指针获得error对象）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSError *error = nil;</span><br><span class="line">BOOL ret = [object doSomethingError:&amp;error];</span><br><span class="line">if (error) &#123;</span><br><span class="line">// There was an error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>像这样的方法一般都会返回Boolean值，用以表示该操作是成功了还是失败了。如果调用者不关注具体的错误信息，那么直接判断这个Boolean值就好；若是关注具体错误，那就检查经由”输出参数”所返回的那个错误对象。在不想知道具体错误的时候，可以给error参数传入nil。比方说，可以如下使用此方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BOOL ret = [object doSomethingError:nil];</span><br><span class="line">if (ret) &#123;</span><br><span class="line">// There was an error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>实际上，在使用ARC时，编译器会把方法签名中的NSError转换成NSError__autoreleasing，也就是说，指针所指的对象会在方法执行完毕后自动释放。这个对象必须自动释放，因为”doSomething:”方法不能保证其调用者可以把此方法中创建的NSError释放掉，所以必须加入autorelease。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/iOS-NSError/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-编译链接" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/iOS-编译链接/">编译链接</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/iOS-编译链接/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:39:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0vdqctdgwj30k203zdfs.jpg" alt=""></p>
-<p>程序中的源代码计算机是无法识别的，需要将其转成0、1二进制代码，计算机才能识别。将源代码转成二进制代码需要两步：编译和链接。</p>
-<h5 id="例"><a href="#例" class="headerlink" title="例"></a>例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSLog(@&quot;%@&quot;,@&quot;Hello Leo&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0: input, &quot;Foundation&quot;, object </span><br><span class="line">1: input, &quot;test.m&quot;, objective-c</span><br><span class="line">2: preprocessor, &#123;1&#125;, objective-c-cpp-output//预处理</span><br><span class="line">3: compiler, &#123;2&#125;, ir //编译生成IR(中间代码)</span><br><span class="line">4: backend, &#123;3&#125;, assembler//汇编器生成汇编代码</span><br><span class="line">5: assembler, &#123;4&#125;, object//生成机器码</span><br><span class="line">6: linker, &#123;0, 5&#125;, image//链接</span><br><span class="line">7: bind-arch, &quot;x86_64&quot;, &#123;6&#125;, image//生成Image，也就是最后的可执行文件</span><br></pre></td></tr></table></figure>
-<p>传统的编译器通常分为三个部分，</p>
-<ol>
-<li>前端主要负责词法和语法分析，会进行类型检查，如果发现错误或者警告会标注出来在哪一行。</li>
-<li>优化器则是在前端的基础上，对得到的中间代码进行优化，进行BitCode的生成。</li>
-<li>后端则是针对不同的架构，比如arm64等生成不同的机器码</li>
-</ol>
-<h2 id="Xcode执行Build的流程"><a href="#Xcode执行Build的流程" class="headerlink" title="Xcode执行Build的流程"></a>Xcode执行Build的流程</h2><ul>
-<li>编译信息写入辅助文件，创建编译后的文件架构(name.app)</li>
-<li>写入辅助文件：将项目的文件结构对应表、将要执行的脚本、项目依赖库的文件结构对应表写成文件，方便后面使用</li>
-<li>运行预设脚本：Cocoapods 会预设一些脚本，当然你也可以自己预设一些脚本来运行。这些脚本都在 Build Phases 中可以看到；</li>
-<li>编译文件：针对每一个文件进行编译，生成可执行文件 Mach-O，这过程 LLVM 的完整流程，前端、优化器、后端；使用CompileC和clang命令。</li>
-<li>链接库，例如Foundation.framework,AFNetworking.framework…</li>
-<li>拷贝资源文件：将项目中的资源文件拷贝到目标包；</li>
-<li>编译 storyboard 文件：storyboard 文件也是会被编译的；</li>
-<li>链接 storyboard 文件：将编译后的 storyboard 文件链接成一个文件；</li>
-<li>编译 Asset 文件：我们的图片如果使用 Assets.xcassets 来管理图片，那么这些图片将会被编译成机器码，除了 icon 和 launchImage；</li>
-<li>运行 Cocoapods 脚本：将在编译项目之前已经编译好的依赖库和相关资源拷贝到包中。</li>
-<li>创建.app文件和对其签名</li>
-</ul>
-<p>编译链接都发生在main函数之前。同时<code>runtime</code>会对项目中所有类进行类机构初始化，然后调用所有的<code>load</code>方法。最后<code>dyld</code>返回<code>main</code>函数地址，<code>main</code>函数被调用，我们便来到程序入口<code>main</code>函数。</p>
-<h5 id="main-之后"><a href="#main-之后" class="headerlink" title="main 之后"></a>main 之后</h5>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/iOS-编译链接/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-iOS-图片加载速度极限优化—FastImageCache解析" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/06/iOS-图片加载速度极限优化—FastImageCache解析/">iOS图片加载速度极限优化—FastImageCache解析</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/06/iOS-图片加载速度极限优化—FastImageCache解析/" class="archive-article-date">
-  	<time datetime="2019-01-06T12:35:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://blog.cnbang.net/tech/2578/" target="_blank" rel="noopener">http://blog.cnbang.net/tech/2578/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/06/iOS-图片加载速度极限优化—FastImageCache解析/">展开全文 >></a>
         </p>
       
 

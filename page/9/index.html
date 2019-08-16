@@ -174,19 +174,284 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-frame-bounds" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-iOS-Animation" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/frame-bounds/">frame-bounds</a>
+      <a class="article-title" href="/2019/01/04/iOS-Animation/">Animation</a>
     </h1>
   
 
         
-        <a href="/2019/01/03/frame-bounds/" class="archive-article-date">
+        <a href="/2019/01/04/iOS-Animation/" class="archive-article-date">
+  	<time datetime="2019-01-04T14:01:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>CABasicAnimation</code>：基础动画，通过属性修改进行动画参数控制，只有初始状态和结束状态。</p>
+<p><code>CAKeyframeAnimation</code>：关键帧动画，同样是通过属性进行动画参数控制，但是同基础动画不同的是它可以有多个状态控制。</p>
+<p>基础动画、关键帧动画都属于属性动画，就是通过修改属性值产生动画效果，开发人员只需要设置初始值和结束值，中间的过程动画由系统自动计算产生。</p>
+<p>关键帧动画开发分为两种形式：一种是通过设置不同的属性值进行关键帧控制，另一种是通过绘制路径进行关键帧控制。后者优先级高于前者，如果设置了路径则属性值就不再起作用。</p>
+<p>图层动画的本质就是将图层内部的内容转化为位图经硬件操作形成一种动画效果，其实图层本身并没有任何的变化。上面的动画中图层并没有因为动画效果而改变它的位置（对于缩放动画其大小也是不会改变的），所以动画完成之后图层还是在原来的显示位置没有任何变化，如果这个图层在一个UIView中你会发现在UIView移动过程中你要触发UIView的点击事件也只能点击原来的位置，因为它的位置从来没有变过。</p>
+<p>解决此点击问题可以在动画view中重写如下方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event &#123;</span><br><span class="line">    CGRect presentingRect = self.frame;</span><br><span class="line">    //如果不在动画中则presentationLayer为空，在动画中就需要实时的判断点击是否点中动画中的位图</span><br><span class="line">    if (self.layer.presentationLayer) &#123;</span><br><span class="line">        presentingRect = self.layer.presentationLayer.frame;</span><br><span class="line">    &#125;</span><br><span class="line">    CGPoint superPoint = [self convertPoint:point toView:self.superview];</span><br><span class="line">    BOOLisInside = CGRectContainsPoint(presentingRect, superPoint);</span><br><span class="line">    return isInside;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>UIView</code>动画称为隐式动画，此动画和显示动画不同的是在动画过程中改变的就是uiview各个属性的值，所以点击会生效。<br> 但是这里需要注意的是隐式动画默认是不接收点击事件的，需要我们手动打开<br> <code>UIViewAnimationOptionAllowUserInteraction</code> </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/iOS-Animation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-iOS-AFNetworking" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/iOS-AFNetworking/">AFNetworking</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/iOS-AFNetworking/" class="archive-article-date">
+  	<time datetime="2019-01-04T07:38:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="2-x-vs-3-x"><a href="#2-x-vs-3-x" class="headerlink" title="2.x vs 3.x"></a>2.x vs 3.x</h5><ul>
+<li>2.x<br><code>NSURLConnection</code> 是被设计成异步发送的，调用了<code>start</code>方法后，<code>NSURLConnection</code> 会新建一条线程用底层的 <code>CFSocket</code> 去发送和接收请求，在发送和接收的一些事件发生后通知原来线程的<code>Runloop</code>去回调事件。<br>如果在主线程中创建<code>NSURLConnection</code>回调会在主线程中触发，但是主线程默认在<code>NSDefaultRunLoopMode</code>模式下，虽然我们可以将其加入到<code>NSRunLoopCommonModes</code>。但是作为网络回调，势必会有些耗时操作要在子线程中处理，然后再回到主线程中更新<code>UI</code>。<br>为什么要在主线程中更新<code>UI</code>，因为<code>UIKit</code>是线程不安全的，要确保<code>UIKit</code>的线程安全，过于复杂，而且其最后的执行时间点未必是我们希望的。<br>一个请求开辟一个线程，开销太大。只开辟一条子线程，设置runloop使线程常驻。所有的请求在这个线程上发起、同时也在这个线程上回调。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//networkRequestThread即常驻线程</span><br><span class="line">[self performSelector:@selector(operationDidStart) onThread:[[self class] networkRequestThread] withObject:nil waitUntilDone:NO modes:[self.runLoopModes allObjects]];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)operationDidStart &#123;</span><br><span class="line">    [self.lock lock];</span><br><span class="line">    if (![self isCancelled]) &#123;</span><br><span class="line">        self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];</span><br><span class="line">        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];</span><br><span class="line">        for (NSString *runLoopMode in self.runLoopModes) &#123;</span><br><span class="line">            [self.connection scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">            [self.outputStream scheduleInRunLoop:runLoop forMode:runLoopMode];</span><br><span class="line">        &#125;</span><br><span class="line">        [self.outputStream open];</span><br><span class="line">        [self.connection start];</span><br><span class="line">    &#125;</span><br><span class="line">    [self.lock unlock];</span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        [[NSNotificationCenter defaultCenter] postNotificationName:AFNetworkingOperationDidStartNotification object:self];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，每一个请求对应一个AFHTTPRequestOperation实例对象，每一个operation在初始化完成后都会被添加到一个NSOperationQueue中。<br>由这个NSOperationQueue来控制并发，系统会根据当前可用的核心数以及负载情况动态地调整最大的并发 operation 数量，我们也可以通过setMaxConcurrentoperationCount:方法来设置最大并发数。</p>
+<p>也就是说此处执行operation是并发的、多线程的。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0vdjb6l13j30fx0f6q2z.jpg" alt=""></p>
+<ul>
+<li>3.x<br>3.x 不需要常驻线程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.operationQueue = [[NSOperationQueue alloc] init];</span><br><span class="line">self.operationQueue.maxConcurrentOperationCount = 1;</span><br><span class="line">self.session = [NSURLSession sessionWithConfiguration:self.sessionConfiguration delegate:self delegateQueue:self.operationQueue];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>NSURLSession</code>发起的请求，不再需要在当前线程进行代理方法的回调。可以指定回调的<code>delegateQueue</code>，这样我们就不用为了等待代理回调方法而苦苦保活线程了。</p>
+<p><code>2.0</code>的<code>operationQueue</code>是用来添加operation并进行并发请求的，所以不要设置为1，其回调都会在固定的单一线程中，是线程安全的<br><code>3.0</code>的<code>operationqueue</code>是专门用来执行请求回调的，为了安全的考虑，需要设置<code>maxConcurrentOperationCount = 1</code>来达到串行回调的效果</p>
+<h5 id="AFURLSessionManagerTaskDelegate"><a href="#AFURLSessionManagerTaskDelegate" class="headerlink" title="AFURLSessionManagerTaskDelegate"></a>AFURLSessionManagerTaskDelegate</h5><p>使用<code>KVO</code>监听上传、下载进度变化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSString *,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    if ([object isEqual:self.downloadProgress]) &#123;</span><br><span class="line">        if (self.downloadProgressBlock) &#123;</span><br><span class="line">            self.downloadProgressBlock(object);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if ([object isEqual:self.uploadProgress]) &#123;</span><br><span class="line">        if (self.uploadProgressBlock) &#123;</span><br><span class="line">            self.uploadProgressBlock(object);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://www.cocoachina.com/ios/20181017/25225.html" target="_blank" rel="noopener">http://www.cocoachina.com/ios/20181017/25225.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/iOS-AFNetworking/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-iOS-SDWebImage" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/04/iOS-SDWebImage/">SDWebImage</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/04/iOS-SDWebImage/" class="archive-article-date">
+  	<time datetime="2019-01-04T05:44:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>通过<code>category</code>为<code>UIImageView</code>添加设置方法，使我们的代码和<code>SDWebImage</code>解耦.</li>
+<li>提供多个方法设置图片的<code>URL</code>，用户需要则使用带有更多参数的方法，否则会使用默认参数进行调用，但最终调用的是同一个设置方法。同时提供了<code>SDWebImageOptions</code>来配置不同的情况。</li>
+<li>调用方法时首先取消当前<code>UIImageView</code>上的下载<br><code>[self sd_cancelImageLoadOperationWithKey:validOperationKey];</code></li>
+<li>使用关联将当前<code>UIImageView</code>和<code>URL</code>进行管理<br><code>objc_setAssociatedObject(self, &amp;imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</code></li>
+<li>判断<code>URL</code>是否是<code>faildURL</code>，如果是，根据传入的<code>options</code>参数判断是否需要重新下载，不是则直接返回。<code>SDWebImage</code>保存了所有下载失败的<code>url</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (url.absoluteString.length == 0 || (!(options &amp; SDWebImageRetryFailed) &amp;&amp; isFailedUrl)) &#123;</span><br><span class="line">    ...</span><br><span class="line">    return operation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (strong, nonatomic, nonnull) NSMutableSet&lt;NSURL *&gt; *failedURLs;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>根据我们传入的<code>options</code>判断是否从内存、磁盘中获取缓存的图片；不获取缓存图片或没有缓存图片则开始下载。</li>
+<li>下载时先判断是否已有以此<code>URL</code>为<code>key</code>的下载<br><code>SDWebImageDownloaderOperation *operation = [self.URLOperations objectForKey:url];</code><br>如果没有则创建一个<code>operation</code>，并将其加入到下载队列中</li>
+</ol>
+<h5 id="SDMemoryCache"><a href="#SDMemoryCache" class="headerlink" title="SDMemoryCache"></a>SDMemoryCache</h5><p>初始化时注册通知<code>UIApplicationDidReceiveMemoryWarningNotification</code><br>如果内存紧张，清除所有缓存</p>
+<h5 id="SDImageCache"><a href="#SDImageCache" class="headerlink" title="SDImageCache"></a>SDImageCache</h5><p>存储的<code>key</code>是<code>url</code>的<code>MD5</code>值</p>
+<p>初始化时注册通知<code>UIApplicationWillTerminateNotification</code><br>APP退出时删除部分缓存，使缓存总量控制在预设总量的1/2,删除顺序从最旧的开始（获取时间，更新时间）</p>
+<p>初始化时注册通知<code>UIApplicationDidEnterBackgroundNotification</code><br>取消没有完成的下载，同时执行<code>UIApplicationWillTerminateNotification</code>的相关清理工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">- (void)backgroundDeleteOldFiles &#123;</span><br><span class="line">    Class UIApplicationClass = NSClassFromString(@&quot;UIApplication&quot;);</span><br><span class="line">    if(!UIApplicationClass || ![UIApplicationClass respondsToSelector:@selector(sharedApplication)]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    UIApplication *application = [UIApplication performSelector:@selector(sharedApplication)];</span><br><span class="line">    __block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^&#123;</span><br><span class="line">        // Clean up any unfinished task business by marking where you</span><br><span class="line">        // stopped or ending the task outright.</span><br><span class="line">        [application endBackgroundTask:bgTask];</span><br><span class="line">        bgTask = UIBackgroundTaskInvalid;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    // Start the long-running task and return immediately.</span><br><span class="line">    [self deleteOldFilesWithCompletionBlock:^&#123;</span><br><span class="line">        [application endBackgroundTask:bgTask];</span><br><span class="line">        bgTask = UIBackgroundTaskInvalid;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h5><ul>
+<li>线程安全<br>主线程更新UI<br>使用信号量当锁<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define LOCK(lock) dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);</span><br><span class="line">#define UNLOCK(lock) dispatch_semaphore_signal(lock);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (strong, nonatomic, nonnull) dispatch_semaphore_t headersLock;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/01/04/iOS-SDWebImage/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-iOS-frame-bounds" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/03/iOS-frame-bounds/">frame-bounds</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/03/iOS-frame-bounds/" class="archive-article-date">
   	<time datetime="2019-01-03T12:30:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
 </a>
         
@@ -222,7 +487,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/frame-bounds/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/01/03/iOS-frame-bounds/">展开全文 >></a>
         </p>
       
 
@@ -438,10 +703,9 @@
 <li>object</li>
 </ul>
 <p>在发送通知的时候也会传递一个<code>object</code>参数，一般情况下发送通知的<code>object</code>参数传递的是发送方自己，那么在注册监听者这里，<code>object</code>参数指代的也是发送方的这个<code>object</code>参数，意思就是接收<code>object</code>对象发出的名为<code>name</code>的通知，如果有其它发送方发出同样<code>name</code>的通知，是不会接收到通知的。如果把<code>name</code>和<code>object</code>这两个参数同时置为nil，则会接收所有的通知</p>
-<p>NSNotification 应该是采用单例模式设计。使用<strong>观察者模式</strong>来实现跨层传递消息。</p>
-<p>主体应该是一个dictionary，key就是注册通知时的name。value应该是一个数组，里面是所有注册了该通知的数据模型(observer, SEL)</p>
+<p>NSNotification 应该是采用单例模式设计。</p>
+<p>主体应该是一个dictionary，key就是注册通知时的name。value应该是一个数组（NSHashTable，存储observe的弱引用），里面是所有注册了该通知的数据模型(observer, SEL)，发送通知时遍历此hashtable，如果observe是nil，主动移除</p>
 <p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g1pr2mfw2jj30ly0ezgm5.jpg" alt=""></p>
-<p>value中的observe要使用week，避免强引用；每次发送通知时，如果observe为nil，主动移除</p>
 
       
 
@@ -554,6 +818,7 @@
 </table>
 <p><img src="iOS-load/2.png" alt="2"></p>
 <p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g4mcrp7gwlj314i0k442b.jpg" alt="3"></p>
+<p>总结：load 和 initialize 总是先调用父方法再调用子方法，而category中的load要根据文件的加载顺序决定先调用父方法还是子方法</p>
 
       
 
@@ -788,279 +1053,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/01/03/ios-事件链/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ios-消息转发" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/ios-消息转发/">消息转发</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/ios-消息转发/" class="archive-article-date">
-  	<time datetime="2019-01-03T09:26:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g0umn83b00j30sv0fm0u8.jpg" alt=""></p>
-<p>在oc中调用一个对象的方法，相当于给这个对象发送一个消息。而当这个对象无法响应这个消息时，就会进入消息转发流程，程序通过此步骤来寻找解决这个方法的途径。</p>
-<ul>
-<li>动态方法解析<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+resolveInstanceMethod: 实例方法</span><br><span class="line">+resolveClassMethod: 类方法</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>// 在已知某个方法没有实现的时候，添加该方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">@interface ViewController : UIViewController</span><br><span class="line"></span><br><span class="line">- (void)name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#include &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">void dynamicMethodIMP(id self, SEL _cmd) &#123;</span><br><span class="line">    NSLog(@&quot;动态添加&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    [self name];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    if (sel == @selector(name)) &#123;</span><br><span class="line">        class_addMethod([self class], sel, (IMP)dynamicMethodIMP, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return [super resolveInstanceMethod:sel];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>备用接收者</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-forwardingTargetForSelector:</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector &#123;</span><br><span class="line">    Bird *bird = [[Bird alloc] init];</span><br><span class="line">    if ([bird respondsToSelector: aSelector]) &#123;</span><br><span class="line">        return bird;</span><br><span class="line">    &#125;</span><br><span class="line">    return [super forwardingTargetForSelector: aSelector];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>完整消息转发<br>如果在上一步还不能处理未知消息，则唯一能做的就是启用完整的消息转发机制了。<br>首先它会发送<code>-methodSignatureForSelector:</code>消息获得函数的参数和返回值类型。如果<code>-methodSignatureForSelector:</code>返回nil ，Runtime则会发出 <code>-doesNotRecognizeSelector:</code>消息，程序这时也就挂掉了。如果返回了一个函数签名，<code>Runtime</code>就会创建一个<code>NSInvocation</code> 对象并发送 <code>-forwardInvocation:</code>消息给目标对象。<br>运行时系统会在这一步给消息接收者最后一次机会将消息转发给其它对象。对象会创建一个表示消息的<code>NSInvocation</code>对象，把与尚未处理的消息有关的全部细节都封装在<code>NSInvocation</code>中，包括<code>selector</code>，目标(target)和参数。我们可以在<code>forwardInvocation</code> 方法中选择将消息转发给其它对象。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-(void)forwardInvocation:(NSInvocation *)anInvocation</span><br><span class="line">&#123;</span><br><span class="line">    if (anInvocation.selector == @selector(testMethod)) &#123;</span><br><span class="line">        TestModelHelper1 *h1 = [[TestModelHelper1 alloc] init];</span><br><span class="line">        TestModelHelper2 *h2 = [[TestModelHelper2 alloc] init];</span><br><span class="line">        [anInvocation invokeWithTarget:h1];</span><br><span class="line">        [anInvocation invokeWithTarget:h2];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>forwardingTargetForSelector</code>仅支持一个对象的返回，也就是说消息只能被转发给一个对象<br><code>forwardInvocation</code>可以将消息同时转发给任意多个对象</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/ios-消息转发/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-const-static" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/const-static/">const static</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/const-static/" class="archive-article-date">
-  	<time datetime="2019-01-03T09:24:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="const"><a href="#const" class="headerlink" title="const"></a>const</h5><ul>
-<li>const用来修饰右边的基本变量或指针变量</li>
-<li>被修饰的变量只读，不能被修改</li>
-</ul>
-<h5 id="static"><a href="#static" class="headerlink" title="static"></a>static</h5><ul>
-<li>修饰局部变量</li>
-</ul>
-<p>保证局部变量永远只初始化一次，在程序的运行过程中永远只有一份内存, 生命周期类似全局变量了，但是作用域不变。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event</span><br><span class="line">&#123;    //声明一个局部变量i</span><br><span class="line">    int i = 0;    //每次点击view来到这个方法时让i自增</span><br><span class="line">    i ++;    //打印结果</span><br><span class="line">    NSLog(@&quot;i=%d&quot;,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>输出日志如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=1</span><br><span class="line">i=1</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event</span><br><span class="line">&#123;    //声明一个局部变量i</span><br><span class="line">    static  int i = 0;    //每次点击view来到这个方法时让i自增</span><br><span class="line">    i ++;    //打印结果</span><br><span class="line">    NSLog(@&quot;i=%d&quot;,i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出日志如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=2</span><br><span class="line">i=3</span><br><span class="line">i=4</span><br><span class="line">i=5</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
-<p>再看一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    [self a]; // 2</span><br><span class="line">    [self a]; // 3</span><br><span class="line">    [self a]; // 4</span><br><span class="line">    [self b]; // 2</span><br><span class="line">    [self b]; // 3</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)a &#123;</span><br><span class="line">    static int a = 1;</span><br><span class="line">    a ++;</span><br><span class="line">    NSLog(@&quot;%d&quot;,a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)b &#123;</span><br><span class="line">    static int a = 1;</span><br><span class="line">    a ++;</span><br><span class="line">    NSLog(@&quot;%d&quot;,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于限定了作用域，a 和 b 中的static变量可以重名。相当于两个变量，它们的值互不影响。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Test *test1 = [[Test alloc] init];</span><br><span class="line">[test1 logStaticA]; // 2</span><br><span class="line">Test *test2 = [[Test alloc] init];</span><br><span class="line">[test2 logStaticA]; // 3</span><br></pre></td></tr></table></figure>
-<p>同时，在局部变量内定义的static变量，自动称为了静态变量，生命周期同APP，所以当某个对象释放后再重新生成并调用上面的方法，a的值还是从上次的值开始，而不是从1开始。可以理解为，某个对象内部的静态变量的值，一直跟随这个类，无论这个对象被声明几次。</p>
-<ul>
-<li>修饰全局变量</li>
-</ul>
-<p>使全局变量的作用域仅限于当前文件内部，即当前文件内部才能访问该全局变量。</p>
-<ul>
-<li>修饰函数<br>static修饰函数时，被修饰的函数被称为静态函数，使得外部文件无法访问这个函数，仅本文件可以访问。</li>
-</ul>
-<h5 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h5><p>这个单词翻译过来是“外面的、外部的”。顾名思义，它的作用是声明外部全局变量。这里需要特别注意<code>extern</code>只能声明，不能用于实现。<br>在开发中，我们通常会单独抽一个类来管理一些全局的变量或常量，下面来看看逼格比较高的一种做法：</p>
-<p>我们可以在.h文件中extern声明一些全局的常量</p>
-<p>//声明一些全局常量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">extern NSString * const name;</span><br><span class="line">extern NSInteger const count;</span><br></pre></td></tr></table></figure></p>
-<p>然后在.m文件中去实现</p>
-<p>###import //实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSString * const name = @&quot;王五&quot;;</span><br><span class="line">NSInteger const count = 3;</span><br></pre></td></tr></table></figure></p>
-<p>这样，只要导入头文件，就可以全局的使用定义的变量或常量。</p>
-<p>从分配内存空间看：</p>
-<p>全局变量、静态局部变量、静态全局变量都在静态存储区分配空间，而局部变量在栈分配空间。</p>
-<p>全局变量本身就是静态存储方式，静态全局变量当然也是静态存储方式。这两者在存储方式上没有什么不同。区别在于非静态全局变量的作用域是整个源程序，当一个源程序由多个源文件组成时，非静态的全局变量在各个源文件中都是有效的。而静态全局变量则限制了其作用域，即只在定义该变量的源文件内有效，在同一源程序的其他源文件中不能使用它。由于静态全局变量的作用域局限于一个源文件内，只能为该源文件内的函数公用，因此可以避免在其他源文件中引起错误。</p>
-<p>1、静态变量会被放在程序的静态数据存储区里，这样可以在下一次调用的时候还可以保持原来的赋值。这一点是他与栈变量和堆变量的区别，单例模式就是利用这个机制。</p>
-<p>2、变量用static告知编译器，自己仅仅在变量的作用域范围内可见。这一点是他与全局变量的区别。</p>
-<p>从以上分析可以看出，把局部变量改变为静态变量后是改变了他的存储方式，即改变了他的生命周期。把全局变量改变为静态变量后是改变了他的作用域，限制了他的使用范围，</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/const-static/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-int所占位数" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/03/int所占位数/">int long 所占位数</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/03/int所占位数/" class="archive-article-date">
-  	<time datetime="2019-01-03T09:22:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>重点注意 long<br>// 32<br><code>int64_t</code> <code>double</code> <code>long long</code> 8位，其他4位<br>// 64<br><code>int</code> <code>int32_t</code> 4位，其他8位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//    // 32                           // 位数  数值</span><br><span class="line">//    int         t1 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int32_t     t2 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int64_t     t3 = pow(2, 62);    // 8    4611686018427387904</span><br><span class="line">//    NSInteger   t4 = pow(2, 32);    // 4    2147483647</span><br><span class="line">//    double      t5 = pow(2, 64);    // 8    18446744073709551616.000000</span><br><span class="line">//    long        t6 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    long long   t7 = pow(2, 62);    // 8    4611686018427387904</span><br><span class="line"></span><br><span class="line">//    // 64                           // 位数  数值</span><br><span class="line">//    int         t1 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int32_t     t2 = pow(2, 31);    // 4    2147483647</span><br><span class="line">//    int64_t     t3 = pow(2, 63);    // 8    9223372036854775807</span><br><span class="line">//    NSInteger   t4 = pow(2, 63);    // 8    9223372036854775807</span><br><span class="line">//    double      t5 = pow(2, 64);    // 8    18446744073709551616.000000</span><br><span class="line">//    long        t6 = pow(2, 63);    // 8    9223372036854775807</span><br><span class="line">//    long long   t7 = pow(2, 63);    // 8    9223372036854775807</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/iOS//" class="article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/01/03/int所占位数/">展开全文 >></a>
         </p>
       
 

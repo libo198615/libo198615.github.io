@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://libo198615.github.io/2019/01/03/iOS-load/iOS-load/1.jpg">
 <meta property="og:image" content="https://libo198615.github.io/2019/01/03/iOS-load/iOS-load/2.png">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g4mcrp7gwlj314i0k442b.jpg">
-<meta property="og:updated_time" content="2019-07-17T12:54:20.943Z">
+<meta property="og:updated_time" content="2019-08-13T03:41:39.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="load initialize">
 <meta name="twitter:description" content="+load 会在程序加载时调用， +initialize 会在第一次调用类的类方法或实例方法之前被调用。  load +load方法在这个文件被程序装载时调用。只要是在Compile Sources中出现的文件总是会被装载，这与这个类是否被用到无关，因此+load方法总是在main函数之前调用。 由于调用load方法时的环境很不安全，我们应该尽量减少load方法的逻辑。另一个原因是load方法是">
@@ -239,6 +239,7 @@
 </table>
 <p><img src="iOS-load/2.png" alt="2"></p>
 <p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g4mcrp7gwlj314i0k442b.jpg" alt="3"></p>
+<p>总结：load 和 initialize 总是先调用父方法再调用子方法，而category中的load要根据文件的加载顺序决定先调用父方法还是子方法</p>
 
       
 
